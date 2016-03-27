@@ -72,22 +72,29 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
      */
     public function dispatch(<CommandInterface> command) -> <ResponseInterface>
     {
-        var response, parser, e;
+        var response, e;
 
         try {
-            this->connection->connect();
-
-            let parser = command->getResponseParser();
-            let response = parser->parse("");
+            let response = this->_dispatch(command);
         } catch ConnectionException, e {
-            // perform command
             this->reconnect();
-
-            let parser = command->getResponseParser();
-            let response = parser->parse("");
+            let response = this->_dispatch(command);
         } catch \Exception, e {
             throw new DispatcherException(e->getMessge(), e->getCode(), e);
         }
+
+        return response;
+    }
+
+    internal function _dispatch(<CommandInterface> command) -> <ResponseInterface>
+    {
+        var connection, response, parser;
+
+        this->connection->connect();
+
+        let connection = this->connection,
+            parser     = command->getResponseParser(),
+            response   = parser->parse("");
 
         return response;
     }
