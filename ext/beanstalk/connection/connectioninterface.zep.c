@@ -24,7 +24,27 @@ ZEPHIR_INIT_CLASS(Beanstalk_Connection_ConnectionInterface) {
 }
 
 /**
- * Makes a connection to the Beanstalkd server
+ * Makes a connection to the Beanstalkd server.
  */
 ZEPHIR_DOC_METHOD(Beanstalk_Connection_ConnectionInterface, connect);
+
+/**
+ * Returns the host for this connection.
+ */
+ZEPHIR_DOC_METHOD(Beanstalk_Connection_ConnectionInterface, getHost);
+
+/**
+ * Returns the port for this connection.
+ */
+ZEPHIR_DOC_METHOD(Beanstalk_Connection_ConnectionInterface, getPort);
+
+/**
+ * Returns the connect timeout for this connection.
+ */
+ZEPHIR_DOC_METHOD(Beanstalk_Connection_ConnectionInterface, getConnectTimeout);
+
+/**
+ * Whether the connection is persistent or not?
+ */
+ZEPHIR_DOC_METHOD(Beanstalk_Connection_ConnectionInterface, isPersistent);
 

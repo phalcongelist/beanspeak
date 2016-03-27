@@ -23,7 +23,27 @@ namespace Beanstalk\Connection;
 interface ConnectionInterface
 {
     /**
-     * Makes a connection to the Beanstalkd server
+     * Makes a connection to the Beanstalkd server.
      */
     public function connect() -> resource;
+
+    /**
+     * Returns the host for this connection.
+     */
+    public function getHost() -> string;
+
+    /**
+     * Returns the port for this connection.
+     */
+    public function getPort() -> int;
+
+    /**
+     * Returns the connect timeout for this connection.
+     */
+    public function getConnectTimeout() -> int;
+
+    /**
+     * Whether the connection is persistent or not?
+     */
+    public function isPersistent() -> boolean;
 }

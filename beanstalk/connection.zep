@@ -28,7 +28,11 @@ use Beanstalk\Connection\ConnectionInterface;
 class Connection implements ConnectionInterface
 {
     private socket;
-    protected options = [] { get, set };
+
+    /**
+     * Connection options
+     */
+    private options = [];
 
     /**
      * Beanstalk\Connection constructor
@@ -50,6 +54,11 @@ class Connection implements ConnectionInterface
         if !isset options["persistent"] {
             let options["persistent"] = false;
         }
+
+        let options["host"] = (string) options["host"];
+        let options["port"] = (string) options["port"];
+        let options["timeout"] = (int) options["timeout"];
+        let options["persistent"] = (boolean) options["persistent"];
 
         let this->options = options;
     }
@@ -82,5 +91,37 @@ class Connection implements ConnectionInterface
         let this->socket = socket;
 
         return socket;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getHost() -> string
+    {
+        return this->options["host"];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPort() -> int
+    {
+        return this->options["port"];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConnectTimeout() -> int
+    {
+        return this->options["timeout"];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isPersistent() -> boolean
+    {
+        return this->options["persistent"];
     }
 }
