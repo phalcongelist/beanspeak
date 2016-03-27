@@ -56,4 +56,24 @@ class Beanstalk implements ConnectionAwareInterface
 
         return this;
     }
+
+    /**
+     * Creates a new connection object, based on the existing connection object
+     */
+    private function reconnect()
+    {
+        var newc, oldc;
+
+        let oldc = this->connection;
+        let newc = new Connection([
+            "host" : oldc->getHost(),
+            "port" : oldc->getPort(),
+            "timeout" : oldc->getConnectTimeout(),
+            "persistent" : oldc->isPersistent()
+        ]);
+
+        newc->connect();
+
+        let this->connection = newc;
+    }
 }

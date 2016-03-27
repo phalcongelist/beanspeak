@@ -16,6 +16,7 @@
 #include "kernel/operators.h"
 #include "kernel/fcall.h"
 #include "kernel/object.h"
+#include "kernel/array.h"
 
 
 /**
@@ -91,6 +92,44 @@ PHP_METHOD(Beanstalk_Beanstalk, setConnection) {
 
 	zephir_update_property_this(this_ptr, SL("connection"), connection TSRMLS_CC);
 	RETURN_THISW();
+
+}
+
+/**
+ * Creates a new connection object, based on the existing connection object
+ */
+PHP_METHOD(Beanstalk_Beanstalk, reconnect) {
+
+	zval *_0;
+	zval *newc = NULL, *oldc = NULL, *_1 = NULL;
+	int ZEPHIR_LAST_CALL_STATUS;
+
+	ZEPHIR_MM_GROW();
+
+	ZEPHIR_OBS_VAR(oldc);
+	zephir_read_property_this(&oldc, this_ptr, SL("connection"), PH_NOISY_CC);
+	ZEPHIR_INIT_VAR(newc);
+	object_init_ex(newc, beanstalk_connection_ce);
+	ZEPHIR_INIT_VAR(_0);
+	zephir_create_array(_0, 4, 0 TSRMLS_CC);
+	ZEPHIR_CALL_METHOD(&_1, oldc, "gethost", NULL, 0);
+	zephir_check_call_status();
+	zephir_array_update_string(&_0, SL("host"), &_1, PH_COPY | PH_SEPARATE);
+	ZEPHIR_CALL_METHOD(&_1, oldc, "getport", NULL, 0);
+	zephir_check_call_status();
+	zephir_array_update_string(&_0, SL("port"), &_1, PH_COPY | PH_SEPARATE);
+	ZEPHIR_CALL_METHOD(&_1, oldc, "getconnecttimeout", NULL, 0);
+	zephir_check_call_status();
+	zephir_array_update_string(&_0, SL("timeout"), &_1, PH_COPY | PH_SEPARATE);
+	ZEPHIR_CALL_METHOD(&_1, oldc, "ispersistent", NULL, 0);
+	zephir_check_call_status();
+	zephir_array_update_string(&_0, SL("persistent"), &_1, PH_COPY | PH_SEPARATE);
+	ZEPHIR_CALL_METHOD(NULL, newc, "__construct", NULL, 1, _0);
+	zephir_check_call_status();
+	ZEPHIR_CALL_METHOD(NULL, newc, "connect", NULL, 2);
+	zephir_check_call_status();
+	zephir_update_property_this(this_ptr, SL("connection"), newc TSRMLS_CC);
+	ZEPHIR_MM_RESTORE();
 
 }
 

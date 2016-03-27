@@ -142,7 +142,7 @@ PHP_METHOD(Beanstalk_Connection, connect) {
 	ZVAL_LONG(&_7, -1);
 	ZEPHIR_SINIT_VAR(_8);
 	ZVAL_LONG(&_8, 0);
-	ZEPHIR_CALL_FUNCTION(NULL, "stream_set_timeout", NULL, 2, socket, &_7, &_8);
+	ZEPHIR_CALL_FUNCTION(NULL, "stream_set_timeout", NULL, 3, socket, &_7, &_8);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("socket"), socket TSRMLS_CC);
 	RETURN_CCTOR(socket);
