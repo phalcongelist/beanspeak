@@ -44,7 +44,12 @@ ZEPHIR_DOC_METHOD(Beanstalk_Connection_ConnectionInterface, getPort);
 ZEPHIR_DOC_METHOD(Beanstalk_Connection_ConnectionInterface, getConnectTimeout);
 
 /**
- * Whether the connection is persistent or not?
+ * Whether the connection is persistent or not.
  */
 ZEPHIR_DOC_METHOD(Beanstalk_Connection_ConnectionInterface, isPersistent);
+
+/**
+ * Whether the connection is established or not.
+ */
+ZEPHIR_DOC_METHOD(Beanstalk_Connection_ConnectionInterface, isConnected);
 

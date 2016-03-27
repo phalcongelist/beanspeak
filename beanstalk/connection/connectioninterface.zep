@@ -43,7 +43,12 @@ interface ConnectionInterface
     public function getConnectTimeout() -> int;
 
     /**
-     * Whether the connection is persistent or not?
+     * Whether the connection is persistent or not.
      */
     public function isPersistent() -> boolean;
+
+    /**
+     * Whether the connection is established or not.
+     */
+    public function isConnected() -> boolean;
 }

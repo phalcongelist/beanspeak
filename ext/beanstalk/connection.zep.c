@@ -106,46 +106,65 @@ PHP_METHOD(Beanstalk_Connection, __construct) {
 
 /**
  * {@inheritdoc}
+ */
+PHP_METHOD(Beanstalk_Connection, isConnected) {
+
+	zval *_0;
+
+	ZEPHIR_MM_GROW();
+
+	ZEPHIR_OBS_VAR(_0);
+	zephir_read_property_this(&_0, this_ptr, SL("socket"), PH_NOISY_CC);
+	RETURN_MM_BOOL(Z_TYPE_P(_0) == IS_RESOURCE);
+
+}
+
+/**
+ * {@inheritdoc}
  *
  * @throws \Beanstalk\Connection\Exception
  */
 PHP_METHOD(Beanstalk_Connection, connect) {
 
-	zval *options = NULL, *socket = NULL, *function = NULL, *_0, *_1, *_2, *_3, *_4, *_5, *_6, _7, _8;
+	zval *_0 = NULL, *options$$3 = NULL, *socket$$3 = NULL, *function$$3 = NULL, *_1$$3, *_2$$3, *_3$$3, *_4$$3, *_5$$3, *_6$$3, *_7$$3, _8$$3, _9$$3;
 	int ZEPHIR_LAST_CALL_STATUS;
 
 	ZEPHIR_MM_GROW();
 
-	_0 = zephir_fetch_nproperty_this(this_ptr, SL("options"), PH_NOISY_CC);
-	ZEPHIR_CPY_WRT(options, _0);
-	zephir_array_fetch_string(&_1, options, SL("persistent"), PH_NOISY | PH_READONLY, "beanstalk/connection.zep", 77 TSRMLS_CC);
-	ZEPHIR_INIT_VAR(function);
-	if (zephir_is_true(_1)) {
-		ZVAL_STRING(function, "pfsockopen", 1);
-	} else {
-		ZVAL_STRING(function, "fsockopen", 1);
-	}
-	zephir_array_fetch_string(&_2, options, SL("host"), PH_NOISY | PH_READONLY, "beanstalk/connection.zep", 83 TSRMLS_CC);
-	zephir_array_fetch_string(&_3, options, SL("port"), PH_NOISY | PH_READONLY, "beanstalk/connection.zep", 83 TSRMLS_CC);
-	zephir_array_fetch_string(&_4, options, SL("timeout"), PH_NOISY | PH_READONLY, "beanstalk/connection.zep", 83 TSRMLS_CC);
-	ZEPHIR_INIT_VAR(_5);
-	ZVAL_NULL(_5);
-	ZEPHIR_INIT_VAR(_6);
-	ZVAL_NULL(_6);
-	ZEPHIR_CALL_ZVAL_FUNCTION(&socket, function, NULL, 0, _2, _3, _5, _6, _4);
+	ZEPHIR_CALL_METHOD(&_0, this_ptr, "isconnected", NULL, 0);
 	zephir_check_call_status();
-	if (Z_TYPE_P(socket) != IS_RESOURCE) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanstalk_connection_exception_ce, "Can't connect to Beanstalk server.", "beanstalk/connection.zep", 86);
-		return;
+	if (!(zephir_is_true(_0))) {
+		_1$$3 = zephir_fetch_nproperty_this(this_ptr, SL("options"), PH_NOISY_CC);
+		ZEPHIR_CPY_WRT(options$$3, _1$$3);
+		zephir_array_fetch_string(&_2$$3, options$$3, SL("persistent"), PH_NOISY | PH_READONLY, "beanstalk/connection.zep", 86 TSRMLS_CC);
+		ZEPHIR_INIT_VAR(function$$3);
+		if (zephir_is_true(_2$$3)) {
+			ZVAL_STRING(function$$3, "pfsockopen", 1);
+		} else {
+			ZVAL_STRING(function$$3, "fsockopen", 1);
+		}
+		zephir_array_fetch_string(&_3$$3, options$$3, SL("host"), PH_NOISY | PH_READONLY, "beanstalk/connection.zep", 92 TSRMLS_CC);
+		zephir_array_fetch_string(&_4$$3, options$$3, SL("port"), PH_NOISY | PH_READONLY, "beanstalk/connection.zep", 92 TSRMLS_CC);
+		zephir_array_fetch_string(&_5$$3, options$$3, SL("timeout"), PH_NOISY | PH_READONLY, "beanstalk/connection.zep", 92 TSRMLS_CC);
+		ZEPHIR_INIT_VAR(_6$$3);
+		ZVAL_NULL(_6$$3);
+		ZEPHIR_INIT_VAR(_7$$3);
+		ZVAL_NULL(_7$$3);
+		ZEPHIR_CALL_ZVAL_FUNCTION(&socket$$3, function$$3, NULL, 0, _3$$3, _4$$3, _6$$3, _7$$3, _5$$3);
+		zephir_check_call_status();
+		if (Z_TYPE_P(socket$$3) != IS_RESOURCE) {
+			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanstalk_connection_exception_ce, "Can't connect to Beanstalk server.", "beanstalk/connection.zep", 95);
+			return;
+		}
+		ZEPHIR_SINIT_VAR(_8$$3);
+		ZVAL_LONG(&_8$$3, -1);
+		ZEPHIR_SINIT_VAR(_9$$3);
+		ZVAL_LONG(&_9$$3, 0);
+		ZEPHIR_CALL_FUNCTION(NULL, "stream_set_timeout", NULL, 3, socket$$3, &_8$$3, &_9$$3);
+		zephir_check_call_status();
+		zephir_update_property_this(this_ptr, SL("socket"), socket$$3 TSRMLS_CC);
 	}
-	ZEPHIR_SINIT_VAR(_7);
-	ZVAL_LONG(&_7, -1);
-	ZEPHIR_SINIT_VAR(_8);
-	ZVAL_LONG(&_8, 0);
-	ZEPHIR_CALL_FUNCTION(NULL, "stream_set_timeout", NULL, 3, socket, &_7, &_8);
-	zephir_check_call_status();
-	zephir_update_property_this(this_ptr, SL("socket"), socket TSRMLS_CC);
-	RETURN_CCTOR(socket);
+	RETURN_MM_MEMBER(this_ptr, "socket");
 
 }
 
@@ -158,7 +177,7 @@ PHP_METHOD(Beanstalk_Connection, getHost) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("options"), PH_NOISY_CC);
-	zephir_array_fetch_string(&_1, _0, SL("host"), PH_NOISY | PH_READONLY, "beanstalk/connection.zep", 101 TSRMLS_CC);
+	zephir_array_fetch_string(&_1, _0, SL("host"), PH_NOISY | PH_READONLY, "beanstalk/connection.zep", 111 TSRMLS_CC);
 	RETURN_CTORW(_1);
 
 }
@@ -172,7 +191,7 @@ PHP_METHOD(Beanstalk_Connection, getPort) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("options"), PH_NOISY_CC);
-	zephir_array_fetch_string(&_1, _0, SL("port"), PH_NOISY | PH_READONLY, "beanstalk/connection.zep", 109 TSRMLS_CC);
+	zephir_array_fetch_string(&_1, _0, SL("port"), PH_NOISY | PH_READONLY, "beanstalk/connection.zep", 119 TSRMLS_CC);
 	RETURN_CTORW(_1);
 
 }
@@ -186,7 +205,7 @@ PHP_METHOD(Beanstalk_Connection, getConnectTimeout) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("options"), PH_NOISY_CC);
-	zephir_array_fetch_string(&_1, _0, SL("timeout"), PH_NOISY | PH_READONLY, "beanstalk/connection.zep", 117 TSRMLS_CC);
+	zephir_array_fetch_string(&_1, _0, SL("timeout"), PH_NOISY | PH_READONLY, "beanstalk/connection.zep", 127 TSRMLS_CC);
 	RETURN_CTORW(_1);
 
 }
@@ -200,7 +219,7 @@ PHP_METHOD(Beanstalk_Connection, isPersistent) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("options"), PH_NOISY_CC);
-	zephir_array_fetch_string(&_1, _0, SL("persistent"), PH_NOISY | PH_READONLY, "beanstalk/connection.zep", 125 TSRMLS_CC);
+	zephir_array_fetch_string(&_1, _0, SL("persistent"), PH_NOISY | PH_READONLY, "beanstalk/connection.zep", 135 TSRMLS_CC);
 	RETURN_CTORW(_1);
 
 }

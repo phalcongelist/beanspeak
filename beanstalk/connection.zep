@@ -65,32 +65,42 @@ class Connection implements ConnectionInterface
 
     /**
      * {@inheritdoc}
+     */
+    public function isConnected() -> boolean
+    {
+        return typeof this->socket == "resource";
+    }
+
+    /**
+     * {@inheritdoc}
      *
      * @throws \Beanstalk\Connection\Exception
      */
     public function connect() -> resource
     {
-        var options, socket, $function;
+        if !this->isConnected() {
+            var options, socket, $function;
 
-        let options = this->options;
+            let options = this->options;
 
-        if options["persistent"] {
-            let $function = "pfsockopen";
-        } else {
-            let $function = "fsockopen";
+            if options["persistent"] {
+                let $function = "pfsockopen";
+            } else {
+                let $function = "fsockopen";
+            }
+
+            let socket = {$function}(options["host"], options["port"], null, null, options["timeout"]);
+
+            if typeof socket != "resource" {
+                throw new Exception("Can't connect to Beanstalk server.");
+            }
+
+            stream_set_timeout(socket, -1, 0);
+
+            let this->socket = socket;
         }
 
-        let socket = {$function}(options["host"], options["port"], null, null, options["timeout"]);
-
-        if typeof socket != "resource" {
-            throw new Exception("Can't connect to Beanstalk server.");
-        }
-
-        stream_set_timeout(socket, -1, 0);
-
-        let this->socket = socket;
-
-        return socket;
+        return this->socket;
     }
 
     /**
