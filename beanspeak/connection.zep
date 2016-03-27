@@ -28,6 +28,7 @@ use Beanspeak\Connection\ConnectionInterface;
 class Connection implements ConnectionInterface
 {
     private socket;
+    private data = [];
 
     /**
      * Connection options
@@ -106,6 +107,23 @@ class Connection implements ConnectionInterface
     /**
      * {@inheritdoc}
      */
+    public function disconnect() -> boolean
+    {
+        var socket;
+
+        let socket = this->socket;
+        if typeof socket != "resource" {
+            return false;
+        }
+
+        fclose(socket);
+
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getHost() -> string
     {
         return this->options["host"];
@@ -133,5 +151,59 @@ class Connection implements ConnectionInterface
     public function isPersistent() -> boolean
     {
         return this->options["persistent"];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function write(string data) -> void
+    {
+        int retries = 8,
+            written = 0;
+
+        var socket, substring, fwritec;
+
+        let this->data = [],
+            socket = this->socket;
+
+        socket->connect();
+
+        while written < strlen(data) {
+            let substring = substr(data, written),
+                fwritec   = fwrite(socket, substring);
+
+            this->logwriteCall(fwritec);
+            if this->isFullWithNoWrites() {
+                throw new Exception("fwrite() failed to write data after 8 tries");
+            }
+
+            let written += fwritec;
+        }
+    }
+
+    internal function isFull(int limit = 8) -> boolean
+    {
+        return count(this->data) >= limit;
+    }
+
+    internal function hasWrites() -> boolean
+    {
+        return (boolean) array_sum(this->data);
+    }
+
+    internal function isFullWithNoWrites() -> boolean
+    {
+        return this->isFull() && !this->hasWrites();
+    }
+
+    internal function logwriteCall(int write) -> int
+    {
+        if this->isFull() {
+            array_shift(this->data);
+        }
+
+        let this->data[] = write;
+
+        return write;
     }
 }

@@ -1,3 +1,1 @@
-*        text=auto
-*.zep    text eol=lf
-*.w32    text eol=crlf
+*.w32 -crlf

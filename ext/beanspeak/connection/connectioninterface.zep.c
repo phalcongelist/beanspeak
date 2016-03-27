@@ -24,9 +24,14 @@ ZEPHIR_INIT_CLASS(Beanspeak_Connection_ConnectionInterface) {
 }
 
 /**
- * Makes a connection to the Beanspeakd server.
+ * Makes a connection to the Beanspeak server.
  */
 ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, connect);
+
+/**
+ * Closes the connection to the Beanspeak server.
+ */
+ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, disconnect);
 
 /**
  * Returns the host for this connection.
@@ -52,4 +57,9 @@ ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, isPersistent);
  * Whether the connection is established or not.
  */
 ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, isConnected);
+
+/**
+ * Writes data to the socket.
+ */
+ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, write);
 

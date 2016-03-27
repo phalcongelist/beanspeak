@@ -23,9 +23,14 @@ namespace Beanspeak\Connection;
 interface ConnectionInterface
 {
     /**
-     * Makes a connection to the Beanspeakd server.
+     * Makes a connection to the Beanspeak server.
      */
     public function connect() -> resource;
+
+    /**
+     * Closes the connection to the Beanspeak server.
+     */
+    public function disconnect() -> boolean;
 
     /**
      * Returns the host for this connection.
@@ -51,4 +56,9 @@ interface ConnectionInterface
      * Whether the connection is established or not.
      */
     public function isConnected() -> boolean;
+
+    /**
+     * Writes data to the socket.
+     */
+    public function write(string data) -> void;
 }
