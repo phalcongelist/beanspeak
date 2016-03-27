@@ -18,17 +18,25 @@
 #include "kernel/object.h"
 
 
+/**
+ * Beanstalk\Beanstalk
+ *
+ * Class to access the beanstalk queue service.
+ */
 ZEPHIR_INIT_CLASS(Beanstalk_Beanstalk) {
 
 	ZEPHIR_REGISTER_CLASS(Beanstalk, Beanstalk, beanstalk, beanstalk, beanstalk_beanstalk_method_entry, 0);
 
 	zend_declare_property_null(beanstalk_beanstalk_ce, SL("connection"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_class_implements(beanstalk_beanstalk_ce TSRMLS_CC, 1, beanstalk_beanstalkinterface_ce);
+	zend_class_implements(beanstalk_beanstalk_ce TSRMLS_CC, 1, beanstalk_connection_connectionawareinterface_ce);
 	return SUCCESS;
 
 }
 
+/**
+ * Beanstalk\Beanstalk constructor
+ */
 PHP_METHOD(Beanstalk_Beanstalk, __construct) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
@@ -56,6 +64,33 @@ PHP_METHOD(Beanstalk_Beanstalk, __construct) {
 	ZEPHIR_CPY_WRT(connection, _0);
 	zephir_update_property_this(this_ptr, SL("connection"), connection TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
+
+}
+
+/**
+ * {@inheritdoc}
+ */
+PHP_METHOD(Beanstalk_Beanstalk, getConnection) {
+
+	
+
+	RETURN_MEMBER(this_ptr, "connection");
+
+}
+
+/**
+ * {@inheritdoc}
+ */
+PHP_METHOD(Beanstalk_Beanstalk, setConnection) {
+
+	zval *connection;
+
+	zephir_fetch_params(0, 1, 0, &connection);
+
+
+
+	zephir_update_property_this(this_ptr, SL("connection"), connection TSRMLS_CC);
+	RETURN_THISW();
 
 }
 

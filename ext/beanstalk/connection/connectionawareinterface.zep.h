@@ -1,0 +1,14 @@
+
+extern zend_class_entry *beanstalk_connection_connectionawareinterface_ce;
+
+ZEPHIR_INIT_CLASS(Beanstalk_Connection_ConnectionAwareInterface);
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_beanstalk_connection_connectionawareinterface_setconnection, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, connection, Beanstalk\\Connection\\ConnectionInterface, 0)
+ZEND_END_ARG_INFO()
+
+ZEPHIR_INIT_FUNCS(beanstalk_connection_connectionawareinterface_method_entry) {
+	PHP_ABSTRACT_ME(Beanstalk_Connection_ConnectionAwareInterface, getConnection, NULL)
+	PHP_ABSTRACT_ME(Beanstalk_Connection_ConnectionAwareInterface, setConnection, arginfo_beanstalk_connection_connectionawareinterface_setconnection)
+	PHP_FE_END
+};

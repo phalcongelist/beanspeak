@@ -27,8 +27,8 @@
 
 
 
-zend_class_entry *beanstalk_beanstalkinterface_ce;
-zend_class_entry *beanstalk_connectioninterface_ce;
+zend_class_entry *beanstalk_connection_connectionawareinterface_ce;
+zend_class_entry *beanstalk_connection_connectioninterface_ce;
 zend_class_entry *beanstalk_beanstalk_ce;
 zend_class_entry *beanstalk_connection_ce;
 zend_class_entry *beanstalk_connection_exception_ce;
@@ -58,8 +58,8 @@ static PHP_MINIT_FUNCTION(beanstalk)
 	setlocale(LC_ALL, "C");
 #endif
 	REGISTER_INI_ENTRIES();
-	ZEPHIR_INIT(Beanstalk_BeanstalkInterface);
-	ZEPHIR_INIT(Beanstalk_ConnectionInterface);
+	ZEPHIR_INIT(Beanstalk_Connection_ConnectionAwareInterface);
+	ZEPHIR_INIT(Beanstalk_Connection_ConnectionInterface);
 	ZEPHIR_INIT(Beanstalk_Beanstalk);
 	ZEPHIR_INIT(Beanstalk_Connection);
 	ZEPHIR_INIT(Beanstalk_Connection_Exception);

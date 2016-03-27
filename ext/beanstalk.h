@@ -4,8 +4,8 @@
 #ifndef ZEPHIR_CLASS_ENTRIES_H
 #define ZEPHIR_CLASS_ENTRIES_H
 
-#include "beanstalk/beanstalkinterface.zep.h"
-#include "beanstalk/connectioninterface.zep.h"
+#include "beanstalk/connection/connectionawareinterface.zep.h"
+#include "beanstalk/connection/connectioninterface.zep.h"
 #include "beanstalk/beanstalk.zep.h"
 #include "beanstalk/connection.zep.h"
 #include "beanstalk/connection/exception.zep.h"

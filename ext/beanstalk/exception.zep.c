@@ -14,6 +14,9 @@
 #include "kernel/main.h"
 
 
+/**
+ * Beanstalk\Exception
+ */
 ZEPHIR_INIT_CLASS(Beanstalk_Exception) {
 
 	ZEPHIR_REGISTER_CLASS_EX(Beanstalk, Exception, beanstalk, exception, zend_exception_get_default(TSRMLS_C), NULL, 0);

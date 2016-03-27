@@ -9,8 +9,8 @@ if test "$PHP_BEANSTALK" = "yes"; then
 	fi
 
 	AC_DEFINE(HAVE_BEANSTALK, 1, [Whether you have Beanstalk])
-	beanstalk_sources="beanstalk.c kernel/main.c kernel/memory.c kernel/exception.c kernel/hash.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/extended/array.c kernel/string.c kernel/fcall.c kernel/extended/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c beanstalk/beanstalkinterface.zep.c
-	beanstalk/connectioninterface.zep.c
+	beanstalk_sources="beanstalk.c kernel/main.c kernel/memory.c kernel/exception.c kernel/hash.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/extended/array.c kernel/string.c kernel/fcall.c kernel/extended/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c beanstalk/connection/connectionawareinterface.zep.c
+	beanstalk/connection/connectioninterface.zep.c
 	beanstalk/beanstalk.zep.c
 	beanstalk/connection.zep.c
 	beanstalk/connection/exception.zep.c

@@ -17,14 +17,43 @@
 
 namespace Beanstalk;
 
-class Beanstalk implements BeanstalkInterface
+use Beanstalk\Connection\ConnectionInterface;
+use Beanstalk\Connection\ConnectionAwareInterface;
+
+/**
+ * Beanstalk\Beanstalk
+ *
+ * Class to access the beanstalk queue service.
+ */
+class Beanstalk implements ConnectionAwareInterface
 {
     protected connection;
 
+    /**
+     * Beanstalk\Beanstalk constructor
+     */
     public function __construct(<ConnectionInterface> connection = null)
     {
         let connection = connection ?: new Connection;
 
         let this->connection = connection;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConnection() -> <ConnectionInterface>
+    {
+        return this->connection;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setConnection(<ConnectionInterface> connection) -> <Beanstalk>
+    {
+        let this->connection = connection;
+
+        return this;
     }
 }

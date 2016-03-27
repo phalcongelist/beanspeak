@@ -15,8 +15,20 @@
  +------------------------------------------------------------------------+
 */
 
-namespace Beanstalk;
+namespace Beanstalk\Connection;
 
-interface ConnectionInterface
+/**
+ * Beanstalk\Connection\ConnectionAwareInterface
+ */
+interface ConnectionAwareInterface
 {
+    /**
+     * Returns the internal connection object.
+     */
+    public function getConnection() -> <ConnectionInterface>;
+
+    /**
+     * Sets the connection object.
+     */
+    public function setConnection(<ConnectionInterface> connection);
 }

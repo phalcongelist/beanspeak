@@ -18,14 +18,20 @@
 namespace Beanstalk;
 
 use Beanstalk\Connection\Exception;
+use Beanstalk\Connection\ConnectionInterface;
 
+/**
+ * Beanstalk\Connection
+ *
+ * Represents a connection to a beanstalkd instance
+ */
 class Connection implements ConnectionInterface
 {
     private socket;
     protected options = [] { get, set };
 
     /**
-     * Beanstalk\Connection
+     * Beanstalk\Connection constructor
      */
     public function __construct(array options = [])
     {
@@ -49,7 +55,7 @@ class Connection implements ConnectionInterface
     }
 
     /**
-     * Makes a connection to the Beanstalkd server
+     * {@inheritdoc}
      *
      * @throws \Beanstalk\Connection\Exception
      */

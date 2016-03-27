@@ -17,6 +17,9 @@
 
 namespace Beanstalk;
 
+/**
+ * Beanstalk\Exception
+ */
 class Exception extends \Exception
 {
 }

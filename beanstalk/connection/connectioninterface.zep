@@ -15,8 +15,15 @@
  +------------------------------------------------------------------------+
 */
 
-namespace Beanstalk;
+namespace Beanstalk\Connection;
 
-interface BeanstalkInterface
+/**
+ * Beanstalk\Connection\ConnectionInterface
+ */
+interface ConnectionInterface
 {
+    /**
+     * Makes a connection to the Beanstalkd server
+     */
+    public function connect() -> resource;
 }
