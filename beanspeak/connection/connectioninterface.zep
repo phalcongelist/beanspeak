@@ -23,12 +23,12 @@ namespace Beanspeak\Connection;
 interface ConnectionInterface
 {
     /**
-     * Makes a connection to the Beanspeak server.
+     * Makes a connection to the Beanstalk server.
      */
     public function connect() -> resource;
 
     /**
-     * Closes the connection to the Beanspeak server.
+     * Closes the connection to the Beanstalk server.
      */
     public function disconnect() -> boolean;
 
