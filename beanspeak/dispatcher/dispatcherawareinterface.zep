@@ -1,3 +1,4 @@
+
 /*
  +------------------------------------------------------------------------+
  | Beanspeak                                                              |
@@ -15,49 +16,24 @@
  +------------------------------------------------------------------------+
 */
 
-namespace Beanspeak;
+namespace Beanspeak\Dispatcher;
 
 use Beanspeak\Dispatcher\DispatcherInterface;
-use Beanspeak\Dispatcher\DispatcherAwareInterface;
 
 /**
- * Beanspeak\Beanspeak
+ * Beanspeak\Dispatcher\DispatcherAwareInterface
  *
- * Class to access the beanstalk queue service.
+ * This interface must be implemented in those classes that uses internally the Beanspeak\Dispatcher that creates them
  */
-class Beanspeak implements DispatcherAwareInterface
+interface DispatcherAwareInterface
 {
     /**
-     * The Interanl Dispatcher.
-     * @var DispatcherInterface
+     * Sets the Dispatcher.
      */
-    protected dispatcher;
+    public function setDispatcher(<DispatcherInterface> dispatcher);
 
     /**
-     * Beanspeak\Beanspeak constructor
+     * Returns the Dispatcher.
      */
-    public function __construct(<DispatcherInterface> dispatcher = null)
-    {
-        let dispatcher = dispatcher ?: new Dispatcher;
-
-        let this->dispatcher = dispatcher;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setDispatcher(<DispatcherInterface> dispatcher) -> <Beanspeak>
-    {
-         let this->dispatcher = dispatcher;
-
-         return this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDispatcher() -> <DispatcherInterface>
-    {
-        return this->dispatcher;
-    }
+    public function getDispatcher() -> <DispatcherInterface>;
 }

@@ -160,7 +160,7 @@ PHP_METHOD(Beanspeak_Connection, connect) {
 		ZVAL_LONG(&_8$$3, -1);
 		ZEPHIR_SINIT_VAR(_9$$3);
 		ZVAL_LONG(&_9$$3, 0);
-		ZEPHIR_CALL_FUNCTION(NULL, "stream_set_timeout", NULL, 3, socket$$3, &_8$$3, &_9$$3);
+		ZEPHIR_CALL_FUNCTION(NULL, "stream_set_timeout", NULL, 2, socket$$3, &_8$$3, &_9$$3);
 		zephir_check_call_status();
 		zephir_update_property_this(this_ptr, SL("socket"), socket$$3 TSRMLS_CC);
 	}

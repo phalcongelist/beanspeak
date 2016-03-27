@@ -57,7 +57,7 @@ PHP_METHOD(Beanspeak_Dispatcher, __construct) {
 	if (!(zephir_is_true(connection))) {
 		ZEPHIR_INIT_NVAR(_0);
 		object_init_ex(_0, beanspeak_connection_ce);
-		ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 1);
+		ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 3);
 		zephir_check_call_status();
 	} else {
 		ZEPHIR_CPY_WRT(_0, connection);
@@ -193,9 +193,9 @@ PHP_METHOD(Beanspeak_Dispatcher, reconnect) {
 	ZEPHIR_CALL_METHOD(&_1, oldc, "ispersistent", NULL, 0);
 	zephir_check_call_status();
 	zephir_array_update_string(&_0, SL("persistent"), &_1, PH_COPY | PH_SEPARATE);
-	ZEPHIR_CALL_METHOD(NULL, newc, "__construct", NULL, 1, _0);
+	ZEPHIR_CALL_METHOD(NULL, newc, "__construct", NULL, 3, _0);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(NULL, newc, "connect", NULL, 2);
+	ZEPHIR_CALL_METHOD(NULL, newc, "connect", NULL, 6);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("connection"), newc TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();

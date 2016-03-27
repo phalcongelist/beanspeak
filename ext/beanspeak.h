@@ -6,6 +6,7 @@
 
 #include "beanspeak/connection/connectionawareinterface.zep.h"
 #include "beanspeak/connection/connectioninterface.zep.h"
+#include "beanspeak/dispatcher/dispatcherawareinterface.zep.h"
 #include "beanspeak/dispatcher/dispatcherinterface.zep.h"
 #include "beanspeak/beanspeak.zep.h"
 #include "beanspeak/command/commandinterface.zep.h"

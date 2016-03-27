@@ -29,6 +29,7 @@
 
 zend_class_entry *beanspeak_connection_connectionawareinterface_ce;
 zend_class_entry *beanspeak_connection_connectioninterface_ce;
+zend_class_entry *beanspeak_dispatcher_dispatcherawareinterface_ce;
 zend_class_entry *beanspeak_dispatcher_dispatcherinterface_ce;
 zend_class_entry *beanspeak_command_commandinterface_ce;
 zend_class_entry *beanspeak_response_parser_parserinterface_ce;
@@ -66,6 +67,7 @@ static PHP_MINIT_FUNCTION(beanspeak)
 	REGISTER_INI_ENTRIES();
 	ZEPHIR_INIT(Beanspeak_Connection_ConnectionAwareInterface);
 	ZEPHIR_INIT(Beanspeak_Connection_ConnectionInterface);
+	ZEPHIR_INIT(Beanspeak_Dispatcher_DispatcherAwareInterface);
 	ZEPHIR_INIT(Beanspeak_Dispatcher_DispatcherInterface);
 	ZEPHIR_INIT(Beanspeak_Command_CommandInterface);
 	ZEPHIR_INIT(Beanspeak_Response_Parser_ParserInterface);
