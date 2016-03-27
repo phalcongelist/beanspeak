@@ -1,0 +1,17 @@
+ARG_ENABLE("beanstalk", "enable beanstalk", "no");
+
+if (PHP_BEANSTALK != "no") {
+  EXTENSION("beanstalk", "beanstalk.c", null, "-I"+configure_module_dirname);
+  ADD_SOURCES(configure_module_dirname + "/kernel", "main.c memory.c exception.c hash.c debug.c backtrace.c object.c array.c string.c fcall.c require.c file.c operators.c math.c concat.c variables.c filter.c iterator.c exit.c time.c", "beanstalk");
+  ADD_SOURCES(configure_module_dirname + "/kernel/extended", "array.c fcall.c", "beanstalk");
+  /* PCRE is always included on WIN32 */
+  AC_DEFINE("ZEPHIR_USE_PHP_PCRE", 1, "Whether PHP pcre extension is present at compile time");
+  if (PHP_JSON != "no") {
+    ADD_EXTENSION_DEP("beanstalk", "json");
+    AC_DEFINE("ZEPHIR_USE_PHP_JSON", 1, "Whether PHP json extension is present at compile time");
+  }
+  
+  ADD_SOURCES(configure_module_dirname + "/beanstalk", "beanstalkinterface.zep.c connectioninterface.zep.c beanstalk.zep.c connection.zep.c exception.zep.c", "beanstalk");
+	ADD_SOURCES(configure_module_dirname + "/beanstalk/connection", "exception.zep.c", "beanstalk");
+  ADD_FLAG("CFLAGS_BEANSTALK", "/D ZEPHIR_RELEASE");
+}

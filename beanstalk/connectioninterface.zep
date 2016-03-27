@@ -1,0 +1,5 @@
+namespace Beanstalk;
+
+interface ConnectionInterface
+{
+}
