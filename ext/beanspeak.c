@@ -30,11 +30,13 @@
 zend_class_entry *beanspeak_connection_connectionawareinterface_ce;
 zend_class_entry *beanspeak_connection_connectioninterface_ce;
 zend_class_entry *beanspeak_dispatcher_dispatcherinterface_ce;
+zend_class_entry *beanspeak_command_commandinterface_ce;
 zend_class_entry *beanspeak_response_parser_parserinterface_ce;
 zend_class_entry *beanspeak_response_responseinterface_ce;
 zend_class_entry *beanspeak_beanspeak_ce;
 zend_class_entry *beanspeak_connection_ce;
 zend_class_entry *beanspeak_connection_exception_ce;
+zend_class_entry *beanspeak_dispatcher_ce;
 zend_class_entry *beanspeak_dispatcher_exception_ce;
 zend_class_entry *beanspeak_exception_ce;
 
@@ -65,11 +67,13 @@ static PHP_MINIT_FUNCTION(beanspeak)
 	ZEPHIR_INIT(Beanspeak_Connection_ConnectionAwareInterface);
 	ZEPHIR_INIT(Beanspeak_Connection_ConnectionInterface);
 	ZEPHIR_INIT(Beanspeak_Dispatcher_DispatcherInterface);
+	ZEPHIR_INIT(Beanspeak_Command_CommandInterface);
 	ZEPHIR_INIT(Beanspeak_Response_Parser_ParserInterface);
 	ZEPHIR_INIT(Beanspeak_Response_ResponseInterface);
 	ZEPHIR_INIT(Beanspeak_Beanspeak);
 	ZEPHIR_INIT(Beanspeak_Connection);
 	ZEPHIR_INIT(Beanspeak_Connection_Exception);
+	ZEPHIR_INIT(Beanspeak_Dispatcher);
 	ZEPHIR_INIT(Beanspeak_Dispatcher_Exception);
 	ZEPHIR_INIT(Beanspeak_Exception);
 
