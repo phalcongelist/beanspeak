@@ -92,7 +92,7 @@ class Connection implements ConnectionInterface
             let socket = {$function}(options["host"], options["port"], null, null, options["timeout"]);
 
             if typeof socket != "resource" {
-                throw new Exception("Can't connect to Beanspeak server.");
+                throw new Exception("Can't connect to Beanstalk server.");
             }
 
             stream_set_timeout(socket, -1, 0);

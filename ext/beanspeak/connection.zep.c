@@ -153,7 +153,7 @@ PHP_METHOD(Beanspeak_Connection, connect) {
 		ZEPHIR_CALL_ZVAL_FUNCTION(&socket$$3, function$$3, NULL, 0, _3$$3, _4$$3, _6$$3, _7$$3, _5$$3);
 		zephir_check_call_status();
 		if (Z_TYPE_P(socket$$3) != IS_RESOURCE) {
-			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_connection_exception_ce, "Can't connect to Beanspeak server.", "beanspeak/connection.zep", 95);
+			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_connection_exception_ce, "Can't connect to Beanstalk server.", "beanspeak/connection.zep", 95);
 			return;
 		}
 		ZEPHIR_SINIT_VAR(_8$$3);
