@@ -15,8 +15,8 @@ ext/.deps
 ext/acinclude.m4
 ext/aclocal.m4
 ext/autom4te.cache/
-ext/beanstalk.la
-ext/beanstalk.lo
+ext/beanspeak.la
+ext/beanspeak.lo
 ext/build/
 ext/config.guess
 ext/config.h

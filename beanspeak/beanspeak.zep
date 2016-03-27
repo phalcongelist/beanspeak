@@ -15,22 +15,22 @@
  +------------------------------------------------------------------------+
 */
 
-namespace Beanstalk;
+namespace Beanspeak;
 
-use Beanstalk\Connection\ConnectionInterface;
-use Beanstalk\Connection\ConnectionAwareInterface;
+use Beanspeak\Connection\ConnectionInterface;
+use Beanspeak\Connection\ConnectionAwareInterface;
 
 /**
- * Beanstalk\Beanstalk
+ * Beanspeak\Beanspeak
  *
  * Class to access the beanstalk queue service.
  */
-class Beanstalk implements ConnectionAwareInterface
+class Beanspeak implements ConnectionAwareInterface
 {
     protected connection;
 
     /**
-     * Beanstalk\Beanstalk constructor
+     * Beanspeak\Beanspeak constructor
      */
     public function __construct(<ConnectionInterface> connection = null)
     {
@@ -50,7 +50,7 @@ class Beanstalk implements ConnectionAwareInterface
     /**
      * {@inheritdoc}
      */
-    public function setConnection(<ConnectionInterface> connection) -> <Beanstalk>
+    public function setConnection(<ConnectionInterface> connection) -> <Beanspeak>
     {
         let this->connection = connection;
 

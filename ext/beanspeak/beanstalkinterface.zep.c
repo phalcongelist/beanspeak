@@ -12,9 +12,9 @@
 #include "kernel/main.h"
 
 
-ZEPHIR_INIT_CLASS(Beanstalk_ConnectionInterface) {
+ZEPHIR_INIT_CLASS(Beanspeak_BeanspeakInterface) {
 
-	ZEPHIR_REGISTER_INTERFACE(Beanstalk, ConnectionInterface, beanstalk, connectioninterface, NULL);
+	ZEPHIR_REGISTER_INTERFACE(Beanspeak, BeanspeakInterface, beanspeak, beanspeakinterface, NULL);
 
 	return SUCCESS;
 

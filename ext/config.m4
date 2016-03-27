@@ -1,22 +1,22 @@
-PHP_ARG_ENABLE(beanstalk, whether to enable beanstalk, [ --enable-beanstalk   Enable Beanstalk])
+PHP_ARG_ENABLE(beanspeak, whether to enable beanspeak, [ --enable-beanspeak   Enable Beanspeak])
 
-if test "$PHP_BEANSTALK" = "yes"; then
+if test "$PHP_BEANSPEAK" = "yes"; then
 
 	
 
 	if ! test "x" = "x"; then
-		PHP_EVAL_LIBLINE(, BEANSTALK_SHARED_LIBADD)
+		PHP_EVAL_LIBLINE(, BEANSPEAK_SHARED_LIBADD)
 	fi
 
-	AC_DEFINE(HAVE_BEANSTALK, 1, [Whether you have Beanstalk])
-	beanstalk_sources="beanstalk.c kernel/main.c kernel/memory.c kernel/exception.c kernel/hash.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/extended/array.c kernel/string.c kernel/fcall.c kernel/extended/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c beanstalk/connection/connectionawareinterface.zep.c
-	beanstalk/connection/connectioninterface.zep.c
-	beanstalk/beanstalk.zep.c
-	beanstalk/connection.zep.c
-	beanstalk/connection/exception.zep.c
-	beanstalk/exception.zep.c "
-	PHP_NEW_EXTENSION(beanstalk, $beanstalk_sources, $ext_shared,, )
-	PHP_SUBST(BEANSTALK_SHARED_LIBADD)
+	AC_DEFINE(HAVE_BEANSPEAK, 1, [Whether you have Beanspeak])
+	beanspeak_sources="beanspeak.c kernel/main.c kernel/memory.c kernel/exception.c kernel/hash.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/extended/array.c kernel/string.c kernel/fcall.c kernel/extended/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c beanspeak/connection/connectionawareinterface.zep.c
+	beanspeak/connection/connectioninterface.zep.c
+	beanspeak/beanspeak.zep.c
+	beanspeak/connection.zep.c
+	beanspeak/connection/exception.zep.c
+	beanspeak/exception.zep.c "
+	PHP_NEW_EXTENSION(beanspeak, $beanspeak_sources, $ext_shared,, )
+	PHP_SUBST(BEANSPEAK_SHARED_LIBADD)
 
 	old_CPPFLAGS=$CPPFLAGS
 	CPPFLAGS="$CPPFLAGS $INCLUDES"
@@ -27,7 +27,7 @@ if test "$PHP_BEANSTALK" = "yes"; then
 			AC_CHECK_HEADERS(
 				[ext/pcre/php_pcre.h],
 				[
-					PHP_ADD_EXTENSION_DEP([beanstalk], [pcre])
+					PHP_ADD_EXTENSION_DEP([beanspeak], [pcre])
 					AC_DEFINE([ZEPHIR_USE_PHP_PCRE], [1], [Whether PHP pcre extension is present at compile time])
 				],
 				,
@@ -44,7 +44,7 @@ if test "$PHP_BEANSTALK" = "yes"; then
 			AC_CHECK_HEADERS(
 				[ext/json/php_json.h],
 				[
-					PHP_ADD_EXTENSION_DEP([beanstalk], [json])
+					PHP_ADD_EXTENSION_DEP([beanspeak], [json])
 					AC_DEFINE([ZEPHIR_USE_PHP_JSON], [1], [Whether PHP json extension is present at compile time])
 				],
 				,
@@ -57,6 +57,6 @@ if test "$PHP_BEANSTALK" = "yes"; then
 
 	CPPFLAGS=$old_CPPFLAGS
 
-	PHP_INSTALL_HEADERS([ext/beanstalk], [php_BEANSTALK.h])
+	PHP_INSTALL_HEADERS([ext/beanspeak], [php_BEANSPEAK.h])
 
 fi

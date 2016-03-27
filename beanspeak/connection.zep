@@ -15,13 +15,13 @@
  +------------------------------------------------------------------------+
 */
 
-namespace Beanstalk;
+namespace Beanspeak;
 
-use Beanstalk\Connection\Exception;
-use Beanstalk\Connection\ConnectionInterface;
+use Beanspeak\Connection\Exception;
+use Beanspeak\Connection\ConnectionInterface;
 
 /**
- * Beanstalk\Connection
+ * Beanspeak\Connection
  *
  * Represents a connection to a beanstalkd instance
  */
@@ -35,7 +35,7 @@ class Connection implements ConnectionInterface
     private options = [];
 
     /**
-     * Beanstalk\Connection constructor
+     * Beanspeak\Connection constructor
      */
     public function __construct(array options = [])
     {
@@ -74,7 +74,7 @@ class Connection implements ConnectionInterface
     /**
      * {@inheritdoc}
      *
-     * @throws \Beanstalk\Connection\Exception
+     * @throws \Beanspeak\Connection\Exception
      */
     public function connect() -> resource
     {
@@ -92,7 +92,7 @@ class Connection implements ConnectionInterface
             let socket = {$function}(options["host"], options["port"], null, null, options["timeout"]);
 
             if typeof socket != "resource" {
-                throw new Exception("Can't connect to Beanstalk server.");
+                throw new Exception("Can't connect to Beanspeak server.");
             }
 
             stream_set_timeout(socket, -1, 0);

@@ -1,17 +1,17 @@
-ARG_ENABLE("beanstalk", "enable beanstalk", "no");
+ARG_ENABLE("beanspeak", "enable beanspeak", "no");
 
-if (PHP_BEANSTALK != "no") {
-  EXTENSION("beanstalk", "beanstalk.c", null, "-I"+configure_module_dirname);
-  ADD_SOURCES(configure_module_dirname + "/kernel", "main.c memory.c exception.c hash.c debug.c backtrace.c object.c array.c string.c fcall.c require.c file.c operators.c math.c concat.c variables.c filter.c iterator.c exit.c time.c", "beanstalk");
-  ADD_SOURCES(configure_module_dirname + "/kernel/extended", "array.c fcall.c", "beanstalk");
+if (PHP_BEANSPEAK != "no") {
+  EXTENSION("beanspeak", "beanspeak.c", null, "-I"+configure_module_dirname);
+  ADD_SOURCES(configure_module_dirname + "/kernel", "main.c memory.c exception.c hash.c debug.c backtrace.c object.c array.c string.c fcall.c require.c file.c operators.c math.c concat.c variables.c filter.c iterator.c exit.c time.c", "beanspeak");
+  ADD_SOURCES(configure_module_dirname + "/kernel/extended", "array.c fcall.c", "beanspeak");
   /* PCRE is always included on WIN32 */
   AC_DEFINE("ZEPHIR_USE_PHP_PCRE", 1, "Whether PHP pcre extension is present at compile time");
   if (PHP_JSON != "no") {
-    ADD_EXTENSION_DEP("beanstalk", "json");
+    ADD_EXTENSION_DEP("beanspeak", "json");
     AC_DEFINE("ZEPHIR_USE_PHP_JSON", 1, "Whether PHP json extension is present at compile time");
   }
   
-  ADD_SOURCES(configure_module_dirname + "/beanstalk/connection", "connectionawareinterface.zep.c connectioninterface.zep.c exception.zep.c", "beanstalk");
-	ADD_SOURCES(configure_module_dirname + "/beanstalk", "beanstalk.zep.c connection.zep.c exception.zep.c", "beanstalk");
-  ADD_FLAG("CFLAGS_BEANSTALK", "/D ZEPHIR_RELEASE");
+  ADD_SOURCES(configure_module_dirname + "/beanspeak/connection", "connectionawareinterface.zep.c connectioninterface.zep.c exception.zep.c", "beanspeak");
+	ADD_SOURCES(configure_module_dirname + "/beanspeak", "beanspeak.zep.c connection.zep.c exception.zep.c", "beanspeak");
+  ADD_FLAG("CFLAGS_BEANSPEAK", "/D ZEPHIR_RELEASE");
 }

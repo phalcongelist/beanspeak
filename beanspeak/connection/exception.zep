@@ -15,10 +15,10 @@
  +------------------------------------------------------------------------+
 */
 
-namespace Beanstalk\Connection;
+namespace Beanspeak\Connection;
 
 /**
- * Beanstalk\Connection\Exception
+ * Beanspeak\Connection\Exception
  */
 class Exception extends \Exception
 {

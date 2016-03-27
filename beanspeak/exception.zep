@@ -15,40 +15,11 @@
  +------------------------------------------------------------------------+
 */
 
-namespace Beanstalk\Connection;
+namespace Beanspeak;
 
 /**
- * Beanstalk\Connection\ConnectionInterface
+ * Beanspeak\Exception
  */
-interface ConnectionInterface
+class Exception extends \Exception
 {
-    /**
-     * Makes a connection to the Beanstalkd server.
-     */
-    public function connect() -> resource;
-
-    /**
-     * Returns the host for this connection.
-     */
-    public function getHost() -> string;
-
-    /**
-     * Returns the port for this connection.
-     */
-    public function getPort() -> int;
-
-    /**
-     * Returns the connect timeout for this connection.
-     */
-    public function getConnectTimeout() -> int;
-
-    /**
-     * Whether the connection is persistent or not.
-     */
-    public function isPersistent() -> boolean;
-
-    /**
-     * Whether the connection is established or not.
-     */
-    public function isConnected() -> boolean;
 }

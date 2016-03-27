@@ -15,20 +15,40 @@
  +------------------------------------------------------------------------+
 */
 
-namespace Beanstalk\Connection;
+namespace Beanspeak\Connection;
 
 /**
- * Beanstalk\Connection\ConnectionAwareInterface
+ * Beanspeak\Connection\ConnectionInterface
  */
-interface ConnectionAwareInterface
+interface ConnectionInterface
 {
     /**
-     * Returns the internal connection object.
+     * Makes a connection to the Beanspeakd server.
      */
-    public function getConnection() -> <ConnectionInterface>;
+    public function connect() -> resource;
 
     /**
-     * Sets the connection object.
+     * Returns the host for this connection.
      */
-    public function setConnection(<ConnectionInterface> connection);
+    public function getHost() -> string;
+
+    /**
+     * Returns the port for this connection.
+     */
+    public function getPort() -> int;
+
+    /**
+     * Returns the connect timeout for this connection.
+     */
+    public function getConnectTimeout() -> int;
+
+    /**
+     * Whether the connection is persistent or not.
+     */
+    public function isPersistent() -> boolean;
+
+    /**
+     * Whether the connection is established or not.
+     */
+    public function isConnected() -> boolean;
 }

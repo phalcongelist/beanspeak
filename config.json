@@ -52,8 +52,8 @@
         "check-invalid-reads": false,
         "internal-call-transformation": false
     },
-    "namespace": "beanstalk",
-    "name": "beanstalk",
+    "namespace": "beanspeak",
+    "name": "beanspeak",
     "description": "PHP extension for beanstalkd queue",
     "author": "Serghei Iakovlev",
     "version": "0.0.1",

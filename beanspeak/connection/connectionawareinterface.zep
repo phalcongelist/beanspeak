@@ -15,11 +15,20 @@
  +------------------------------------------------------------------------+
 */
 
-namespace Beanstalk;
+namespace Beanspeak\Connection;
 
 /**
- * Beanstalk\Exception
+ * Beanspeak\Connection\ConnectionAwareInterface
  */
-class Exception extends \Exception
+interface ConnectionAwareInterface
 {
+    /**
+     * Returns the internal connection object.
+     */
+    public function getConnection() -> <ConnectionInterface>;
+
+    /**
+     * Sets the connection object.
+     */
+    public function setConnection(<ConnectionInterface> connection);
 }

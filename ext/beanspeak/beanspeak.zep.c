@@ -20,25 +20,25 @@
 
 
 /**
- * Beanstalk\Beanstalk
+ * Beanspeak\Beanspeak
  *
  * Class to access the beanstalk queue service.
  */
-ZEPHIR_INIT_CLASS(Beanstalk_Beanstalk) {
+ZEPHIR_INIT_CLASS(Beanspeak_Beanspeak) {
 
-	ZEPHIR_REGISTER_CLASS(Beanstalk, Beanstalk, beanstalk, beanstalk, beanstalk_beanstalk_method_entry, 0);
+	ZEPHIR_REGISTER_CLASS(Beanspeak, Beanspeak, beanspeak, beanspeak, beanspeak_beanspeak_method_entry, 0);
 
-	zend_declare_property_null(beanstalk_beanstalk_ce, SL("connection"), ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(beanspeak_beanspeak_ce, SL("connection"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_class_implements(beanstalk_beanstalk_ce TSRMLS_CC, 1, beanstalk_connection_connectionawareinterface_ce);
+	zend_class_implements(beanspeak_beanspeak_ce TSRMLS_CC, 1, beanspeak_connection_connectionawareinterface_ce);
 	return SUCCESS;
 
 }
 
 /**
- * Beanstalk\Beanstalk constructor
+ * Beanspeak\Beanspeak constructor
  */
-PHP_METHOD(Beanstalk_Beanstalk, __construct) {
+PHP_METHOD(Beanspeak_Beanspeak, __construct) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 	zval *connection = NULL, *_0 = NULL;
@@ -56,7 +56,7 @@ PHP_METHOD(Beanstalk_Beanstalk, __construct) {
 	ZEPHIR_INIT_VAR(_0);
 	if (!(zephir_is_true(connection))) {
 		ZEPHIR_INIT_NVAR(_0);
-		object_init_ex(_0, beanstalk_connection_ce);
+		object_init_ex(_0, beanspeak_connection_ce);
 		ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 1);
 		zephir_check_call_status();
 	} else {
@@ -71,7 +71,7 @@ PHP_METHOD(Beanstalk_Beanstalk, __construct) {
 /**
  * {@inheritdoc}
  */
-PHP_METHOD(Beanstalk_Beanstalk, getConnection) {
+PHP_METHOD(Beanspeak_Beanspeak, getConnection) {
 
 	
 
@@ -82,7 +82,7 @@ PHP_METHOD(Beanstalk_Beanstalk, getConnection) {
 /**
  * {@inheritdoc}
  */
-PHP_METHOD(Beanstalk_Beanstalk, setConnection) {
+PHP_METHOD(Beanspeak_Beanspeak, setConnection) {
 
 	zval *connection;
 
@@ -98,7 +98,7 @@ PHP_METHOD(Beanstalk_Beanstalk, setConnection) {
 /**
  * Creates a new connection object, based on the existing connection object
  */
-PHP_METHOD(Beanstalk_Beanstalk, reconnect) {
+PHP_METHOD(Beanspeak_Beanspeak, reconnect) {
 
 	zval *_0;
 	zval *newc = NULL, *oldc = NULL, *_1 = NULL;
@@ -109,7 +109,7 @@ PHP_METHOD(Beanstalk_Beanstalk, reconnect) {
 	ZEPHIR_OBS_VAR(oldc);
 	zephir_read_property_this(&oldc, this_ptr, SL("connection"), PH_NOISY_CC);
 	ZEPHIR_INIT_VAR(newc);
-	object_init_ex(newc, beanstalk_connection_ce);
+	object_init_ex(newc, beanspeak_connection_ce);
 	ZEPHIR_INIT_VAR(_0);
 	zephir_create_array(_0, 4, 0 TSRMLS_CC);
 	ZEPHIR_CALL_METHOD(&_1, oldc, "gethost", NULL, 0);

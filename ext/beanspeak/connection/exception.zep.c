@@ -15,11 +15,11 @@
 
 
 /**
- * Beanstalk\Connection\Exception
+ * Beanspeak\Connection\Exception
  */
-ZEPHIR_INIT_CLASS(Beanstalk_Connection_Exception) {
+ZEPHIR_INIT_CLASS(Beanspeak_Connection_Exception) {
 
-	ZEPHIR_REGISTER_CLASS_EX(Beanstalk\\Connection, Exception, beanstalk, connection_exception, zend_exception_get_default(TSRMLS_C), NULL, 0);
+	ZEPHIR_REGISTER_CLASS_EX(Beanspeak\\Connection, Exception, beanspeak, connection_exception, zend_exception_get_default(TSRMLS_C), NULL, 0);
 
 	return SUCCESS;
 
