@@ -40,5 +40,6 @@ ext/mkinstalldirs
 ext/modules/
 ext/run-tests.php
 
+tests/manual.php
 build.sh
 extension.ini
