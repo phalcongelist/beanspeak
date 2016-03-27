@@ -14,7 +14,9 @@ if test "$PHP_BEANSPEAK" = "yes"; then
 	beanspeak/beanspeak.zep.c
 	beanspeak/connection.zep.c
 	beanspeak/connection/exception.zep.c
-	beanspeak/exception.zep.c "
+	beanspeak/exception.zep.c
+	beanspeak/response/parser/parserinterface.zep.c
+	beanspeak/response/responseinterface.zep.c "
 	PHP_NEW_EXTENSION(beanspeak, $beanspeak_sources, $ext_shared,, )
 	PHP_SUBST(BEANSPEAK_SHARED_LIBADD)
 
