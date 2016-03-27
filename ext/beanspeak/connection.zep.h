@@ -12,7 +12,7 @@ PHP_METHOD(Beanspeak_Connection, getPort);
 PHP_METHOD(Beanspeak_Connection, getConnectTimeout);
 PHP_METHOD(Beanspeak_Connection, isPersistent);
 PHP_METHOD(Beanspeak_Connection, write);
-void zep_Beanspeak_Connection_isFull(int ht, zval *return_value, zval **return_value_ptr, zval *this_ptr, int return_value_used, zval *limit_param_ext TSRMLS_DC);
+void zep_Beanspeak_Connection_isFull(int ht, zval *return_value, zval **return_value_ptr, zval *this_ptr, int return_value_used TSRMLS_DC);
 void zep_Beanspeak_Connection_hasWrites(int ht, zval *return_value, zval **return_value_ptr, zval *this_ptr, int return_value_used TSRMLS_DC);
 void zep_Beanspeak_Connection_isFullWithNoWrites(int ht, zval *return_value, zval **return_value_ptr, zval *this_ptr, int return_value_used TSRMLS_DC);
 void zep_Beanspeak_Connection_logwriteCall(int ht, zval *return_value, zval **return_value_ptr, zval *this_ptr, int return_value_used, zval *write_param_ext TSRMLS_DC);
@@ -24,10 +24,6 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_connection_write, 0, 0, 1)
 	ZEND_ARG_INFO(0, data)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_connection_isfull, 0, 0, 0)
-	ZEND_ARG_INFO(0, limit)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_connection_logwritecall, 0, 0, 1)

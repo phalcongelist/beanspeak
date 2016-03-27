@@ -24,12 +24,12 @@ ZEPHIR_INIT_CLASS(Beanspeak_Connection_ConnectionInterface) {
 }
 
 /**
- * Makes a connection to the Beanspeak server.
+ * Makes a connection to the Beanstalk server.
  */
 ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, connect);
 
 /**
- * Closes the connection to the Beanspeak server.
+ * Closes the connection to the Beanstalk server.
  */
 ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, disconnect);
 

@@ -56,12 +56,17 @@ class Connection implements ConnectionInterface
             let options["persistent"] = false;
         }
 
-        let options["host"] = (string) options["host"];
-        let options["port"] = (string) options["port"];
-        let options["timeout"] = (int) options["timeout"];
-        let options["persistent"] = (boolean) options["persistent"];
+        if !isset options["write_retries"] {
+            let options["write_retries"] = 8;
+        }
 
-        let this->options = options;
+        let options["host"]          = (string) options["host"],
+            options["port"]          = (string) options["port"],
+            options["timeout"]       = (int) options["timeout"],
+            options["write_retries"] = (int) options["write_retries"],
+            options["persistent"]    = (boolean) options["persistent"],
+
+            this->options = options;
     }
 
     /**
@@ -69,7 +74,11 @@ class Connection implements ConnectionInterface
      */
     public function isConnected() -> boolean
     {
-        return typeof this->socket == "resource";
+        var socket;
+
+        let socket = this->socket;
+
+        return typeof socket == "resource";
     }
 
     /**
@@ -158,12 +167,10 @@ class Connection implements ConnectionInterface
      */
     public function write(string data) -> void
     {
-        int retries = 8,
-            written = 0;
+        var socket, substring, fwritec, retries, written;
 
-        var socket, substring, fwritec;
-
-        let this->data = [],
+        let retries = this->options["write_retries"],
+            this->data = [],
             socket = this->socket;
 
         socket->connect();
@@ -174,16 +181,20 @@ class Connection implements ConnectionInterface
 
             this->logwriteCall(fwritec);
             if this->isFullWithNoWrites() {
-                throw new Exception("fwrite() failed to write data after 8 tries");
+                throw new Exception(sprintf("fwrite() failed to write data after %d tries", retries));
             }
 
             let written += fwritec;
         }
     }
 
-    internal function isFull(int limit = 8) -> boolean
+    internal function isFull() -> boolean
     {
-        return count(this->data) >= limit;
+        var retries;
+
+        let retries = this->options["write_retries"];
+
+        return count(this->data) >= retries;
     }
 
     internal function hasWrites() -> boolean
