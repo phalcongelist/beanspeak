@@ -29,5 +29,5 @@ interface ParserInterface
     /**
      * Parses raw response data into a Response object.
      */
-    public function parse(string! $responseLine, string $responseData = null) -> <ResponseInterface>;
+    public function parse(string! line, string data = null) -> <ResponseInterface>;
 }
