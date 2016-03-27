@@ -54,8 +54,8 @@
     },
     "namespace": "beanstalk",
     "name": "beanstalk",
-    "description": "",
-    "author": "",
+    "description": "PHP extension for beanstalkd queue",
+    "author": "Serghei Iakovlev",
     "version": "0.0.1",
     "verbose": false,
     "requires": {
