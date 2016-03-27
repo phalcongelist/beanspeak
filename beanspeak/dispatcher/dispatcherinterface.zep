@@ -15,19 +15,20 @@
  +------------------------------------------------------------------------+
 */
 
-namespace Beanspeak\Response\Parser;
+namespace Beanspeak\Dispatcher;
 
-use Beanspeak\Response\ResponseInterface;
+use Beanspeak\Command\CommandInterface;
+use Beanspeak\Response\Parser\ParserInterface;
 
 /**
- * Beanspeak\Response\Parser\ParserInterface
+ * Beanspeak\Dispatcher\DispatcherInterface
  *
- * A parser for response data sent from the beanstalkd server.
+ * Interface for Beanspeak\Dispatcher
  */
-interface ParserInterface
+interface DispatcherInterface
 {
     /**
-     * Parses raw response data into a Response object.
+     * Dispatches the specified command to the connection object.
      */
-    public function parse(string! $responseLine, string $responseData = null) -> <ResponseInterface>;
+    public function dispatch(<CommandInterface> command) -> <ParserInterface>;
 }

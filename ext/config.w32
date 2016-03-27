@@ -13,6 +13,7 @@ if (PHP_BEANSPEAK != "no") {
   
   ADD_SOURCES(configure_module_dirname + "/beanspeak/connection", "connectionawareinterface.zep.c connectioninterface.zep.c exception.zep.c", "beanspeak");
 	ADD_SOURCES(configure_module_dirname + "/beanspeak", "beanspeak.zep.c connection.zep.c exception.zep.c", "beanspeak");
+	ADD_SOURCES(configure_module_dirname + "/beanspeak/dispatcher", "dispatcherinterface.zep.c exception.zep.c", "beanspeak");
 	ADD_SOURCES(configure_module_dirname + "/beanspeak/response/parser", "parserinterface.zep.c", "beanspeak");
 	ADD_SOURCES(configure_module_dirname + "/beanspeak/response", "responseinterface.zep.c", "beanspeak");
   ADD_FLAG("CFLAGS_BEANSPEAK", "/D ZEPHIR_RELEASE");

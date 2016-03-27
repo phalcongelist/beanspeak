@@ -14,6 +14,8 @@ if test "$PHP_BEANSPEAK" = "yes"; then
 	beanspeak/beanspeak.zep.c
 	beanspeak/connection.zep.c
 	beanspeak/connection/exception.zep.c
+	beanspeak/dispatcher/dispatcherinterface.zep.c
+	beanspeak/dispatcher/exception.zep.c
 	beanspeak/exception.zep.c
 	beanspeak/response/parser/parserinterface.zep.c
 	beanspeak/response/responseinterface.zep.c "
