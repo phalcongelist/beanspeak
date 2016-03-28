@@ -49,6 +49,11 @@ ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, getPort);
 ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, getConnectTimeout);
 
 /**
+ * Returns the write retries for this connection.
+ */
+ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, getWriteRetries);
+
+/**
  * Whether the connection is persistent or not.
  */
 ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, isPersistent);
@@ -59,7 +64,7 @@ ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, isPersistent);
 ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, isConnected);
 
 /**
- * Writes data to the socket.
+ * Writes data to the socket. Performs a connection if none is available.
  */
 ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, write);
 

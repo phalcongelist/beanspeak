@@ -13,6 +13,7 @@ ZEPHIR_INIT_FUNCS(beanspeak_connection_connectioninterface_method_entry) {
 	PHP_ABSTRACT_ME(Beanspeak_Connection_ConnectionInterface, getHost, NULL)
 	PHP_ABSTRACT_ME(Beanspeak_Connection_ConnectionInterface, getPort, NULL)
 	PHP_ABSTRACT_ME(Beanspeak_Connection_ConnectionInterface, getConnectTimeout, NULL)
+	PHP_ABSTRACT_ME(Beanspeak_Connection_ConnectionInterface, getWriteRetries, NULL)
 	PHP_ABSTRACT_ME(Beanspeak_Connection_ConnectionInterface, isPersistent, NULL)
 	PHP_ABSTRACT_ME(Beanspeak_Connection_ConnectionInterface, isConnected, NULL)
 	PHP_ABSTRACT_ME(Beanspeak_Connection_ConnectionInterface, write, arginfo_beanspeak_connection_connectioninterface_write)

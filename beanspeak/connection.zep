@@ -28,7 +28,6 @@ use Beanspeak\Connection\ConnectionInterface;
 class Connection implements ConnectionInterface
 {
     private socket;
-    private data = [];
 
     /**
      * Connection options
@@ -157,6 +156,14 @@ class Connection implements ConnectionInterface
     /**
      * {@inheritdoc}
      */
+    public function getWriteRetries() -> int
+    {
+        return this->options["write_retries"];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function isPersistent() -> boolean
     {
         return this->options["persistent"];
@@ -167,54 +174,29 @@ class Connection implements ConnectionInterface
      */
     public function write(string data) -> void
     {
-        var socket, substring, fwritec, retries, written;
+        var socket, part, fwritec, retries, written, step;
+
+        if !this->isConnected() {
+            this->connect();
+        }
 
         let retries = this->options["write_retries"],
-            this->data = [],
-            socket = this->socket;
-
-        socket->connect();
+            socket  = this->socket,
+            step    = 0,
+            fwritec = 0,
+            written = 0;
 
         while written < strlen(data) {
-            let substring = substr(data, written),
-                fwritec   = fwrite(socket, substring);
+            let step++;
 
-            this->logwriteCall(fwritec);
-            if this->isFullWithNoWrites() {
+            if step >= retries && !written {
                 throw new Exception(sprintf("fwrite() failed to write data after %d tries", retries));
             }
 
+            let part    = substr(data, written),
+                fwritec = fwrite(socket, part);
+
             let written += fwritec;
         }
-    }
-
-    internal function isFull() -> boolean
-    {
-        var retries;
-
-        let retries = this->options["write_retries"];
-
-        return count(this->data) >= retries;
-    }
-
-    internal function hasWrites() -> boolean
-    {
-        return (boolean) array_sum(this->data);
-    }
-
-    internal function isFullWithNoWrites() -> boolean
-    {
-        return this->isFull() && !this->hasWrites();
-    }
-
-    internal function logwriteCall(int write) -> int
-    {
-        if this->isFull() {
-            array_shift(this->data);
-        }
-
-        let this->data[] = write;
-
-        return write;
     }
 }

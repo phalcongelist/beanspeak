@@ -33,8 +33,6 @@ ZEPHIR_INIT_CLASS(Beanspeak_Connection) {
 
 	zend_declare_property_null(beanspeak_connection_ce, SL("socket"), ZEND_ACC_PRIVATE TSRMLS_CC);
 
-	zend_declare_property_null(beanspeak_connection_ce, SL("data"), ZEND_ACC_PRIVATE TSRMLS_CC);
-
 	/**
 	 * Connection options
 	 */
@@ -91,25 +89,25 @@ PHP_METHOD(Beanspeak_Connection, __construct) {
 		zephir_array_update_string(&options, SL("write_retries"), &_3$$7, PH_COPY | PH_SEPARATE);
 	}
 	ZEPHIR_OBS_VAR(_4);
-	zephir_array_fetch_string(&_4, options, SL("host"), PH_NOISY, "beanspeak/connection.zep", 63 TSRMLS_CC);
+	zephir_array_fetch_string(&_4, options, SL("host"), PH_NOISY, "beanspeak/connection.zep", 62 TSRMLS_CC);
 	zephir_get_strval(_5, _4);
 	zephir_array_update_string(&options, SL("host"), &_5, PH_COPY | PH_SEPARATE);
 	ZEPHIR_OBS_VAR(_6);
-	zephir_array_fetch_string(&_6, options, SL("port"), PH_NOISY, "beanspeak/connection.zep", 64 TSRMLS_CC);
+	zephir_array_fetch_string(&_6, options, SL("port"), PH_NOISY, "beanspeak/connection.zep", 63 TSRMLS_CC);
 	zephir_get_strval(_7, _6);
 	zephir_array_update_string(&options, SL("port"), &_7, PH_COPY | PH_SEPARATE);
 	ZEPHIR_OBS_VAR(_8);
-	zephir_array_fetch_string(&_8, options, SL("timeout"), PH_NOISY, "beanspeak/connection.zep", 65 TSRMLS_CC);
+	zephir_array_fetch_string(&_8, options, SL("timeout"), PH_NOISY, "beanspeak/connection.zep", 64 TSRMLS_CC);
 	ZEPHIR_INIT_VAR(_9);
 	ZVAL_LONG(_9, zephir_get_intval(_8));
 	zephir_array_update_string(&options, SL("timeout"), &_9, PH_COPY | PH_SEPARATE);
 	ZEPHIR_OBS_VAR(_10);
-	zephir_array_fetch_string(&_10, options, SL("write_retries"), PH_NOISY, "beanspeak/connection.zep", 66 TSRMLS_CC);
+	zephir_array_fetch_string(&_10, options, SL("write_retries"), PH_NOISY, "beanspeak/connection.zep", 65 TSRMLS_CC);
 	ZEPHIR_INIT_VAR(_11);
 	ZVAL_LONG(_11, zephir_get_intval(_10));
 	zephir_array_update_string(&options, SL("write_retries"), &_11, PH_COPY | PH_SEPARATE);
 	ZEPHIR_OBS_VAR(_12);
-	zephir_array_fetch_string(&_12, options, SL("persistent"), PH_NOISY, "beanspeak/connection.zep", 67 TSRMLS_CC);
+	zephir_array_fetch_string(&_12, options, SL("persistent"), PH_NOISY, "beanspeak/connection.zep", 66 TSRMLS_CC);
 	ZEPHIR_INIT_VAR(_13);
 	ZVAL_BOOL(_13, zephir_get_boolval(_12));
 	zephir_array_update_string(&options, SL("persistent"), &_13, PH_COPY | PH_SEPARATE);
@@ -150,16 +148,16 @@ PHP_METHOD(Beanspeak_Connection, connect) {
 	if (!(zephir_is_true(_0))) {
 		_1$$3 = zephir_fetch_nproperty_this(this_ptr, SL("options"), PH_NOISY_CC);
 		ZEPHIR_CPY_WRT(options$$3, _1$$3);
-		zephir_array_fetch_string(&_2$$3, options$$3, SL("persistent"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 96 TSRMLS_CC);
+		zephir_array_fetch_string(&_2$$3, options$$3, SL("persistent"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 95 TSRMLS_CC);
 		ZEPHIR_INIT_VAR(function$$3);
 		if (zephir_is_true(_2$$3)) {
 			ZVAL_STRING(function$$3, "pfsockopen", 1);
 		} else {
 			ZVAL_STRING(function$$3, "fsockopen", 1);
 		}
-		zephir_array_fetch_string(&_3$$3, options$$3, SL("host"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 102 TSRMLS_CC);
-		zephir_array_fetch_string(&_4$$3, options$$3, SL("port"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 102 TSRMLS_CC);
-		zephir_array_fetch_string(&_5$$3, options$$3, SL("timeout"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 102 TSRMLS_CC);
+		zephir_array_fetch_string(&_3$$3, options$$3, SL("host"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 101 TSRMLS_CC);
+		zephir_array_fetch_string(&_4$$3, options$$3, SL("port"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 101 TSRMLS_CC);
+		zephir_array_fetch_string(&_5$$3, options$$3, SL("timeout"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 101 TSRMLS_CC);
 		ZEPHIR_INIT_VAR(_6$$3);
 		ZVAL_NULL(_6$$3);
 		ZEPHIR_INIT_VAR(_7$$3);
@@ -167,7 +165,7 @@ PHP_METHOD(Beanspeak_Connection, connect) {
 		ZEPHIR_CALL_ZVAL_FUNCTION(&socket$$3, function$$3, NULL, 0, _3$$3, _4$$3, _6$$3, _7$$3, _5$$3);
 		zephir_check_call_status();
 		if (Z_TYPE_P(socket$$3) != IS_RESOURCE) {
-			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_connection_exception_ce, "Can't connect to Beanstalk server.", "beanspeak/connection.zep", 105);
+			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_connection_exception_ce, "Can't connect to Beanstalk server.", "beanspeak/connection.zep", 104);
 			return;
 		}
 		ZEPHIR_SINIT_VAR(_8$$3);
@@ -210,7 +208,7 @@ PHP_METHOD(Beanspeak_Connection, getHost) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("options"), PH_NOISY_CC);
-	zephir_array_fetch_string(&_1, _0, SL("host"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 138 TSRMLS_CC);
+	zephir_array_fetch_string(&_1, _0, SL("host"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 137 TSRMLS_CC);
 	RETURN_CTORW(_1);
 
 }
@@ -224,7 +222,7 @@ PHP_METHOD(Beanspeak_Connection, getPort) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("options"), PH_NOISY_CC);
-	zephir_array_fetch_string(&_1, _0, SL("port"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 146 TSRMLS_CC);
+	zephir_array_fetch_string(&_1, _0, SL("port"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 145 TSRMLS_CC);
 	RETURN_CTORW(_1);
 
 }
@@ -238,7 +236,21 @@ PHP_METHOD(Beanspeak_Connection, getConnectTimeout) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("options"), PH_NOISY_CC);
-	zephir_array_fetch_string(&_1, _0, SL("timeout"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 154 TSRMLS_CC);
+	zephir_array_fetch_string(&_1, _0, SL("timeout"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 153 TSRMLS_CC);
+	RETURN_CTORW(_1);
+
+}
+
+/**
+ * {@inheritdoc}
+ */
+PHP_METHOD(Beanspeak_Connection, getWriteRetries) {
+
+	zval *_0, *_1;
+
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("options"), PH_NOISY_CC);
+	zephir_array_fetch_string(&_1, _0, SL("write_retries"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 161 TSRMLS_CC);
 	RETURN_CTORW(_1);
 
 }
@@ -252,7 +264,7 @@ PHP_METHOD(Beanspeak_Connection, isPersistent) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("options"), PH_NOISY_CC);
-	zephir_array_fetch_string(&_1, _0, SL("persistent"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 162 TSRMLS_CC);
+	zephir_array_fetch_string(&_1, _0, SL("persistent"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 169 TSRMLS_CC);
 	RETURN_CTORW(_1);
 
 }
@@ -262,9 +274,10 @@ PHP_METHOD(Beanspeak_Connection, isPersistent) {
  */
 PHP_METHOD(Beanspeak_Connection, write) {
 
+	zend_bool _3$$4;
 	zephir_fcall_cache_entry *_7 = NULL, *_8 = NULL;
-	int ZEPHIR_LAST_CALL_STATUS;
-	zval *data_param = NULL, *socket = NULL, *substring = NULL, *fwritec = NULL, *retries = NULL, *written = NULL, *_0, *_1, *_2, *_3$$3 = NULL, *_4$$4 = NULL, _5$$4 = zval_used_for_init, *_6$$4 = NULL;
+	int ZEPHIR_LAST_CALL_STATUS, step = 0;
+	zval *data_param = NULL, *socket = NULL, *part = NULL, *fwritec = NULL, *retries = NULL, *written = NULL, *_0 = NULL, *_1, *_2, *_4$$5 = NULL, _5$$5 = zval_used_for_init, *_6$$5 = NULL;
 	zval *data = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -273,126 +286,57 @@ PHP_METHOD(Beanspeak_Connection, write) {
 	zephir_get_strval(data, data_param);
 
 
-	_0 = zephir_fetch_nproperty_this(this_ptr, SL("options"), PH_NOISY_CC);
+	ZEPHIR_CALL_METHOD(&_0, this_ptr, "isconnected", NULL, 0);
+	zephir_check_call_status();
+	if (!(zephir_is_true(_0))) {
+		ZEPHIR_CALL_METHOD(NULL, this_ptr, "connect", NULL, 0);
+		zephir_check_call_status();
+	}
+	_1 = zephir_fetch_nproperty_this(this_ptr, SL("options"), PH_NOISY_CC);
 	ZEPHIR_OBS_VAR(retries);
-	zephir_array_fetch_string(&retries, _0, SL("write_retries"), PH_NOISY, "beanspeak/connection.zep", 172 TSRMLS_CC);
-	ZEPHIR_INIT_VAR(_1);
-	array_init(_1);
-	zephir_update_property_this(this_ptr, SL("data"), _1 TSRMLS_CC);
+	zephir_array_fetch_string(&retries, _1, SL("write_retries"), PH_NOISY, "beanspeak/connection.zep", 183 TSRMLS_CC);
 	_2 = zephir_fetch_nproperty_this(this_ptr, SL("socket"), PH_NOISY_CC);
 	ZEPHIR_CPY_WRT(socket, _2);
-	ZEPHIR_CALL_METHOD(NULL, socket, "connect", NULL, 0);
-	zephir_check_call_status();
+	step = 0;
+	ZEPHIR_INIT_VAR(fwritec);
+	ZVAL_LONG(fwritec, 0);
+	ZEPHIR_INIT_VAR(written);
+	ZVAL_LONG(written, 0);
 	while (1) {
 		if (!(ZEPHIR_LT_LONG(written, zephir_fast_strlen_ev(data)))) {
 			break;
 		}
-		ZEPHIR_INIT_NVAR(substring);
-		zephir_substr(substring, data, zephir_get_intval(written), 0, ZEPHIR_SUBSTR_NO_LENGTH);
-		ZEPHIR_INIT_NVAR(fwritec);
-		zephir_fwrite(fwritec, socket, substring TSRMLS_CC);
-		ZEPHIR_CALL_INTERNAL_METHOD_NORETURN_P1(this_ptr, zep_Beanspeak_Connection_logwriteCall, fwritec);
-		zephir_check_call_status();
-		ZEPHIR_CALL_INTERNAL_METHOD_P0(&_3$$3, this_ptr, zep_Beanspeak_Connection_isFullWithNoWrites);
-		zephir_check_call_status();
-		if (zephir_is_true(_3$$3)) {
-			ZEPHIR_INIT_NVAR(_4$$4);
-			object_init_ex(_4$$4, beanspeak_connection_exception_ce);
-			ZEPHIR_SINIT_NVAR(_5$$4);
-			ZVAL_STRING(&_5$$4, "fwrite() failed to write data after %d tries", 0);
-			ZEPHIR_CALL_FUNCTION(&_6$$4, "sprintf", &_7, 3, &_5$$4, retries);
+		step++;
+		_3$$4 = ZEPHIR_LE_LONG(retries, step);
+		if (_3$$4) {
+			_3$$4 = !zephir_is_true(written);
+		}
+		if (_3$$4) {
+			ZEPHIR_INIT_NVAR(_4$$5);
+			object_init_ex(_4$$5, beanspeak_connection_exception_ce);
+			ZEPHIR_SINIT_NVAR(_5$$5);
+			ZVAL_STRING(&_5$$5, "fwrite() failed to write data after %d tries", 0);
+			ZEPHIR_CALL_FUNCTION(&_6$$5, "sprintf", &_7, 3, &_5$$5, retries);
 			zephir_check_call_status();
-			ZEPHIR_CALL_METHOD(NULL, _4$$4, "__construct", &_8, 4, _6$$4);
+			ZEPHIR_CALL_METHOD(NULL, _4$$5, "__construct", &_8, 4, _6$$5);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_4$$4, "beanspeak/connection.zep", 184 TSRMLS_CC);
+			zephir_throw_exception_debug(_4$$5, "beanspeak/connection.zep", 193 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
+		ZEPHIR_INIT_NVAR(part);
+		zephir_substr(part, data, zephir_get_intval(written), 0, ZEPHIR_SUBSTR_NO_LENGTH);
+		ZEPHIR_INIT_NVAR(fwritec);
+		zephir_fwrite(fwritec, socket, part TSRMLS_CC);
 		ZEPHIR_ADD_ASSIGN(written, fwritec);
 	}
 	ZEPHIR_MM_RESTORE();
 
 }
 
-void zep_Beanspeak_Connection_isFull(int ht, zval *return_value, zval **return_value_ptr, zval *this_ptr, int return_value_used TSRMLS_DC) {
-
-	zval *retries = NULL, *_0, *_1;
-
-	ZEPHIR_MM_GROW();
-
-	_0 = zephir_fetch_nproperty_this(this_ptr, SL("options"), PH_NOISY_CC);
-	ZEPHIR_OBS_VAR(retries);
-	zephir_array_fetch_string(&retries, _0, SL("write_retries"), PH_NOISY, "beanspeak/connection.zep", 195 TSRMLS_CC);
-	_1 = zephir_fetch_nproperty_this(this_ptr, SL("data"), PH_NOISY_CC);
-	RETURN_MM_BOOL(ZEPHIR_LE_LONG(retries, zephir_fast_count_int(_1 TSRMLS_CC)));
-
-}
-
-void zep_Beanspeak_Connection_hasWrites(int ht, zval *return_value, zval **return_value_ptr, zval *this_ptr, int return_value_used TSRMLS_DC) {
-
-	zval *_0, *_1 = NULL;
-	int ZEPHIR_LAST_CALL_STATUS;
-
-	ZEPHIR_MM_GROW();
-
-	_0 = zephir_fetch_nproperty_this(this_ptr, SL("data"), PH_NOISY_CC);
-	ZEPHIR_CALL_FUNCTION(&_1, "array_sum", NULL, 5, _0);
-	zephir_check_call_status();
-	RETURN_MM_BOOL(zephir_get_boolval(_1));
-
-}
-
-void zep_Beanspeak_Connection_isFullWithNoWrites(int ht, zval *return_value, zval **return_value_ptr, zval *this_ptr, int return_value_used TSRMLS_DC) {
-
-	zend_bool _1;
-	zval *_0 = NULL, *_2 = NULL;
-	int ZEPHIR_LAST_CALL_STATUS;
-
-	ZEPHIR_MM_GROW();
-
-	ZEPHIR_CALL_INTERNAL_METHOD_P0(&_0, this_ptr, zep_Beanspeak_Connection_isFull);
-	zephir_check_call_status();
-	_1 = zephir_is_true(_0);
-	if (_1) {
-		ZEPHIR_CALL_INTERNAL_METHOD_P0(&_2, this_ptr, zep_Beanspeak_Connection_hasWrites);
-		zephir_check_call_status();
-		_1 = !zephir_is_true(_2);
-	}
-	RETURN_MM_BOOL(_1);
-
-}
-
-void zep_Beanspeak_Connection_logwriteCall(int ht, zval *return_value, zval **return_value_ptr, zval *this_ptr, int return_value_used, zval *write_param_ext TSRMLS_DC) {
-
-	zval *write_param = NULL, *_0 = NULL, *_2, *_1$$3;
-	int write, ZEPHIR_LAST_CALL_STATUS;
-
-	ZEPHIR_MM_GROW();
-	write_param = write_param_ext;
-
-
-	write = zephir_get_intval(write_param);
-
-
-	ZEPHIR_CALL_INTERNAL_METHOD_P0(&_0, this_ptr, zep_Beanspeak_Connection_isFull);
-	zephir_check_call_status();
-	if (zephir_is_true(_0)) {
-		_1$$3 = zephir_fetch_nproperty_this(this_ptr, SL("data"), PH_NOISY_CC);
-		ZEPHIR_MAKE_REF(_1$$3);
-		ZEPHIR_CALL_FUNCTION(NULL, "array_shift", NULL, 6, _1$$3);
-		ZEPHIR_UNREF(_1$$3);
-		zephir_check_call_status();
-	}
-	ZEPHIR_INIT_ZVAL_NREF(_2);
-	ZVAL_LONG(_2, write);
-	zephir_update_property_array_append(this_ptr, SL("data"), _2 TSRMLS_CC);
-	RETURN_MM_LONG(write);
-
-}
-
 static zend_object_value zephir_init_properties_Beanspeak_Connection(zend_class_entry *class_type TSRMLS_DC) {
 
-		zval *_0, *_2, *_1$$3, *_3$$4;
+		zval *_0, *_1$$3;
 
 		ZEPHIR_MM_GROW();
 	
@@ -404,12 +348,6 @@ static zend_object_value zephir_init_properties_Beanspeak_Connection(zend_class_
 			ZEPHIR_INIT_VAR(_1$$3);
 			array_init(_1$$3);
 			zephir_update_property_this(this_ptr, SL("options"), _1$$3 TSRMLS_CC);
-		}
-		_2 = zephir_fetch_nproperty_this(this_ptr, SL("data"), PH_NOISY_CC);
-		if (Z_TYPE_P(_2) == IS_NULL) {
-			ZEPHIR_INIT_VAR(_3$$4);
-			array_init(_3$$4);
-			zephir_update_property_this(this_ptr, SL("data"), _3$$4 TSRMLS_CC);
 		}
 		ZEPHIR_MM_RESTORE();
 		return Z_OBJVAL_P(this_ptr);

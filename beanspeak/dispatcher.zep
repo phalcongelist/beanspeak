@@ -107,10 +107,11 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
 
         let oldc = this->connection;
         let newc = new Connection([
-            "host" : oldc->getHost(),
-            "port" : oldc->getPort(),
-            "timeout" : oldc->getConnectTimeout(),
-            "persistent" : oldc->isPersistent()
+            "host"          : oldc->getHost(),
+            "port"          : oldc->getPort(),
+            "timeout"       : oldc->getConnectTimeout(),
+            "persistent"    : oldc->isPersistent(),
+            "write_retries" : oldc->getWriteRetries()
         ]);
 
         let this->connection = newc;

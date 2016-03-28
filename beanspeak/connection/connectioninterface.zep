@@ -48,6 +48,11 @@ interface ConnectionInterface
     public function getConnectTimeout() -> int;
 
     /**
+     * Returns the write retries for this connection.
+     */
+    public function getWriteRetries() -> int;
+
+    /**
      * Whether the connection is persistent or not.
      */
     public function isPersistent() -> boolean;
@@ -58,7 +63,7 @@ interface ConnectionInterface
     public function isConnected() -> boolean;
 
     /**
-     * Writes data to the socket.
+     * Writes data to the socket. Performs a connection if none is available.
      */
     public function write(string data) -> void;
 }
