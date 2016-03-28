@@ -176,9 +176,8 @@ class Connection implements ConnectionInterface
     {
         var socket, part, fwritec, retries, written, step;
 
-        if !this->isConnected() {
-            this->connect();
-        }
+        // Performs a connection if none is available
+        this->connect();
 
         let retries = this->options["write_retries"],
             socket  = this->socket,

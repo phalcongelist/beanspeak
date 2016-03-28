@@ -63,7 +63,7 @@ interface ConnectionInterface
     public function isConnected() -> boolean;
 
     /**
-     * Writes data to the socket. Performs a connection if none is available.
+     * Writes data to the socket.
      */
     public function write(string data) -> void;
 }

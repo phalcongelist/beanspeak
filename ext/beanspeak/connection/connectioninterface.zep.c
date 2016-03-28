@@ -64,7 +64,7 @@ ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, isPersistent);
 ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, isConnected);
 
 /**
- * Writes data to the socket. Performs a connection if none is available.
+ * Writes data to the socket.
  */
 ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, write);
 
