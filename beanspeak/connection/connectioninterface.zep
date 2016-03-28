@@ -70,5 +70,10 @@ interface ConnectionInterface
     /**
      * Reads a packet from the socket.
      */
-    public function read(int length = 0) -> string;
+    public function read(int length = null) -> string;
+
+    /**
+     * Reads up to the next new-line, or length - 1 bytes.
+     */
+    public function getLine(int length = null) -> string;
 }

@@ -73,3 +73,8 @@ ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, write);
  */
 ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, read);
 
+/**
+ * Reads up to the next new-line, or length - 1 bytes.
+ */
+ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, getLine);
+

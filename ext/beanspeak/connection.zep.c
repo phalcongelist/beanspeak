@@ -382,6 +382,59 @@ PHP_METHOD(Beanspeak_Connection, read) {
 
 }
 
+/**
+ * {@inheritdoc}
+ * Trailing whitespace is trimmed.
+ *
+ * @throws \Beanspeak\Connection\Exception
+ */
+PHP_METHOD(Beanspeak_Connection, getLine) {
+
+	zephir_fcall_cache_entry *_2 = NULL, *_3 = NULL;
+	zval *length_param = NULL, *socket = NULL, *data = NULL, *meta = NULL, *_0, _1$$5 = zval_used_for_init, *_4$$3;
+	int length, ZEPHIR_LAST_CALL_STATUS;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 0, 1, &length_param);
+
+	if (!length_param) {
+		length = 0;
+	} else {
+		length = zephir_get_intval(length_param);
+	}
+
+
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "connect", NULL, 0);
+	zephir_check_call_status();
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("socket"), PH_NOISY_CC);
+	ZEPHIR_CPY_WRT(socket, _0);
+	do {
+		if (zephir_feof(socket TSRMLS_CC)) {
+			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_connection_exception_ce, "Failed to get line from socket (EOF)", "beanspeak/connection.zep", 259);
+			return;
+		}
+		if (length) {
+			ZEPHIR_SINIT_NVAR(_1$$5);
+			ZVAL_LONG(&_1$$5, length);
+			ZEPHIR_CALL_FUNCTION(&data, "fgets", &_2, 7, socket, &_1$$5);
+			zephir_check_call_status();
+		} else {
+			ZEPHIR_CALL_FUNCTION(&data, "fgets", &_2, 7, socket);
+			zephir_check_call_status();
+		}
+		ZEPHIR_CALL_FUNCTION(&meta, "stream_get_meta_data", &_3, 6, socket);
+		zephir_check_call_status();
+		zephir_array_fetch_string(&_4$$3, meta, SL("timed_out"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 270 TSRMLS_CC);
+		if (zephir_is_true(_4$$3)) {
+			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_connection_exception_ce, "Connection timed out upon attempt to get line from socket", "beanspeak/connection.zep", 271);
+			return;
+		}
+	} while (ZEPHIR_IS_FALSE_IDENTICAL(data));
+	zephir_fast_trim(return_value, data, NULL , ZEPHIR_TRIM_RIGHT TSRMLS_CC);
+	RETURN_MM();
+
+}
+
 static zend_object_value zephir_init_properties_Beanspeak_Connection(zend_class_entry *class_type TSRMLS_DC) {
 
 		zval *_0, *_1$$3;

@@ -208,7 +208,7 @@ class Connection implements ConnectionInterface
      *
      * @throws \Beanspeak\Connection\Exception
      */
-    public function read(int length = 0) -> string
+    public function read(int length = null) -> string
     {
         var socket, data, meta;
 
@@ -237,5 +237,41 @@ class Connection implements ConnectionInterface
         }
 
         return data;
+    }
+
+    /**
+     * {@inheritdoc}
+     * Trailing whitespace is trimmed.
+     *
+     * @throws \Beanspeak\Connection\Exception
+     */
+    public function getLine(int length = null) -> string
+    {
+        var socket, data, meta;
+
+        // Performs a connection if none is available
+        this->connect();
+
+        let socket = this->socket;
+
+        do {
+            if feof(socket) {
+                throw new Exception("Failed to get line from socket (EOF)");
+            }
+
+            if length {
+                let data = fgets(socket, length);
+            } else {
+                let data = fgets(socket);
+            }
+
+            let meta = stream_get_meta_data(socket);
+
+            if meta["timed_out"] {
+                throw new Exception("Connection timed out upon attempt to get line from socket");
+            }
+        } while (false === data);
+
+        return rtrim(data);
     }
 }
