@@ -45,7 +45,7 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
     const EXCEPTION_TIMED_OUT       = 10;
     const EXCEPTION_UNKNOWN_COMMAND = 11;
 
-    const EXCEPTION_INTERNAL        = 255;
+    const EXCEPTION_NO_CRLF         = 255;
 
     /**
      * @var ConnectionInterface
@@ -168,7 +168,7 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
             if "\r\n" !== crlf {
                 throw new Exception(
                     sprintf("Expected 2 bytes of CRLF after %u bytes of data", dataLength, command),
-                    self::EXCEPTION_INTERNAL
+                    self::EXCEPTION_NO_CRLF
                 );
             }
         }

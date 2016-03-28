@@ -60,7 +60,7 @@ ZEPHIR_INIT_CLASS(Beanspeak_Dispatcher) {
 
 	zend_declare_class_constant_long(beanspeak_dispatcher_ce, SL("EXCEPTION_UNKNOWN_COMMAND"), 11 TSRMLS_CC);
 
-	zend_declare_class_constant_long(beanspeak_dispatcher_ce, SL("EXCEPTION_INTERNAL"), 255 TSRMLS_CC);
+	zend_declare_class_constant_long(beanspeak_dispatcher_ce, SL("EXCEPTION_NO_CRLF"), 255 TSRMLS_CC);
 
 	zend_class_implements(beanspeak_dispatcher_ce TSRMLS_CC, 1, beanspeak_dispatcher_dispatcherinterface_ce);
 	zend_class_implements(beanspeak_dispatcher_ce TSRMLS_CC, 1, beanspeak_connection_connectionawareinterface_ce);
