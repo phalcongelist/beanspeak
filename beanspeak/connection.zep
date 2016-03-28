@@ -73,11 +73,7 @@ class Connection implements ConnectionInterface
      */
     public function isConnected() -> boolean
     {
-        var socket;
-
-        let socket = this->socket;
-
-        return typeof socket == "resource";
+        return typeof this->socket == "resource";
     }
 
     /**
