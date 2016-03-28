@@ -1,6 +1,6 @@
 # Beanspeak
 
-PHP extension for beanstalkd queue
+Client for Beanstalk delivered as a C-extension for PHP
 
 *WIP*
 

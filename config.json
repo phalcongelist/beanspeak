@@ -1,4 +1,13 @@
 {
+    "namespace": "beanspeak",
+    "name": "beanspeak",
+    "description": "Client for Beanstalk delivered as a C-extension for PHP",
+    "author": "Phalcon Team and contributors",
+    "version": "1.0.0",
+    "verbose": false,
+    "requires": {
+        "extensions": []
+    },
     "stubs": {
         "path": "ide\/%version%\/%namespace%\/",
         "stubs-run-after-generate": false
@@ -51,14 +60,5 @@
         "call-gatherer-pass": true,
         "check-invalid-reads": false,
         "internal-call-transformation": false
-    },
-    "namespace": "beanspeak",
-    "name": "beanspeak",
-    "description": "PHP extension for beanstalkd queue",
-    "author": "Serghei Iakovlev",
-    "version": "0.0.1",
-    "verbose": false,
-    "requires": {
-        "extensions": []
     }
 }
