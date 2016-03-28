@@ -171,6 +171,8 @@ class Connection implements ConnectionInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Beanspeak\Connection\Exception
      */
     public function write(string data) -> int
     {
@@ -189,7 +191,7 @@ class Connection implements ConnectionInterface
             let step++;
 
             if step >= retries && !written {
-                throw new Exception(sprintf("fwrite() failed to write data after %d tries", retries));
+                throw new Exception(sprintf("Failed to write data to socket after %d tries", retries));
             }
 
             let part    = substr(data, written),
@@ -199,5 +201,41 @@ class Connection implements ConnectionInterface
         }
 
         return written;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \Beanspeak\Connection\Exception
+     */
+    public function read(int length = 0) -> string
+    {
+        var socket, data, meta;
+
+        // Performs a connection if none is available
+        this->connect();
+
+        let socket = this->socket;
+
+        if !length {
+            let length = 16384;
+        }
+
+        if feof(socket) {
+            throw new Exception("Failed to read data from socket (EOF)");
+        }
+
+        let data = stream_get_line(socket, length),
+            meta = stream_get_meta_data(socket);
+
+        if meta["timed_out"] {
+            throw new Exception("Connection timed out upon attempt to read data from socket");
+        }
+
+        if (false === data) {
+            throw new Exception("Failed to read data from socket");
+        }
+
+        return data;
     }
 }

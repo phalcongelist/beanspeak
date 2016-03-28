@@ -68,3 +68,8 @@ ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, isConnected);
  */
 ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, write);
 
+/**
+ * Reads a packet from the socket.
+ */
+ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, read);
+

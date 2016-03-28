@@ -66,4 +66,9 @@ interface ConnectionInterface
      * Writes data to the socket.
      */
     public function write(string data) -> int;
+
+    /**
+     * Reads a packet from the socket.
+     */
+    public function read(int length = 0) -> string;
 }
