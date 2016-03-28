@@ -326,7 +326,7 @@ PHP_METHOD(Beanspeak_Connection, write) {
 		zephir_fwrite(fwritec, socket, part TSRMLS_CC);
 		ZEPHIR_ADD_ASSIGN(written, fwritec);
 	}
-	ZEPHIR_MM_RESTORE();
+	RETURN_CCTOR(written);
 
 }
 

@@ -172,7 +172,7 @@ class Connection implements ConnectionInterface
     /**
      * {@inheritdoc}
      */
-    public function write(string data) -> void
+    public function write(string data) -> int
     {
         var socket, part, fwritec, retries, written, step;
 
@@ -197,5 +197,7 @@ class Connection implements ConnectionInterface
 
             let written += fwritec;
         }
+
+        return written;
     }
 }

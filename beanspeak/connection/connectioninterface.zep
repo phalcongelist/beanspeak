@@ -65,5 +65,5 @@ interface ConnectionInterface
     /**
      * Writes data to the socket.
      */
-    public function write(string data) -> void;
+    public function write(string data) -> int;
 }
