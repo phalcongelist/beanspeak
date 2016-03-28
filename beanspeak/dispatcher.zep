@@ -34,7 +34,7 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
     protected connection;
 
     /**
-     * Beanspeak\Dispatcher constructor
+     * Beanspeak\Dispatcher constructor.
      */
     public function __construct(<ConnectionInterface> connection = null)
     {
@@ -67,7 +67,6 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
      * If a Beanspeak\Connection\Exception occurs, the connection is reset,
      * and the command is re-attempted once.
      *
-     * @todo
      * @throws \Beanspeak\Dispatcher\Exception
      */
     public function dispatch(<CommandInterface> command) -> <ResponseInterface>
@@ -77,7 +76,7 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
         try {
             let response = this->_dispatch(command);
         } catch ConnectionException, e {
-            this->reconnect();
+            this->_reconnect();
             let response = this->_dispatch(command);
         } catch \Exception, e {
             throw new DispatcherException(e->getMessge(), e->getCode(), e);
@@ -100,9 +99,9 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
     }
 
     /**
-     * Creates a new connection object, based on the existing connection object
+     * Creates a new connection object, based on the existing connection object.
      */
-    private function reconnect()
+    internal function _reconnect() -> void
     {
         var newc, oldc;
 
@@ -113,8 +112,6 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
             "timeout" : oldc->getConnectTimeout(),
             "persistent" : oldc->isPersistent()
         ]);
-
-        newc->connect();
 
         let this->connection = newc;
     }
