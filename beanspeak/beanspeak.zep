@@ -17,6 +17,7 @@
 
 namespace Beanspeak;
 
+use Beanspeak\Command\Put;
 use Beanspeak\Dispatcher\DispatcherInterface;
 use Beanspeak\Dispatcher\DispatcherAwareInterface;
 
@@ -59,5 +60,35 @@ class Beanspeak implements DispatcherAwareInterface
     public function getDispatcher() -> <DispatcherInterface>
     {
         return this->dispatcher;
+    }
+
+    public function put(var data, array options = null)
+    {
+        var priority, delay, ttr, serialized, dispatcher, response;
+
+        /**
+         * Priority is 100 by default
+         */
+        if !fetch priority, options["priority"] {
+            let priority = 100;
+        }
+
+        if !fetch delay, options["delay"] {
+            let delay = 0;
+        }
+
+        if !fetch ttr, options["ttr"] {
+            let ttr = 86400;
+        }
+
+        /**
+         * Data is automatically serialized before be sent to the server
+         */
+        let serialized = serialize(data),
+            dispatcher = this->dispatcher;
+
+        let response = dispatcher->dispatch(new Put(serialized, priority, delay, ttr));
+
+        return response;
     }
 }

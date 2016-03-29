@@ -30,7 +30,7 @@ abstract class Command implements CommandInterface
     /**
      * {@inheritdoc}
      */
-    public function getCommandName() -> string
+    public function getName() -> string
     {
         return strtoupper(array_pop(explode("\\", get_called_class())));
     }

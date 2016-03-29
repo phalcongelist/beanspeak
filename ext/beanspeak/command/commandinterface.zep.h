@@ -9,7 +9,7 @@ ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(beanspeak_command_commandinterface_method_entry) {
 	PHP_ABSTRACT_ME(Beanspeak_Command_CommandInterface, execute, arginfo_beanspeak_command_commandinterface_execute)
-	PHP_ABSTRACT_ME(Beanspeak_Command_CommandInterface, getCommandName, NULL)
+	PHP_ABSTRACT_ME(Beanspeak_Command_CommandInterface, getName, NULL)
 	PHP_ABSTRACT_ME(Beanspeak_Command_CommandInterface, getCommandLine, NULL)
 	PHP_ABSTRACT_ME(Beanspeak_Command_CommandInterface, hasData, NULL)
 	PHP_ABSTRACT_ME(Beanspeak_Command_CommandInterface, getData, NULL)

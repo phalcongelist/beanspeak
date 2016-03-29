@@ -83,7 +83,7 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
             this->_reconnect();
             let response = this->_dispatch(command);
         } catch \Exception, e {
-            throw new DispatcherException(e->getMessge(), e->getCode(), e);
+            throw new DispatcherException(e->getMessage(), e->getCode(), e);
         }
 
         return response;

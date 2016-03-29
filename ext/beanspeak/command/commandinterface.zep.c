@@ -31,7 +31,7 @@ ZEPHIR_DOC_METHOD(Beanspeak_Command_CommandInterface, execute);
 /**
  * Returns name of current command.
  */
-ZEPHIR_DOC_METHOD(Beanspeak_Command_CommandInterface, getCommandName);
+ZEPHIR_DOC_METHOD(Beanspeak_Command_CommandInterface, getName);
 
 /**
  * The command line, without trailing CRLF.

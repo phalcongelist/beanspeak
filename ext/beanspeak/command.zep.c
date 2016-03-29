@@ -36,7 +36,7 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command) {
 /**
  * {@inheritdoc}
  */
-PHP_METHOD(Beanspeak_Command, getCommandName) {
+PHP_METHOD(Beanspeak_Command, getName) {
 
 	zval *_0, *_1, *_2 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;

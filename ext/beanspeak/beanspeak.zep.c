@@ -16,6 +16,7 @@
 #include "kernel/operators.h"
 #include "kernel/fcall.h"
 #include "kernel/object.h"
+#include "kernel/array.h"
 
 
 /**
@@ -95,6 +96,52 @@ PHP_METHOD(Beanspeak_Beanspeak, getDispatcher) {
 	
 
 	RETURN_MEMBER(this_ptr, "dispatcher");
+
+}
+
+PHP_METHOD(Beanspeak_Beanspeak, put) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *options = NULL;
+	zval *data, *options_param = NULL, *priority = NULL, *delay = NULL, *ttr = NULL, *serialized = NULL, *dispatcher = NULL, *response = NULL, *_0, *_1;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 1, &data, &options_param);
+
+	if (!options_param) {
+		ZEPHIR_INIT_VAR(options);
+		array_init(options);
+	} else {
+		zephir_get_arrval(options, options_param);
+	}
+
+
+	ZEPHIR_OBS_VAR(priority);
+	if (!(zephir_array_isset_string_fetch(&priority, options, SS("priority"), 0 TSRMLS_CC))) {
+		ZEPHIR_INIT_NVAR(priority);
+		ZVAL_LONG(priority, 100);
+	}
+	ZEPHIR_OBS_VAR(delay);
+	if (!(zephir_array_isset_string_fetch(&delay, options, SS("delay"), 0 TSRMLS_CC))) {
+		ZEPHIR_INIT_NVAR(delay);
+		ZVAL_LONG(delay, 0);
+	}
+	ZEPHIR_OBS_VAR(ttr);
+	if (!(zephir_array_isset_string_fetch(&ttr, options, SS("ttr"), 0 TSRMLS_CC))) {
+		ZEPHIR_INIT_NVAR(ttr);
+		ZVAL_LONG(ttr, 86400);
+	}
+	ZEPHIR_CALL_FUNCTION(&serialized, "serialize", NULL, 4, data);
+	zephir_check_call_status();
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
+	ZEPHIR_CPY_WRT(dispatcher, _0);
+	ZEPHIR_INIT_VAR(_1);
+	object_init_ex(_1, beanspeak_command_put_ce);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 5, serialized, priority, delay, ttr);
+	zephir_check_call_status();
+	ZEPHIR_CALL_METHOD(&response, dispatcher, "dispatch", NULL, 0, _1);
+	zephir_check_call_status();
+	RETURN_CCTOR(response);
 
 }
 

@@ -33,7 +33,7 @@ interface CommandInterface
     /**
      * Returns name of current command.
      */
-    public function getCommandName() -> string;
+    public function getName() -> string;
 
     /**
      * The command line, without trailing CRLF.
