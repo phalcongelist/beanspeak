@@ -103,6 +103,7 @@ class Response implements ResponseInterface
             let this->dataResponses = dataResponses;
         }
 
+        let data = null;
         if isset dataResponses[message] {
             let dataLength = preg_replace("#^.*\b(\d+)$#", "$1", content),
                 data       = connection->read(dataLength),
