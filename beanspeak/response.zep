@@ -20,6 +20,7 @@ namespace Beanspeak;
 use Beanspeak\Response\Exception;
 use Beanspeak\Command\CommandInterface;
 use Beanspeak\Response\ResponseInterface;
+use Beanspeak\Connection\ConnectionInterface;
 
 /**
  * Beanspeak\Response
@@ -55,7 +56,7 @@ class Response implements ResponseInterface
      *
      * @param string content
      */
-    public function __construct(<CommandInterface> command, resource connection)
+    public function __construct(<CommandInterface> command, <ConnectionInterface> connection)
     {
         let this->command     = command,
             this->connection  = connection,

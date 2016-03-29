@@ -18,12 +18,19 @@
 namespace Beanspeak\Command;
 
 use Beanspeak\Parser\ParserInterface;
+use Beanspeak\Response\ResponseInterface;
+use Beanspeak\Connection\ConnectionInterface;
 
 /**
  * Beanspeak\Command\CommandInterface
  */
 interface CommandInterface
 {
+    /**
+     * Execute current command;
+     */
+    public function execute(<ConnectionInterface> connection) -> <ResponseInterface>;
+
     /**
      * Returns name of current command.
      */

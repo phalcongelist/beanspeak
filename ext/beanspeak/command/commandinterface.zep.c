@@ -24,6 +24,11 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command_CommandInterface) {
 }
 
 /**
+ * Execute current command;
+ */
+ZEPHIR_DOC_METHOD(Beanspeak_Command_CommandInterface, execute);
+
+/**
  * Returns name of current command.
  */
 ZEPHIR_DOC_METHOD(Beanspeak_Command_CommandInterface, getCommandName);

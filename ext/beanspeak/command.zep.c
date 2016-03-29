@@ -16,6 +16,8 @@
 #include "kernel/memory.h"
 #include "kernel/object.h"
 #include "kernel/fcall.h"
+#include "kernel/concat.h"
+#include "kernel/operators.h"
 
 
 /**
@@ -49,6 +51,41 @@ PHP_METHOD(Beanspeak_Command, getCommandName) {
 	ZEPHIR_UNREF(_0);
 	zephir_check_call_status();
 	zephir_fast_strtoupper(return_value, _2);
+	RETURN_MM();
+
+}
+
+/**
+ * {@inheritdoc}
+ */
+PHP_METHOD(Beanspeak_Command, execute) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *connection, *preparedcmd = NULL, *_0 = NULL, *_1 = NULL, *_2$$3 = NULL, *_3$$3;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &connection);
+
+
+
+	ZEPHIR_CALL_METHOD(&_0, this_ptr, "getcommandline", NULL, 0);
+	zephir_check_call_status();
+	ZEPHIR_INIT_VAR(preparedcmd);
+	ZEPHIR_CONCAT_VS(preparedcmd, _0, "\r\n");
+	ZEPHIR_CALL_METHOD(&_1, this_ptr, "hasdata", NULL, 0);
+	zephir_check_call_status();
+	if (zephir_is_true(_1)) {
+		ZEPHIR_CALL_METHOD(&_2$$3, this_ptr, "getdata", NULL, 0);
+		zephir_check_call_status();
+		ZEPHIR_INIT_VAR(_3$$3);
+		ZEPHIR_CONCAT_VS(_3$$3, _2$$3, "\r\n");
+		zephir_concat_self(&preparedcmd, _3$$3 TSRMLS_CC);
+	}
+	ZEPHIR_CALL_METHOD(NULL, connection, "write", NULL, 0, preparedcmd);
+	zephir_check_call_status();
+	object_init_ex(return_value, beanspeak_response_ce);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 3, this_ptr, connection);
+	zephir_check_call_status();
 	RETURN_MM();
 
 }

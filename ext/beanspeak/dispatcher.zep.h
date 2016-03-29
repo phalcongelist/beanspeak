@@ -9,7 +9,6 @@ PHP_METHOD(Beanspeak_Dispatcher, setConnection);
 PHP_METHOD(Beanspeak_Dispatcher, dispatch);
 void zep_Beanspeak_Dispatcher__dispatch(int ht, zval *return_value, zval **return_value_ptr, zval *this_ptr, int return_value_used, zval *command_ext TSRMLS_DC);
 void zep_Beanspeak_Dispatcher__reconnect(int ht, zval *return_value, zval **return_value_ptr, zval *this_ptr, int return_value_used TSRMLS_DC);
-static zend_object_value zephir_init_properties_Beanspeak_Dispatcher(zend_class_entry *class_type TSRMLS_DC);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_dispatcher___construct, 0, 0, 0)
 	ZEND_ARG_OBJ_INFO(0, connection, Beanspeak\\Connection\\ConnectionInterface, 1)

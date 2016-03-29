@@ -18,6 +18,8 @@
 namespace Beanspeak;
 
 use Beanspeak\Command\CommandInterface;
+use Beanspeak\Response\ResponseInterface;
+use Beanspeak\Connection\ConnectionInterface;
 
 /**
  * Beanspeak\Command
@@ -30,6 +32,24 @@ abstract class Command implements CommandInterface
     public function getCommandName() -> string
     {
         return strtoupper(array_pop(explode("\\", get_called_class())));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(<ConnectionInterface> connection) -> <ResponseInterface>
+    {
+        var preparedcmd;
+
+        let preparedcmd = this->getCommandLine() . "\r\n";
+
+        if this->hasData() {
+            let preparedcmd .= this->getData() . "\r\n";
+        }
+
+        connection->write(preparedcmd);
+
+        return new Response(this, connection);
     }
 
     /**

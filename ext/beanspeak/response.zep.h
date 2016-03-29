@@ -12,7 +12,7 @@ static zend_object_value zephir_init_properties_Beanspeak_Response(zend_class_en
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_response___construct, 0, 0, 2)
 	ZEND_ARG_OBJ_INFO(0, command, Beanspeak\\Command\\CommandInterface, 0)
-	ZEND_ARG_INFO(0, connection)
+	ZEND_ARG_OBJ_INFO(0, connection, Beanspeak\\Connection\\ConnectionInterface, 0)
 ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(beanspeak_response_method_entry) {
