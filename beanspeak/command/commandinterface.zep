@@ -25,6 +25,11 @@ use Beanspeak\Parser\ParserInterface;
 interface CommandInterface
 {
     /**
+     * Returns name of current command.
+     */
+    public function getCommandName() -> string;
+
+    /**
      * The command line, without trailing CRLF.
      */
     public function getCommandLine() -> string;
@@ -48,4 +53,9 @@ interface CommandInterface
      * The response parser for the command.
      */
     public function getResponseParser() -> <ParserInterface>;
+
+    /**
+     * The string representation of the object.
+     */
+    public function __toString() -> string;
 }

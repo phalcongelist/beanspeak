@@ -90,7 +90,7 @@ PHP_METHOD(Beanspeak_Dispatcher, __construct) {
 	if (!(zephir_is_true(connection))) {
 		ZEPHIR_INIT_NVAR(_0);
 		object_init_ex(_0, beanspeak_connection_ce);
-		ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 8);
+		ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 9);
 		zephir_check_call_status();
 	} else {
 		ZEPHIR_CPY_WRT(_0, connection);
@@ -172,7 +172,7 @@ PHP_METHOD(Beanspeak_Dispatcher, dispatch) {
 			zephir_check_call_status();
 			ZEPHIR_CALL_METHOD(&_2$$5, e, "getcode", NULL, 0);
 			zephir_check_call_status();
-			ZEPHIR_CALL_METHOD(NULL, _0$$5, "__construct", NULL, 4, _1$$5, _2$$5, e);
+			ZEPHIR_CALL_METHOD(NULL, _0$$5, "__construct", NULL, 5, _1$$5, _2$$5, e);
 			zephir_check_call_status();
 			zephir_throw_exception_debug(_0$$5, "beanspeak/dispatcher.zep", 103 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
@@ -220,7 +220,7 @@ void zep_Beanspeak_Dispatcher__dispatch(int ht, zval *return_value, zval **retur
 	ZVAL_STRING(_5, "#^(\\S+).*$#s", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_VAR(_6);
 	ZVAL_STRING(_6, "$1", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_FUNCTION(&responseMsg, "preg_replace", &_7, 9, _5, _6, responseLine);
+	ZEPHIR_CALL_FUNCTION(&responseMsg, "preg_replace", &_7, 10, _5, _6, responseLine);
 	zephir_check_temp_parameter(_5);
 	zephir_check_temp_parameter(_6);
 	zephir_check_call_status();
@@ -248,10 +248,10 @@ void zep_Beanspeak_Dispatcher__dispatch(int ht, zval *return_value, zval **retur
 		object_init_ex(_8$$5, beanspeak_exception_ce);
 		ZEPHIR_SINIT_VAR(_9$$5);
 		ZVAL_STRING(&_9$$5, "%s in response to '%s'", 0);
-		ZEPHIR_CALL_FUNCTION(&_10$$5, "sprintf", &_11, 3, &_9$$5, responseMsg, command);
+		ZEPHIR_CALL_FUNCTION(&_10$$5, "sprintf", &_11, 4, &_9$$5, responseMsg, command);
 		zephir_check_call_status();
 		zephir_array_fetch(&_12$$5, statusMessages, responseMsg, PH_NOISY | PH_READONLY, "beanspeak/dispatcher.zep", 152 TSRMLS_CC);
-		ZEPHIR_CALL_METHOD(NULL, _8$$5, "__construct", NULL, 4, _10$$5, _12$$5);
+		ZEPHIR_CALL_METHOD(NULL, _8$$5, "__construct", NULL, 5, _10$$5, _12$$5);
 		zephir_check_call_status();
 		zephir_throw_exception_debug(_8$$5, "beanspeak/dispatcher.zep", 152 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
@@ -269,7 +269,7 @@ void zep_Beanspeak_Dispatcher__dispatch(int ht, zval *return_value, zval **retur
 		ZVAL_STRING(_13$$6, "#^.*\\b(\\d+)$#", ZEPHIR_TEMP_PARAM_COPY);
 		ZEPHIR_INIT_VAR(_14$$6);
 		ZVAL_STRING(_14$$6, "$1", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_FUNCTION(&dataLength, "preg_replace", &_7, 9, _13$$6, _14$$6, responseLine);
+		ZEPHIR_CALL_FUNCTION(&dataLength, "preg_replace", &_7, 10, _13$$6, _14$$6, responseLine);
 		zephir_check_temp_parameter(_13$$6);
 		zephir_check_temp_parameter(_14$$6);
 		zephir_check_call_status();
@@ -286,11 +286,11 @@ void zep_Beanspeak_Dispatcher__dispatch(int ht, zval *return_value, zval **retur
 			object_init_ex(_16$$7, beanspeak_exception_ce);
 			ZEPHIR_SINIT_VAR(_17$$7);
 			ZVAL_STRING(&_17$$7, "Expected 2 bytes of CRLF after %u bytes of data", 0);
-			ZEPHIR_CALL_FUNCTION(&_18$$7, "sprintf", &_11, 3, &_17$$7, dataLength, command);
+			ZEPHIR_CALL_FUNCTION(&_18$$7, "sprintf", &_11, 4, &_17$$7, dataLength, command);
 			zephir_check_call_status();
 			ZEPHIR_INIT_VAR(_19$$7);
 			ZVAL_LONG(_19$$7, 255);
-			ZEPHIR_CALL_METHOD(NULL, _16$$7, "__construct", NULL, 4, _18$$7, _19$$7);
+			ZEPHIR_CALL_METHOD(NULL, _16$$7, "__construct", NULL, 5, _18$$7, _19$$7);
 			zephir_check_call_status();
 			zephir_throw_exception_debug(_16$$7, "beanspeak/dispatcher.zep", 172 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
@@ -337,7 +337,7 @@ void zep_Beanspeak_Dispatcher__reconnect(int ht, zval *return_value, zval **retu
 	ZEPHIR_CALL_METHOD(&_1, oldc, "getwriteretries", NULL, 0);
 	zephir_check_call_status();
 	zephir_array_update_string(&_0, SL("write_retries"), &_1, PH_COPY | PH_SEPARATE);
-	ZEPHIR_CALL_METHOD(NULL, newc, "__construct", NULL, 8, _0);
+	ZEPHIR_CALL_METHOD(NULL, newc, "__construct", NULL, 9, _0);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("connection"), newc TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();

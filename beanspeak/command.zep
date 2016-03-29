@@ -25,7 +25,15 @@ use Beanspeak\Command\CommandInterface;
 abstract class Command implements CommandInterface
 {
     /**
-     * The string representation of the object.
+     * {@inheritdoc}
+     */
+    public function getCommandName() -> string
+    {
+        return strtoupper(array_pop(explode("\\", get_called_class())));
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function __toString() -> string
     {

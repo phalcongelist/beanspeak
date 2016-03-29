@@ -12,8 +12,10 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/fcall.h"
+#include "kernel/string.h"
 #include "kernel/memory.h"
+#include "kernel/object.h"
+#include "kernel/fcall.h"
 
 
 /**
@@ -29,7 +31,30 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command) {
 }
 
 /**
- * The string representation of the object.
+ * {@inheritdoc}
+ */
+PHP_METHOD(Beanspeak_Command, getCommandName) {
+
+	zval *_0, *_1, *_2 = NULL;
+	int ZEPHIR_LAST_CALL_STATUS;
+
+	ZEPHIR_MM_GROW();
+
+	ZEPHIR_INIT_VAR(_0);
+	ZEPHIR_INIT_VAR(_1);
+	zephir_get_called_class(_1 TSRMLS_CC);
+	zephir_fast_explode_str(_0, SL("\\"), _1, LONG_MAX TSRMLS_CC);
+	ZEPHIR_MAKE_REF(_0);
+	ZEPHIR_CALL_FUNCTION(&_2, "array_pop", NULL, 2, _0);
+	ZEPHIR_UNREF(_0);
+	zephir_check_call_status();
+	zephir_fast_strtoupper(return_value, _2);
+	RETURN_MM();
+
+}
+
+/**
+ * {@inheritdoc}
  */
 PHP_METHOD(Beanspeak_Command, __toString) {
 
