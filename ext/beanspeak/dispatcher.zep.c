@@ -32,6 +32,8 @@ ZEPHIR_INIT_CLASS(Beanspeak_Dispatcher) {
 	 */
 	zend_declare_property_null(beanspeak_dispatcher_ce, SL("connection"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
+	zend_declare_property_null(beanspeak_dispatcher_ce, SL("lastCommand"), ZEND_ACC_PROTECTED TSRMLS_CC);
+
 	zend_class_implements(beanspeak_dispatcher_ce TSRMLS_CC, 1, beanspeak_dispatcher_dispatcherinterface_ce);
 	zend_class_implements(beanspeak_dispatcher_ce TSRMLS_CC, 1, beanspeak_connection_connectionawareinterface_ce);
 	return SUCCESS;
@@ -144,12 +146,23 @@ PHP_METHOD(Beanspeak_Dispatcher, dispatch) {
 			zephir_check_call_status();
 			ZEPHIR_CALL_METHOD(NULL, _0$$5, "__construct", NULL, 6, _1$$5, _2$$5, e);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_0$$5, "beanspeak/dispatcher.zep", 84 TSRMLS_CC);
+			zephir_throw_exception_debug(_0$$5, "beanspeak/dispatcher.zep", 86 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
 	}
 	RETURN_CCTOR(response);
+
+}
+
+/**
+ * {@inheritdoc}
+ */
+PHP_METHOD(Beanspeak_Dispatcher, getLastCommand) {
+
+	
+
+	RETURN_MEMBER(this_ptr, "lastCommand");
 
 }
 
@@ -168,6 +181,7 @@ void zep_Beanspeak_Dispatcher__dispatch(int ht, zval *return_value, zval **retur
 	ZEPHIR_CPY_WRT(connection, _0);
 	ZEPHIR_CALL_METHOD(NULL, connection, "connect", NULL, 0);
 	zephir_check_call_status();
+	zephir_update_property_this(this_ptr, SL("lastCommand"), command TSRMLS_CC);
 	ZEPHIR_RETURN_CALL_METHOD(command, "execute", NULL, 0, connection);
 	zephir_check_call_status();
 	RETURN_MM();

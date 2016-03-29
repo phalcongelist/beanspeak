@@ -18,7 +18,6 @@
 namespace Beanspeak\Dispatcher;
 
 use Beanspeak\Command\CommandInterface;
-use Beanspeak\Response\Parser\ParserInterface;
 
 /**
  * Beanspeak\Dispatcher\DispatcherInterface
@@ -31,4 +30,9 @@ interface DispatcherInterface
      * Dispatches the specified command to the connection object.
      */
     public function dispatch(<CommandInterface> command) -> <ResponseInterface>;
+
+    /**
+     * Returns the lastest dispatched command.
+     */
+    public function getLastCommand() -> <CommandInterface>;
 }

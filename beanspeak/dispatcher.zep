@@ -35,6 +35,8 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
      */
     protected connection;
 
+    protected lastCommand = null;
+
     /**
      * Beanspeak\Dispatcher constructor.
      */
@@ -87,13 +89,22 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
         return response;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getLastCommand() -> <CommandInterface>
+    {
+        return this->lastCommand;
+    }
+
     internal function _dispatch(<CommandInterface> command) -> <ResponseInterface>
     {
         var connection;
 
         let connection = this->connection;
-
         connection->connect();
+
+        let this->lastCommand = command;
 
         return command->execute(connection);
     }

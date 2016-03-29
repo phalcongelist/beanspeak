@@ -30,3 +30,8 @@ ZEPHIR_INIT_CLASS(Beanspeak_Dispatcher_DispatcherInterface) {
  */
 ZEPHIR_DOC_METHOD(Beanspeak_Dispatcher_DispatcherInterface, dispatch);
 
+/**
+ * Returns the lastest dispatched command.
+ */
+ZEPHIR_DOC_METHOD(Beanspeak_Dispatcher_DispatcherInterface, getLastCommand);
+
