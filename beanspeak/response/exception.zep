@@ -18,19 +18,8 @@
 namespace Beanspeak\Response;
 
 /**
- * Beanspeak\Response\ResponseInterface
- *
- * A response from the beanstalkd server.
+ * Beanspeak\Response\Exception
  */
-interface ResponseInterface
+class Exception extends \Exception
 {
-    /**
-     * The response content.
-     */
-    public function getContent() -> string;
-
-    /**
-     * The response data.
-     */
-    public function getData() -> var;
 }
