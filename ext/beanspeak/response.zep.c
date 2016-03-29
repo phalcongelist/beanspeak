@@ -143,7 +143,7 @@ PHP_METHOD(Beanspeak_Response, parseData) {
 	ZVAL_STRING(_2, "#^(\\S+).*$#s", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_VAR(_3);
 	ZVAL_STRING(_3, "$1", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_FUNCTION(&message, "preg_replace", &_4, 11, _2, _3, content);
+	ZEPHIR_CALL_FUNCTION(&message, "preg_replace", &_4, 12, _2, _3, content);
 	zephir_check_temp_parameter(_2);
 	zephir_check_temp_parameter(_3);
 	zephir_check_call_status();
@@ -160,7 +160,7 @@ PHP_METHOD(Beanspeak_Response, parseData) {
 		ZVAL_STRING(_5$$4, "#^.*\\b(\\d+)$#", ZEPHIR_TEMP_PARAM_COPY);
 		ZEPHIR_INIT_VAR(_6$$4);
 		ZVAL_STRING(_6$$4, "$1", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_FUNCTION(&dataLength, "preg_replace", &_4, 11, _5$$4, _6$$4, content);
+		ZEPHIR_CALL_FUNCTION(&dataLength, "preg_replace", &_4, 12, _5$$4, _6$$4, content);
 		zephir_check_temp_parameter(_5$$4);
 		zephir_check_temp_parameter(_6$$4);
 		zephir_check_call_status();
@@ -177,11 +177,11 @@ PHP_METHOD(Beanspeak_Response, parseData) {
 			object_init_ex(_8$$5, beanspeak_response_exception_ce);
 			ZEPHIR_SINIT_VAR(_9$$5);
 			ZVAL_STRING(&_9$$5, "Expected 2 bytes of CRLF after %u bytes of data", 0);
-			ZEPHIR_CALL_FUNCTION(&_10$$5, "sprintf", NULL, 5, &_9$$5, dataLength);
+			ZEPHIR_CALL_FUNCTION(&_10$$5, "sprintf", NULL, 4, &_9$$5, dataLength);
 			zephir_check_call_status();
 			ZEPHIR_INIT_VAR(_11$$5);
 			ZVAL_LONG(_11$$5, 255);
-			ZEPHIR_CALL_METHOD(NULL, _8$$5, "__construct", NULL, 6, _10$$5, _11$$5);
+			ZEPHIR_CALL_METHOD(NULL, _8$$5, "__construct", NULL, 7, _10$$5, _11$$5);
 			zephir_check_call_status();
 			zephir_throw_exception_debug(_8$$5, "beanspeak/response.zep", 115 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
@@ -209,7 +209,7 @@ PHP_METHOD(Beanspeak_Response, checkStatusMessage) {
 	ZVAL_STRING(_2, "#^(\\S+).*$#s", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_VAR(_3);
 	ZVAL_STRING(_3, "$1", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_FUNCTION(&message, "preg_replace", NULL, 11, _2, _3, content);
+	ZEPHIR_CALL_FUNCTION(&message, "preg_replace", NULL, 12, _2, _3, content);
 	zephir_check_temp_parameter(_2);
 	zephir_check_temp_parameter(_3);
 	zephir_check_call_status();
@@ -236,10 +236,10 @@ PHP_METHOD(Beanspeak_Response, checkStatusMessage) {
 		_5$$4 = zephir_fetch_nproperty_this(this_ptr, SL("commandName"), PH_NOISY_CC);
 		ZEPHIR_SINIT_VAR(_6$$4);
 		ZVAL_STRING(&_6$$4, "%s in response to '%s'", 0);
-		ZEPHIR_CALL_FUNCTION(&_7$$4, "sprintf", NULL, 5, &_6$$4, message, _5$$4);
+		ZEPHIR_CALL_FUNCTION(&_7$$4, "sprintf", NULL, 4, &_6$$4, message, _5$$4);
 		zephir_check_call_status();
 		zephir_array_fetch(&_8$$4, statusMessages, message, PH_NOISY | PH_READONLY, "beanspeak/response.zep", 154 TSRMLS_CC);
-		ZEPHIR_CALL_METHOD(NULL, _4$$4, "__construct", NULL, 6, _7$$4, _8$$4);
+		ZEPHIR_CALL_METHOD(NULL, _4$$4, "__construct", NULL, 7, _7$$4, _8$$4);
 		zephir_check_call_status();
 		zephir_throw_exception_debug(_4$$4, "beanspeak/response.zep", 154 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();

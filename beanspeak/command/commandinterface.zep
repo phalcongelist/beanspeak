@@ -17,7 +17,6 @@
 
 namespace Beanspeak\Command;
 
-use Beanspeak\Parser\ParserInterface;
 use Beanspeak\Response\ResponseInterface;
 use Beanspeak\Connection\ConnectionInterface;
 
@@ -55,11 +54,6 @@ interface CommandInterface
      * The length of the binary data in bytes.
      */
     public function getDataLength() -> int;
-
-    /**
-     * The response parser for the command.
-     */
-    public function getResponseParser() -> <ParserInterface>;
 
     /**
      * The string representation of the object.

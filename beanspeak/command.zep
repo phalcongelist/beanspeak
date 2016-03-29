@@ -17,6 +17,7 @@
 
 namespace Beanspeak;
 
+use Beanspeak\Command\Exception;
 use Beanspeak\Command\CommandInterface;
 use Beanspeak\Response\ResponseInterface;
 use Beanspeak\Connection\ConnectionInterface;
@@ -36,6 +37,8 @@ abstract class Command implements CommandInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Beanspeak\Command\Exception
      */
     public function execute(<ConnectionInterface> connection) -> <ResponseInterface>
     {
@@ -50,6 +53,30 @@ abstract class Command implements CommandInterface
         connection->write(preparedcmd);
 
         return new Response(this, connection);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function hasData()
+    {
+        return false;
+    }
+
+    /*
+     * {@inheritdoc}
+     */
+    public function getData()
+    {
+        throw new Exception("Command has no data");
+    }
+
+    /*
+     * {@inheritdoc}
+     */
+    public function getDataLength()
+    {
+        throw new Exception("Command has no data");
     }
 
     /**

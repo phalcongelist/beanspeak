@@ -18,6 +18,7 @@
 #include "kernel/fcall.h"
 #include "kernel/concat.h"
 #include "kernel/operators.h"
+#include "kernel/exception.h"
 
 
 /**
@@ -47,7 +48,7 @@ PHP_METHOD(Beanspeak_Command, getCommandName) {
 	zephir_get_called_class(_1 TSRMLS_CC);
 	zephir_fast_explode_str(_0, SL("\\"), _1, LONG_MAX TSRMLS_CC);
 	ZEPHIR_MAKE_REF(_0);
-	ZEPHIR_CALL_FUNCTION(&_2, "array_pop", NULL, 2, _0);
+	ZEPHIR_CALL_FUNCTION(&_2, "array_pop", NULL, 1, _0);
 	ZEPHIR_UNREF(_0);
 	zephir_check_call_status();
 	zephir_fast_strtoupper(return_value, _2);
@@ -57,6 +58,8 @@ PHP_METHOD(Beanspeak_Command, getCommandName) {
 
 /**
  * {@inheritdoc}
+ *
+ * @throws \Beanspeak\Command\Exception
  */
 PHP_METHOD(Beanspeak_Command, execute) {
 
@@ -84,9 +87,38 @@ PHP_METHOD(Beanspeak_Command, execute) {
 	ZEPHIR_CALL_METHOD(NULL, connection, "write", NULL, 0, preparedcmd);
 	zephir_check_call_status();
 	object_init_ex(return_value, beanspeak_response_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 3, this_ptr, connection);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 2, this_ptr, connection);
 	zephir_check_call_status();
 	RETURN_MM();
+
+}
+
+/**
+ * {@inheritdoc}
+ */
+PHP_METHOD(Beanspeak_Command, hasData) {
+
+	
+
+	RETURN_BOOL(0);
+
+}
+
+PHP_METHOD(Beanspeak_Command, getData) {
+
+	
+
+	ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(beanspeak_command_exception_ce, "Command has no data", "beanspeak/command.zep", 71);
+	return;
+
+}
+
+PHP_METHOD(Beanspeak_Command, getDataLength) {
+
+	
+
+	ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(beanspeak_command_exception_ce, "Command has no data", "beanspeak/command.zep", 79);
+	return;
 
 }
 

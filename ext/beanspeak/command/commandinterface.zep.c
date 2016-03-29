@@ -54,11 +54,6 @@ ZEPHIR_DOC_METHOD(Beanspeak_Command_CommandInterface, getData);
 ZEPHIR_DOC_METHOD(Beanspeak_Command_CommandInterface, getDataLength);
 
 /**
- * The response parser for the command.
- */
-ZEPHIR_DOC_METHOD(Beanspeak_Command_CommandInterface, getResponseParser);
-
-/**
  * The string representation of the object.
  */
 ZEPHIR_DOC_METHOD(Beanspeak_Command_CommandInterface, __toString);

@@ -28,7 +28,7 @@ ZEPHIR_INIT_CLASS(Beanspeak_Beanspeak) {
 	ZEPHIR_REGISTER_CLASS(Beanspeak, Beanspeak, beanspeak, beanspeak, beanspeak_beanspeak_method_entry, 0);
 
 	/**
-	 * The Interanl Dispatcher.
+	 * The internal Dispatcher.
 	 * @var DispatcherInterface
 	 */
 	zend_declare_property_null(beanspeak_beanspeak_ce, SL("dispatcher"), ZEND_ACC_PROTECTED TSRMLS_CC);
@@ -60,7 +60,7 @@ PHP_METHOD(Beanspeak_Beanspeak, __construct) {
 	if (!(zephir_is_true(dispatcher))) {
 		ZEPHIR_INIT_NVAR(_0);
 		object_init_ex(_0, beanspeak_dispatcher_ce);
-		ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 1);
+		ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 3);
 		zephir_check_call_status();
 	} else {
 		ZEPHIR_CPY_WRT(_0, dispatcher);

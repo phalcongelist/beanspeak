@@ -15,49 +15,72 @@
  +------------------------------------------------------------------------+
 */
 
-namespace Beanspeak;
+namespace Beanspeak\Command;
 
-use Beanspeak\Dispatcher\DispatcherInterface;
-use Beanspeak\Dispatcher\DispatcherAwareInterface;
+use Beanspeak\Command;
 
 /**
- * Beanspeak\Beanspeak
+ * Beanspeak\Command\Put
  *
- * Class to access the beanstalk queue service.
+ * Inserts a job into the client's currently used tube.
  */
-class Beanspeak implements DispatcherAwareInterface
+class Put extends Command
 {
-    /**
-     * The internal Dispatcher.
-     * @var DispatcherInterface
-     */
-    protected dispatcher;
+    private data;
+    private priority;
+    private delay;
+    private ttr;
 
     /**
-     * Beanspeak\Beanspeak constructor
+     * Beanspeak\Command\Put constructor
      */
-    public function __construct(<DispatcherInterface> dispatcher = null)
+    public function __construct(string! data, int! priority, int! delay, int! ttr)
     {
-        let dispatcher = dispatcher ?: new Dispatcher;
-
-        let this->dispatcher = dispatcher;
+        let this->data     = data,
+            this->priority = priority,
+            this->delay    = delay,
+            this->ttr      = ttr;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setDispatcher(<DispatcherInterface> dispatcher) -> <Beanspeak>
+    public function getCommandLine() -> string
     {
-         let this->dispatcher = dispatcher;
-
-         return this;
+        return sprintf(
+            "put %u %u %u %u",
+            this->priority,
+            this->delay,
+            this->ttr,
+            this->getDataLength()
+        );
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getDispatcher() -> <DispatcherInterface>
+    public function hasData()
     {
-        return this->dispatcher;
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getData()
+    {
+        return this->data;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDataLength()
+    {
+        if (function_exists("mb_strlen")) {
+            return mb_strlen(this->data, "latin1");
+        }
+
+        return strlen(this->data);
     }
 }

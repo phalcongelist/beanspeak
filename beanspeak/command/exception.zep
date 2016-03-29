@@ -15,19 +15,11 @@
  +------------------------------------------------------------------------+
 */
 
-namespace Beanspeak\Response\Parser;
-
-use Beanspeak\Response\ResponseInterface;
+namespace Beanspeak\Command;
 
 /**
- * Beanspeak\Response\Parser\ParserInterface
- *
- * A parser for response data sent from the beanstalkd server.
+ * Beanspeak\Command\Exception
  */
-interface ParserInterface
+class Exception extends \Exception
 {
-    /**
-     * Parses raw response data into a Response object.
-     */
-    public function parse(string! line, string data = null) -> <ResponseInterface>;
 }
