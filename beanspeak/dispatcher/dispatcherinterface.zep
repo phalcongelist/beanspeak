@@ -30,5 +30,5 @@ interface DispatcherInterface
     /**
      * Dispatches the specified command to the connection object.
      */
-    public function dispatch(<CommandInterface> command) -> <ParserInterface>;
+    public function dispatch(<CommandInterface> command) -> <ResponseInterface>;
 }
