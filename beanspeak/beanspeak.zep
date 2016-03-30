@@ -89,6 +89,6 @@ class Beanspeak implements DispatcherAwareInterface
 
         let response = dispatcher->dispatch(new Put(serialized, priority, delay, ttr));
 
-        return response;
+        return response->id;
     }
 }

@@ -103,7 +103,7 @@ PHP_METHOD(Beanspeak_Beanspeak, put) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 	zval *options = NULL;
-	zval *data, *options_param = NULL, *priority = NULL, *delay = NULL, *ttr = NULL, *serialized = NULL, *dispatcher = NULL, *response = NULL, *_0, *_1;
+	zval *data, *options_param = NULL, *priority = NULL, *delay = NULL, *ttr = NULL, *serialized = NULL, *dispatcher = NULL, *response = NULL, *_0, *_1, *_2;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 1, &data, &options_param);
@@ -141,7 +141,9 @@ PHP_METHOD(Beanspeak_Beanspeak, put) {
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&response, dispatcher, "dispatch", NULL, 0, _1);
 	zephir_check_call_status();
-	RETURN_CCTOR(response);
+	ZEPHIR_OBS_VAR(_2);
+	zephir_read_property(&_2, response, SL("id"), PH_NOISY_CC);
+	RETURN_CCTOR(_2);
 
 }
 
