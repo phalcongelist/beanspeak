@@ -187,7 +187,7 @@ class Connection implements ConnectionInterface
             let step++;
 
             if step >= retries && !written {
-                throw new Exception(sprintf("Failed to write data to socket after %d tries", retries));
+                throw new Exception("Failed to write data to socket after " . retries . " tries");
             }
 
             let part    = substr(data, written),

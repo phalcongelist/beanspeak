@@ -17,6 +17,7 @@
 #include "ext/spl/spl_exceptions.h"
 #include "kernel/exception.h"
 #include "kernel/operators.h"
+#include "kernel/concat.h"
 #include "kernel/fcall.h"
 #include "kernel/string.h"
 
@@ -100,7 +101,7 @@ PHP_METHOD(Beanspeak_Command_Put, __construct) {
  */
 PHP_METHOD(Beanspeak_Command_Put, getCommandLine) {
 
-	zval *_0, *_1, *_2, *_3 = NULL, _4;
+	zval *_0, *_1, *_2, *_3 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
 
 	ZEPHIR_MM_GROW();
@@ -110,10 +111,7 @@ PHP_METHOD(Beanspeak_Command_Put, getCommandLine) {
 	_2 = zephir_fetch_nproperty_this(this_ptr, SL("ttr"), PH_NOISY_CC);
 	ZEPHIR_CALL_METHOD(&_3, this_ptr, "getdatalength", NULL, 0);
 	zephir_check_call_status();
-	ZEPHIR_SINIT_VAR(_4);
-	ZVAL_STRING(&_4, "put %u %u %u %u", 0);
-	ZEPHIR_RETURN_CALL_FUNCTION("sprintf", NULL, 6, &_4, _0, _1, _2, _3);
-	zephir_check_call_status();
+	ZEPHIR_CONCAT_SVSVSVSV(return_value, "put ", _0, " ", _1, " ", _2, " ", _3);
 	RETURN_MM();
 
 }
@@ -154,7 +152,7 @@ PHP_METHOD(Beanspeak_Command_Put, getDataLength) {
 		_0$$3 = zephir_fetch_nproperty_this(this_ptr, SL("data"), PH_NOISY_CC);
 		ZEPHIR_SINIT_VAR(_1$$3);
 		ZVAL_STRING(&_1$$3, "latin1", 0);
-		ZEPHIR_RETURN_CALL_FUNCTION("mb_strlen", NULL, 7, _0$$3, &_1$$3);
+		ZEPHIR_RETURN_CALL_FUNCTION("mb_strlen", NULL, 6, _0$$3, &_1$$3);
 		zephir_check_call_status();
 		RETURN_MM();
 	}

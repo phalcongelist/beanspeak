@@ -111,7 +111,7 @@ class Response implements ResponseInterface
 
             if "\r\n" !== crlf {
                 throw new Exception(
-                    sprintf("Expected 2 bytes of CRLF after %u bytes of data", dataLength),
+                    "Expected 2 bytes of CRLF after " . dataLength . " bytes of data",
                     self::EXCEPTION_NO_CRLF
                 );
             }
@@ -150,7 +150,7 @@ class Response implements ResponseInterface
 
         if isset statusMessages[message] {
             throw new Exception(
-                sprintf("%s in response to '%s'", message, this->commandName),
+                message . " in response to '" . this->commandName . "'",
                 statusMessages[message]
             );
         }

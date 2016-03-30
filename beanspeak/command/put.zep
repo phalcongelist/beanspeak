@@ -47,13 +47,7 @@ class Put extends Command
      */
     public function getCommandLine() -> string
     {
-        return sprintf(
-            "put %u %u %u %u",
-            this->priority,
-            this->delay,
-            this->ttr,
-            this->getDataLength()
-        );
+        return "put " . this->priority . " " . this->delay . " " . this->ttr . " " . this->getDataLength();
     }
 
     /**
