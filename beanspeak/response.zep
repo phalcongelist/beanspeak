@@ -71,7 +71,7 @@ class Response implements ResponseInterface
     /**
      * {@inheritdoc}
      */
-    public function getContent() -> string
+    public function getRawContent() -> string
     {
         return this->content;
     }
@@ -79,7 +79,7 @@ class Response implements ResponseInterface
     /**
      * {@inheritdoc}
      */
-    public function getData() -> var
+    public function getRawData() -> var
     {
         return this->data;
     }

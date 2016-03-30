@@ -24,7 +24,7 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command_CommandInterface) {
 }
 
 /**
- * Execute current command;
+ * Execute current command.
  */
 ZEPHIR_DOC_METHOD(Beanspeak_Command_CommandInterface, execute);
 

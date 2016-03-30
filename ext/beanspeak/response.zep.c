@@ -107,7 +107,7 @@ PHP_METHOD(Beanspeak_Response, __construct) {
 /**
  * {@inheritdoc}
  */
-PHP_METHOD(Beanspeak_Response, getContent) {
+PHP_METHOD(Beanspeak_Response, getRawContent) {
 
 	
 
@@ -118,7 +118,7 @@ PHP_METHOD(Beanspeak_Response, getContent) {
 /**
  * {@inheritdoc}
  */
-PHP_METHOD(Beanspeak_Response, getData) {
+PHP_METHOD(Beanspeak_Response, getRawData) {
 
 	
 

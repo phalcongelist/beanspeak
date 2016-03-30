@@ -26,12 +26,12 @@ ZEPHIR_INIT_CLASS(Beanspeak_Response_ResponseInterface) {
 }
 
 /**
- * The response content.
+ * Return the raw response content.
  */
-ZEPHIR_DOC_METHOD(Beanspeak_Response_ResponseInterface, getContent);
+ZEPHIR_DOC_METHOD(Beanspeak_Response_ResponseInterface, getRawContent);
 
 /**
- * The response data.
+ * Return the raw response data.
  */
-ZEPHIR_DOC_METHOD(Beanspeak_Response_ResponseInterface, getData);
+ZEPHIR_DOC_METHOD(Beanspeak_Response_ResponseInterface, getRawData);
 

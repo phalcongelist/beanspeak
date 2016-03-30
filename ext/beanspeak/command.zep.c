@@ -108,7 +108,7 @@ PHP_METHOD(Beanspeak_Command, getData) {
 
 	
 
-	ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(beanspeak_command_exception_ce, "Command has no data", "beanspeak/command.zep", 71);
+	ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(beanspeak_command_exception_ce, "Command has no data", "beanspeak/command.zep", 72);
 	return;
 
 }
@@ -117,7 +117,7 @@ PHP_METHOD(Beanspeak_Command, getDataLength) {
 
 	
 
-	ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(beanspeak_command_exception_ce, "Command has no data", "beanspeak/command.zep", 79);
+	ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(beanspeak_command_exception_ce, "Command has no data", "beanspeak/command.zep", 80);
 	return;
 
 }

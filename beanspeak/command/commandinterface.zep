@@ -26,7 +26,7 @@ use Beanspeak\Connection\ConnectionInterface;
 interface CommandInterface
 {
     /**
-     * Execute current command;
+     * Execute current command.
      */
     public function execute(<ConnectionInterface> connection) -> <ResponseInterface>;
 

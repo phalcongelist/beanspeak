@@ -25,12 +25,12 @@ namespace Beanspeak\Response;
 interface ResponseInterface
 {
     /**
-     * The response content.
+     * Return the raw response content.
      */
-    public function getContent() -> string;
+    public function getRawContent() -> string;
 
     /**
-     * The response data.
+     * Return the raw response data.
      */
-    public function getData() -> var;
+    public function getRawData() -> var;
 }

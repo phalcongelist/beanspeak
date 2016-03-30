@@ -20,6 +20,7 @@ namespace Beanspeak;
 use Beanspeak\Command\Exception;
 use Beanspeak\Command\CommandInterface;
 use Beanspeak\Response\ResponseInterface;
+use Beanspeak\Response\RendererInterface;
 use Beanspeak\Connection\ConnectionInterface;
 
 /**
