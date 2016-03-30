@@ -62,6 +62,23 @@ class Beanspeak implements DispatcherAwareInterface
         return this->dispatcher;
     }
 
+    /**
+     * Inserts jobs into the queue.
+     *
+     * Example:
+     * <code>
+     * $queue->put([
+     *     'recipient' => 'user@mail.com',
+     *     'subject'   => 'Welcome',
+     *     'content'   => $content,
+     * ]);
+     *
+     * $queue->put(
+     *    ['someKey' => 'someValue'],
+     *    ['priority' => 999, 'delay' => 60 * 60, 'ttr' => 3600]
+     * );
+     * </code>
+     */
     public function put(var data, array options = null)
     {
         var priority, delay, ttr, serialized, dispatcher, response;

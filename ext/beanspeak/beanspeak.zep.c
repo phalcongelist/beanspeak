@@ -99,6 +99,23 @@ PHP_METHOD(Beanspeak_Beanspeak, getDispatcher) {
 
 }
 
+/**
+ * Inserts jobs into the queue.
+ *
+ * Example:
+ * <code>
+ * $queue->put([
+ *     'recipient' => 'user@mail.com',
+ *     'subject'   => 'Welcome',
+ *     'content'   => $content,
+ * ]);
+ *
+ * $queue->put(
+ *    ['someKey' => 'someValue'],
+ *    ['priority' => 999, 'delay' => 60 * 60, 'ttr' => 3600]
+ * );
+ * </code>
+ */
 PHP_METHOD(Beanspeak_Beanspeak, put) {
 
 	int ZEPHIR_LAST_CALL_STATUS;

@@ -67,7 +67,7 @@ abstract class Command implements CommandInterface
      */
     public function getResponseParser() -> <ResponseParserInterface>
     {
-       return this; 
+       return this;
     }
 
     /**
