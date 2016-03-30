@@ -18,10 +18,9 @@
 namespace Beanspeak;
 
 use Beanspeak\Command\Exception;
+use Beanspeak\Response\ArrayResponse;
 use Beanspeak\Command\CommandInterface;
-use Beanspeak\Response\ResponseInterface;
-use Beanspeak\Response\RendererInterface;
-use Beanspeak\Connection\ConnectionInterface;
+use Beanspeak\Response\ResponseParserInterface;
 
 /**
  * Beanspeak\Command
@@ -38,33 +37,13 @@ abstract class Command implements CommandInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @throws \Beanspeak\Command\Exception
-     */
-    public function execute(<ConnectionInterface> connection) -> <ResponseInterface>
-    {
-        var preparedcmd;
-
-        let preparedcmd = this->getCommandLine() . "\r\n";
-
-        if this->hasData() {
-            let preparedcmd .= this->getData() . "\r\n";
-        }
-
-        connection->write(preparedcmd);
-
-        return new Response(this, connection);
-    }
-
-    /**
-     * {@inheritdoc}
      */
     public function hasData()
     {
         return false;
     }
 
-    /*
+    /**
      * {@inheritdoc}
      */
     public function getData()
@@ -72,7 +51,7 @@ abstract class Command implements CommandInterface
         throw new Exception("Command has no data");
     }
 
-    /*
+    /**
      * {@inheritdoc}
      */
     public function getDataLength()
@@ -82,9 +61,28 @@ abstract class Command implements CommandInterface
 
     /**
      * {@inheritdoc}
+     * Concrete implementation must either:
+     * a) implement ResponseParserInterface
+     * b) override this getResponseParser method
+     */
+    public function getResponseParser() -> <ResponseParserInterface>
+    {
+       return this; 
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function __toString() -> string
     {
         return this->getCommandLine();
+    }
+
+    /**
+     * Creates a Response for the given data.
+     */
+    protected function createResponse(string name, array data = [])
+    {
+        return new ArrayResponse(name, data);
     }
 }

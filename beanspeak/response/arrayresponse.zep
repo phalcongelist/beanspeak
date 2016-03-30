@@ -15,25 +15,30 @@
  +------------------------------------------------------------------------+
 */
 
-namespace Beanspeak\Dispatcher;
-
-use Beanspeak\Command\CommandInterface;
-use Beanspeak\Response\ResponseInterface;
+namespace Beanspeak\Response;
 
 /**
- * Beanspeak\Dispatcher\DispatcherInterface
- *
- * Interface for Beanspeak\Dispatcher
+ * Beanspeak\Response\ArrayResponse
  */
-interface DispatcherInterface
+class ArrayResponse extends \ArrayObject implements ResponseInterface
 {
-    /**
-     * Dispatches the specified command to the connection object.
-     */
-    public function dispatch(<CommandInterface> command) -> <ResponseInterface>;
+    private name;
 
     /**
-     * Returns the lastest dispatched command.
+     * Beanspeak\Response\ArrayResponse constructor
      */
-    public function getLastCommand() -> <CommandInterface>;
+    public function __construct(string name, array data = [])
+    {
+        let this->name = name;
+
+        parent::__construct(data);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getResponseName() -> string
+    {
+       return this->name; 
+    }
 }

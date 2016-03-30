@@ -17,19 +17,13 @@
 
 namespace Beanspeak\Command;
 
-use Beanspeak\Response\ResponseInterface;
-use Beanspeak\Connection\ConnectionInterface;
+use Beanspeak\Response\ResponseParserInterface;
 
 /**
  * Beanspeak\Command\CommandInterface
  */
 interface CommandInterface
 {
-    /**
-     * Execute current command.
-     */
-    public function execute(<ConnectionInterface> connection) -> <ResponseInterface>;
-
     /**
      * Returns name of current command.
      */
@@ -54,6 +48,11 @@ interface CommandInterface
      * The length of the binary data in bytes.
      */
     public function getDataLength() -> int;
+
+    /**
+     * The response parser for the command.
+     */
+    public function getResponseParser() -> <ResponseParserInterface>;
 
     /**
      * The string representation of the object.

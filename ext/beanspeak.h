@@ -11,6 +11,7 @@
 #include "beanspeak/dispatcher/dispatcherawareinterface.zep.h"
 #include "beanspeak/dispatcher/dispatcherinterface.zep.h"
 #include "beanspeak/response/responseinterface.zep.h"
+#include "beanspeak/response/responseparserinterface.zep.h"
 #include "beanspeak/beanspeak.zep.h"
 #include "beanspeak/command/exception.zep.h"
 #include "beanspeak/command/put.zep.h"
@@ -19,7 +20,9 @@
 #include "beanspeak/dispatcher.zep.h"
 #include "beanspeak/dispatcher/exception.zep.h"
 #include "beanspeak/exception.zep.h"
-#include "beanspeak/response.zep.h"
+#include "beanspeak/response/arrayresponse.zep.h"
 #include "beanspeak/response/exception.zep.h"
+#include "beanspeak/responseinterface.zep.h"
+#include "beanspeak/responseparserinterface.zep.h"
 
 #endif

@@ -24,11 +24,6 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command_CommandInterface) {
 }
 
 /**
- * Execute current command.
- */
-ZEPHIR_DOC_METHOD(Beanspeak_Command_CommandInterface, execute);
-
-/**
  * Returns name of current command.
  */
 ZEPHIR_DOC_METHOD(Beanspeak_Command_CommandInterface, getName);
@@ -52,6 +47,11 @@ ZEPHIR_DOC_METHOD(Beanspeak_Command_CommandInterface, getData);
  * The length of the binary data in bytes.
  */
 ZEPHIR_DOC_METHOD(Beanspeak_Command_CommandInterface, getDataLength);
+
+/**
+ * The response parser for the command.
+ */
+ZEPHIR_DOC_METHOD(Beanspeak_Command_CommandInterface, getResponseParser);
 
 /**
  * The string representation of the object.

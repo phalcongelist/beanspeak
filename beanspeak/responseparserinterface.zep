@@ -15,25 +15,15 @@
  +------------------------------------------------------------------------+
 */
 
-namespace Beanspeak\Dispatcher;
-
-use Beanspeak\Command\CommandInterface;
-use Beanspeak\Response\ResponseInterface;
+namespace Beanspeak;
 
 /**
- * Beanspeak\Dispatcher\DispatcherInterface
- *
- * Interface for Beanspeak\Dispatcher
+ * Beanspeak\ResponseParserInterface
  */
-interface DispatcherInterface
+interface ResponseParserInterface
 {
     /**
-     * Dispatches the specified command to the connection object.
+     * Parses raw response data into a Response object.
      */
-    public function dispatch(<CommandInterface> command) -> <ResponseInterface>;
-
-    /**
-     * Returns the lastest dispatched command.
-     */
-    public function getLastCommand() -> <CommandInterface>;
+    public function parseResponse(string line, string data = null) -> <ResponseInterface>;
 }

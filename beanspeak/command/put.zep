@@ -18,13 +18,14 @@
 namespace Beanspeak\Command;
 
 use Beanspeak\Command;
+use Beanspeak\Response\ResponseParserInterface;
 
 /**
  * Beanspeak\Command\Put
  *
  * Inserts a job into the client's currently used tube.
  */
-class Put extends Command
+class Put extends Command implements ResponseParserInterface
 {
     private data;
     private priority;
@@ -76,5 +77,33 @@ class Put extends Command
         }
 
         return strlen(this->data);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function parseResponse(string line, string data = null) -> <ResponseInterface>
+    {
+        var matches;
+
+        let matches = null;
+
+        if (preg_match("#^INSERTED (\d+)$#", line, matches)) {
+            return this->createResponse("INSERTED", ["id" : (int) matches[1]]);
+        }
+
+        if (preg_match("#^BURIED (\d)+$#", line, matches)) {
+            throw new Exception(line . ": server ran out of memory trying to grow the priority queue data structure");
+        }
+
+        if (preg_match("#^JOB_TOO_BIG$#", line)) {
+            throw new Exception(line . ": job data exceeds server-enforced limit");
+        }
+
+        if (preg_match("#^EXPECTED_CRLF#", line)) {
+            throw new Exception(line . ": CRLF expected");
+        }
+
+        throw new Exception("Unhandled response: " . line);
     }
 }

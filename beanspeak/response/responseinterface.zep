@@ -19,18 +19,11 @@ namespace Beanspeak\Response;
 
 /**
  * Beanspeak\Response\ResponseInterface
- *
- * A response from the beanstalkd server.
  */
 interface ResponseInterface
 {
     /**
-     * Return the raw response content.
+     * The name of the response.
      */
-    public function getRawContent() -> string;
-
-    /**
-     * Return the raw response data.
-     */
-    public function getRawData() -> var;
+    public function getResponseName() -> string;
 }

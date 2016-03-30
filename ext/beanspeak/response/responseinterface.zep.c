@@ -14,8 +14,6 @@
 
 /**
  * Beanspeak\Response\ResponseInterface
- *
- * A response from the beanstalkd server.
  */
 ZEPHIR_INIT_CLASS(Beanspeak_Response_ResponseInterface) {
 
@@ -26,12 +24,7 @@ ZEPHIR_INIT_CLASS(Beanspeak_Response_ResponseInterface) {
 }
 
 /**
- * Return the raw response content.
+ * The name of the response.
  */
-ZEPHIR_DOC_METHOD(Beanspeak_Response_ResponseInterface, getRawContent);
-
-/**
- * Return the raw response data.
- */
-ZEPHIR_DOC_METHOD(Beanspeak_Response_ResponseInterface, getRawData);
+ZEPHIR_DOC_METHOD(Beanspeak_Response_ResponseInterface, getResponseName);
 
