@@ -68,9 +68,6 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
     /**
      * {@inheritdoc}
      *
-     * If a Beanspeak\Connection\Exception occurs, the connection is reset,
-     * and the command is re-attempted once.
-     *
      * @throws \Beanspeak\Dispatcher\Exception
      */
     public function dispatch(<CommandInterface> command) -> <ResponseInterface>

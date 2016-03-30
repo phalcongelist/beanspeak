@@ -65,21 +65,9 @@ PHP_METHOD(Beanspeak_Command_Put, __construct) {
 		ZEPHIR_INIT_VAR(data);
 		ZVAL_EMPTY_STRING(data);
 	}
-	if (unlikely(Z_TYPE_P(priority_param) != IS_LONG)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'priority' must be a int") TSRMLS_CC);
-		RETURN_MM_NULL();
-	}
-	priority = Z_LVAL_P(priority_param);
-	if (unlikely(Z_TYPE_P(delay_param) != IS_LONG)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'delay' must be a int") TSRMLS_CC);
-		RETURN_MM_NULL();
-	}
-	delay = Z_LVAL_P(delay_param);
-	if (unlikely(Z_TYPE_P(ttr_param) != IS_LONG)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'ttr' must be a int") TSRMLS_CC);
-		RETURN_MM_NULL();
-	}
-	ttr = Z_LVAL_P(ttr_param);
+	priority = zephir_get_intval(priority_param);
+	delay = zephir_get_intval(delay_param);
+	ttr = zephir_get_intval(ttr_param);
 
 
 	zephir_update_property_this(this_ptr, SL("data"), data TSRMLS_CC);

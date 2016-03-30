@@ -34,7 +34,7 @@ class Put extends Command
     /**
      * Beanspeak\Command\Put constructor
      */
-    public function __construct(string! data, int! priority, int! delay, int! ttr)
+    public function __construct(string! data, int priority, int delay, int ttr)
     {
         let this->data     = data,
             this->priority = priority,
