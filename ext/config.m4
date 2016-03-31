@@ -11,15 +11,16 @@ if test "$PHP_BEANSPEAK" = "yes"; then
 	AC_DEFINE(HAVE_BEANSPEAK, 1, [Whether you have Beanspeak])
 	beanspeak_sources="beanspeak.c kernel/main.c kernel/memory.c kernel/exception.c kernel/hash.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/extended/array.c kernel/string.c kernel/fcall.c kernel/extended/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c beanspeak/command/commandinterface.zep.c
 	beanspeak/command.zep.c
+	beanspeak/response/responseparserinterface.zep.c
 	beanspeak/connection/connectionawareinterface.zep.c
 	beanspeak/connection/connectioninterface.zep.c
 	beanspeak/dispatcher/dispatcherawareinterface.zep.c
 	beanspeak/dispatcher/dispatcherinterface.zep.c
 	beanspeak/response/responseinterface.zep.c
-	beanspeak/response/responseparserinterface.zep.c
 	beanspeak/beanspeak.zep.c
 	beanspeak/command/exception.zep.c
 	beanspeak/command/put.zep.c
+	beanspeak/command/use.zep.c
 	beanspeak/connection.zep.c
 	beanspeak/connection/exception.zep.c
 	beanspeak/dispatcher.zep.c

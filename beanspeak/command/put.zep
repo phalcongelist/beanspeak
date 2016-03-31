@@ -33,14 +33,6 @@ class Put extends Command implements ResponseParserInterface
     private ttr;
 
     /**
-     * {@inheritdoc}
-     */
-    public function getName() -> string
-    {
-        return "PUT";
-    }
-
-    /**
      * Beanspeak\Command\Put constructor
      */
     public function __construct(string! data, int priority, int delay, int ttr)
@@ -49,6 +41,14 @@ class Put extends Command implements ResponseParserInterface
             this->priority = priority,
             this->delay    = delay,
             this->ttr      = ttr;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName() -> string
+    {
+        return "PUT";
     }
 
     /**

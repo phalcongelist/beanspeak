@@ -17,6 +17,7 @@
 #include "kernel/object.h"
 #include "kernel/fcall.h"
 #include "kernel/exception.h"
+#include "kernel/concat.h"
 #include "kernel/operators.h"
 
 
@@ -71,9 +72,21 @@ PHP_METHOD(Beanspeak_Command, hasData) {
  */
 PHP_METHOD(Beanspeak_Command, getData) {
 
-	
+	zval *_0, *_1 = NULL, *_2;
+	int ZEPHIR_LAST_CALL_STATUS;
 
-	ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(beanspeak_command_exception_ce, "Command has no data", "beanspeak/command.zep", 51);
+	ZEPHIR_MM_GROW();
+
+	ZEPHIR_INIT_VAR(_0);
+	object_init_ex(_0, beanspeak_command_exception_ce);
+	ZEPHIR_CALL_METHOD(&_1, this_ptr, "getname", NULL, 0);
+	zephir_check_call_status();
+	ZEPHIR_INIT_VAR(_2);
+	ZEPHIR_CONCAT_SVS(_2, "The ", _1, " command has no data");
+	ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 2, _2);
+	zephir_check_call_status();
+	zephir_throw_exception_debug(_0, "beanspeak/command.zep", 51 TSRMLS_CC);
+	ZEPHIR_MM_RESTORE();
 	return;
 
 }
@@ -83,9 +96,21 @@ PHP_METHOD(Beanspeak_Command, getData) {
  */
 PHP_METHOD(Beanspeak_Command, getDataLength) {
 
-	
+	zval *_0, *_1 = NULL, *_2;
+	int ZEPHIR_LAST_CALL_STATUS;
 
-	ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(beanspeak_command_exception_ce, "Command has no data", "beanspeak/command.zep", 59);
+	ZEPHIR_MM_GROW();
+
+	ZEPHIR_INIT_VAR(_0);
+	object_init_ex(_0, beanspeak_command_exception_ce);
+	ZEPHIR_CALL_METHOD(&_1, this_ptr, "getname", NULL, 0);
+	zephir_check_call_status();
+	ZEPHIR_INIT_VAR(_2);
+	ZEPHIR_CONCAT_SVS(_2, "The ", _1, " command has no data");
+	ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 2, _2);
+	zephir_check_call_status();
+	zephir_throw_exception_debug(_0, "beanspeak/command.zep", 59 TSRMLS_CC);
+	ZEPHIR_MM_RESTORE();
 	return;
 
 }
@@ -142,7 +167,7 @@ PHP_METHOD(Beanspeak_Command, createResponse) {
 
 
 	object_init_ex(return_value, beanspeak_response_arrayresponse_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 2, name, data);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 3, name, data);
 	zephir_check_call_status();
 	RETURN_MM();
 

@@ -17,6 +17,8 @@
 #include "kernel/fcall.h"
 #include "kernel/object.h"
 #include "kernel/array.h"
+#include "ext/spl/spl_exceptions.h"
+#include "kernel/exception.h"
 
 
 /**
@@ -61,7 +63,7 @@ PHP_METHOD(Beanspeak_Beanspeak, __construct) {
 	if (!(zephir_is_true(dispatcher))) {
 		ZEPHIR_INIT_NVAR(_0);
 		object_init_ex(_0, beanspeak_dispatcher_ce);
-		ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 3);
+		ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 4);
 		zephir_check_call_status();
 	} else {
 		ZEPHIR_CPY_WRT(_0, dispatcher);
@@ -122,7 +124,7 @@ PHP_METHOD(Beanspeak_Beanspeak, put) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 	zval *options = NULL;
-	zval *data, *options_param = NULL, *priority = NULL, *delay = NULL, *ttr = NULL, *serialized = NULL, *dispatcher = NULL, *response = NULL, *_0, *_1, *_2;
+	zval *data, *options_param = NULL, *priority = NULL, *delay = NULL, *ttr = NULL, *serialized = NULL, *response = NULL, *_0, *_1, *_2;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 1, &data, &options_param);
@@ -150,18 +152,59 @@ PHP_METHOD(Beanspeak_Beanspeak, put) {
 		ZEPHIR_INIT_NVAR(ttr);
 		ZVAL_LONG(ttr, 86400);
 	}
-	ZEPHIR_CALL_FUNCTION(&serialized, "serialize", NULL, 4, data);
+	ZEPHIR_CALL_FUNCTION(&serialized, "serialize", NULL, 5, data);
 	zephir_check_call_status();
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
-	ZEPHIR_CPY_WRT(dispatcher, _0);
 	ZEPHIR_INIT_VAR(_1);
 	object_init_ex(_1, beanspeak_command_put_ce);
-	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 5, serialized, priority, delay, ttr);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 6, serialized, priority, delay, ttr);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(&response, dispatcher, "dispatch", NULL, 0, _1);
+	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);
 	zephir_check_call_status();
 	ZEPHIR_OBS_VAR(_2);
 	zephir_read_property(&_2, response, SL("id"), PH_NOISY_CC);
+	RETURN_CCTOR(_2);
+
+}
+
+/**
+ * Change the active tube.
+ *
+ * Example:
+ * <code>
+ * $queue->use('mail_queue');
+ * </code>
+ */
+PHP_METHOD(Beanspeak_Beanspeak, use) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *tube_param = NULL, *response = NULL, *_0, *_1, *_2;
+	zval *tube = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &tube_param);
+
+	if (unlikely(Z_TYPE_P(tube_param) != IS_STRING && Z_TYPE_P(tube_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'tube' must be a string") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+	if (likely(Z_TYPE_P(tube_param) == IS_STRING)) {
+		zephir_get_strval(tube, tube_param);
+	} else {
+		ZEPHIR_INIT_VAR(tube);
+		ZVAL_EMPTY_STRING(tube);
+	}
+
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
+	ZEPHIR_INIT_VAR(_1);
+	object_init_ex(_1, beanspeak_command_use_ce);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 7, tube);
+	zephir_check_call_status();
+	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);
+	zephir_check_call_status();
+	ZEPHIR_OBS_VAR(_2);
+	zephir_read_property(&_2, response, SL("tube"), PH_NOISY_CC);
 	RETURN_CCTOR(_2);
 
 }

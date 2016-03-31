@@ -18,6 +18,7 @@
 namespace Beanspeak;
 
 use Beanspeak\Command\Put;
+use Beanspeak\Command\Use;
 use Beanspeak\Dispatcher\DispatcherInterface;
 use Beanspeak\Dispatcher\DispatcherAwareInterface;
 
@@ -83,11 +84,9 @@ class Beanspeak implements DispatcherAwareInterface
      */
     public function put(var data, array options = null)
     {
-        var priority, delay, ttr, serialized, dispatcher, response;
+        var priority, delay, ttr, serialized, response;
 
-        /**
-         * Priority is 100 by default
-         */
+        // Priority is 100 by default
         if !fetch priority, options["priority"] {
             let priority = "100";
         }
@@ -100,14 +99,27 @@ class Beanspeak implements DispatcherAwareInterface
             let ttr = "86400";
         }
 
-        /**
-         * Data is automatically serialized before be sent to the server
-         */
-        let serialized = serialize(data),
-            dispatcher = this->dispatcher;
+        // Data is automatically serialized before be sent to the server
+        let serialized = serialize(data);
 
-        let response = dispatcher->dispatch(new Put(serialized, priority, delay, ttr));
+        let response = this->dispatcher->dispatch(new Put(serialized, priority, delay, ttr));
 
         return response->id;
+    }
+
+    /**
+     * Change the active tube.
+     *
+     * Example:
+     * <code>
+     * $queue->use('mail_queue');
+     * </code>
+     */
+    public function $use(string! tube)
+    {
+        var response;
+        let response = this->dispatcher->dispatch(new $Use(tube));
+
+        return response->tube;
     }
 }

@@ -91,7 +91,7 @@ PHP_METHOD(Beanspeak_Response_ArrayResponse, __get) {
 	zephir_get_strval(name, name_param);
 
 
-	ZEPHIR_CALL_METHOD(&key, this_ptr, "transformpropertyname", NULL, 14, name);
+	ZEPHIR_CALL_METHOD(&key, this_ptr, "transformpropertyname", NULL, 15, name);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_0);
 	ZEPHIR_CALL_METHOD(&_1, this_ptr, "offsetexists", NULL, 0, key);
@@ -121,7 +121,7 @@ PHP_METHOD(Beanspeak_Response_ArrayResponse, __isset) {
 	zephir_get_strval(name, name_param);
 
 
-	ZEPHIR_CALL_METHOD(&key, this_ptr, "transformpropertyname", NULL, 14, name);
+	ZEPHIR_CALL_METHOD(&key, this_ptr, "transformpropertyname", NULL, 15, name);
 	zephir_check_call_status();
 	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "offsetexists", NULL, 0, key);
 	zephir_check_call_status();

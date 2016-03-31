@@ -15,74 +15,51 @@
  +------------------------------------------------------------------------+
 */
 
-namespace Beanspeak;
+namespace Beanspeak\Command;
 
-use Beanspeak\Command\Exception;
-use Beanspeak\Response\ArrayResponse;
-use Beanspeak\Command\CommandInterface;
+use Beanspeak\Command;
 use Beanspeak\Response\ResponseParserInterface;
 
 /**
- * Beanspeak\Command
+ * Beanspeak\Command\Use
+ *
+ * The "use" command is for producers. Subsequent put commands will put jobs
+ * into the tube specified by this command. If no use command has been issued,
+ * jobs will be put into the tube named "default".
  */
-abstract class Command implements CommandInterface
+class $Use extends Command implements ResponseParserInterface
 {
+    private tube;
+
+    /**
+     * Beanspeak\Command\Use constructor
+     */
+    public function __construct(string! tube)
+    {
+        let this->tube = tube;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function getName() -> string
     {
-        return strtoupper(array_pop(explode("\\", get_called_class())));
+        return "USE";
     }
 
     /**
      * {@inheritdoc}
      */
-    public function hasData()
+    public function getCommandLine() -> string
     {
-        return false;
+        return "use " . this->tube;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getData()
+    public function parseResponse(string line, string data = null) -> <ResponseInterface>
     {
-        throw new Exception("The " . this->getName() . " command has no data");
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDataLength()
-    {
-        throw new Exception("The " . this->getName() . " command has no data");
-    }
-
-    /**
-     * {@inheritdoc}
-     * Concrete implementation must either:
-     * a) implement ResponseParserInterface
-     * b) override this getResponseParser method
-     */
-    public function getResponseParser() -> <ResponseParserInterface>
-    {
-       return this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __toString() -> string
-    {
-        return this->getCommandLine();
-    }
-
-    /**
-     * Creates a Response for the given data.
-     */
-    protected function createResponse(string name, array data = [])
-    {
-        return new ArrayResponse(name, data);
+       return this->createResponse("USING", ["tube" : preg_replace("#^USING (.+)$#", "$1", line)]);
     }
 }
