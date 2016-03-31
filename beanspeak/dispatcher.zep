@@ -55,8 +55,6 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
 
     protected statusMessages = [];
 
-    protected dataResponses = [];
-
     protected responseData = null;
 
     protected responseLine = null;
@@ -204,21 +202,15 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
         array dataResponses;
         var connection, dataLength, data, message, crlf;
 
-        let dataResponses = this->dataResponses,
-            connection    = this->connection,
-            message       = preg_replace("#^(\S+).*$#s", "$1", content);
-
-        if empty dataResponses {
-            let dataResponses = [
+        let connection    = this->connection,
+            message       = preg_replace("#^(\S+).*$#s", "$1", content),
+            data          = null,
+            dataResponses = [
                 "RESERVED" : true,
                 "FOUND"    : true,
                 "OK"       : true
-            ];
+           ];
 
-            let this->dataResponses = dataResponses;
-        }
-
-        let data = null;
         if isset dataResponses[message] {
             let dataLength = preg_replace("#^.*\b(\d+)$#", "$1", content),
                 data       = connection->read(dataLength),
