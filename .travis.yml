@@ -1,14 +1,19 @@
 language: php
 
-sudo: required
-dist: precise
-group: edge
-
 php:
   - 5.4
   - 5.5
   - 5.6
   - 7
+
+sudo: required
+dist: precise
+group: edge
+
+env:
+  global:
+    - TEST_BT_HOST="127.0.0.1"
+    - TEST_BT_PORT="11300"
 
 cache:
   - apt
