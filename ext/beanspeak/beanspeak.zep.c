@@ -104,15 +104,17 @@ PHP_METHOD(Beanspeak_Beanspeak, getDispatcher) {
  *
  * Example:
  * <code>
- * $queue->put([
- *     'recipient' => 'user@mail.com',
- *     'subject'   => 'Welcome',
- *     'content'   => $content,
- * ]);
- *
  * $queue->put(
- *    ['someKey' => 'someValue'],
- *    ['priority' => 999, 'delay' => 60 * 60, 'ttr' => 3600]
+ *     [
+ *         'recipient' => 'user@mail.com',
+ *         'subject'   => 'Welcome',
+ *         'content'   => $content,
+ *     ],
+ *     [
+ *         'priority' => 999,
+ *         'delay'    => 60 * 60,
+ *         'ttr'      => 3600,
+ *     ],
  * );
  * </code>
  */

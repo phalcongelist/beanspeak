@@ -46,6 +46,17 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command_Put) {
 }
 
 /**
+ * {@inheritdoc}
+ */
+PHP_METHOD(Beanspeak_Command_Put, getName) {
+
+	
+
+	RETURN_STRING("PUT", 1);
+
+}
+
+/**
  * Beanspeak\Command\Put constructor
  */
 PHP_METHOD(Beanspeak_Command_Put, __construct) {
@@ -158,8 +169,8 @@ PHP_METHOD(Beanspeak_Command_Put, parseResponse) {
 
 	zval *_2$$3;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *line_param = NULL, *data_param = NULL, *matches = NULL, *_0, _1, *_5, _6, *_9, *_10, _11, *_14, *_15, _16, *_19, *_3$$3, *_4$$3, *_7$$4, *_12$$5, *_17$$6;
-	zval *line = NULL, *data = NULL, *_20, *_8$$4, *_13$$5, *_18$$6;
+	zval *line_param = NULL, *data_param = NULL, *matches = NULL, *name = NULL, *_0, _1, *_5, _6, *_9, *_10, _11, *_14, *_15, _16, *_19, *_20, _21, *_24, *_3$$3, *_4$$3, *_7$$4, *_8$$4, *_12$$5, *_13$$5, *_17$$6, *_18$$6, *_22$$7, *_23$$7;
+	zval *line = NULL, *data = NULL, *_25;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 1, &line_param, &data_param);
@@ -183,7 +194,7 @@ PHP_METHOD(Beanspeak_Command_Put, parseResponse) {
 		ZEPHIR_INIT_VAR(_2$$3);
 		zephir_create_array(_2$$3, 1, 0 TSRMLS_CC);
 		ZEPHIR_OBS_VAR(_3$$3);
-		zephir_array_fetch_long(&_3$$3, matches, 1, PH_NOISY, "beanspeak/command/put.zep", 92 TSRMLS_CC);
+		zephir_array_fetch_long(&_3$$3, matches, 1, PH_NOISY, "beanspeak/command/put.zep", 100 TSRMLS_CC);
 		add_assoc_long_ex(_2$$3, SS("id"), zephir_get_intval(_3$$3));
 		ZEPHIR_INIT_VAR(_4$$3);
 		ZVAL_STRING(_4$$3, "INSERTED", ZEPHIR_TEMP_PARAM_COPY);
@@ -192,6 +203,8 @@ PHP_METHOD(Beanspeak_Command_Put, parseResponse) {
 		zephir_check_call_status();
 		RETURN_MM();
 	}
+	ZEPHIR_CALL_METHOD(&name, this_ptr, "getname", NULL, 0);
+	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_5);
 	ZEPHIR_SINIT_VAR(_6);
 	ZVAL_STRING(&_6, "#^BURIED (\\d)+$#", 0);
@@ -200,10 +213,10 @@ PHP_METHOD(Beanspeak_Command_Put, parseResponse) {
 		ZEPHIR_INIT_VAR(_7$$4);
 		object_init_ex(_7$$4, beanspeak_command_exception_ce);
 		ZEPHIR_INIT_VAR(_8$$4);
-		ZEPHIR_CONCAT_VS(_8$$4, line, ": server ran out of memory trying to grow the priority queue data structure");
+		ZEPHIR_CONCAT_VS(_8$$4, name, ": server ran out of memory trying to grow the priority queue data structure");
 		ZEPHIR_CALL_METHOD(NULL, _7$$4, "__construct", NULL, 7, _8$$4);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_7$$4, "beanspeak/command/put.zep", 96 TSRMLS_CC);
+		zephir_throw_exception_debug(_7$$4, "beanspeak/command/put.zep", 106 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -216,10 +229,10 @@ PHP_METHOD(Beanspeak_Command_Put, parseResponse) {
 		ZEPHIR_INIT_VAR(_12$$5);
 		object_init_ex(_12$$5, beanspeak_command_exception_ce);
 		ZEPHIR_INIT_VAR(_13$$5);
-		ZEPHIR_CONCAT_VS(_13$$5, line, ": job data exceeds server-enforced limit");
+		ZEPHIR_CONCAT_VS(_13$$5, name, ": job data exceeds server-enforced limit");
 		ZEPHIR_CALL_METHOD(NULL, _12$$5, "__construct", NULL, 7, _13$$5);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_12$$5, "beanspeak/command/put.zep", 100 TSRMLS_CC);
+		zephir_throw_exception_debug(_12$$5, "beanspeak/command/put.zep", 110 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -232,20 +245,36 @@ PHP_METHOD(Beanspeak_Command_Put, parseResponse) {
 		ZEPHIR_INIT_VAR(_17$$6);
 		object_init_ex(_17$$6, beanspeak_command_exception_ce);
 		ZEPHIR_INIT_VAR(_18$$6);
-		ZEPHIR_CONCAT_VS(_18$$6, line, ": CRLF expected");
+		ZEPHIR_CONCAT_VS(_18$$6, name, ": CRLF expected");
 		ZEPHIR_CALL_METHOD(NULL, _17$$6, "__construct", NULL, 7, _18$$6);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_17$$6, "beanspeak/command/put.zep", 104 TSRMLS_CC);
+		zephir_throw_exception_debug(_17$$6, "beanspeak/command/put.zep", 114 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
 	ZEPHIR_INIT_VAR(_19);
-	object_init_ex(_19, beanspeak_command_exception_ce);
 	ZEPHIR_INIT_VAR(_20);
-	ZEPHIR_CONCAT_SV(_20, "Unhandled response: ", line);
-	ZEPHIR_CALL_METHOD(NULL, _19, "__construct", NULL, 7, _20);
+	ZEPHIR_SINIT_VAR(_21);
+	ZVAL_STRING(&_21, "#^DRAINING#", 0);
+	zephir_preg_match(_20, &_21, line, _19, 0, 0 , 0  TSRMLS_CC);
+	if (zephir_is_true(_20)) {
+		ZEPHIR_INIT_VAR(_22$$7);
+		object_init_ex(_22$$7, beanspeak_command_exception_ce);
+		ZEPHIR_INIT_VAR(_23$$7);
+		ZEPHIR_CONCAT_VS(_23$$7, name, ": server has been put into 'drain mode' and is no longer accepting new jobs");
+		ZEPHIR_CALL_METHOD(NULL, _22$$7, "__construct", NULL, 7, _23$$7);
+		zephir_check_call_status();
+		zephir_throw_exception_debug(_22$$7, "beanspeak/command/put.zep", 118 TSRMLS_CC);
+		ZEPHIR_MM_RESTORE();
+		return;
+	}
+	ZEPHIR_INIT_VAR(_24);
+	object_init_ex(_24, beanspeak_command_exception_ce);
+	ZEPHIR_INIT_VAR(_25);
+	ZEPHIR_CONCAT_SV(_25, "Unhandled response: ", line);
+	ZEPHIR_CALL_METHOD(NULL, _24, "__construct", NULL, 7, _25);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(_19, "beanspeak/command/put.zep", 107 TSRMLS_CC);
+	zephir_throw_exception_debug(_24, "beanspeak/command/put.zep", 121 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 

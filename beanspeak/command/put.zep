@@ -33,6 +33,14 @@ class Put extends Command implements ResponseParserInterface
     private ttr;
 
     /**
+     * {@inheritdoc}
+     */
+    public function getName() -> string
+    {
+        return "PUT";
+    }
+
+    /**
      * Beanspeak\Command\Put constructor
      */
     public function __construct(string! data, int priority, int delay, int ttr)
@@ -84,7 +92,7 @@ class Put extends Command implements ResponseParserInterface
      */
     public function parseResponse(string line, string data = null) -> <ResponseInterface>
     {
-        var matches;
+        var matches, name;
 
         let matches = null;
 
@@ -92,16 +100,22 @@ class Put extends Command implements ResponseParserInterface
             return this->createResponse("INSERTED", ["id" : (int) matches[1]]);
         }
 
+        let name = this->getName();
+
         if (preg_match("#^BURIED (\d)+$#", line, matches)) {
-            throw new Exception(line . ": server ran out of memory trying to grow the priority queue data structure");
+            throw new Exception(name . ": server ran out of memory trying to grow the priority queue data structure");
         }
 
         if (preg_match("#^JOB_TOO_BIG$#", line)) {
-            throw new Exception(line . ": job data exceeds server-enforced limit");
+            throw new Exception(name . ": job data exceeds server-enforced limit");
         }
 
         if (preg_match("#^EXPECTED_CRLF#", line)) {
-            throw new Exception(line . ": CRLF expected");
+            throw new Exception(name . ": CRLF expected");
+        }
+
+        if (preg_match("#^DRAINING#", line)) {
+            throw new Exception(name . ": server has been put into 'drain mode' and is no longer accepting new jobs");
         }
 
         throw new Exception("Unhandled response: " . line);

@@ -67,15 +67,17 @@ class Beanspeak implements DispatcherAwareInterface
      *
      * Example:
      * <code>
-     * $queue->put([
-     *     'recipient' => 'user@mail.com',
-     *     'subject'   => 'Welcome',
-     *     'content'   => $content,
-     * ]);
-     *
      * $queue->put(
-     *    ['someKey' => 'someValue'],
-     *    ['priority' => 999, 'delay' => 60 * 60, 'ttr' => 3600]
+     *     [
+     *         'recipient' => 'user@mail.com',
+     *         'subject'   => 'Welcome',
+     *         'content'   => $content,
+     *     ],
+     *     [
+     *         'priority' => 999,
+     *         'delay'    => 60 * 60,
+     *         'ttr'      => 3600,
+     *     ],
      * );
      * </code>
      */
@@ -87,15 +89,15 @@ class Beanspeak implements DispatcherAwareInterface
          * Priority is 100 by default
          */
         if !fetch priority, options["priority"] {
-            let priority = 100;
+            let priority = "100";
         }
 
         if !fetch delay, options["delay"] {
-            let delay = 0;
+            let delay = "0";
         }
 
         if !fetch ttr, options["ttr"] {
-            let ttr = 86400;
+            let ttr = "86400";
         }
 
         /**
