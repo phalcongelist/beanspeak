@@ -3,7 +3,7 @@
     "name": "beanspeak",
     "description": "Client for Beanstalk delivered as a C-extension for PHP",
     "author": "Phalcon Team and contributors",
-    "version": "1.0.0",
+    "version": "1.0.0-alpha",
     "verbose": false,
     "requires": {
         "extensions": []
