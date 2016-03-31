@@ -24,12 +24,12 @@ before_install:
   - travis_retry composer require phalcon/zephir:dev-master
   - bash tests/_ci/install_zephir.sh
   - bash tests/_ci/install_beanstalkd.sh
-  - '[[ "$TRAVIS_PHP_VERSION" == "7" ]] || zephir generate'
-  - '[[ "$TRAVIS_PHP_VERSION" != "7" ]] || zephir generate --ZendEngine3'
 
 before_script:
-  - (cd ${TRAVIS_BUILD_DIR}/ext; export CFLAGS="-g0 -O0 -std=gnu90"; phpize &> /dev/null && ./configure --silent --enable-beanspeak &> /dev/null && make --silent -j2 &> /dev/null && make --silent install)
-  - phpenv config-add tests/_ci/beanspeack.ini
+  - '[[ "$TRAVIS_PHP_VERSION" == "7" ]] || zephir build'
+  - '[[ "$TRAVIS_PHP_VERSION" != "7" ]] || zephir build --ZendEngine3'
+  - echo "extension=${TRAVIS_BUILD_DIR}/ext/modules/beanspeak.so" | tee tests/_ci/beanspeak.ini
+  - phpenv config-add tests/_ci/beanspeak.ini
   - ulimit -c unlimited -S || true
   - echo '/tmp/core_%e.%p' | sudo tee /proc/sys/kernel/core_pattern &> /dev/null
   - stty cols 160
