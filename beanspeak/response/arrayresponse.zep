@@ -41,7 +41,7 @@ class ArrayResponse extends \ArrayObject implements ResponseInterface
      */
     public function getResponseName() -> string
     {
-       return this->name; 
+       return this->name;
     }
 
     /**
@@ -71,7 +71,7 @@ class ArrayResponse extends \ArrayObject implements ResponseInterface
     /**
      * Tranform underscored property name to hyphenated array key.
      */
-    private function transformPropertyName(string name) -> string
+    internal function transformPropertyName(string name) -> string
     {
         return str_replace("_", "-", name);
     }

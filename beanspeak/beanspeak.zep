@@ -26,6 +26,18 @@ use Beanspeak\Dispatcher\DispatcherAwareInterface;
  * Beanspeak\Beanspeak
  *
  * Class to access the beanstalk queue service.
+ *
+ * <code>
+ * use Beanspeak\Beanspeak;
+ *
+ * $queue = new Beanspeak([
+ *     'host'       => '127.0.0.1',
+ *     'port'       => 11300,
+ *     'persistent' => true,
+ * ]);
+ * </code>
+ *
+ * @link https://github.com/kr/beanstalkd/
  */
 class Beanspeak implements DispatcherAwareInterface
 {

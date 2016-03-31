@@ -23,6 +23,8 @@
 
 /**
  * Beanspeak\Command
+ *
+ * A command to be sent to the beanstalkd server, and response processing logic.
  */
 ZEPHIR_INIT_CLASS(Beanspeak_Command) {
 
@@ -85,7 +87,7 @@ PHP_METHOD(Beanspeak_Command, getData) {
 	ZEPHIR_CONCAT_SVS(_2, "The ", _1, " command has no data");
 	ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 2, _2);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(_0, "beanspeak/command.zep", 51 TSRMLS_CC);
+	zephir_throw_exception_debug(_0, "beanspeak/command.zep", 53 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 
@@ -109,7 +111,7 @@ PHP_METHOD(Beanspeak_Command, getDataLength) {
 	ZEPHIR_CONCAT_SVS(_2, "The ", _1, " command has no data");
 	ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 2, _2);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(_0, "beanspeak/command.zep", 59 TSRMLS_CC);
+	zephir_throw_exception_debug(_0, "beanspeak/command.zep", 61 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 

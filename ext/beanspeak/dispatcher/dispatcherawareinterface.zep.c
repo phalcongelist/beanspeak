@@ -15,7 +15,8 @@
 /**
  * Beanspeak\Dispatcher\DispatcherAwareInterface
  *
- * This interface must be implemented in those classes that uses internally the Beanspeak\Dispatcher that creates them
+ * This interface must be implemented in those classes that uses internally the
+ * Beanspeak\Dispatcher that creates them.
  */
 ZEPHIR_INIT_CLASS(Beanspeak_Dispatcher_DispatcherAwareInterface) {
 

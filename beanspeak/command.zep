@@ -24,6 +24,8 @@ use Beanspeak\Response\ResponseParserInterface;
 
 /**
  * Beanspeak\Command
+ *
+ * A command to be sent to the beanstalkd server, and response processing logic.
  */
 abstract class Command implements CommandInterface
 {

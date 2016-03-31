@@ -91,7 +91,7 @@ PHP_METHOD(Beanspeak_Response_ArrayResponse, __get) {
 	zephir_get_strval(name, name_param);
 
 
-	ZEPHIR_CALL_METHOD(&key, this_ptr, "transformpropertyname", NULL, 15, name);
+	ZEPHIR_CALL_INTERNAL_METHOD_P1(&key, this_ptr, zep_Beanspeak_Response_ArrayResponse_transformPropertyName, name);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_0);
 	ZEPHIR_CALL_METHOD(&_1, this_ptr, "offsetexists", NULL, 0, key);
@@ -121,7 +121,7 @@ PHP_METHOD(Beanspeak_Response_ArrayResponse, __isset) {
 	zephir_get_strval(name, name_param);
 
 
-	ZEPHIR_CALL_METHOD(&key, this_ptr, "transformpropertyname", NULL, 15, name);
+	ZEPHIR_CALL_INTERNAL_METHOD_P1(&key, this_ptr, zep_Beanspeak_Response_ArrayResponse_transformPropertyName, name);
 	zephir_check_call_status();
 	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "offsetexists", NULL, 0, key);
 	zephir_check_call_status();
@@ -132,13 +132,14 @@ PHP_METHOD(Beanspeak_Response_ArrayResponse, __isset) {
 /**
  * Tranform underscored property name to hyphenated array key.
  */
-PHP_METHOD(Beanspeak_Response_ArrayResponse, transformPropertyName) {
+void zep_Beanspeak_Response_ArrayResponse_transformPropertyName(int ht, zval *return_value, zval **return_value_ptr, zval *this_ptr, int return_value_used, zval *name_param_ext TSRMLS_DC) {
 
 	zval *name_param = NULL, _0, _1, *_2;
 	zval *name = NULL;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 0, &name_param);
+	name_param = name_param_ext;
+
 
 	zephir_get_strval(name, name_param);
 

@@ -24,6 +24,21 @@ use Beanspeak\Response\ResponseParserInterface;
  * Beanspeak\Command\Put
  *
  * Inserts a job into the client's currently used tube.
+ *
+ * <code>
+ * $queue->put(
+ *     [
+ *         'recipient' => 'user@mail.com',
+ *         'subject'   => 'Welcome',
+ *         'content'   => $content,
+ *     ],
+ *     [
+ *         'priority' => 999,
+ *         'delay'    => 60 * 60,
+ *         'ttr'      => 3600,
+ *     ],
+ * );
+ * </code>
  */
 class Put extends Command implements ResponseParserInterface
 {

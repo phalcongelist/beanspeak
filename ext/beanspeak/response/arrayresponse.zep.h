@@ -7,7 +7,7 @@ PHP_METHOD(Beanspeak_Response_ArrayResponse, __construct);
 PHP_METHOD(Beanspeak_Response_ArrayResponse, getResponseName);
 PHP_METHOD(Beanspeak_Response_ArrayResponse, __get);
 PHP_METHOD(Beanspeak_Response_ArrayResponse, __isset);
-PHP_METHOD(Beanspeak_Response_ArrayResponse, transformPropertyName);
+void zep_Beanspeak_Response_ArrayResponse_transformPropertyName(int ht, zval *return_value, zval **return_value_ptr, zval *this_ptr, int return_value_used, zval *name_param_ext TSRMLS_DC);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_response_arrayresponse___construct, 0, 0, 1)
 	ZEND_ARG_INFO(0, name)
@@ -31,6 +31,5 @@ ZEPHIR_INIT_FUNCS(beanspeak_response_arrayresponse_method_entry) {
 	PHP_ME(Beanspeak_Response_ArrayResponse, getResponseName, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Response_ArrayResponse, __get, arginfo_beanspeak_response_arrayresponse___get, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Response_ArrayResponse, __isset, arginfo_beanspeak_response_arrayresponse___isset, ZEND_ACC_PUBLIC)
-	PHP_ME(Beanspeak_Response_ArrayResponse, transformPropertyName, arginfo_beanspeak_response_arrayresponse_transformpropertyname, ZEND_ACC_PRIVATE)
 	PHP_FE_END
 };
