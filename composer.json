@@ -1,0 +1,32 @@
+{
+    "name" : "phalcongelist/beanspeak",
+    "type" : "library",
+    "description": "Client for Beanstalk delivered as a C-extension for PHP.",
+    "keywords": [
+      "beanstalk",
+      "beanstalkd",
+      "beanspeak",
+      "queue",
+      "extension"
+    ],
+    "homepage": "https://github.com/phalcongelist/beanspeak",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Phalcon Team",
+            "homepage": "http://phalconphp.com/en/team"
+        },
+        {
+            "name": "Contributors",
+            "homepage": "https://github.com/phalcongelist/beanspeak/graphs/contributors"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/phalcongelist/beanspea/issues",
+        "source": "https://github.com/phalcongelist/beanspea"
+    },
+    "require": {
+        "php": "~5.4"
+    },
+    "minimum-stability": "dev"
+}

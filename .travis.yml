@@ -1,0 +1,38 @@
+language: php
+
+sudo: required
+dist: precise
+group: edge
+
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+  - 7
+
+cache:
+  - apt
+
+before_install:
+  - export PATH=$PATH:~/bin;
+  - travis_retry composer self-update
+  - travis_retry composer require phalcon/zephir:dev-master
+  - bash tests/_ci/install_zephir.sh
+  - bash tests/_ci/install_beanstalkd.sh
+
+before_script:
+  - '[[ "$TRAVIS_PHP_VERSION" == "7" ]] || zephir build'
+  - '[[ "$TRAVIS_PHP_VERSION" != "7" ]] || zephir build --ZendEngine3'
+  - phpenv config-add tests/_ci/beanspeack.ini
+  - ulimit -c unlimited -S || true
+  - echo '/tmp/core_%e.%p' | sudo tee /proc/sys/kernel/core_pattern &> /dev/null
+  - stty cols 160
+
+script:
+  - php --ri beanspeack
+
+addons:
+  apt:
+    packages:
+      - gdb
+      - re2c
