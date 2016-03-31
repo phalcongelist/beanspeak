@@ -28,6 +28,7 @@ before_install:
 before_script:
   - '[[ "$TRAVIS_PHP_VERSION" == "7" ]] || zephir build'
   - '[[ "$TRAVIS_PHP_VERSION" != "7" ]] || zephir build --ZendEngine3'
+  - echo "extension=${TRAVIS_BUILD_DIR}/ext/modules/beanspeak.so" | tee tests/_ci/beanspeak.ini
   - phpenv config-add tests/_ci/beanspeack.ini
   - ulimit -c unlimited -S || true
   - echo '/tmp/core_%e.%p' | sudo tee /proc/sys/kernel/core_pattern &> /dev/null
