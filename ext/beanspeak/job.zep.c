@@ -22,7 +22,7 @@
 /**
  * Beanspeak\Job
  *
- *  Represents a job in a beanstalk queue.
+ * Represents a job in a beanstalk queue.
  */
 ZEPHIR_INIT_CLASS(Beanspeak_Job) {
 

@@ -16,6 +16,7 @@
 #include "beanspeak/beanspeak.zep.h"
 #include "beanspeak/command/exception.zep.h"
 #include "beanspeak/command/put.zep.h"
+#include "beanspeak/command/reserve.zep.h"
 #include "beanspeak/command/use.zep.h"
 #include "beanspeak/connection.zep.h"
 #include "beanspeak/connection/exception.zep.h"

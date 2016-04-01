@@ -17,8 +17,11 @@
 
 namespace Beanspeak;
 
+use Beanspeak\Job;
 use Beanspeak\Command\Put;
 use Beanspeak\Command\Use;
+use Beanspeak\Command\Reserve;
+use Beanspeak\Job\JobInterface;
 use Beanspeak\Dispatcher\DispatcherInterface;
 use Beanspeak\Dispatcher\DispatcherAwareInterface;
 
@@ -93,7 +96,7 @@ class Beanspeak implements DispatcherAwareInterface
      * );
      * </code>
      */
-    public function put(var data, array options = null)
+    public function put(var data, array options = null) -> int
     {
         var priority, delay, ttr, serialized, response;
 
@@ -125,11 +128,31 @@ class Beanspeak implements DispatcherAwareInterface
      * $queue->use('mail_queue');
      * </code>
      */
-    public function $use(string! tube)
+    public function $use(string! tube) -> string
     {
         var response;
         let response = this->dispatcher->dispatch(new $Use(tube));
 
         return response->tube;
+    }
+
+    /**
+     * Reserves/locks a ready job from the specified tube.
+     *
+     * <code>
+     * $queue->reserve();
+     * </code>
+     */
+    public function reserve(var timeout = null) -> boolean|<JobInterface>
+    {
+        var response;
+
+        let response = this->dispatcher->dispatch(new Reserve(timeout));
+
+        if response->getResponseName() == "RESERVED" {
+            return new Job(response->id, response->jobdata);
+        }
+
+        return false;
     }
 }

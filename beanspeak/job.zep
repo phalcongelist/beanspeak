@@ -22,7 +22,7 @@ use Beanspeak\Job\JobInterface;
 /**
  * Beanspeak\Job
  *
- *  Represents a job in a beanstalk queue.
+ * Represents a job in a beanstalk queue.
  */
 class Job implements JobInterface
 {
