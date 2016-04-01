@@ -13,10 +13,10 @@ if (PHP_BEANSPEAK != "no") {
   
   ADD_SOURCES(configure_module_dirname + "/beanspeak/command", "commandinterface.zep.c exception.zep.c put.zep.c reserve.zep.c use.zep.c", "beanspeak");
 	ADD_SOURCES(configure_module_dirname + "/beanspeak", "command.zep.c beanspeak.zep.c connection.zep.c dispatcher.zep.c exception.zep.c job.zep.c", "beanspeak");
-	ADD_SOURCES(configure_module_dirname + "/beanspeak/response/parser", "parserinterface.zep.c", "beanspeak");
+	ADD_SOURCES(configure_module_dirname + "/beanspeak/response/parser", "parserinterface.zep.c exception.zep.c", "beanspeak");
 	ADD_SOURCES(configure_module_dirname + "/beanspeak/connection", "connectionawareinterface.zep.c connectioninterface.zep.c exception.zep.c", "beanspeak");
 	ADD_SOURCES(configure_module_dirname + "/beanspeak/dispatcher", "dispatcherawareinterface.zep.c dispatcherinterface.zep.c exception.zep.c", "beanspeak");
-	ADD_SOURCES(configure_module_dirname + "/beanspeak/job", "jobinterface.zep.c", "beanspeak");
+	ADD_SOURCES(configure_module_dirname + "/beanspeak/job", "jobinterface.zep.c exception.zep.c", "beanspeak");
 	ADD_SOURCES(configure_module_dirname + "/beanspeak/response", "responseinterface.zep.c arrayresponse.zep.c exception.zep.c", "beanspeak");
   ADD_FLAG("CFLAGS_BEANSPEAK", "/D ZEPHIR_RELEASE");
 }

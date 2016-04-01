@@ -24,7 +24,9 @@
 #include "beanspeak/dispatcher/exception.zep.h"
 #include "beanspeak/exception.zep.h"
 #include "beanspeak/job.zep.h"
+#include "beanspeak/job/exception.zep.h"
 #include "beanspeak/response/arrayresponse.zep.h"
 #include "beanspeak/response/exception.zep.h"
+#include "beanspeak/response/parser/exception.zep.h"
 
 #endif
