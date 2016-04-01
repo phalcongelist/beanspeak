@@ -75,12 +75,12 @@ class Reserve extends Command implements ResponseParserInterface
      */
     public function parseResponse(string line, string data = null) -> <ResponseInterface>
     {
-        if line != "RESERVED" {
+        if !starts_with(line, "RESERVED") {
             return this->createResponse(line);
         }
 
         var response;
-        let response = explode(" ", line, 2);
+        let response = explode(" ", line);
 
         return this->createResponse(response[0], [
             "id"      : (int) response[1],

@@ -16,8 +16,8 @@
 #include "kernel/memory.h"
 #include "kernel/operators.h"
 #include "kernel/concat.h"
-#include "kernel/fcall.h"
 #include "kernel/string.h"
+#include "kernel/fcall.h"
 #include "kernel/array.h"
 
 
@@ -118,13 +118,13 @@ PHP_METHOD(Beanspeak_Command_Reserve, parseResponse) {
 	}
 
 
-	if (!ZEPHIR_IS_STRING(line, "RESERVED")) {
+	if (!(zephir_start_with_str(line, SL("RESERVED")))) {
 		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "createresponse", NULL, 0, line);
 		zephir_check_call_status();
 		RETURN_MM();
 	}
 	ZEPHIR_INIT_VAR(response);
-	zephir_fast_explode_str(response, SL(" "), line, 2  TSRMLS_CC);
+	zephir_fast_explode_str(response, SL(" "), line, LONG_MAX TSRMLS_CC);
 	zephir_array_fetch_long(&_0, response, 0, PH_NOISY | PH_READONLY, "beanspeak/command/reserve.zep", 85 TSRMLS_CC);
 	ZEPHIR_INIT_VAR(_1);
 	zephir_create_array(_1, 2, 0 TSRMLS_CC);
