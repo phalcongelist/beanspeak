@@ -18,7 +18,8 @@
 namespace Beanspeak\Command;
 
 use Beanspeak\Command;
-use Beanspeak\Response\ResponseParserInterface;
+use Beanspeak\Response\ResponseInterface;
+use Beanspeak\Response\Parser\ParserInterface;
 
 /**
  * Beanspeak\Command\Use
@@ -31,7 +32,7 @@ use Beanspeak\Response\ResponseParserInterface;
  * $queue->use('mail_queue');
  * </code>
  */
-class $Use extends Command implements ResponseParserInterface
+class $Use extends Command implements ParserInterface
 {
     private tube;
 

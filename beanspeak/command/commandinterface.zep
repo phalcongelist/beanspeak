@@ -17,7 +17,7 @@
 
 namespace Beanspeak\Command;
 
-use Beanspeak\Response\ResponseParserInterface;
+use Beanspeak\Response\Parser\ParserInterface;
 
 /**
  * Beanspeak\Command\CommandInterface
@@ -52,7 +52,7 @@ interface CommandInterface
     /**
      * The response parser for the command.
      */
-    public function getResponseParser() -> <ResponseParserInterface>;
+    public function getResponseParser() -> <ParserInterface>;
 
     /**
      * The string representation of the object.

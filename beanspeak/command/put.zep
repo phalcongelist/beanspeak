@@ -18,7 +18,8 @@
 namespace Beanspeak\Command;
 
 use Beanspeak\Command;
-use Beanspeak\Response\ResponseParserInterface;
+use Beanspeak\Response\ResponseInterface;
+use Beanspeak\Response\Parser\ParserInterface;
 
 /**
  * Beanspeak\Command\Put
@@ -40,7 +41,7 @@ use Beanspeak\Response\ResponseParserInterface;
  * );
  * </code>
  */
-class Put extends Command implements ResponseParserInterface
+class Put extends Command implements ParserInterface
 {
     private data;
     private priority;

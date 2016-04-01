@@ -46,7 +46,7 @@ class Beanspeak implements DispatcherAwareInterface
 {
     /**
      * The internal Dispatcher.
-     * @var DispatcherInterface
+     * @var \Beanspeak\Dispatcher\DispatcherInterface
      */
     protected dispatcher;
 

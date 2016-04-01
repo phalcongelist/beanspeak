@@ -39,7 +39,7 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command_Use) {
 
 	zend_declare_property_null(beanspeak_command_use_ce, SL("tube"), ZEND_ACC_PRIVATE TSRMLS_CC);
 
-	zend_class_implements(beanspeak_command_use_ce TSRMLS_CC, 1, beanspeak_response_responseparserinterface_ce);
+	zend_class_implements(beanspeak_command_use_ce TSRMLS_CC, 1, beanspeak_response_parser_parserinterface_ce);
 	return SUCCESS;
 
 }

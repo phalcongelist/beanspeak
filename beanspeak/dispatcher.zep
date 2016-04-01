@@ -21,6 +21,7 @@ use Beanspeak\Command\CommandInterface;
 use Beanspeak\Response\ResponseInterface;
 use Beanspeak\Dispatcher\DispatcherInterface;
 use Beanspeak\Connection\ConnectionInterface;
+use Beanspeak\Response\Parser\ParserInterface;
 use Beanspeak\Connection\ConnectionAwareInterface;
 use Beanspeak\Connection\Exception as ConnectionException;
 use Beanspeak\Dispatcher\Exception as DispatcherException;
