@@ -41,6 +41,8 @@ class Reserve extends Command implements ParserInterface
     {
         if typeof timeout == "int" {
             let this->timeout = timeout;
+        } elseif is_numeric(timeout) {
+            let this->timeout = (int) timeout;
         }
     }
 
