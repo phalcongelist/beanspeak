@@ -26,7 +26,7 @@
 /**
  * Beanspeak\Connection
  *
- * Represents a connection to a beanstalkd instance
+ * Represents a connection to a beanstalkd instance.
  */
 ZEPHIR_INIT_CLASS(Beanspeak_Connection) {
 

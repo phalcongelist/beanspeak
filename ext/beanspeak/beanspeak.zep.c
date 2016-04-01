@@ -116,7 +116,6 @@ PHP_METHOD(Beanspeak_Beanspeak, getDispatcher) {
 /**
  * Inserts jobs into the queue.
  *
- * Example:
  * <code>
  * $queue->put(
  *     [
@@ -182,7 +181,6 @@ PHP_METHOD(Beanspeak_Beanspeak, put) {
 /**
  * Change the active tube.
  *
- * Example:
  * <code>
  * $queue->use('mail_queue');
  * </code>

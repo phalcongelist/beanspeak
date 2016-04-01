@@ -78,7 +78,6 @@ class Beanspeak implements DispatcherAwareInterface
     /**
      * Inserts jobs into the queue.
      *
-     * Example:
      * <code>
      * $queue->put(
      *     [
@@ -122,7 +121,6 @@ class Beanspeak implements DispatcherAwareInterface
     /**
      * Change the active tube.
      *
-     * Example:
      * <code>
      * $queue->use('mail_queue');
      * </code>
