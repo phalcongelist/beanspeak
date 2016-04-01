@@ -346,7 +346,7 @@ void zep_Beanspeak_Dispatcher_checkStatusMessage(int ht, zval *return_value, zva
 
 void zep_Beanspeak_Dispatcher_parseData(int ht, zval *return_value, zval **return_value_ptr, zval *this_ptr, int return_value_used, zval *content_param_ext TSRMLS_DC) {
 
-	zval *dataResponses = NULL;
+	zval *dataResponses;
 	int ZEPHIR_LAST_CALL_STATUS;
 	zephir_fcall_cache_entry *_3 = NULL;
 	zval *content_param = NULL, *connection = NULL, *dataLength = NULL, *data = NULL, *message = NULL, *crlf = NULL, *_0, *_1, *_2, *_4$$3 = NULL, *_5$$3, _6$$3, *_7$$4, *_8$$4, *_9$$4;
