@@ -14,8 +14,6 @@
 
 /**
  * Beanspeak\Response\Parser\ParserInterface
- *
- * A parser for response data sent from the beanstalkd server.
  */
 ZEPHIR_INIT_CLASS(Beanspeak_Response_Parser_ParserInterface) {
 
@@ -28,5 +26,5 @@ ZEPHIR_INIT_CLASS(Beanspeak_Response_Parser_ParserInterface) {
 /**
  * Parses raw response data into a Response object.
  */
-ZEPHIR_DOC_METHOD(Beanspeak_Response_Parser_ParserInterface, parse);
+ZEPHIR_DOC_METHOD(Beanspeak_Response_Parser_ParserInterface, parseResponse);
 

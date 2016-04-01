@@ -18,7 +18,8 @@
 namespace Beanspeak\Command;
 
 use Beanspeak\Command;
-use Beanspeak\Response\ResponseParserInterface;
+use Beanspeak\Response\ResponseInterface;
+use Beanspeak\Response\Parser\ParserInterface;
 
 /**
  * Beanspeak\Command\Reserve
@@ -29,7 +30,7 @@ use Beanspeak\Response\ResponseParserInterface;
  * $queue->reserve();
  * </code>
  */
-class Reserve extends Command implements ResponseParserInterface
+class Reserve extends Command implements ParserInterface
 {
     private timeout = null;
 

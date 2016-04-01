@@ -15,12 +15,14 @@
  +------------------------------------------------------------------------+
 */
 
-namespace Beanspeak\Response;
+namespace Beanspeak\Response\Parser;
+
+use Beanspeak\Response\ResponseInterface;
 
 /**
- * Beanspeak\Response\ResponseParserInterface
+ * Beanspeak\Response\Parser\ParserInterface
  */
-interface ResponseParserInterface
+interface ParserInterface
 {
     /**
      * Parses raw response data into a Response object.

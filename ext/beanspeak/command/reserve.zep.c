@@ -36,7 +36,7 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command_Reserve) {
 
 	zend_declare_property_null(beanspeak_command_reserve_ce, SL("timeout"), ZEND_ACC_PRIVATE TSRMLS_CC);
 
-	zend_class_implements(beanspeak_command_reserve_ce TSRMLS_CC, 1, beanspeak_response_responseparserinterface_ce);
+	zend_class_implements(beanspeak_command_reserve_ce TSRMLS_CC, 1, beanspeak_response_parser_parserinterface_ce);
 	return SUCCESS;
 
 }
@@ -125,11 +125,11 @@ PHP_METHOD(Beanspeak_Command_Reserve, parseResponse) {
 	}
 	ZEPHIR_INIT_VAR(response);
 	zephir_fast_explode_str(response, SL(" "), line, LONG_MAX TSRMLS_CC);
-	zephir_array_fetch_long(&_0, response, 0, PH_NOISY | PH_READONLY, "beanspeak/command/reserve.zep", 85 TSRMLS_CC);
+	zephir_array_fetch_long(&_0, response, 0, PH_NOISY | PH_READONLY, "beanspeak/command/reserve.zep", 86 TSRMLS_CC);
 	ZEPHIR_INIT_VAR(_1);
 	zephir_create_array(_1, 2, 0 TSRMLS_CC);
 	ZEPHIR_OBS_VAR(_2);
-	zephir_array_fetch_long(&_2, response, 1, PH_NOISY, "beanspeak/command/reserve.zep", 86 TSRMLS_CC);
+	zephir_array_fetch_long(&_2, response, 1, PH_NOISY, "beanspeak/command/reserve.zep", 87 TSRMLS_CC);
 	add_assoc_long_ex(_1, SS("id"), zephir_get_intval(_2));
 	zephir_array_update_string(&_1, SL("jobdata"), &data, PH_COPY | PH_SEPARATE);
 	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "createresponse", NULL, 0, _0, _1);

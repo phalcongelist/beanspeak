@@ -44,7 +44,7 @@ ZEPHIR_INIT_CLASS(Beanspeak_Beanspeak) {
 
 	/**
 	 * The internal Dispatcher.
-	 * @var DispatcherInterface
+	 * @var \Beanspeak\Dispatcher\DispatcherInterface
 	 */
 	zend_declare_property_null(beanspeak_beanspeak_ce, SL("dispatcher"), ZEND_ACC_PROTECTED TSRMLS_CC);
 

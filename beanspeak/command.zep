@@ -21,7 +21,7 @@ use Beanspeak\Command\Exception;
 use Beanspeak\Response\ArrayResponse;
 use Beanspeak\Command\CommandInterface;
 use Beanspeak\Response\ResponseInterface;
-use Beanspeak\Response\ResponseParserInterface;
+use Beanspeak\Response\Parser\ParserInterface;
 
 /**
  * Beanspeak\Command
@@ -57,7 +57,7 @@ abstract class Command implements CommandInterface
     /**
      * {@inheritdoc}
      */
-    public function getResponseParser() -> <ResponseParserInterface>
+    public function getResponseParser() -> <ParserInterface>
     {
        return this;
     }
