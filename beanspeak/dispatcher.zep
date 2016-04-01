@@ -199,17 +199,17 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
 
     internal function parseData(string content) -> void
     {
-        array dataResponses;
         var connection, dataLength, data, message, crlf;
 
-        let connection    = this->connection,
-            message       = preg_replace("#^(\S+).*$#s", "$1", content),
-            data          = null,
-            dataResponses = [
-                "RESERVED" : true,
-                "FOUND"    : true,
-                "OK"       : true
-           ];
+        let connection = this->connection,
+            message    = preg_replace("#^(\S+).*$#s", "$1", content),
+            data       = null;
+
+        array dataResponses = [
+            "RESERVED" : true,
+            "FOUND"    : true,
+            "OK"       : true
+        ];
 
         if isset dataResponses[message] {
             let dataLength = preg_replace("#^.*\b(\d+)$#", "$1", content),

@@ -16,16 +16,19 @@ if test "$PHP_BEANSPEAK" = "yes"; then
 	beanspeak/connection/connectioninterface.zep.c
 	beanspeak/dispatcher/dispatcherawareinterface.zep.c
 	beanspeak/dispatcher/dispatcherinterface.zep.c
+	beanspeak/job/jobinterface.zep.c
 	beanspeak/response/responseinterface.zep.c
 	beanspeak/beanspeak.zep.c
 	beanspeak/command/exception.zep.c
 	beanspeak/command/put.zep.c
+	beanspeak/command/reserve.zep.c
 	beanspeak/command/use.zep.c
 	beanspeak/connection.zep.c
 	beanspeak/connection/exception.zep.c
 	beanspeak/dispatcher.zep.c
 	beanspeak/dispatcher/exception.zep.c
 	beanspeak/exception.zep.c
+	beanspeak/job.zep.c
 	beanspeak/response/arrayresponse.zep.c
 	beanspeak/response/exception.zep.c
 	beanspeak/responseinterface.zep.c

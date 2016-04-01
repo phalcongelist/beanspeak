@@ -15,66 +15,76 @@
  +------------------------------------------------------------------------+
 */
 
-namespace Beanspeak;
+namespace Beanspeak\Command;
 
-use Beanspeak\Command\Exception;
-use Beanspeak\Response\ArrayResponse;
-use Beanspeak\Command\CommandInterface;
-use Beanspeak\Response\ResponseInterface;
+use Beanspeak\Command;
 use Beanspeak\Response\ResponseParserInterface;
 
 /**
- * Beanspeak\Command
+ * Beanspeak\Command\Reserve
  *
- * A command to be sent to the beanstalkd server, and response processing logic.
+ * Reserves/locks a ready job from the specified tube.
+ *
+ * <code>
+ * $queue->reserve();
+ * </code>
  */
-abstract class Command implements CommandInterface
+class Reserve extends Command implements ResponseParserInterface
 {
+    private timeout = null;
+
     /**
-     * {@inheritdoc}
+     * Beanspeak\Command\Reserve constructor
      */
-    public function hasData() -> boolean
+    public function __construct(var timeout = null)
     {
-        return false;
+        if typeof timeout == "int" {
+            let this->timeout = timeout;
+        }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getData() -> string
+    public function getName() -> string
     {
-        throw new Exception("The " . this->getName() . " command has no data");
+        if this->timeout {
+            return "RESERVE-WITH-TIMEOUT";
+        }
+
+        return "RESERVE";
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getDataLength() -> int
+    public function getCommandLine()
     {
-        throw new Exception("The " . this->getName() . " command has no data");
+        var timeout;
+        let timeout = this->timeout;
+
+        if typeof timeout == "int" {
+            return "reserve-with-timeout " . timeout;
+        }
+
+        return "reserve";
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getResponseParser() -> <ResponseParserInterface>
+    public function parseResponse(string line, string data = null) -> <ResponseInterface>
     {
-       return this;
-    }
+        if line != "RESERVED" {
+            return this->createResponse(line);
+        }
 
-    /**
-     * Creates a Response for the given data.
-     */
-    protected function createResponse(string name, array data = []) -> <ResponseInterface>
-    {
-        return new ArrayResponse(name, data);
-    }
+        var response;
+        let response = explode(" ", line, 2);
 
-    /**
-     * {@inheritdoc}
-     */
-    public function __toString() -> string
-    {
-        return this->getCommandLine();
+        return this->createResponse(response[0], [
+            "id"      : (int) response[1],
+            "jobdata" : data
+        ]);
     }
 }

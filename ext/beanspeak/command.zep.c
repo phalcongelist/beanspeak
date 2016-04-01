@@ -12,11 +12,9 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/string.h"
-#include "kernel/memory.h"
-#include "kernel/object.h"
-#include "kernel/fcall.h"
 #include "kernel/exception.h"
+#include "kernel/memory.h"
+#include "kernel/fcall.h"
 #include "kernel/concat.h"
 #include "kernel/operators.h"
 
@@ -32,29 +30,6 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command) {
 
 	zend_class_implements(beanspeak_command_ce TSRMLS_CC, 1, beanspeak_command_commandinterface_ce);
 	return SUCCESS;
-
-}
-
-/**
- * {@inheritdoc}
- */
-PHP_METHOD(Beanspeak_Command, getName) {
-
-	zval *_0, *_1, *_2 = NULL;
-	int ZEPHIR_LAST_CALL_STATUS;
-
-	ZEPHIR_MM_GROW();
-
-	ZEPHIR_INIT_VAR(_0);
-	ZEPHIR_INIT_VAR(_1);
-	zephir_get_called_class(_1 TSRMLS_CC);
-	zephir_fast_explode_str(_0, SL("\\"), _1, LONG_MAX TSRMLS_CC);
-	ZEPHIR_MAKE_REF(_0);
-	ZEPHIR_CALL_FUNCTION(&_2, "array_pop", NULL, 1, _0);
-	ZEPHIR_UNREF(_0);
-	zephir_check_call_status();
-	zephir_fast_strtoupper(return_value, _2);
-	RETURN_MM();
 
 }
 
@@ -85,9 +60,9 @@ PHP_METHOD(Beanspeak_Command, getData) {
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_2);
 	ZEPHIR_CONCAT_SVS(_2, "The ", _1, " command has no data");
-	ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 2, _2);
+	ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 1, _2);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(_0, "beanspeak/command.zep", 53 TSRMLS_CC);
+	zephir_throw_exception_debug(_0, "beanspeak/command.zep", 46 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 
@@ -109,9 +84,9 @@ PHP_METHOD(Beanspeak_Command, getDataLength) {
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_2);
 	ZEPHIR_CONCAT_SVS(_2, "The ", _1, " command has no data");
-	ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 2, _2);
+	ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 1, _2);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(_0, "beanspeak/command.zep", 61 TSRMLS_CC);
+	zephir_throw_exception_debug(_0, "beanspeak/command.zep", 54 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 
@@ -119,30 +94,12 @@ PHP_METHOD(Beanspeak_Command, getDataLength) {
 
 /**
  * {@inheritdoc}
- * Concrete implementation must either:
- * a) implement ResponseParserInterface
- * b) override this getResponseParser method
  */
 PHP_METHOD(Beanspeak_Command, getResponseParser) {
 
 	
 
 	RETURN_THISW();
-
-}
-
-/**
- * {@inheritdoc}
- */
-PHP_METHOD(Beanspeak_Command, __toString) {
-
-	int ZEPHIR_LAST_CALL_STATUS;
-
-	ZEPHIR_MM_GROW();
-
-	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "getcommandline", NULL, 0);
-	zephir_check_call_status();
-	RETURN_MM();
 
 }
 
@@ -169,7 +126,22 @@ PHP_METHOD(Beanspeak_Command, createResponse) {
 
 
 	object_init_ex(return_value, beanspeak_response_arrayresponse_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 3, name, data);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 2, name, data);
+	zephir_check_call_status();
+	RETURN_MM();
+
+}
+
+/**
+ * {@inheritdoc}
+ */
+PHP_METHOD(Beanspeak_Command, __toString) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+
+	ZEPHIR_MM_GROW();
+
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "getcommandline", NULL, 0);
 	zephir_check_call_status();
 	RETURN_MM();
 

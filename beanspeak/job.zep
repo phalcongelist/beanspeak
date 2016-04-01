@@ -17,25 +17,33 @@
 
 namespace Beanspeak;
 
-use Beanspeak\Command\Exception;
-use Beanspeak\Response\ArrayResponse;
-use Beanspeak\Command\CommandInterface;
-use Beanspeak\Response\ResponseInterface;
-use Beanspeak\Response\ResponseParserInterface;
+use Beanspeak\Job\JobInterface;
 
 /**
- * Beanspeak\Command
+ * Beanspeak\Job
  *
- * A command to be sent to the beanstalkd server, and response processing logic.
+ * Represents a job in a beanstalk queue.
  */
-abstract class Command implements CommandInterface
+class Job implements JobInterface
 {
+    private id;
+    private data;
+
+    /**
+     * Beanspeak\Job constructor
+     */
+    public function __construct(int! id, string! data)
+    {
+        let this->id   = id,
+            this->data = data;
+    }
+
     /**
      * {@inheritdoc}
      */
-    public function hasData() -> boolean
+    public function getId() -> int
     {
-        return false;
+        return this->id;
     }
 
     /**
@@ -43,38 +51,6 @@ abstract class Command implements CommandInterface
      */
     public function getData() -> string
     {
-        throw new Exception("The " . this->getName() . " command has no data");
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDataLength() -> int
-    {
-        throw new Exception("The " . this->getName() . " command has no data");
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getResponseParser() -> <ResponseParserInterface>
-    {
-       return this;
-    }
-
-    /**
-     * Creates a Response for the given data.
-     */
-    protected function createResponse(string name, array data = []) -> <ResponseInterface>
-    {
-        return new ArrayResponse(name, data);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __toString() -> string
-    {
-        return this->getCommandLine();
+        return this->data;
     }
 }

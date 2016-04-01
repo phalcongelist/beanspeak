@@ -23,7 +23,7 @@ use Beanspeak\Connection\ConnectionInterface;
 /**
  * Beanspeak\Connection
  *
- * Represents a connection to a beanstalkd instance
+ * Represents a connection to a beanstalkd instance.
  */
 class Connection implements ConnectionInterface
 {
