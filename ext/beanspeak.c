@@ -51,6 +51,7 @@ zend_class_entry *beanspeak_job_exception_ce;
 zend_class_entry *beanspeak_response_arrayresponse_ce;
 zend_class_entry *beanspeak_response_exception_ce;
 zend_class_entry *beanspeak_response_parser_exception_ce;
+zend_class_entry *beanspeak_response_parser_yaml_ce;
 
 ZEND_DECLARE_MODULE_GLOBALS(beanspeak)
 
@@ -100,6 +101,7 @@ static PHP_MINIT_FUNCTION(beanspeak)
 	ZEPHIR_INIT(Beanspeak_Response_ArrayResponse);
 	ZEPHIR_INIT(Beanspeak_Response_Exception);
 	ZEPHIR_INIT(Beanspeak_Response_Parser_Exception);
+	ZEPHIR_INIT(Beanspeak_Response_Parser_Yaml);
 
 #if PHP_VERSION_ID < 50500
 	setlocale(LC_ALL, old_lc_all);

@@ -5,8 +5,8 @@
 #define ZEPHIR_CLASS_ENTRIES_H
 
 #include "beanspeak/command/commandinterface.zep.h"
-#include "beanspeak/command.zep.h"
 #include "beanspeak/response/parser/parserinterface.zep.h"
+#include "beanspeak/command.zep.h"
 #include "beanspeak/connection/connectionawareinterface.zep.h"
 #include "beanspeak/connection/connectioninterface.zep.h"
 #include "beanspeak/dispatcher/dispatcherawareinterface.zep.h"
@@ -28,5 +28,6 @@
 #include "beanspeak/response/arrayresponse.zep.h"
 #include "beanspeak/response/exception.zep.h"
 #include "beanspeak/response/parser/exception.zep.h"
+#include "beanspeak/response/parser/yaml.zep.h"
 
 #endif
