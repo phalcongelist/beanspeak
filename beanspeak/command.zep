@@ -20,6 +20,7 @@ namespace Beanspeak;
 use Beanspeak\Command\Exception;
 use Beanspeak\Response\ArrayResponse;
 use Beanspeak\Command\CommandInterface;
+use Beanspeak\Response\ResponseInterface;
 use Beanspeak\Response\ResponseParserInterface;
 
 /**
@@ -32,15 +33,7 @@ abstract class Command implements CommandInterface
     /**
      * {@inheritdoc}
      */
-    public function getName() -> string
-    {
-        return strtoupper(array_pop(explode("\\", get_called_class())));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function hasData()
+    public function hasData() -> boolean
     {
         return false;
     }
@@ -48,7 +41,7 @@ abstract class Command implements CommandInterface
     /**
      * {@inheritdoc}
      */
-    public function getData()
+    public function getData() -> string
     {
         throw new Exception("The " . this->getName() . " command has no data");
     }
@@ -56,20 +49,25 @@ abstract class Command implements CommandInterface
     /**
      * {@inheritdoc}
      */
-    public function getDataLength()
+    public function getDataLength() -> int
     {
         throw new Exception("The " . this->getName() . " command has no data");
     }
 
     /**
      * {@inheritdoc}
-     * Concrete implementation must either:
-     * a) implement ResponseParserInterface
-     * b) override this getResponseParser method
      */
     public function getResponseParser() -> <ResponseParserInterface>
     {
        return this;
+    }
+
+    /**
+     * Creates a Response for the given data.
+     */
+    protected function createResponse(string name, array data = []) -> <ResponseInterface>
+    {
+        return new ArrayResponse(name, data);
     }
 
     /**
@@ -78,13 +76,5 @@ abstract class Command implements CommandInterface
     public function __toString() -> string
     {
         return this->getCommandLine();
-    }
-
-    /**
-     * Creates a Response for the given data.
-     */
-    protected function createResponse(string name, array data = [])
-    {
-        return new ArrayResponse(name, data);
     }
 }

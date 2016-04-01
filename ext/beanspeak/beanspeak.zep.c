@@ -75,7 +75,7 @@ PHP_METHOD(Beanspeak_Beanspeak, __construct) {
 	if (!(zephir_is_true(dispatcher))) {
 		ZEPHIR_INIT_NVAR(_0);
 		object_init_ex(_0, beanspeak_dispatcher_ce);
-		ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 4);
+		ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 3);
 		zephir_check_call_status();
 	} else {
 		ZEPHIR_CPY_WRT(_0, dispatcher);
@@ -163,12 +163,12 @@ PHP_METHOD(Beanspeak_Beanspeak, put) {
 		ZEPHIR_INIT_NVAR(ttr);
 		ZVAL_LONG(ttr, 86400);
 	}
-	ZEPHIR_CALL_FUNCTION(&serialized, "serialize", NULL, 5, data);
+	ZEPHIR_CALL_FUNCTION(&serialized, "serialize", NULL, 4, data);
 	zephir_check_call_status();
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
 	ZEPHIR_INIT_VAR(_1);
 	object_init_ex(_1, beanspeak_command_put_ce);
-	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 6, serialized, priority, delay, ttr);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 5, serialized, priority, delay, ttr);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);
 	zephir_check_call_status();
@@ -209,7 +209,7 @@ PHP_METHOD(Beanspeak_Beanspeak, use) {
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
 	ZEPHIR_INIT_VAR(_1);
 	object_init_ex(_1, beanspeak_command_use_ce);
-	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 7, tube);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 6, tube);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);
 	zephir_check_call_status();
@@ -242,7 +242,7 @@ PHP_METHOD(Beanspeak_Beanspeak, reserve) {
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
 	ZEPHIR_INIT_VAR(_1);
 	object_init_ex(_1, beanspeak_command_reserve_ce);
-	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 8, timeout);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 7, timeout);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);
 	zephir_check_call_status();
@@ -254,7 +254,7 @@ PHP_METHOD(Beanspeak_Beanspeak, reserve) {
 		zephir_read_property(&_3$$3, response, SL("id"), PH_NOISY_CC);
 		ZEPHIR_OBS_VAR(_4$$3);
 		zephir_read_property(&_4$$3, response, SL("jobdata"), PH_NOISY_CC);
-		ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 9, _3$$3, _4$$3);
+		ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 8, _3$$3, _4$$3);
 		zephir_check_call_status();
 		RETURN_MM();
 	}
