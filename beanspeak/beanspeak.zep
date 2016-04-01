@@ -20,8 +20,10 @@ namespace Beanspeak;
 use Beanspeak\Job;
 use Beanspeak\Command\Put;
 use Beanspeak\Command\Use;
+use Beanspeak\Command\Stats;
 use Beanspeak\Command\Reserve;
 use Beanspeak\Job\JobInterface;
+use Beanspeak\Response\ArrayResponse;
 use Beanspeak\Dispatcher\DispatcherInterface;
 use Beanspeak\Dispatcher\DispatcherAwareInterface;
 
@@ -154,5 +156,17 @@ class Beanspeak implements DispatcherAwareInterface
         }
 
         return false;
+    }
+
+    /**
+     * Gives statistical information about the system as a whole.
+     *
+     * <code>
+     * $queue->stats();
+     * </code>
+     */
+    public function stats() -> <ArrayResponse>
+    {
+        return this->dispatcher->dispatch(new Stats());
     }
 }

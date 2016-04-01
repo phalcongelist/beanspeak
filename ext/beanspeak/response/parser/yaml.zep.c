@@ -114,7 +114,7 @@ PHP_METHOD(Beanspeak_Response_Parser_Yaml, parseResponse) {
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
-	ZEPHIR_CALL_FUNCTION(&report, "yaml_parse", NULL, 16, data);
+	ZEPHIR_CALL_FUNCTION(&report, "yaml_parse", NULL, 17, data);
 	zephir_check_call_status();
 	_2 = zephir_fetch_nproperty_this(this_ptr, SL("mode"), PH_NOISY_CC);
 	if (ZEPHIR_IS_STRING(_2, "list")) {

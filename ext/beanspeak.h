@@ -5,8 +5,8 @@
 #define ZEPHIR_CLASS_ENTRIES_H
 
 #include "beanspeak/command/commandinterface.zep.h"
-#include "beanspeak/response/parser/parserinterface.zep.h"
 #include "beanspeak/command.zep.h"
+#include "beanspeak/response/parser/parserinterface.zep.h"
 #include "beanspeak/connection/connectionawareinterface.zep.h"
 #include "beanspeak/connection/connectioninterface.zep.h"
 #include "beanspeak/dispatcher/dispatcherawareinterface.zep.h"
@@ -17,6 +17,7 @@
 #include "beanspeak/command/exception.zep.h"
 #include "beanspeak/command/put.zep.h"
 #include "beanspeak/command/reserve.zep.h"
+#include "beanspeak/command/stats.zep.h"
 #include "beanspeak/command/use.zep.h"
 #include "beanspeak/connection.zep.h"
 #include "beanspeak/connection/exception.zep.h"

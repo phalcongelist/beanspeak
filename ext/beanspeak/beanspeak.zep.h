@@ -9,6 +9,7 @@ PHP_METHOD(Beanspeak_Beanspeak, getDispatcher);
 PHP_METHOD(Beanspeak_Beanspeak, put);
 PHP_METHOD(Beanspeak_Beanspeak, use);
 PHP_METHOD(Beanspeak_Beanspeak, reserve);
+PHP_METHOD(Beanspeak_Beanspeak, stats);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_beanspeak___construct, 0, 0, 0)
 	ZEND_ARG_OBJ_INFO(0, dispatcher, Beanspeak\\Dispatcher\\DispatcherInterface, 1)
@@ -38,5 +39,6 @@ ZEPHIR_INIT_FUNCS(beanspeak_beanspeak_method_entry) {
 	PHP_ME(Beanspeak_Beanspeak, put, arginfo_beanspeak_beanspeak_put, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Beanspeak, use, arginfo_beanspeak_beanspeak_use, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Beanspeak, reserve, arginfo_beanspeak_beanspeak_reserve, ZEND_ACC_PUBLIC)
+	PHP_ME(Beanspeak_Beanspeak, stats, NULL, ZEND_ACC_PUBLIC)
 	PHP_FE_END
 };
