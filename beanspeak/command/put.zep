@@ -117,19 +117,19 @@ class Put extends Command implements ResponseParserInterface
 
         let name = this->getName();
 
-        if (preg_match("#^BURIED (\d)+$#", line, matches)) {
+        if (starts_with(line, "BURIED")) {
             throw new Exception(name . ": server ran out of memory trying to grow the priority queue data structure");
         }
 
-        if (preg_match("#^JOB_TOO_BIG$#", line)) {
+        if (starts_with(line, "JOB_TOO_BIG")) {
             throw new Exception(name . ": job data exceeds server-enforced limit");
         }
 
-        if (preg_match("#^EXPECTED_CRLF#", line)) {
+        if (starts_with(line, "EXPECTED_CRLF")) {
             throw new Exception(name . ": CRLF expected");
         }
 
-        if (preg_match("#^DRAINING#", line)) {
+        if (starts_with(line, "DRAINING")) {
             throw new Exception(name . ": server has been put into 'drain mode' and is no longer accepting new jobs");
         }
 
