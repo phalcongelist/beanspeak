@@ -25,6 +25,7 @@
 #include "beanspeak/command/quit.zep.h"
 #include "beanspeak/command/reserve.zep.h"
 #include "beanspeak/command/stats.zep.h"
+#include "beanspeak/command/statstube.zep.h"
 #include "beanspeak/connection.zep.h"
 #include "beanspeak/connection/exception.zep.h"
 #include "beanspeak/dispatcher.zep.h"

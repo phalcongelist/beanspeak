@@ -17,7 +17,6 @@
 
 namespace Beanspeak;
 
-use Beanspeak\Job;
 use Beanspeak\Command\Put;
 use Beanspeak\Command\Peek;
 use Beanspeak\Command\Quit;
@@ -25,6 +24,7 @@ use Beanspeak\Command\Stats;
 use Beanspeak\Command\Choose;
 use Beanspeak\Command\Reserve;
 use Beanspeak\Job\JobInterface;
+use Beanspeak\Command\StatsTube;
 use Beanspeak\Command\ListTubes;
 use Beanspeak\Command\PauseTube;
 use Beanspeak\Command\ListTubeUsed;
@@ -281,6 +281,18 @@ class Beanspeak implements DispatcherAwareInterface
     public function stats() -> <ArrayResponse>
     {
         return this->dispatcher->dispatch(new Stats());
+    }
+
+    /**
+     * Gives statistical information about the specified tube if it exists.
+     *
+     * <code>
+     * $queue->statsTube('process-bitcoin');
+     * </code>
+     */
+    public function statsTube(string! tube) -> <ArrayResponse>
+    {
+        return this->dispatcher->dispatch(new StatsTube(tube));
     }
 
     /**

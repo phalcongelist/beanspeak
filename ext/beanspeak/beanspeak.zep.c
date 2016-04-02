@@ -510,6 +510,45 @@ PHP_METHOD(Beanspeak_Beanspeak, stats) {
 }
 
 /**
+ * Gives statistical information about the specified tube if it exists.
+ *
+ * <code>
+ * $queue->statsTube('process-bitcoin');
+ * </code>
+ */
+PHP_METHOD(Beanspeak_Beanspeak, statsTube) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *tube_param = NULL, *_0, *_1;
+	zval *tube = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &tube_param);
+
+	if (unlikely(Z_TYPE_P(tube_param) != IS_STRING && Z_TYPE_P(tube_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'tube' must be a string") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+	if (likely(Z_TYPE_P(tube_param) == IS_STRING)) {
+		zephir_get_strval(tube, tube_param);
+	} else {
+		ZEPHIR_INIT_VAR(tube);
+		ZVAL_EMPTY_STRING(tube);
+	}
+
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
+	ZEPHIR_INIT_VAR(_1);
+	object_init_ex(_1, beanspeak_command_statstube_ce);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 11, tube);
+	zephir_check_call_status();
+	ZEPHIR_RETURN_CALL_METHOD(_0, "dispatch", NULL, 0, _1);
+	zephir_check_call_status();
+	RETURN_MM();
+
+}
+
+/**
  * The pause-tube command can delay any new job being reserved for a given time.
  *
  * <code>
@@ -547,7 +586,7 @@ PHP_METHOD(Beanspeak_Beanspeak, pauseTube) {
 	object_init_ex(_1, beanspeak_command_pausetube_ce);
 	ZEPHIR_INIT_VAR(_2);
 	ZVAL_LONG(_2, delay);
-	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 11, tube, _2);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 12, tube, _2);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);
 	zephir_check_call_status();
