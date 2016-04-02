@@ -40,6 +40,11 @@ interface CommandInterface
     public function hasData() -> boolean;
 
     /**
+     * Whether the command has response from the server.
+     */
+    public function hasResponse() -> boolean;
+
+    /**
      *  The binary data to follow the command.
      */
     public function getData() -> string;

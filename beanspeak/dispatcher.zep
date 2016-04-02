@@ -135,13 +135,17 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
 
         connection->write(preparedcmd);
 
-        let responseLine = connection->getLine();
+        if command->hasResponse() {
+            let responseLine = connection->getLine();
 
-        this->checkStatusMessage(responseLine);
+            this->checkStatusMessage(responseLine);
 
-        this->parseData(responseLine);
+            this->parseData(responseLine);
 
-        let this->responseLine = responseLine;
+            let this->responseLine = responseLine;
+        } else {
+            let this->responseLine = command->getName();
+        }
     }
 
     /**

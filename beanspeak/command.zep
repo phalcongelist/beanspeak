@@ -41,6 +41,14 @@ abstract class Command implements CommandInterface
     /**
      * {@inheritdoc}
      */
+    public function hasResponse() -> boolean
+    {
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getData() -> string
     {
         throw new Exception("The " . this->getName() . " command has no data");

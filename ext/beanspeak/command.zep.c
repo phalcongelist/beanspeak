@@ -47,6 +47,17 @@ PHP_METHOD(Beanspeak_Command, hasData) {
 /**
  * {@inheritdoc}
  */
+PHP_METHOD(Beanspeak_Command, hasResponse) {
+
+	
+
+	RETURN_BOOL(1);
+
+}
+
+/**
+ * {@inheritdoc}
+ */
 PHP_METHOD(Beanspeak_Command, getData) {
 
 	zval *_0, *_1 = NULL, *_2;
@@ -62,7 +73,7 @@ PHP_METHOD(Beanspeak_Command, getData) {
 	ZEPHIR_CONCAT_SVS(_2, "The ", _1, " command has no data");
 	ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 1, _2);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(_0, "beanspeak/command.zep", 46 TSRMLS_CC);
+	zephir_throw_exception_debug(_0, "beanspeak/command.zep", 54 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 
@@ -86,7 +97,7 @@ PHP_METHOD(Beanspeak_Command, getDataLength) {
 	ZEPHIR_CONCAT_SVS(_2, "The ", _1, " command has no data");
 	ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 1, _2);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(_0, "beanspeak/command.zep", 54 TSRMLS_CC);
+	zephir_throw_exception_debug(_0, "beanspeak/command.zep", 62 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 

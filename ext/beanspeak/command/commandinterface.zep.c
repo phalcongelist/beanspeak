@@ -39,6 +39,11 @@ ZEPHIR_DOC_METHOD(Beanspeak_Command_CommandInterface, getCommandLine);
 ZEPHIR_DOC_METHOD(Beanspeak_Command_CommandInterface, hasData);
 
 /**
+ * Whether the command has response from the server.
+ */
+ZEPHIR_DOC_METHOD(Beanspeak_Command_CommandInterface, hasResponse);
+
+/**
  *  The binary data to follow the command.
  */
 ZEPHIR_DOC_METHOD(Beanspeak_Command_CommandInterface, getData);
