@@ -24,6 +24,7 @@ use Beanspeak\Command\Stats;
 use Beanspeak\Command\Choose;
 use Beanspeak\Command\Reserve;
 use Beanspeak\Job\JobInterface;
+use Beanspeak\Command\ListTubes;
 use Beanspeak\Command\PauseTube;
 use Beanspeak\Response\ArrayResponse;
 use Beanspeak\Dispatcher\DispatcherInterface;
@@ -225,6 +226,18 @@ class Beanspeak implements DispatcherAwareInterface
     public function peekReady() -> <JobInterface>
     {
         return this->peek("ready");
+    }
+
+    /**
+     * Returns a list of all existing tubes.
+     *
+     * <code>
+     * $queue->listTubes();
+     * </code>
+     */
+    public function listTubes() -> <ArrayResponse>
+    {
+        return this->dispatcher->dispatch(new ListTubes());
     }
 
     /**
