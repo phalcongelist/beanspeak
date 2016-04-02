@@ -105,7 +105,7 @@ class Put extends Command implements ParserInterface
 
     /**
      * {@inheritdoc}
-     *  @throws \Beanspeak\Command\Exception
+     * @throws \Beanspeak\Command\Exception
      */
     public function parseResponse(string line, string data = null) -> <ResponseInterface>
     {

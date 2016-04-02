@@ -9,6 +9,11 @@ PHP_METHOD(Beanspeak_Beanspeak, getDispatcher);
 PHP_METHOD(Beanspeak_Beanspeak, put);
 PHP_METHOD(Beanspeak_Beanspeak, choose);
 PHP_METHOD(Beanspeak_Beanspeak, reserve);
+PHP_METHOD(Beanspeak_Beanspeak, peek);
+PHP_METHOD(Beanspeak_Beanspeak, peekJob);
+PHP_METHOD(Beanspeak_Beanspeak, peekDelayed);
+PHP_METHOD(Beanspeak_Beanspeak, peekBuried);
+PHP_METHOD(Beanspeak_Beanspeak, peekReady);
 PHP_METHOD(Beanspeak_Beanspeak, stats);
 PHP_METHOD(Beanspeak_Beanspeak, pauseTube);
 
@@ -33,6 +38,14 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_beanspeak_reserve, 0, 0, 0)
 	ZEND_ARG_INFO(0, timeout)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_beanspeak_peek, 0, 0, 1)
+	ZEND_ARG_INFO(0, subject)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_beanspeak_peekjob, 0, 0, 1)
+	ZEND_ARG_INFO(0, id)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_beanspeak_pausetube, 0, 0, 2)
 	ZEND_ARG_INFO(0, tube)
 	ZEND_ARG_INFO(0, delay)
@@ -45,6 +58,11 @@ ZEPHIR_INIT_FUNCS(beanspeak_beanspeak_method_entry) {
 	PHP_ME(Beanspeak_Beanspeak, put, arginfo_beanspeak_beanspeak_put, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Beanspeak, choose, arginfo_beanspeak_beanspeak_choose, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Beanspeak, reserve, arginfo_beanspeak_beanspeak_reserve, ZEND_ACC_PUBLIC)
+	PHP_ME(Beanspeak_Beanspeak, peek, arginfo_beanspeak_beanspeak_peek, ZEND_ACC_PUBLIC)
+	PHP_ME(Beanspeak_Beanspeak, peekJob, arginfo_beanspeak_beanspeak_peekjob, ZEND_ACC_PUBLIC)
+	PHP_ME(Beanspeak_Beanspeak, peekDelayed, NULL, ZEND_ACC_PUBLIC)
+	PHP_ME(Beanspeak_Beanspeak, peekBuried, NULL, ZEND_ACC_PUBLIC)
+	PHP_ME(Beanspeak_Beanspeak, peekReady, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Beanspeak, stats, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Beanspeak, pauseTube, arginfo_beanspeak_beanspeak_pausetube, ZEND_ACC_PUBLIC)
 	PHP_FE_END

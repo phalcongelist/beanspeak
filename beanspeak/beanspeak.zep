@@ -19,6 +19,7 @@ namespace Beanspeak;
 
 use Beanspeak\Job;
 use Beanspeak\Command\Put;
+use Beanspeak\Command\Peek;
 use Beanspeak\Command\Stats;
 use Beanspeak\Command\Choose;
 use Beanspeak\Command\Reserve;
@@ -157,6 +158,73 @@ class Beanspeak implements DispatcherAwareInterface
         }
 
         return false;
+    }
+
+    /**
+     * Lets the client inspect a job in the system.
+     *
+     * <code>
+     * $peekJob     = $queue->peek(91);        // Returns a Job ID
+     * $peekReady   = $queue->peek('ready');   // Inspect the next ready job.
+     * $peekDelayed = $queue->peek('delayed'); // Return the delayed job with the shortest delay left.
+     * $peekBuried  = $queue->peek('buried');  // Return the next job in the list of buried jobs.
+     * </code>
+     */
+    public function peek(var subject) -> <JobInterface>
+    {
+        var response;
+
+        let response = this->dispatcher->dispatch(new Peek(subject));
+
+        return new Job(response->id, response->jobdata);
+    }
+
+    /**
+     * Lets the client inspect a job in the system.
+     *
+     * <code>
+     * $queue->peekJob();
+     * </code>
+     */
+    public function peekJob(int id) -> <JobInterface>
+    {
+        return this->peek(id);
+    }
+
+    /**
+     * Return the delayed job with the shortest delay left.
+     *
+     * <code>
+     * $queue->peekDelayed();
+     * </code>
+     */
+    public function peekDelayed() -> <JobInterface>
+    {
+        return this->peek("delayed");
+    }
+
+    /**
+     * Return the next job in the list of buried jobs.
+     *
+     * <code>
+     * $queue->peekBuried();
+     * </code>
+     */
+    public function peekBuried() -> <JobInterface>
+    {
+        return this->peek("buried");
+    }
+
+    /**
+     * Inspect the next ready job.
+     *
+     * <code>
+     * $queue->peekReady();
+     * </code>
+     */
+    public function peekReady() -> <JobInterface>
+    {
+        return this->peek("ready");
     }
 
     /**

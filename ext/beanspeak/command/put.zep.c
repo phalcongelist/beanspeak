@@ -168,7 +168,7 @@ PHP_METHOD(Beanspeak_Command_Put, getDataLength) {
 		_0$$3 = zephir_fetch_nproperty_this(this_ptr, SL("data"), PH_NOISY_CC);
 		ZEPHIR_SINIT_VAR(_1$$3);
 		ZVAL_STRING(&_1$$3, "latin1", 0);
-		ZEPHIR_RETURN_CALL_FUNCTION("mb_strlen", NULL, 11, _0$$3, &_1$$3);
+		ZEPHIR_RETURN_CALL_FUNCTION("mb_strlen", NULL, 13, _0$$3, &_1$$3);
 		zephir_check_call_status();
 		RETURN_MM();
 	}
@@ -179,7 +179,7 @@ PHP_METHOD(Beanspeak_Command_Put, getDataLength) {
 
 /**
  * {@inheritdoc}
- *  @throws \Beanspeak\Command\Exception
+ * @throws \Beanspeak\Command\Exception
  */
 PHP_METHOD(Beanspeak_Command_Put, parseResponse) {
 

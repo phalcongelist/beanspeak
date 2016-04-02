@@ -263,6 +263,139 @@ PHP_METHOD(Beanspeak_Beanspeak, reserve) {
 }
 
 /**
+ * Lets the client inspect a job in the system.
+ *
+ * <code>
+ * $peekJob     = $queue->peek(91);        // Returns a Job ID
+ * $peekReady   = $queue->peek('ready');   // Inspect the next ready job.
+ * $peekDelayed = $queue->peek('delayed'); // Return the delayed job with the shortest delay left.
+ * $peekBuried  = $queue->peek('buried');  // Return the next job in the list of buried jobs.
+ * </code>
+ */
+PHP_METHOD(Beanspeak_Beanspeak, peek) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *subject, *response = NULL, *_0, *_1, *_2, *_3;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &subject);
+
+
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
+	ZEPHIR_INIT_VAR(_1);
+	object_init_ex(_1, beanspeak_command_peek_ce);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 9, subject);
+	zephir_check_call_status();
+	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);
+	zephir_check_call_status();
+	object_init_ex(return_value, beanspeak_job_ce);
+	ZEPHIR_OBS_VAR(_2);
+	zephir_read_property(&_2, response, SL("id"), PH_NOISY_CC);
+	ZEPHIR_OBS_VAR(_3);
+	zephir_read_property(&_3, response, SL("jobdata"), PH_NOISY_CC);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 8, _2, _3);
+	zephir_check_call_status();
+	RETURN_MM();
+
+}
+
+/**
+ * Lets the client inspect a job in the system.
+ *
+ * <code>
+ * $queue->peekJob();
+ * </code>
+ */
+PHP_METHOD(Beanspeak_Beanspeak, peekJob) {
+
+	zval *id_param = NULL, *_0;
+	int id, ZEPHIR_LAST_CALL_STATUS;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &id_param);
+
+	id = zephir_get_intval(id_param);
+
+
+	ZEPHIR_INIT_VAR(_0);
+	ZVAL_LONG(_0, id);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "peek", NULL, 0, _0);
+	zephir_check_call_status();
+	RETURN_MM();
+
+}
+
+/**
+ * Return the delayed job with the shortest delay left.
+ *
+ * <code>
+ * $queue->peekDelayed();
+ * </code>
+ */
+PHP_METHOD(Beanspeak_Beanspeak, peekDelayed) {
+
+	zval *_0;
+	int ZEPHIR_LAST_CALL_STATUS;
+
+	ZEPHIR_MM_GROW();
+
+	ZEPHIR_INIT_VAR(_0);
+	ZVAL_STRING(_0, "delayed", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "peek", NULL, 0, _0);
+	zephir_check_temp_parameter(_0);
+	zephir_check_call_status();
+	RETURN_MM();
+
+}
+
+/**
+ * Return the next job in the list of buried jobs.
+ *
+ * <code>
+ * $queue->peekBuried();
+ * </code>
+ */
+PHP_METHOD(Beanspeak_Beanspeak, peekBuried) {
+
+	zval *_0;
+	int ZEPHIR_LAST_CALL_STATUS;
+
+	ZEPHIR_MM_GROW();
+
+	ZEPHIR_INIT_VAR(_0);
+	ZVAL_STRING(_0, "buried", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "peek", NULL, 0, _0);
+	zephir_check_temp_parameter(_0);
+	zephir_check_call_status();
+	RETURN_MM();
+
+}
+
+/**
+ * Inspect the next ready job.
+ *
+ * <code>
+ * $queue->peekReady();
+ * </code>
+ */
+PHP_METHOD(Beanspeak_Beanspeak, peekReady) {
+
+	zval *_0;
+	int ZEPHIR_LAST_CALL_STATUS;
+
+	ZEPHIR_MM_GROW();
+
+	ZEPHIR_INIT_VAR(_0);
+	ZVAL_STRING(_0, "ready", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "peek", NULL, 0, _0);
+	zephir_check_temp_parameter(_0);
+	zephir_check_call_status();
+	RETURN_MM();
+
+}
+
+/**
  * Gives statistical information about the system as a whole.
  *
  * <code>
@@ -327,7 +460,7 @@ PHP_METHOD(Beanspeak_Beanspeak, pauseTube) {
 	object_init_ex(_1, beanspeak_command_pausetube_ce);
 	ZEPHIR_INIT_VAR(_2);
 	ZVAL_LONG(_2, delay);
-	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 9, tube, _2);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 10, tube, _2);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);
 	zephir_check_call_status();

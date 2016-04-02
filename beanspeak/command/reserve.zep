@@ -41,7 +41,7 @@ class Reserve extends Command implements ParserInterface
      */
     public function __construct(var timeout = null)
     {
-        if is_numeric(timeout) {
+        if typeof timeout == "int" || ctype_digit(timeout) {
             let this->timeout = (int) timeout;
         }
     }
