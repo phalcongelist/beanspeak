@@ -121,6 +121,7 @@ class Connection implements ConnectionInterface
         }
 
         fclose(socket);
+        let this->socket = null;
 
         return true;
     }

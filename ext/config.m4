@@ -27,6 +27,7 @@ if test "$PHP_BEANSPEAK" = "yes"; then
 	beanspeak/command/pausetube.zep.c
 	beanspeak/command/peek.zep.c
 	beanspeak/command/put.zep.c
+	beanspeak/command/quit.zep.c
 	beanspeak/command/reserve.zep.c
 	beanspeak/command/stats.zep.c
 	beanspeak/connection.zep.c

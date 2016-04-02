@@ -196,6 +196,7 @@ PHP_METHOD(Beanspeak_Connection, disconnect) {
 		RETURN_MM_BOOL(0);
 	}
 	zephir_fclose(socket TSRMLS_CC);
+	zephir_update_property_this(this_ptr, SL("socket"), ZEPHIR_GLOBAL(global_null) TSRMLS_CC);
 	RETURN_MM_BOOL(1);
 
 }
@@ -209,7 +210,7 @@ PHP_METHOD(Beanspeak_Connection, getHost) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("options"), PH_NOISY_CC);
-	zephir_array_fetch_string(&_1, _0, SL("host"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 133 TSRMLS_CC);
+	zephir_array_fetch_string(&_1, _0, SL("host"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 134 TSRMLS_CC);
 	RETURN_CTORW(_1);
 
 }
@@ -223,7 +224,7 @@ PHP_METHOD(Beanspeak_Connection, getPort) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("options"), PH_NOISY_CC);
-	zephir_array_fetch_string(&_1, _0, SL("port"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 141 TSRMLS_CC);
+	zephir_array_fetch_string(&_1, _0, SL("port"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 142 TSRMLS_CC);
 	RETURN_CTORW(_1);
 
 }
@@ -237,7 +238,7 @@ PHP_METHOD(Beanspeak_Connection, getConnectTimeout) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("options"), PH_NOISY_CC);
-	zephir_array_fetch_string(&_1, _0, SL("timeout"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 149 TSRMLS_CC);
+	zephir_array_fetch_string(&_1, _0, SL("timeout"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 150 TSRMLS_CC);
 	RETURN_CTORW(_1);
 
 }
@@ -251,7 +252,7 @@ PHP_METHOD(Beanspeak_Connection, getWriteRetries) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("options"), PH_NOISY_CC);
-	zephir_array_fetch_string(&_1, _0, SL("write_retries"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 157 TSRMLS_CC);
+	zephir_array_fetch_string(&_1, _0, SL("write_retries"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 158 TSRMLS_CC);
 	RETURN_CTORW(_1);
 
 }
@@ -265,7 +266,7 @@ PHP_METHOD(Beanspeak_Connection, isPersistent) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("options"), PH_NOISY_CC);
-	zephir_array_fetch_string(&_1, _0, SL("persistent"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 165 TSRMLS_CC);
+	zephir_array_fetch_string(&_1, _0, SL("persistent"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 166 TSRMLS_CC);
 	RETURN_CTORW(_1);
 
 }
@@ -293,7 +294,7 @@ PHP_METHOD(Beanspeak_Connection, write) {
 	zephir_check_call_status();
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("options"), PH_NOISY_CC);
 	ZEPHIR_OBS_VAR(retries);
-	zephir_array_fetch_string(&retries, _0, SL("write_retries"), PH_NOISY, "beanspeak/connection.zep", 180 TSRMLS_CC);
+	zephir_array_fetch_string(&retries, _0, SL("write_retries"), PH_NOISY, "beanspeak/connection.zep", 181 TSRMLS_CC);
 	_1 = zephir_fetch_nproperty_this(this_ptr, SL("socket"), PH_NOISY_CC);
 	ZEPHIR_CPY_WRT(socket, _1);
 	step = 0;
@@ -317,7 +318,7 @@ PHP_METHOD(Beanspeak_Connection, write) {
 			ZEPHIR_CONCAT_SVS(_4$$4, "Failed to write data to socket after ", retries, " tries");
 			ZEPHIR_CALL_METHOD(NULL, _3$$4, "__construct", &_5, 1, _4$$4);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_3$$4, "beanspeak/connection.zep", 190 TSRMLS_CC);
+			zephir_throw_exception_debug(_3$$4, "beanspeak/connection.zep", 191 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -359,7 +360,7 @@ PHP_METHOD(Beanspeak_Connection, read) {
 		length = 16384;
 	}
 	if (zephir_feof(socket TSRMLS_CC)) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_connection_exception_ce, "Failed to read data from socket (EOF)", "beanspeak/connection.zep", 221);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_connection_exception_ce, "Failed to read data from socket (EOF)", "beanspeak/connection.zep", 222);
 		return;
 	}
 	ZEPHIR_SINIT_VAR(_1);
@@ -368,13 +369,13 @@ PHP_METHOD(Beanspeak_Connection, read) {
 	zephir_check_call_status();
 	ZEPHIR_CALL_FUNCTION(&meta, "stream_get_meta_data", NULL, 18, socket);
 	zephir_check_call_status();
-	zephir_array_fetch_string(&_2, meta, SL("timed_out"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 227 TSRMLS_CC);
+	zephir_array_fetch_string(&_2, meta, SL("timed_out"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 228 TSRMLS_CC);
 	if (zephir_is_true(_2)) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_connection_exception_ce, "Connection timed out upon attempt to read data from socket", "beanspeak/connection.zep", 228);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_connection_exception_ce, "Connection timed out upon attempt to read data from socket", "beanspeak/connection.zep", 229);
 		return;
 	}
 	if (ZEPHIR_IS_FALSE_IDENTICAL(data)) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_connection_exception_ce, "Failed to read data from socket", "beanspeak/connection.zep", 232);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_connection_exception_ce, "Failed to read data from socket", "beanspeak/connection.zep", 233);
 		return;
 	}
 	RETURN_CCTOR(data);
@@ -409,7 +410,7 @@ PHP_METHOD(Beanspeak_Connection, getLine) {
 	ZEPHIR_CPY_WRT(socket, _0);
 	do {
 		if (zephir_feof(socket TSRMLS_CC)) {
-			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_connection_exception_ce, "Failed to get line from socket (EOF)", "beanspeak/connection.zep", 255);
+			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_connection_exception_ce, "Failed to get line from socket (EOF)", "beanspeak/connection.zep", 256);
 			return;
 		}
 		if (length) {
@@ -423,9 +424,9 @@ PHP_METHOD(Beanspeak_Connection, getLine) {
 		}
 		ZEPHIR_CALL_FUNCTION(&meta, "stream_get_meta_data", &_3, 18, socket);
 		zephir_check_call_status();
-		zephir_array_fetch_string(&_4$$3, meta, SL("timed_out"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 266 TSRMLS_CC);
+		zephir_array_fetch_string(&_4$$3, meta, SL("timed_out"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 267 TSRMLS_CC);
 		if (zephir_is_true(_4$$3)) {
-			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_connection_exception_ce, "Connection timed out upon attempt to get line from socket", "beanspeak/connection.zep", 267);
+			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_connection_exception_ce, "Connection timed out upon attempt to get line from socket", "beanspeak/connection.zep", 268);
 			return;
 		}
 	} while (ZEPHIR_IS_FALSE_IDENTICAL(data));
