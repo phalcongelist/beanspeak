@@ -114,7 +114,7 @@ PHP_METHOD(Beanspeak_Response_Parser_Yaml, parseResponse) {
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
-	ZEPHIR_CALL_FUNCTION(&report, "yaml_parse", NULL, 17, data);
+	ZEPHIR_CALL_INTERNAL_METHOD_P1(&report, this_ptr, zep_Beanspeak_Response_Parser_Yaml_yamlParse, data);
 	zephir_check_call_status();
 	_2 = zephir_fetch_nproperty_this(this_ptr, SL("mode"), PH_NOISY_CC);
 	if (ZEPHIR_IS_STRING(_2, "list")) {
@@ -140,6 +140,92 @@ PHP_METHOD(Beanspeak_Response_Parser_Yaml, parseResponse) {
 	zephir_check_temp_parameter(_7);
 	zephir_check_call_status();
 	RETURN_MM();
+
+}
+
+void zep_Beanspeak_Response_Parser_Yaml_yamlParse(int ht, zval *return_value, zval **return_value_ptr, zval *this_ptr, int return_value_used, zval *data_param_ext TSRMLS_DC) {
+
+	HashTable *_8;
+	HashPosition _7;
+	zend_bool _0, _4, _6;
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *data_param = NULL, *lines = NULL, *values = NULL, *value = NULL, *respoonse = NULL, *_1, *_2, _3, *_5, **_9, *_10$$7 = NULL, *_11$$7, *_12$$7 = NULL, *_13$$7, _14$$7 = zval_used_for_init;
+	zval *data = NULL;
+
+	ZEPHIR_MM_GROW();
+	data_param = data_param_ext;
+
+
+	if (!data_param) {
+		ZEPHIR_INIT_VAR(data);
+		ZVAL_EMPTY_STRING(data);
+	} else {
+		zephir_get_strval(data, data_param);
+	}
+
+
+	ZEPHIR_INIT_VAR(respoonse);
+	array_init(respoonse);
+	_0 = 1 != 1;
+	if (!(_0)) {
+		_0 = ZEPHIR_IS_EMPTY(data);
+	}
+	if (_0) {
+		array_init(return_value);
+		RETURN_MM();
+	}
+	if ((zephir_function_exists_ex(SS("yaml_parse") TSRMLS_CC) == SUCCESS)) {
+		ZEPHIR_RETURN_CALL_FUNCTION("yaml_parse", NULL, 17, data);
+		zephir_check_call_status();
+		RETURN_MM();
+	}
+	ZEPHIR_INIT_VAR(_1);
+	zephir_fast_trim(_1, data, NULL , ZEPHIR_TRIM_RIGHT TSRMLS_CC);
+	zephir_get_strval(data, _1);
+	ZEPHIR_INIT_VAR(_2);
+	zephir_fast_trim(_2, data, NULL , ZEPHIR_TRIM_RIGHT TSRMLS_CC);
+	ZEPHIR_SINIT_VAR(_3);
+	ZVAL_STRING(&_3, "#[\r\n]+#", 0);
+	ZEPHIR_CALL_FUNCTION(&lines, "preg_split", NULL, 18, &_3, _2);
+	zephir_check_call_status();
+	_4 = zephir_array_isset_long(lines, 0);
+	if (_4) {
+		zephir_array_fetch_long(&_5, lines, 0, PH_NOISY | PH_READONLY, "beanspeak/response/parser/yaml.zep", 88 TSRMLS_CC);
+		_4 = ZEPHIR_IS_STRING(_5, "---");
+	}
+	if (_4) {
+		ZEPHIR_MAKE_REF(lines);
+		ZEPHIR_CALL_FUNCTION(NULL, "array_shift", NULL, 19, lines);
+		ZEPHIR_UNREF(lines);
+		zephir_check_call_status();
+	}
+	_6 = Z_TYPE_P(lines) != IS_ARRAY;
+	if (!(_6)) {
+		_6 = ZEPHIR_IS_EMPTY(lines);
+	}
+	if (_6) {
+		array_init(return_value);
+		RETURN_MM();
+	}
+	zephir_is_iterable(lines, &_8, &_7, 0, 0, "beanspeak/response/parser/yaml.zep", 101);
+	for (
+	  ; zephir_hash_get_current_data_ex(_8, (void**) &_9, &_7) == SUCCESS
+	  ; zephir_hash_move_forward_ex(_8, &_7)
+	) {
+		ZEPHIR_GET_HVALUE(values, _9);
+		ZEPHIR_INIT_NVAR(value);
+		zephir_fast_explode_str(value, SL(":"), values, LONG_MAX TSRMLS_CC);
+		ZEPHIR_INIT_NVAR(_10$$7);
+		zephir_array_fetch_long(&_11$$7, value, 1, PH_NOISY | PH_READONLY, "beanspeak/response/parser/yaml.zep", 98 TSRMLS_CC);
+		zephir_fast_trim(_10$$7, _11$$7, NULL , ZEPHIR_TRIM_BOTH TSRMLS_CC);
+		ZEPHIR_INIT_NVAR(_12$$7);
+		zephir_array_fetch_long(&_13$$7, value, 0, PH_NOISY | PH_READONLY, "beanspeak/response/parser/yaml.zep", 98 TSRMLS_CC);
+		ZEPHIR_SINIT_NVAR(_14$$7);
+		ZVAL_LONG(&_14$$7, '- ');
+		zephir_fast_trim(_12$$7, _13$$7, &_14$$7, ZEPHIR_TRIM_LEFT TSRMLS_CC);
+		zephir_array_update_zval(&respoonse, _12$$7, &_10$$7, PH_COPY | PH_SEPARATE);
+	}
+	RETURN_CCTOR(respoonse);
 
 }
 

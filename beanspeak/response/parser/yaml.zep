@@ -55,7 +55,7 @@ class Yaml implements ParserInterface
             throw new Exception("Unhandled response: " . line);
         }
 
-        let report = yaml_parse(data);
+        let report = this->yamlParse(data);
 
         if this->mode == "list" {
             var tmp = [];
@@ -68,5 +68,36 @@ class Yaml implements ParserInterface
         }
 
         return new ArrayResponse("OK", report);
+    }
+
+    internal function yamlParse(string data = null) -> array
+    {
+        var lines, values, value, respoonse = [];
+
+        if typeof data != "string" || empty(data) {
+            return [];
+        }
+
+        if function_exists("yaml_parse") {
+            return yaml_parse(data);
+        }
+
+        let data  = rtrim(data),
+            lines = preg_split("#[\r\n]+#", rtrim(data));
+
+        if isset(lines[0]) && lines[0] == "---" {
+            array_shift(lines);
+        }
+
+        if typeof lines != "array" || empty(lines) {
+            return [];
+        }
+
+        for values in lines {
+            let value = explode(":", values);
+            let respoonse[ltrim(value[0], '- ')] = trim(value[1]);
+        }
+
+        return respoonse;
     }
 }
