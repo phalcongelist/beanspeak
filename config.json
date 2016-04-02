@@ -6,7 +6,9 @@
     "version": "1.0.0-alpha",
     "verbose": false,
     "requires": {
-        "extensions": []
+        "extensions": [
+            "ctype"
+        ]
     },
     "stubs": {
         "path": "ide\/%version%\/%namespace%\/",

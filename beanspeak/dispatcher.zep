@@ -192,7 +192,7 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
 
         if isset statusMessages[message] {
             throw new Exception(
-                message . " in response to '" . this->lastCommand->getName() . "'",
+                message . " in response to \"" . this->lastCommand->getName() . "\"",
                 statusMessages[message]
             );
         }

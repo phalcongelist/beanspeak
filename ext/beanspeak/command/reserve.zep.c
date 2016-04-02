@@ -12,12 +12,12 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
+#include "kernel/memory.h"
+#include "kernel/fcall.h"
 #include "kernel/operators.h"
 #include "kernel/object.h"
-#include "kernel/memory.h"
 #include "kernel/concat.h"
 #include "kernel/string.h"
-#include "kernel/fcall.h"
 #include "kernel/array.h"
 
 
@@ -48,20 +48,30 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command_Reserve) {
  */
 PHP_METHOD(Beanspeak_Command_Reserve, __construct) {
 
-	zval *timeout = NULL, *_0$$3;
+	zend_bool _0;
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *timeout = NULL, *_1 = NULL, *_2$$3;
 
-	zephir_fetch_params(0, 0, 1, &timeout);
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 0, 1, &timeout);
 
 	if (!timeout) {
 		timeout = ZEPHIR_GLOBAL(global_null);
 	}
 
 
-	if (zephir_is_numeric(timeout)) {
-		ZEPHIR_INIT_ZVAL_NREF(_0$$3);
-		ZVAL_LONG(_0$$3, zephir_get_intval(timeout));
-		zephir_update_property_this(this_ptr, SL("timeout"), _0$$3 TSRMLS_CC);
+	_0 = Z_TYPE_P(timeout) == IS_LONG;
+	if (!(_0)) {
+		ZEPHIR_CALL_FUNCTION(&_1, "ctype_digit", NULL, 12, timeout);
+		zephir_check_call_status();
+		_0 = zephir_is_true(_1);
 	}
+	if (_0) {
+		ZEPHIR_INIT_ZVAL_NREF(_2$$3);
+		ZVAL_LONG(_2$$3, zephir_get_intval(timeout));
+		zephir_update_property_this(this_ptr, SL("timeout"), _2$$3 TSRMLS_CC);
+	}
+	ZEPHIR_MM_RESTORE();
 
 }
 
