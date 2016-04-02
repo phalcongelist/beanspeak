@@ -90,41 +90,24 @@ class Beanspeak implements DispatcherAwareInterface
      * Inserts jobs into the queue.
      *
      * <code>
-     * $queue->put(
-     *     [
-     *         'recipient' => 'user@mail.com',
-     *         'subject'   => 'Welcome',
-     *         'content'   => $content,
-     *     ],
-     *     [
-     *         'priority' => 999,
-     *         'delay'    => 60 * 60,
-     *         'ttr'      => 3600,
-     *     ],
-     * );
+     * $task = [
+     *     'recipient' => 'user@mail.com',
+     *     'subject'   => 'Welcome',
+     *     'content'   => $content,
+     * ];
+     *
+     * $queue->put($task, [
+     *     'priority' => 999,
+     *     'delay'    => 60 * 60,
+     *     'ttr'      => 3600,
+     * ]):
      * </code>
      */
     public function put(var data, array options = null) -> int
     {
-        var priority, delay, ttr, serialized, response;
+        var  response;
 
-        // Priority is 100 by default
-        if !fetch priority, options["priority"] {
-            let priority = "100";
-        }
-
-        if !fetch delay, options["delay"] {
-            let delay = "0";
-        }
-
-        if !fetch ttr, options["ttr"] {
-            let ttr = "86400";
-        }
-
-        // Data is automatically serialized before be sent to the server
-        let serialized = serialize(data);
-
-        let response = this->dispatcher->dispatch(new Put(serialized, priority, delay, ttr));
+        let response = this->dispatcher->dispatch(new Put(data, options));
 
         return response->id;
     }
