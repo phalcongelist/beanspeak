@@ -11,7 +11,7 @@ if (PHP_BEANSPEAK != "no") {
     AC_DEFINE("ZEPHIR_USE_PHP_JSON", 1, "Whether PHP json extension is present at compile time");
   }
   
-  ADD_SOURCES(configure_module_dirname + "/beanspeak/command", "commandinterface.zep.c choose.zep.c exception.zep.c put.zep.c reserve.zep.c stats.zep.c", "beanspeak");
+  ADD_SOURCES(configure_module_dirname + "/beanspeak/command", "commandinterface.zep.c choose.zep.c exception.zep.c pausetube.zep.c put.zep.c reserve.zep.c stats.zep.c", "beanspeak");
 	ADD_SOURCES(configure_module_dirname + "/beanspeak", "command.zep.c beanspeak.zep.c connection.zep.c dispatcher.zep.c exception.zep.c job.zep.c", "beanspeak");
 	ADD_SOURCES(configure_module_dirname + "/beanspeak/response/parser", "parserinterface.zep.c exception.zep.c yaml.zep.c", "beanspeak");
 	ADD_SOURCES(configure_module_dirname + "/beanspeak/connection", "connectionawareinterface.zep.c connectioninterface.zep.c exception.zep.c", "beanspeak");

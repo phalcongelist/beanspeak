@@ -182,7 +182,7 @@ PHP_METHOD(Beanspeak_Beanspeak, put) {
  * Change the active tube.
  *
  * <code>
- * $queue->choose('mail_queue');
+ * $queue->choose('mail-queue');
  * </code>
  */
 PHP_METHOD(Beanspeak_Beanspeak, choose) {
@@ -286,6 +286,54 @@ PHP_METHOD(Beanspeak_Beanspeak, stats) {
 	ZEPHIR_RETURN_CALL_METHOD(_0, "dispatch", NULL, 0, _1);
 	zephir_check_call_status();
 	RETURN_MM();
+
+}
+
+/**
+ * The pause-tube command can delay any new job being reserved for a given time.
+ *
+ * <code>
+ * $queue->pauseTube('process-video', 60 * 60);
+ * </code>
+ */
+PHP_METHOD(Beanspeak_Beanspeak, pauseTube) {
+
+	int delay, ZEPHIR_LAST_CALL_STATUS;
+	zval *tube_param = NULL, *delay_param = NULL, *response = NULL, *_0, *_1, *_2, *_3;
+	zval *tube = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 2, 0, &tube_param, &delay_param);
+
+	if (unlikely(Z_TYPE_P(tube_param) != IS_STRING && Z_TYPE_P(tube_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'tube' must be a string") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+	if (likely(Z_TYPE_P(tube_param) == IS_STRING)) {
+		zephir_get_strval(tube, tube_param);
+	} else {
+		ZEPHIR_INIT_VAR(tube);
+		ZVAL_EMPTY_STRING(tube);
+	}
+	if (unlikely(Z_TYPE_P(delay_param) != IS_LONG)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'delay' must be a int") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+	delay = Z_LVAL_P(delay_param);
+
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
+	ZEPHIR_INIT_VAR(_1);
+	object_init_ex(_1, beanspeak_command_pausetube_ce);
+	ZEPHIR_INIT_VAR(_2);
+	ZVAL_LONG(_2, delay);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 9, tube, _2);
+	zephir_check_call_status();
+	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);
+	zephir_check_call_status();
+	ZEPHIR_OBS_VAR(_3);
+	zephir_read_property(&_3, response, SL("delay"), PH_NOISY_CC);
+	RETURN_CCTOR(_3);
 
 }
 

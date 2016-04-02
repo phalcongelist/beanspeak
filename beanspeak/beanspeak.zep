@@ -23,6 +23,7 @@ use Beanspeak\Command\Stats;
 use Beanspeak\Command\Choose;
 use Beanspeak\Command\Reserve;
 use Beanspeak\Job\JobInterface;
+use Beanspeak\Command\PauseTube;
 use Beanspeak\Response\ArrayResponse;
 use Beanspeak\Dispatcher\DispatcherInterface;
 use Beanspeak\Dispatcher\DispatcherAwareInterface;
@@ -127,7 +128,7 @@ class Beanspeak implements DispatcherAwareInterface
      * Change the active tube.
      *
      * <code>
-     * $queue->choose('mail_queue');
+     * $queue->choose('mail-queue');
      * </code>
      */
     public function choose(string! tube) -> string
@@ -168,5 +169,21 @@ class Beanspeak implements DispatcherAwareInterface
     public function stats() -> <ArrayResponse>
     {
         return this->dispatcher->dispatch(new Stats());
+    }
+
+    /**
+     * The pause-tube command can delay any new job being reserved for a given time.
+     *
+     * <code>
+     * $queue->pauseTube('process-video', 60 * 60);
+     * </code>
+     */
+    public function pauseTube(string! tube, int! delay) -> int
+    {
+        var response;
+
+        let response = this->dispatcher->dispatch(new PauseTube(tube, delay));
+
+        return response->delay;
     }
 }

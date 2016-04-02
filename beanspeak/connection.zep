@@ -228,7 +228,7 @@ class Connection implements ConnectionInterface
             throw new Exception("Connection timed out upon attempt to read data from socket");
         }
 
-        if (false === data) {
+        if false === data {
             throw new Exception("Failed to read data from socket");
         }
 

@@ -22,28 +22,28 @@ use Beanspeak\Response\ResponseInterface;
 use Beanspeak\Response\Parser\ParserInterface;
 
 /**
- * Beanspeak\Command\Use
+ * Beanspeak\Command\PauseTube
  *
- * The "use" command is for producers. Subsequent put commands will put jobs
- * into the tube specified by this command. If no use command has been issued,
- * jobs will be put into the tube named "default".
+ * The pause-tube command can delay any new job being reserved for a given time.
  *
  * <code>
- * use Beanspeak\Command\Choose;
+ * use Beanspeak\Command\PauseTube;
  *
- * $command = new Choose('mail-queue');
+ * $pause = new PauseTube('process-video', 60 * 60);
  * </code>
  */
-class Choose extends Command implements ParserInterface
+class PauseTube extends Command implements ParserInterface
 {
     private tube;
+    private delay;
 
     /**
-     * Beanspeak\Command\Use constructor
+     * Beanspeak\Command\PauseTube constructor
      */
-    public function __construct(string! tube)
+    public function __construct(string! tube, int! delay)
     {
-        let this->tube = tube;
+        let this->tube  = tube,
+            this->delay = delay;
     }
 
     /**
@@ -51,7 +51,7 @@ class Choose extends Command implements ParserInterface
      */
     public function getName() -> string
     {
-        return "USE";
+        return "PAUSE-TUBE";
     }
 
     /**
@@ -59,14 +59,23 @@ class Choose extends Command implements ParserInterface
      */
     public function getCommandLine() -> string
     {
-        return "use " . this->tube;
+        return "pause-tube " . this->tube . " " . this->delay;
     }
 
     /**
      * {@inheritdoc}
+     * @throws \Beanspeak\Command\Exception
      */
     public function parseResponse(string line, string data = null) -> <ResponseInterface>
     {
-       return this->createResponse("USING", ["tube" : preg_replace("#^USING (.+)$#", "$1", line)]);
+        if starts_with(line, "NOT_FOUND") {
+            throw new Exception(this->getName() . ": tube " . this->tube . " doesn't exist");
+        }
+
+        if starts_with(line, "PAUSED") {
+            return this->createResponse("PAUSED", ["delay" : this->delay]);
+        }
+
+        throw new Exception("Unhandled response: " . line);
     }
 }

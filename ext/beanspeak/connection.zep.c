@@ -173,7 +173,7 @@ PHP_METHOD(Beanspeak_Connection, connect) {
 		ZVAL_LONG(&_8$$3, -1);
 		ZEPHIR_SINIT_VAR(_9$$3);
 		ZVAL_LONG(&_9$$3, 0);
-		ZEPHIR_CALL_FUNCTION(NULL, "stream_set_timeout", NULL, 12, socket$$3, &_8$$3, &_9$$3);
+		ZEPHIR_CALL_FUNCTION(NULL, "stream_set_timeout", NULL, 13, socket$$3, &_8$$3, &_9$$3);
 		zephir_check_call_status();
 		zephir_update_property_this(this_ptr, SL("socket"), socket$$3 TSRMLS_CC);
 	}
@@ -364,9 +364,9 @@ PHP_METHOD(Beanspeak_Connection, read) {
 	}
 	ZEPHIR_SINIT_VAR(_1);
 	ZVAL_LONG(&_1, length);
-	ZEPHIR_CALL_FUNCTION(&data, "stream_get_line", NULL, 13, socket, &_1);
+	ZEPHIR_CALL_FUNCTION(&data, "stream_get_line", NULL, 14, socket, &_1);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&meta, "stream_get_meta_data", NULL, 14, socket);
+	ZEPHIR_CALL_FUNCTION(&meta, "stream_get_meta_data", NULL, 15, socket);
 	zephir_check_call_status();
 	zephir_array_fetch_string(&_2, meta, SL("timed_out"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 227 TSRMLS_CC);
 	if (zephir_is_true(_2)) {
@@ -415,13 +415,13 @@ PHP_METHOD(Beanspeak_Connection, getLine) {
 		if (length) {
 			ZEPHIR_SINIT_NVAR(_1$$5);
 			ZVAL_LONG(&_1$$5, length);
-			ZEPHIR_CALL_FUNCTION(&data, "fgets", &_2, 15, socket, &_1$$5);
+			ZEPHIR_CALL_FUNCTION(&data, "fgets", &_2, 16, socket, &_1$$5);
 			zephir_check_call_status();
 		} else {
-			ZEPHIR_CALL_FUNCTION(&data, "fgets", &_2, 15, socket);
+			ZEPHIR_CALL_FUNCTION(&data, "fgets", &_2, 16, socket);
 			zephir_check_call_status();
 		}
-		ZEPHIR_CALL_FUNCTION(&meta, "stream_get_meta_data", &_3, 14, socket);
+		ZEPHIR_CALL_FUNCTION(&meta, "stream_get_meta_data", &_3, 15, socket);
 		zephir_check_call_status();
 		zephir_array_fetch_string(&_4$$3, meta, SL("timed_out"), PH_NOISY | PH_READONLY, "beanspeak/connection.zep", 266 TSRMLS_CC);
 		if (zephir_is_true(_4$$3)) {

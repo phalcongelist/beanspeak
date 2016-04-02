@@ -96,7 +96,7 @@ class Put extends Command implements ParserInterface
      */
     public function getDataLength()
     {
-        if (function_exists("mb_strlen")) {
+        if function_exists("mb_strlen") {
             return mb_strlen(this->data, "latin1");
         }
 
@@ -105,33 +105,30 @@ class Put extends Command implements ParserInterface
 
     /**
      * {@inheritdoc}
+     *  @throws \Beanspeak\Command\Exception
      */
     public function parseResponse(string line, string data = null) -> <ResponseInterface>
     {
-        var matches, name;
+        var matches = null;
 
-        let matches = null;
-
-        if (preg_match("#^INSERTED (\d+)$#", line, matches)) {
+        if preg_match("#^INSERTED (\d+)$#", line, matches) {
             return this->createResponse("INSERTED", ["id" : (int) matches[1]]);
         }
 
-        let name = this->getName();
-
         if starts_with(line, "BURIED") {
-            throw new Exception(name . ": server ran out of memory trying to grow the priority queue data structure");
+            throw new Exception(this->getName() . ": server ran out of memory trying to grow the priority queue data structure");
         }
 
         if starts_with(line, "JOB_TOO_BIG") {
-            throw new Exception(name . ": job data exceeds server-enforced limit");
+            throw new Exception(this->getName() . ": job data exceeds server-enforced limit");
         }
 
         if starts_with(line, "EXPECTED_CRLF") {
-            throw new Exception(name . ": CRLF expected");
+            throw new Exception(this->getName() . ": CRLF expected");
         }
 
         if starts_with(line, "DRAINING") {
-            throw new Exception(name . ": server has been put into 'drain mode' and is no longer accepting new jobs");
+            throw new Exception(this->getName() . ": server has been put into 'drain mode' and is no longer accepting new jobs");
         }
 
         throw new Exception("Unhandled response: " . line);
