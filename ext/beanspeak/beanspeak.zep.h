@@ -19,6 +19,7 @@ PHP_METHOD(Beanspeak_Beanspeak, listTubeUsed);
 PHP_METHOD(Beanspeak_Beanspeak, listTubesWatched);
 PHP_METHOD(Beanspeak_Beanspeak, stats);
 PHP_METHOD(Beanspeak_Beanspeak, statsTube);
+PHP_METHOD(Beanspeak_Beanspeak, statsJob);
 PHP_METHOD(Beanspeak_Beanspeak, pauseTube);
 PHP_METHOD(Beanspeak_Beanspeak, quit);
 
@@ -55,6 +56,10 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_beanspeak_statstube, 0, 0, 1)
 	ZEND_ARG_INFO(0, tube)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_beanspeak_statsjob, 0, 0, 1)
+	ZEND_ARG_INFO(0, job)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_beanspeak_pausetube, 0, 0, 2)
 	ZEND_ARG_INFO(0, tube)
 	ZEND_ARG_INFO(0, delay)
@@ -77,6 +82,7 @@ ZEPHIR_INIT_FUNCS(beanspeak_beanspeak_method_entry) {
 	PHP_ME(Beanspeak_Beanspeak, listTubesWatched, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Beanspeak, stats, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Beanspeak, statsTube, arginfo_beanspeak_beanspeak_statstube, ZEND_ACC_PUBLIC)
+	PHP_ME(Beanspeak_Beanspeak, statsJob, arginfo_beanspeak_beanspeak_statsjob, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Beanspeak, pauseTube, arginfo_beanspeak_beanspeak_pausetube, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Beanspeak, quit, NULL, ZEND_ACC_PUBLIC)
 	PHP_FE_END

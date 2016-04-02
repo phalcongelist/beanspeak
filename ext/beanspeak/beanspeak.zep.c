@@ -530,6 +530,35 @@ PHP_METHOD(Beanspeak_Beanspeak, statsTube) {
 }
 
 /**
+ * Gives statistical information about the specified tube if it exists.
+ *
+ * <code>
+ * $stats = $queue->statsJob(90);
+ * $stats = $queue->statsJob($jobObject);
+ * </code>
+ */
+PHP_METHOD(Beanspeak_Beanspeak, statsJob) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *job, *_0, *_1;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &job);
+
+
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
+	ZEPHIR_INIT_VAR(_1);
+	object_init_ex(_1, beanspeak_command_statsjob_ce);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 11, job);
+	zephir_check_call_status();
+	ZEPHIR_RETURN_CALL_METHOD(_0, "dispatch", NULL, 0, _1);
+	zephir_check_call_status();
+	RETURN_MM();
+
+}
+
+/**
  * The pause-tube command can delay any new job being reserved for a given time.
  *
  * <code>
@@ -567,7 +596,7 @@ PHP_METHOD(Beanspeak_Beanspeak, pauseTube) {
 	object_init_ex(_1, beanspeak_command_pausetube_ce);
 	ZEPHIR_INIT_VAR(_2);
 	ZVAL_LONG(_2, delay);
-	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 11, tube, _2);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 12, tube, _2);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);
 	zephir_check_call_status();
