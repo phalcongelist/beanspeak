@@ -22,32 +22,32 @@ use Beanspeak\Response\Parser\Yaml;
 use Beanspeak\Response\Parser\ParserInterface;
 
 /**
- * Beanspeak\Command\Stats
+ * Beanspeak\Command\ListTubes
  *
- * Statistical information about the system as a whole.
+ * Returns a list of all existing tubes.
  *
  * <code>
- * use Beanspeak\Command\Stats;
+ * use Beanspeak\Command\ListTubes;
  *
- * $stats = new Stats;
+ * $list = new ListTubes;
  * </code>
  */
-class Stats extends Command
+class ListTubes extends Command
 {
     /**
      * {@inheritdoc}
      */
     public function getName() -> string
     {
-        return "STATS";
+        return "LIST-TUBES";
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getCommandLine()
+    public function getCommandLine() -> string
     {
-        return "stats";
+        return "list-tubes";
     }
 
     /**
@@ -55,6 +55,6 @@ class Stats extends Command
      */
     public function getResponseParser() -> <ParserInterface>
     {
-        return new Yaml("dict");
+        return new Yaml("list");
     }
 }

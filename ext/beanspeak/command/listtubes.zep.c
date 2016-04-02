@@ -17,19 +17,19 @@
 
 
 /**
- * Beanspeak\Command\Stats
+ * Beanspeak\Command\ListTubes
  *
- * Statistical information about the system as a whole.
+ * Returns a list of all existing tubes.
  *
  * <code>
- * use Beanspeak\Command\Stats;
+ * use Beanspeak\Command\ListTubes;
  *
- * $stats = new Stats;
+ * $list = new ListTubes;
  * </code>
  */
-ZEPHIR_INIT_CLASS(Beanspeak_Command_Stats) {
+ZEPHIR_INIT_CLASS(Beanspeak_Command_ListTubes) {
 
-	ZEPHIR_REGISTER_CLASS_EX(Beanspeak\\Command, Stats, beanspeak, command_stats, beanspeak_command_ce, beanspeak_command_stats_method_entry, 0);
+	ZEPHIR_REGISTER_CLASS_EX(Beanspeak\\Command, ListTubes, beanspeak, command_listtubes, beanspeak_command_ce, beanspeak_command_listtubes_method_entry, 0);
 
 	return SUCCESS;
 
@@ -38,29 +38,29 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command_Stats) {
 /**
  * {@inheritdoc}
  */
-PHP_METHOD(Beanspeak_Command_Stats, getName) {
+PHP_METHOD(Beanspeak_Command_ListTubes, getName) {
 
 	
 
-	RETURN_STRING("STATS", 1);
+	RETURN_STRING("LIST-TUBES", 1);
 
 }
 
 /**
  * {@inheritdoc}
  */
-PHP_METHOD(Beanspeak_Command_Stats, getCommandLine) {
+PHP_METHOD(Beanspeak_Command_ListTubes, getCommandLine) {
 
 	
 
-	RETURN_STRING("stats", 1);
+	RETURN_STRING("list-tubes", 1);
 
 }
 
 /**
  * {@inheritdoc}
  */
-PHP_METHOD(Beanspeak_Command_Stats, getResponseParser) {
+PHP_METHOD(Beanspeak_Command_ListTubes, getResponseParser) {
 
 	zval *_0;
 	int ZEPHIR_LAST_CALL_STATUS;
@@ -69,7 +69,7 @@ PHP_METHOD(Beanspeak_Command_Stats, getResponseParser) {
 
 	object_init_ex(return_value, beanspeak_response_parser_yaml_ce);
 	ZEPHIR_INIT_VAR(_0);
-	ZVAL_STRING(_0, "dict", ZEPHIR_TEMP_PARAM_COPY);
+	ZVAL_STRING(_0, "list", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 13, _0);
 	zephir_check_temp_parameter(_0);
 	zephir_check_call_status();
