@@ -4,6 +4,7 @@ extern zend_class_entry *beanspeak_command_ce;
 ZEPHIR_INIT_CLASS(Beanspeak_Command);
 
 PHP_METHOD(Beanspeak_Command, hasData);
+PHP_METHOD(Beanspeak_Command, hasResponse);
 PHP_METHOD(Beanspeak_Command, getData);
 PHP_METHOD(Beanspeak_Command, getDataLength);
 PHP_METHOD(Beanspeak_Command, getResponseParser);
@@ -17,6 +18,7 @@ ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(beanspeak_command_method_entry) {
 	PHP_ME(Beanspeak_Command, hasData, NULL, ZEND_ACC_PUBLIC)
+	PHP_ME(Beanspeak_Command, hasResponse, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Command, getData, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Command, getDataLength, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Command, getResponseParser, NULL, ZEND_ACC_PUBLIC)
