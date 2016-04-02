@@ -18,53 +18,37 @@
 namespace Beanspeak\Command;
 
 use Beanspeak\Command;
-use Beanspeak\Response\ResponseInterface;
-use Beanspeak\Response\Parser\ParserInterface;
+use Beanspeak\Response\Parser\Yaml;
+use Beanspeak\Response\ResponseParserInterface;
 
 /**
- * Beanspeak\Command\Use
+ * Beanspeak\Command\Stats
  *
- * The "use" command is for producers. Subsequent put commands will put jobs
- * into the tube specified by this command. If no use command has been issued,
- * jobs will be put into the tube named "default".
+ * Statistical information about the system as a whole.
  *
  * <code>
- * $queue->use('mail_queue');
+ * use Beanspeak\Command\Stats;
+ *
+ * $stats = new Stats;
  * </code>
  */
-class $Use extends Command implements ParserInterface
+class Stats extends Command
 {
-    private tube;
-
-    /**
-     * Beanspeak\Command\Use constructor
-     */
-    public function __construct(string! tube)
-    {
-        let this->tube = tube;
-    }
-
     /**
      * {@inheritdoc}
      */
     public function getName() -> string
     {
-        return "USE";
+        return "STATS";
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCommandLine() -> string
+    public function getCommandLine()
     {
-        return "use " . this->tube;
+        return "stats";
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function parseResponse(string line, string data = null) -> <ResponseInterface>
+    public function getResponseParser()
     {
-       return this->createResponse("USING", ["tube" : preg_replace("#^USING (.+)$#", "$1", line)]);
+        return new Yaml("dict");
     }
 }

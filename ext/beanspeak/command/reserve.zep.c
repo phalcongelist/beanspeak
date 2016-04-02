@@ -12,9 +12,9 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
+#include "kernel/operators.h"
 #include "kernel/object.h"
 #include "kernel/memory.h"
-#include "kernel/operators.h"
 #include "kernel/concat.h"
 #include "kernel/string.h"
 #include "kernel/fcall.h"
@@ -27,7 +27,9 @@
  * Reserves/locks a ready job from the specified tube.
  *
  * <code>
- * $queue->reserve();
+ * use Beanspeak\Command\Reserve;
+ *
+ * $reserve = new Reserve(60 * 60 * 2);
  * </code>
  */
 ZEPHIR_INIT_CLASS(Beanspeak_Command_Reserve) {
@@ -46,7 +48,7 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command_Reserve) {
  */
 PHP_METHOD(Beanspeak_Command_Reserve, __construct) {
 
-	zval *timeout = NULL;
+	zval *timeout = NULL, *_0$$3;
 
 	zephir_fetch_params(0, 0, 1, &timeout);
 
@@ -55,8 +57,10 @@ PHP_METHOD(Beanspeak_Command_Reserve, __construct) {
 	}
 
 
-	if (Z_TYPE_P(timeout) == IS_LONG) {
-		zephir_update_property_this(this_ptr, SL("timeout"), timeout TSRMLS_CC);
+	if (zephir_is_numeric(timeout)) {
+		ZEPHIR_INIT_ZVAL_NREF(_0$$3);
+		ZVAL_LONG(_0$$3, zephir_get_intval(timeout));
+		zephir_update_property_this(this_ptr, SL("timeout"), _0$$3 TSRMLS_CC);
 	}
 
 }
@@ -125,11 +129,11 @@ PHP_METHOD(Beanspeak_Command_Reserve, parseResponse) {
 	}
 	ZEPHIR_INIT_VAR(response);
 	zephir_fast_explode_str(response, SL(" "), line, LONG_MAX TSRMLS_CC);
-	zephir_array_fetch_long(&_0, response, 0, PH_NOISY | PH_READONLY, "beanspeak/command/reserve.zep", 86 TSRMLS_CC);
+	zephir_array_fetch_long(&_0, response, 0, PH_NOISY | PH_READONLY, "beanspeak/command/reserve.zep", 88 TSRMLS_CC);
 	ZEPHIR_INIT_VAR(_1);
 	zephir_create_array(_1, 2, 0 TSRMLS_CC);
 	ZEPHIR_OBS_VAR(_2);
-	zephir_array_fetch_long(&_2, response, 1, PH_NOISY, "beanspeak/command/reserve.zep", 87 TSRMLS_CC);
+	zephir_array_fetch_long(&_2, response, 1, PH_NOISY, "beanspeak/command/reserve.zep", 89 TSRMLS_CC);
 	add_assoc_long_ex(_1, SS("id"), zephir_get_intval(_2));
 	zephir_array_update_string(&_1, SL("jobdata"), &data, PH_COPY | PH_SEPARATE);
 	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "createresponse", NULL, 0, _0, _1);

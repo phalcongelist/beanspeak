@@ -22,28 +22,28 @@ use Beanspeak\Response\ResponseInterface;
 use Beanspeak\Response\Parser\ParserInterface;
 
 /**
- * Beanspeak\Command\Reserve
+ * Beanspeak\Command\Use
  *
- * Reserves/locks a ready job from the specified tube.
+ * The "use" command is for producers. Subsequent put commands will put jobs
+ * into the tube specified by this command. If no use command has been issued,
+ * jobs will be put into the tube named "default".
  *
  * <code>
- * use Beanspeak\Command\Reserve;
+ * use Beanspeak\Command\Choose;
  *
- * $reserve = new Reserve(60 * 60 * 2);
+ * $command = new Choose('mail_queue');
  * </code>
  */
-class Reserve extends Command implements ParserInterface
+class Choose extends Command implements ParserInterface
 {
-    private timeout = null;
+    private tube;
 
     /**
-     * Beanspeak\Command\Reserve constructor
+     * Beanspeak\Command\Use constructor
      */
-    public function __construct(var timeout = null)
+    public function __construct(string! tube)
     {
-        if is_numeric(timeout) {
-            let this->timeout = (int) timeout;
-        }
+        let this->tube = tube;
     }
 
     /**
@@ -51,26 +51,15 @@ class Reserve extends Command implements ParserInterface
      */
     public function getName() -> string
     {
-        if this->timeout {
-            return "RESERVE-WITH-TIMEOUT";
-        }
-
-        return "RESERVE";
+        return "USE";
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getCommandLine()
+    public function getCommandLine() -> string
     {
-        var timeout;
-        let timeout = this->timeout;
-
-        if typeof timeout == "int" {
-            return "reserve-with-timeout " . timeout;
-        }
-
-        return "reserve";
+        return "use " . this->tube;
     }
 
     /**
@@ -78,16 +67,6 @@ class Reserve extends Command implements ParserInterface
      */
     public function parseResponse(string line, string data = null) -> <ResponseInterface>
     {
-        if !starts_with(line, "RESERVED") {
-            return this->createResponse(line);
-        }
-
-        var response;
-        let response = explode(" ", line);
-
-        return this->createResponse(response[0], [
-            "id"      : (int) response[1],
-            "jobdata" : data
-        ]);
+       return this->createResponse("USING", ["tube" : preg_replace("#^USING (.+)$#", "$1", line)]);
     }
 }

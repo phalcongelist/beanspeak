@@ -19,9 +19,11 @@ namespace Beanspeak;
 
 use Beanspeak\Job;
 use Beanspeak\Command\Put;
-use Beanspeak\Command\Use;
+use Beanspeak\Command\Stats;
+use Beanspeak\Command\Choose;
 use Beanspeak\Command\Reserve;
 use Beanspeak\Job\JobInterface;
+use Beanspeak\Response\ArrayResponse;
 use Beanspeak\Dispatcher\DispatcherInterface;
 use Beanspeak\Dispatcher\DispatcherAwareInterface;
 
@@ -125,13 +127,13 @@ class Beanspeak implements DispatcherAwareInterface
      * Change the active tube.
      *
      * <code>
-     * $queue->use('mail_queue');
+     * $queue->choose('mail_queue');
      * </code>
      */
-    public function $use(string! tube) -> string
+    public function choose(string! tube) -> string
     {
         var response;
-        let response = this->dispatcher->dispatch(new $Use(tube));
+        let response = this->dispatcher->dispatch(new Choose(tube));
 
         return response->tube;
     }
@@ -154,5 +156,17 @@ class Beanspeak implements DispatcherAwareInterface
         }
 
         return false;
+    }
+
+    /**
+     * Gives statistical information about the system as a whole.
+     *
+     * <code>
+     * $queue->stats();
+     * </code>
+     */
+    public function stats() -> <ArrayResponse>
+    {
+        return this->dispatcher->dispatch(new Stats());
     }
 }

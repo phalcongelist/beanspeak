@@ -37,18 +37,22 @@ zend_class_entry *beanspeak_job_jobinterface_ce;
 zend_class_entry *beanspeak_response_responseinterface_ce;
 zend_class_entry *beanspeak_command_ce;
 zend_class_entry *beanspeak_beanspeak_ce;
+zend_class_entry *beanspeak_command_choose_ce;
 zend_class_entry *beanspeak_command_exception_ce;
 zend_class_entry *beanspeak_command_put_ce;
 zend_class_entry *beanspeak_command_reserve_ce;
-zend_class_entry *beanspeak_command_use_ce;
+zend_class_entry *beanspeak_command_stats_ce;
 zend_class_entry *beanspeak_connection_ce;
 zend_class_entry *beanspeak_connection_exception_ce;
 zend_class_entry *beanspeak_dispatcher_ce;
 zend_class_entry *beanspeak_dispatcher_exception_ce;
 zend_class_entry *beanspeak_exception_ce;
 zend_class_entry *beanspeak_job_ce;
+zend_class_entry *beanspeak_job_exception_ce;
 zend_class_entry *beanspeak_response_arrayresponse_ce;
 zend_class_entry *beanspeak_response_exception_ce;
+zend_class_entry *beanspeak_response_parser_exception_ce;
+zend_class_entry *beanspeak_response_parser_yaml_ce;
 
 ZEND_DECLARE_MODULE_GLOBALS(beanspeak)
 
@@ -84,18 +88,22 @@ static PHP_MINIT_FUNCTION(beanspeak)
 	ZEPHIR_INIT(Beanspeak_Response_ResponseInterface);
 	ZEPHIR_INIT(Beanspeak_Command);
 	ZEPHIR_INIT(Beanspeak_Beanspeak);
+	ZEPHIR_INIT(Beanspeak_Command_Choose);
 	ZEPHIR_INIT(Beanspeak_Command_Exception);
 	ZEPHIR_INIT(Beanspeak_Command_Put);
 	ZEPHIR_INIT(Beanspeak_Command_Reserve);
-	ZEPHIR_INIT(Beanspeak_Command_Use);
+	ZEPHIR_INIT(Beanspeak_Command_Stats);
 	ZEPHIR_INIT(Beanspeak_Connection);
 	ZEPHIR_INIT(Beanspeak_Connection_Exception);
 	ZEPHIR_INIT(Beanspeak_Dispatcher);
 	ZEPHIR_INIT(Beanspeak_Dispatcher_Exception);
 	ZEPHIR_INIT(Beanspeak_Exception);
 	ZEPHIR_INIT(Beanspeak_Job);
+	ZEPHIR_INIT(Beanspeak_Job_Exception);
 	ZEPHIR_INIT(Beanspeak_Response_ArrayResponse);
 	ZEPHIR_INIT(Beanspeak_Response_Exception);
+	ZEPHIR_INIT(Beanspeak_Response_Parser_Exception);
+	ZEPHIR_INIT(Beanspeak_Response_Parser_Yaml);
 
 #if PHP_VERSION_ID < 50500
 	setlocale(LC_ALL, old_lc_all);

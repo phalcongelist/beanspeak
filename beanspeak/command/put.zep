@@ -27,17 +27,17 @@ use Beanspeak\Response\Parser\ParserInterface;
  * Inserts a job into the client's currently used tube.
  *
  * <code>
- * $queue->put(
+ * use Beanspeak\Command\Put;
+ *
+ * $put = new Put(
  *     [
  *         'recipient' => 'user@mail.com',
  *         'subject'   => 'Welcome',
  *         'content'   => $content,
  *     ],
- *     [
- *         'priority' => 999,
- *         'delay'    => 60 * 60,
- *         'ttr'      => 3600,
- *     ],
+ *     999,
+ *     60 * 60,
+ *     3600,
  * );
  * </code>
  */
@@ -118,19 +118,19 @@ class Put extends Command implements ParserInterface
 
         let name = this->getName();
 
-        if (starts_with(line, "BURIED")) {
+        if starts_with(line, "BURIED") {
             throw new Exception(name . ": server ran out of memory trying to grow the priority queue data structure");
         }
 
-        if (starts_with(line, "JOB_TOO_BIG")) {
+        if starts_with(line, "JOB_TOO_BIG") {
             throw new Exception(name . ": job data exceeds server-enforced limit");
         }
 
-        if (starts_with(line, "EXPECTED_CRLF")) {
+        if starts_with(line, "EXPECTED_CRLF") {
             throw new Exception(name . ": CRLF expected");
         }
 
-        if (starts_with(line, "DRAINING")) {
+        if starts_with(line, "DRAINING") {
             throw new Exception(name . ": server has been put into 'drain mode' and is no longer accepting new jobs");
         }
 

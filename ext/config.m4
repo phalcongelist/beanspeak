@@ -19,18 +19,22 @@ if test "$PHP_BEANSPEAK" = "yes"; then
 	beanspeak/job/jobinterface.zep.c
 	beanspeak/response/responseinterface.zep.c
 	beanspeak/beanspeak.zep.c
+	beanspeak/command/choose.zep.c
 	beanspeak/command/exception.zep.c
 	beanspeak/command/put.zep.c
 	beanspeak/command/reserve.zep.c
-	beanspeak/command/use.zep.c
+	beanspeak/command/stats.zep.c
 	beanspeak/connection.zep.c
 	beanspeak/connection/exception.zep.c
 	beanspeak/dispatcher.zep.c
 	beanspeak/dispatcher/exception.zep.c
 	beanspeak/exception.zep.c
 	beanspeak/job.zep.c
+	beanspeak/job/exception.zep.c
 	beanspeak/response/arrayresponse.zep.c
-	beanspeak/response/exception.zep.c "
+	beanspeak/response/exception.zep.c
+	beanspeak/response/parser/exception.zep.c
+	beanspeak/response/parser/yaml.zep.c "
 	PHP_NEW_EXTENSION(beanspeak, $beanspeak_sources, $ext_shared,, )
 	PHP_SUBST(BEANSPEAK_SHARED_LIBADD)
 
