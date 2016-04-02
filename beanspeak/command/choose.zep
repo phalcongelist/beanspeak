@@ -29,10 +29,12 @@ use Beanspeak\Response\Parser\ParserInterface;
  * jobs will be put into the tube named "default".
  *
  * <code>
- * $queue->use('mail_queue');
+ * use Beanspeak\Command\Choose;
+ *
+ * $command = new Choose('mail_queue');
  * </code>
  */
-class $Use extends Command implements ParserInterface
+class Choose extends Command implements ParserInterface
 {
     private tube;
 

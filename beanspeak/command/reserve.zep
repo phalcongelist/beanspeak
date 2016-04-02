@@ -27,7 +27,9 @@ use Beanspeak\Response\Parser\ParserInterface;
  * Reserves/locks a ready job from the specified tube.
  *
  * <code>
- * $queue->reserve();
+ * use Beanspeak\Command\Reserve;
+ *
+ * $reserve = new Reserve(60 * 60 * 2);
  * </code>
  */
 class Reserve extends Command implements ParserInterface
@@ -39,9 +41,7 @@ class Reserve extends Command implements ParserInterface
      */
     public function __construct(var timeout = null)
     {
-        if typeof timeout == "int" {
-            let this->timeout = timeout;
-        } elseif is_numeric(timeout) {
+        if is_numeric(timeout) {
             let this->timeout = (int) timeout;
         }
     }

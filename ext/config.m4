@@ -19,11 +19,11 @@ if test "$PHP_BEANSPEAK" = "yes"; then
 	beanspeak/job/jobinterface.zep.c
 	beanspeak/response/responseinterface.zep.c
 	beanspeak/beanspeak.zep.c
+	beanspeak/command/choose.zep.c
 	beanspeak/command/exception.zep.c
 	beanspeak/command/put.zep.c
 	beanspeak/command/reserve.zep.c
 	beanspeak/command/stats.zep.c
-	beanspeak/command/use.zep.c
 	beanspeak/connection.zep.c
 	beanspeak/connection/exception.zep.c
 	beanspeak/dispatcher.zep.c

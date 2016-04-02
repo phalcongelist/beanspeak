@@ -182,10 +182,10 @@ PHP_METHOD(Beanspeak_Beanspeak, put) {
  * Change the active tube.
  *
  * <code>
- * $queue->use('mail_queue');
+ * $queue->choose('mail_queue');
  * </code>
  */
-PHP_METHOD(Beanspeak_Beanspeak, use) {
+PHP_METHOD(Beanspeak_Beanspeak, choose) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 	zval *tube_param = NULL, *response = NULL, *_0, *_1, *_2;
@@ -208,7 +208,7 @@ PHP_METHOD(Beanspeak_Beanspeak, use) {
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
 	ZEPHIR_INIT_VAR(_1);
-	object_init_ex(_1, beanspeak_command_use_ce);
+	object_init_ex(_1, beanspeak_command_choose_ce);
 	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 6, tube);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);

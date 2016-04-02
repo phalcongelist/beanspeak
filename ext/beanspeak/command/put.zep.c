@@ -29,17 +29,17 @@
  * Inserts a job into the client's currently used tube.
  *
  * <code>
- * $queue->put(
+ * use Beanspeak\Command\Put;
+ *
+ * $put = new Put(
  *     [
  *         'recipient' => 'user@mail.com',
  *         'subject'   => 'Welcome',
  *         'content'   => $content,
  *     ],
- *     [
- *         'priority' => 999,
- *         'delay'    => 60 * 60,
- *         'ttr'      => 3600,
- *     ],
+ *     999,
+ *     60 * 60,
+ *     3600,
  * );
  * </code>
  */
@@ -168,7 +168,7 @@ PHP_METHOD(Beanspeak_Command_Put, getDataLength) {
 		_0$$3 = zephir_fetch_nproperty_this(this_ptr, SL("data"), PH_NOISY_CC);
 		ZEPHIR_SINIT_VAR(_1$$3);
 		ZVAL_STRING(&_1$$3, "latin1", 0);
-		ZEPHIR_RETURN_CALL_FUNCTION("mb_strlen", NULL, 9, _0$$3, &_1$$3);
+		ZEPHIR_RETURN_CALL_FUNCTION("mb_strlen", NULL, 10, _0$$3, &_1$$3);
 		zephir_check_call_status();
 		RETURN_MM();
 	}

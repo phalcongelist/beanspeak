@@ -30,16 +30,18 @@
  * jobs will be put into the tube named "default".
  *
  * <code>
- * $queue->use('mail_queue');
+ * use Beanspeak\Command\Choose;
+ *
+ * $command = new Choose('mail_queue');
  * </code>
  */
-ZEPHIR_INIT_CLASS(Beanspeak_Command_Use) {
+ZEPHIR_INIT_CLASS(Beanspeak_Command_Choose) {
 
-	ZEPHIR_REGISTER_CLASS_EX(Beanspeak\\Command, Use, beanspeak, command_use, beanspeak_command_ce, beanspeak_command_use_method_entry, 0);
+	ZEPHIR_REGISTER_CLASS_EX(Beanspeak\\Command, Choose, beanspeak, command_choose, beanspeak_command_ce, beanspeak_command_choose_method_entry, 0);
 
-	zend_declare_property_null(beanspeak_command_use_ce, SL("tube"), ZEND_ACC_PRIVATE TSRMLS_CC);
+	zend_declare_property_null(beanspeak_command_choose_ce, SL("tube"), ZEND_ACC_PRIVATE TSRMLS_CC);
 
-	zend_class_implements(beanspeak_command_use_ce TSRMLS_CC, 1, beanspeak_response_parser_parserinterface_ce);
+	zend_class_implements(beanspeak_command_choose_ce TSRMLS_CC, 1, beanspeak_response_parser_parserinterface_ce);
 	return SUCCESS;
 
 }
@@ -47,7 +49,7 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command_Use) {
 /**
  * Beanspeak\Command\Use constructor
  */
-PHP_METHOD(Beanspeak_Command_Use, __construct) {
+PHP_METHOD(Beanspeak_Command_Choose, __construct) {
 
 	zval *tube_param = NULL;
 	zval *tube = NULL;
@@ -75,7 +77,7 @@ PHP_METHOD(Beanspeak_Command_Use, __construct) {
 /**
  * {@inheritdoc}
  */
-PHP_METHOD(Beanspeak_Command_Use, getName) {
+PHP_METHOD(Beanspeak_Command_Choose, getName) {
 
 	
 
@@ -86,7 +88,7 @@ PHP_METHOD(Beanspeak_Command_Use, getName) {
 /**
  * {@inheritdoc}
  */
-PHP_METHOD(Beanspeak_Command_Use, getCommandLine) {
+PHP_METHOD(Beanspeak_Command_Choose, getCommandLine) {
 
 	zval *_0;
 
@@ -100,7 +102,7 @@ PHP_METHOD(Beanspeak_Command_Use, getCommandLine) {
 /**
  * {@inheritdoc}
  */
-PHP_METHOD(Beanspeak_Command_Use, parseResponse) {
+PHP_METHOD(Beanspeak_Command_Choose, parseResponse) {
 
 	zval *_0;
 	int ZEPHIR_LAST_CALL_STATUS;
@@ -125,7 +127,7 @@ PHP_METHOD(Beanspeak_Command_Use, parseResponse) {
 	ZVAL_STRING(_1, "#^USING (.+)$#", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_VAR(_2);
 	ZVAL_STRING(_2, "$1", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_FUNCTION(&_3, "preg_replace", NULL, 11, _1, _2, line);
+	ZEPHIR_CALL_FUNCTION(&_3, "preg_replace", NULL, 9, _1, _2, line);
 	zephir_check_temp_parameter(_1);
 	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();

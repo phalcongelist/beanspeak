@@ -304,7 +304,7 @@ void zep_Beanspeak_Dispatcher_checkStatusMessage(int ht, zval *return_value, zva
 	ZVAL_STRING(_1, "#^(\\S+).*$#s", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_VAR(_2);
 	ZVAL_STRING(_2, "$1", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_FUNCTION(&message, "preg_replace", NULL, 11, _1, _2, content);
+	ZEPHIR_CALL_FUNCTION(&message, "preg_replace", NULL, 9, _1, _2, content);
 	zephir_check_temp_parameter(_1);
 	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();
@@ -365,7 +365,7 @@ void zep_Beanspeak_Dispatcher_parseData(int ht, zval *return_value, zval **retur
 	ZVAL_STRING(_1, "#^(\\S+).*$#s", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_VAR(_2);
 	ZVAL_STRING(_2, "$1", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_FUNCTION(&message, "preg_replace", &_3, 11, _1, _2, content);
+	ZEPHIR_CALL_FUNCTION(&message, "preg_replace", &_3, 9, _1, _2, content);
 	zephir_check_temp_parameter(_1);
 	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();
@@ -381,7 +381,7 @@ void zep_Beanspeak_Dispatcher_parseData(int ht, zval *return_value, zval **retur
 		ZVAL_STRING(_4$$3, "#^.*\\b(\\d+)$#", ZEPHIR_TEMP_PARAM_COPY);
 		ZEPHIR_INIT_VAR(_5$$3);
 		ZVAL_STRING(_5$$3, "$1", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_FUNCTION(&dataLength, "preg_replace", &_3, 11, _4$$3, _5$$3, content);
+		ZEPHIR_CALL_FUNCTION(&dataLength, "preg_replace", &_3, 9, _4$$3, _5$$3, content);
 		zephir_check_temp_parameter(_4$$3);
 		zephir_check_temp_parameter(_5$$3);
 		zephir_check_call_status();
