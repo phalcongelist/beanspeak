@@ -313,8 +313,10 @@ class Beanspeak implements DispatcherAwareInterface
         let dispatcher = this->dispatcher,
             connection = dispatcher->getConnection();
 
-        dispatcher->dispatch(new Quit());
-        connection->disconnect();
+        if connection->isConnected() {
+            dispatcher->dispatch(new Quit());
+            connection->disconnect();
+        }
 
         return connection->isConnected() === false;
     }

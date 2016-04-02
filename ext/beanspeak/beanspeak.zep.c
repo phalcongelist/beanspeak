@@ -566,7 +566,7 @@ PHP_METHOD(Beanspeak_Beanspeak, pauseTube) {
  */
 PHP_METHOD(Beanspeak_Beanspeak, quit) {
 
-	zval *dispatcher = NULL, *connection = NULL, *_0, *_1, *_2 = NULL;
+	zval *dispatcher = NULL, *connection = NULL, *_0, *_1 = NULL, *_3 = NULL, *_2$$3;
 	int ZEPHIR_LAST_CALL_STATUS;
 
 	ZEPHIR_MM_GROW();
@@ -575,19 +575,23 @@ PHP_METHOD(Beanspeak_Beanspeak, quit) {
 	ZEPHIR_CPY_WRT(dispatcher, _0);
 	ZEPHIR_CALL_METHOD(&connection, dispatcher, "getconnection", NULL, 0);
 	zephir_check_call_status();
-	ZEPHIR_INIT_VAR(_1);
-	object_init_ex(_1, beanspeak_command_quit_ce);
-	if (zephir_has_constructor(_1 TSRMLS_CC)) {
-		ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_1, connection, "isconnected", NULL, 0);
+	zephir_check_call_status();
+	if (zephir_is_true(_1)) {
+		ZEPHIR_INIT_VAR(_2$$3);
+		object_init_ex(_2$$3, beanspeak_command_quit_ce);
+		if (zephir_has_constructor(_2$$3 TSRMLS_CC)) {
+			ZEPHIR_CALL_METHOD(NULL, _2$$3, "__construct", NULL, 0);
+			zephir_check_call_status();
+		}
+		ZEPHIR_CALL_METHOD(NULL, dispatcher, "dispatch", NULL, 0, _2$$3);
+		zephir_check_call_status();
+		ZEPHIR_CALL_METHOD(NULL, connection, "disconnect", NULL, 0);
 		zephir_check_call_status();
 	}
-	ZEPHIR_CALL_METHOD(NULL, dispatcher, "dispatch", NULL, 0, _1);
+	ZEPHIR_CALL_METHOD(&_3, connection, "isconnected", NULL, 0);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(NULL, connection, "disconnect", NULL, 0);
-	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(&_2, connection, "isconnected", NULL, 0);
-	zephir_check_call_status();
-	RETURN_MM_BOOL(ZEPHIR_IS_FALSE_IDENTICAL(_2));
+	RETURN_MM_BOOL(ZEPHIR_IS_FALSE_IDENTICAL(_3));
 
 }
 
