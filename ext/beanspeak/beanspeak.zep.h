@@ -15,6 +15,7 @@ PHP_METHOD(Beanspeak_Beanspeak, peekDelayed);
 PHP_METHOD(Beanspeak_Beanspeak, peekBuried);
 PHP_METHOD(Beanspeak_Beanspeak, peekReady);
 PHP_METHOD(Beanspeak_Beanspeak, listTubes);
+PHP_METHOD(Beanspeak_Beanspeak, listTubeUsed);
 PHP_METHOD(Beanspeak_Beanspeak, stats);
 PHP_METHOD(Beanspeak_Beanspeak, pauseTube);
 
@@ -65,6 +66,7 @@ ZEPHIR_INIT_FUNCS(beanspeak_beanspeak_method_entry) {
 	PHP_ME(Beanspeak_Beanspeak, peekBuried, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Beanspeak, peekReady, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Beanspeak, listTubes, NULL, ZEND_ACC_PUBLIC)
+	PHP_ME(Beanspeak_Beanspeak, listTubeUsed, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Beanspeak, stats, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Beanspeak, pauseTube, arginfo_beanspeak_beanspeak_pausetube, ZEND_ACC_PUBLIC)
 	PHP_FE_END

@@ -427,6 +427,35 @@ PHP_METHOD(Beanspeak_Beanspeak, listTubes) {
 }
 
 /**
+ * Returns the tube currently being used by the client.
+ *
+ * <code>
+ * $tube = $queue->listTubeUsed();
+ * </code>
+ */
+PHP_METHOD(Beanspeak_Beanspeak, listTubeUsed) {
+
+	zval *response = NULL, *_0, *_1, *_2;
+	int ZEPHIR_LAST_CALL_STATUS;
+
+	ZEPHIR_MM_GROW();
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
+	ZEPHIR_INIT_VAR(_1);
+	object_init_ex(_1, beanspeak_command_listtubeused_ce);
+	if (zephir_has_constructor(_1 TSRMLS_CC)) {
+		ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 0);
+		zephir_check_call_status();
+	}
+	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);
+	zephir_check_call_status();
+	ZEPHIR_OBS_VAR(_2);
+	zephir_read_property(&_2, response, SL("tube"), PH_NOISY_CC);
+	RETURN_CCTOR(_2);
+
+}
+
+/**
  * Gives statistical information about the system as a whole.
  *
  * <code>
