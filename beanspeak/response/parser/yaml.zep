@@ -103,7 +103,7 @@ class Yaml implements ParserInterface
         for values in lines {
             let value = explode(":", values);
 
-            if isset(value[1]) {
+            if !isset(value[1]) {
                 trigger_error("YAML parse error for line: " . values, E_USER_WARNING);
             } else {
                 let response[ltrim(value[0], '- ')] = trim(value[1]);

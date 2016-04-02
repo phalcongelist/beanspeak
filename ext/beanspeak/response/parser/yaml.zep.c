@@ -237,7 +237,7 @@ void zep_Beanspeak_Response_Parser_Yaml_yamlParse(int ht, zval *return_value, zv
 		ZEPHIR_GET_HVALUE(values, _17);
 		ZEPHIR_INIT_NVAR(value);
 		zephir_fast_explode_str(value, SL(":"), values, LONG_MAX TSRMLS_CC);
-		if (zephir_array_isset_long(value, 1)) {
+		if (!(zephir_array_isset_long(value, 1))) {
 			ZEPHIR_INIT_LNVAR(_18$$11);
 			ZEPHIR_CONCAT_SV(_18$$11, "YAML parse error for line: ", values);
 			ZEPHIR_SINIT_NVAR(_19$$11);
