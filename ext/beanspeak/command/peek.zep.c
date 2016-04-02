@@ -66,7 +66,7 @@ PHP_METHOD(Beanspeak_Command_Peek, __construct) {
 
 	_0 = Z_TYPE_P(subject) == IS_LONG;
 	if (!(_0)) {
-		ZEPHIR_CALL_FUNCTION(&_1, "ctype_digit", NULL, 14, subject);
+		ZEPHIR_CALL_FUNCTION(&_1, "ctype_digit", NULL, 15, subject);
 		zephir_check_call_status();
 		_0 = zephir_is_true(_1);
 	}
@@ -102,7 +102,7 @@ PHP_METHOD(Beanspeak_Command_Peek, __construct) {
 		ZEPHIR_INIT_VAR(_8$$7);
 		zephir_gettype(_8$$7, subject TSRMLS_CC);
 		ZEPHIR_INIT_VAR(_9$$7);
-		ZEPHIR_CONCAT_SV(_9$$7, "Peek subject must be integer list or string got: ", _8$$7);
+		ZEPHIR_CONCAT_SV(_9$$7, "Peek subject must be either integer or string got: ", _8$$7);
 		ZEPHIR_CALL_METHOD(NULL, _7$$7, "__construct", NULL, 1, _9$$7);
 		zephir_check_call_status();
 		zephir_throw_exception_debug(_7$$7, "beanspeak/command/peek.zep", 58 TSRMLS_CC);

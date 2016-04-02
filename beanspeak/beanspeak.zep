@@ -24,6 +24,7 @@ use Beanspeak\Command\Stats;
 use Beanspeak\Command\Choose;
 use Beanspeak\Command\Reserve;
 use Beanspeak\Job\JobInterface;
+use Beanspeak\Command\StatsJob;
 use Beanspeak\Command\StatsTube;
 use Beanspeak\Command\ListTubes;
 use Beanspeak\Command\PauseTube;
@@ -276,6 +277,19 @@ class Beanspeak implements DispatcherAwareInterface
     public function statsTube(string! tube) -> <ArrayResponse>
     {
         return this->dispatcher->dispatch(new StatsTube(tube));
+    }
+
+    /**
+     * Gives statistical information about the specified tube if it exists.
+     *
+     * <code>
+     * $stats = $queue->statsJob(90);
+     * $stats = $queue->statsJob($jobObject);
+     * </code>
+     */
+    public function statsJob(var job) -> <ArrayResponse>
+    {
+        return this->dispatcher->dispatch(new StatsJob(job));
     }
 
     /**
