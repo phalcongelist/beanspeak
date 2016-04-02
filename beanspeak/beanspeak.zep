@@ -20,6 +20,7 @@ namespace Beanspeak;
 use Beanspeak\Job;
 use Beanspeak\Command\Put;
 use Beanspeak\Command\Peek;
+use Beanspeak\Command\Quit;
 use Beanspeak\Command\Stats;
 use Beanspeak\Command\Choose;
 use Beanspeak\Command\Reserve;
@@ -296,5 +297,25 @@ class Beanspeak implements DispatcherAwareInterface
         let response = this->dispatcher->dispatch(new PauseTube(tube, delay));
 
         return response->delay;
+    }
+
+    /**
+     * Simply closes the connection.
+     *
+     * <code>
+     * $queue->quit();
+     * </code>
+     */
+    public function quit() -> boolean
+    {
+        var dispatcher, connection;
+
+        let dispatcher = this->dispatcher,
+            connection = dispatcher->getConnection();
+
+        dispatcher->dispatch(new Quit());
+        connection->disconnect();
+
+        return connection->isConnected() === false;
     }
 }
