@@ -45,7 +45,7 @@ class Yaml implements ParserInterface
      */
     public function parseResponse(string line, string data = null) -> <ResponseInterface>
     {
-        var report, key, value;
+        var response;
 
         if line == "NOT_FOUND" {
             throw new Exception("Server reported: NOT_FOUND");
@@ -55,31 +55,33 @@ class Yaml implements ParserInterface
             throw new Exception("Unhandled response: " . line);
         }
 
-        let report = this->yamlParse(data);
+        let response = this->yamlParse(this->mode, data);
 
-        if this->mode == "list" {
-            var tmp = [];
-
-            for key, value in report {
-                let tmp[] = key . " " . value;
-            }
-
-            let report = tmp;
-        }
-
-        return new ArrayResponse("OK", report);
+        return new ArrayResponse("OK", response);
     }
 
-    internal function yamlParse(string data = null) -> array
+    internal function yamlParse(string! mode, string data = null) -> array
     {
-        var lines, values, value, respoonse = [];
+        var lines, values, value, response = [];
 
         if typeof data != "string" || empty(data) {
             return [];
         }
 
         if function_exists("yaml_parse") {
-            return yaml_parse(data);
+            let response = yaml_parse(data);
+
+            if mode == "list" {
+                var key, value, tmp = [];
+
+                for key, value in response {
+                    let tmp[] = key . ": " . value;
+                }
+
+                let response = tmp;
+            }
+
+            return response;
         }
 
         let data  = rtrim(data),
@@ -90,14 +92,24 @@ class Yaml implements ParserInterface
         }
 
         if typeof lines != "array" || empty(lines) {
+            trigger_error("YAML parse error. Raw data: " . print_r(lines, true), E_USER_WARNING);
             return [];
+        }
+
+        if mode == "list" {
+            return lines;
         }
 
         for values in lines {
             let value = explode(":", values);
-            let respoonse[ltrim(value[0], '- ')] = trim(value[1]);
+
+            if isset(value[1]) {
+                trigger_error("YAML parse error for line: " . values, E_USER_WARNING);
+            } else {
+                let response[ltrim(value[0], '- ')] = trim(value[1]);
+            }
         }
 
-        return respoonse;
+        return response;
     }
 }
