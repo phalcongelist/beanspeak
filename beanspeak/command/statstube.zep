@@ -22,24 +22,34 @@ use Beanspeak\Response\Parser\Yaml;
 use Beanspeak\Response\Parser\ParserInterface;
 
 /**
- * Beanspeak\Command\Stats
+ * Beanspeak\Command\StatsTube
  *
- * Gives statistical information about the system as a whole.
+ * Gives statistical information about the specified tube if it exists.
  *
  * <code>
- * use Beanspeak\Command\Stats;
+ * use Beanspeak\Command\StatsTube;
  *
- * $stats = new Stats;
+ * $stats = new StatsTube('process-bitcoin');
  * </code>
  */
-class Stats extends Command
+class StatsTube extends Command
 {
+    private tube;
+
+    /**
+     * Beanspeak\Command\StatsTube constructor
+     */
+    public function __construct(string! tube)
+    {
+        let this->tube = tube;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function getName() -> string
     {
-        return "STATS";
+        return "STATS-TUBE";
     }
 
     /**
@@ -47,7 +57,7 @@ class Stats extends Command
      */
     public function getCommandLine()
     {
-        return "stats";
+        return "stats-tube " . this->tube;
     }
 
     /**
