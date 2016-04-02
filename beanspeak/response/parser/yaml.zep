@@ -106,7 +106,7 @@ class Yaml implements ParserInterface
             if !isset(value[1]) {
                 trigger_error("YAML parse error for line: " . values, E_USER_WARNING);
             } else {
-                let response[ltrim(value[0], '- ')] = trim(value[1]);
+                let response[ltrim(value[0], "- ")] = trim(value[1]);
             }
         }
 

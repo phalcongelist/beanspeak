@@ -251,7 +251,7 @@ void zep_Beanspeak_Response_Parser_Yaml_yamlParse(int ht, zval *return_value, zv
 			ZEPHIR_INIT_NVAR(_22$$12);
 			zephir_array_fetch_long(&_23$$12, value, 0, PH_NOISY | PH_READONLY, "beanspeak/response/parser/yaml.zep", 109 TSRMLS_CC);
 			ZEPHIR_SINIT_NVAR(_24$$12);
-			ZVAL_LONG(&_24$$12, '- ');
+			ZVAL_STRING(&_24$$12, "- ", 0);
 			zephir_fast_trim(_22$$12, _23$$12, &_24$$12, ZEPHIR_TRIM_LEFT TSRMLS_CC);
 			zephir_array_update_zval(&response, _22$$12, &_20$$12, PH_COPY | PH_SEPARATE);
 		}
