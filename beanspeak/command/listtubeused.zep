@@ -22,36 +22,24 @@ use Beanspeak\Response\ResponseInterface;
 use Beanspeak\Response\Parser\ParserInterface;
 
 /**
- * Beanspeak\Command\Use
+ * Beanspeak\Command\ListTubeUsed
  *
- * The "use" command is for producers. Subsequent put commands will put jobs
- * into the tube specified by this command. If no use command has been issued,
- * jobs will be put into the tube named "default".
+ * Returns the tube currently being used by the client.
  *
  * <code>
- * use Beanspeak\Command\Choose;
+ * use Beanspeak\Command\ListTubeUsed;
  *
- * $command = new Choose('mail-queue');
+ * $tube = new ListTubeUsed;
  * </code>
  */
-class Choose extends Command implements ParserInterface
+class ListTubeUsed extends Command implements ParserInterface
 {
-    private tube;
-
-    /**
-     * Beanspeak\Command\Use constructor
-     */
-    public function __construct(string! tube)
-    {
-        let this->tube = tube;
-    }
-
     /**
      * {@inheritdoc}
      */
     public function getName() -> string
     {
-        return "USE";
+        return "LIST-TUBE-USED";
     }
 
     /**
@@ -59,7 +47,7 @@ class Choose extends Command implements ParserInterface
      */
     public function getCommandLine() -> string
     {
-        return "use " . this->tube;
+        return "list-tube-used";
     }
 
     /**
@@ -67,8 +55,8 @@ class Choose extends Command implements ParserInterface
      */
     public function parseResponse(string line, string data = null) -> <ResponseInterface>
     {
-       return this->createResponse("USING", [
-           "tube" : preg_replace("#^USING (.+)$#", "$1", line)
-       ]);
+        return this->createResponse("USING", [
+            "tube" : preg_replace("#^USING (.+)$#", "$1", line)
+        ]);
     }
 }
