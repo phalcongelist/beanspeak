@@ -16,7 +16,6 @@
 #include "kernel/memory.h"
 #include "ext/spl/spl_exceptions.h"
 #include "kernel/exception.h"
-#include "kernel/operators.h"
 
 
 /**
@@ -42,35 +41,22 @@ ZEPHIR_INIT_CLASS(Beanspeak_Job) {
  */
 PHP_METHOD(Beanspeak_Job, __construct) {
 
-	zval *data = NULL;
-	zval *id_param = NULL, *data_param = NULL, *_0;
+	zval *id_param = NULL, *data, *_0;
 	int id;
 
-	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 2, 0, &id_param, &data_param);
+	zephir_fetch_params(0, 2, 0, &id_param, &data);
 
 	if (unlikely(Z_TYPE_P(id_param) != IS_LONG)) {
 		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'id' must be a int") TSRMLS_CC);
-		RETURN_MM_NULL();
+		RETURN_NULL();
 	}
 	id = Z_LVAL_P(id_param);
-	if (unlikely(Z_TYPE_P(data_param) != IS_STRING && Z_TYPE_P(data_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'data' must be a string") TSRMLS_CC);
-		RETURN_MM_NULL();
-	}
-	if (likely(Z_TYPE_P(data_param) == IS_STRING)) {
-		zephir_get_strval(data, data_param);
-	} else {
-		ZEPHIR_INIT_VAR(data);
-		ZVAL_EMPTY_STRING(data);
-	}
 
 
 	ZEPHIR_INIT_ZVAL_NREF(_0);
 	ZVAL_LONG(_0, id);
 	zephir_update_property_this(this_ptr, SL("id"), _0 TSRMLS_CC);
 	zephir_update_property_this(this_ptr, SL("data"), data TSRMLS_CC);
-	ZEPHIR_MM_RESTORE();
 
 }
 

@@ -30,5 +30,5 @@ interface JobInterface
     /**
      * Gets the Job data.
      */
-    public function getData() -> string;
+    public function getData() -> var;
 }
