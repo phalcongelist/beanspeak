@@ -32,7 +32,7 @@ class Job implements JobInterface
     /**
      * Beanspeak\Job constructor
      */
-    public function __construct(int! id, string! data)
+    public function __construct(int! id, var data)
     {
         let this->id   = id,
             this->data = data;
@@ -49,7 +49,7 @@ class Job implements JobInterface
     /**
      * {@inheritdoc}
      */
-    public function getData() -> string
+    public function getData() -> var
     {
         return this->data;
     }

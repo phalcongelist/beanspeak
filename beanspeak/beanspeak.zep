@@ -154,7 +154,7 @@ class Beanspeak implements DispatcherAwareInterface
         let response = this->dispatcher->dispatch(new Reserve(timeout));
 
         if response->getResponseName() == "RESERVED" {
-            return new Job(response->id, response->jobdata);
+            return new Job(response->id, unserialize(response->jobdata));
         }
 
         return false;
@@ -176,7 +176,7 @@ class Beanspeak implements DispatcherAwareInterface
 
         let response = this->dispatcher->dispatch(new Peek(subject));
 
-        return new Job(response->id, response->jobdata);
+        return new Job(response->id, unserialize(response->jobdata));
     }
 
     /**

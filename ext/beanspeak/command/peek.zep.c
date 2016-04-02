@@ -66,7 +66,7 @@ PHP_METHOD(Beanspeak_Command_Peek, __construct) {
 
 	_0 = Z_TYPE_P(subject) == IS_LONG;
 	if (!(_0)) {
-		ZEPHIR_CALL_FUNCTION(&_1, "ctype_digit", NULL, 12, subject);
+		ZEPHIR_CALL_FUNCTION(&_1, "ctype_digit", NULL, 13, subject);
 		zephir_check_call_status();
 		_0 = zephir_is_true(_1);
 	}
