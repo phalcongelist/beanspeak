@@ -28,6 +28,7 @@ use Beanspeak\Command\ListTubes;
 use Beanspeak\Command\PauseTube;
 use Beanspeak\Command\ListTubeUsed;
 use Beanspeak\Response\ArrayResponse;
+use Beanspeak\Command\ListTubesWatched;
 use Beanspeak\Dispatcher\DispatcherInterface;
 use Beanspeak\Dispatcher\DispatcherAwareInterface;
 
@@ -255,6 +256,18 @@ class Beanspeak implements DispatcherAwareInterface
         let response = this->dispatcher->dispatch(new ListTubeUsed());
 
         return response->tube;
+    }
+
+    /**
+     * Returns a list tubes currently being watched by the client.
+     *
+     * <code>
+     * $queue->listTubesWatched();
+     * </code>
+     */
+    public function listTubesWatched() -> <ArrayResponse>
+    {
+        return this->dispatcher->dispatch(new ListTubesWatched());
     }
 
     /**
