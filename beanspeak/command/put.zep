@@ -29,16 +29,17 @@ use Beanspeak\Response\Parser\ParserInterface;
  * <code>
  * use Beanspeak\Command\Put;
  *
- * $put = new Put(
- *     [
- *         'recipient' => 'user@mail.com',
- *         'subject'   => 'Welcome',
- *         'content'   => $content,
- *     ],
- *     999,
- *     60 * 60,
- *     3600,
- * );
+ * $task = [
+ *     'recipient' => 'user@mail.com',
+ *     'subject'   => 'Welcome',
+ *     'content'   => $content,
+ * ];
+ *
+ * $put = new Put($task, [
+ *     'priority' => 999,
+ *     'delay'    => 60 * 60,
+ *     'ttr'      => 3600,
+ * ]);
  * </code>
  */
 class Put extends Command implements ParserInterface
@@ -51,9 +52,24 @@ class Put extends Command implements ParserInterface
     /**
      * Beanspeak\Command\Put constructor
      */
-    public function __construct(string! data, int priority, int delay, int ttr)
+    public function __construct(var data, array options = null)
     {
-        let this->data     = data,
+        var priority, delay, ttr;
+
+        if !fetch priority, options["priority"] {
+            let priority = "100";
+        }
+
+        if !fetch delay, options["delay"] {
+            let delay = "0";
+        }
+
+        if !fetch ttr, options["ttr"] {
+            let ttr = "86400";
+        }
+
+        // Data is automatically serialized before be sent to the server
+        let this->data     = serialize(data),
             this->priority = priority,
             this->delay    = delay,
             this->ttr      = ttr;
