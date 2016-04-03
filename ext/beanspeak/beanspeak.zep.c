@@ -557,11 +557,49 @@ PHP_METHOD(Beanspeak_Beanspeak, statsJob) {
 }
 
 /**
+ * Moves jobs into the ready queue.
+ * The Kick command applies only to the currently used tube.
+ *
+ * <code>
+ * $queue->kick(3);
+ * </code>
+ */
+PHP_METHOD(Beanspeak_Beanspeak, kick) {
+
+	zval *bound_param = NULL, *response = NULL, *_0, *_1, *_2, *_3;
+	int bound, ZEPHIR_LAST_CALL_STATUS;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &bound_param);
+
+	if (unlikely(Z_TYPE_P(bound_param) != IS_LONG)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'bound' must be a int") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+	bound = Z_LVAL_P(bound_param);
+
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
+	ZEPHIR_INIT_VAR(_1);
+	object_init_ex(_1, beanspeak_command_kick_ce);
+	ZEPHIR_INIT_VAR(_2);
+	ZVAL_LONG(_2, bound);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 12, _2);
+	zephir_check_call_status();
+	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);
+	zephir_check_call_status();
+	ZEPHIR_OBS_VAR(_3);
+	zephir_read_property(&_3, response, SL("kicked"), PH_NOISY_CC);
+	RETURN_CCTOR(_3);
+
+}
+
+/**
  * A variant of kick that operates with a single job identified by its Job ID.
  *
  * <code>
- * $stats = $queue->kickJob(90);
- * $stats = $queue->kickJob($jobObject);
+ * $queue->kickJob(90);
+ * $queue->kickJob($jobObject);
  * </code>
  */
 PHP_METHOD(Beanspeak_Beanspeak, kickJob) {
@@ -577,7 +615,7 @@ PHP_METHOD(Beanspeak_Beanspeak, kickJob) {
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
 	ZEPHIR_INIT_VAR(_1);
 	object_init_ex(_1, beanspeak_command_kickjob_ce);
-	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 12, job);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 13, job);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(NULL, _0, "dispatch", NULL, 0, _1);
 	zephir_check_call_status();
@@ -586,7 +624,7 @@ PHP_METHOD(Beanspeak_Beanspeak, kickJob) {
 }
 
 /**
- * The pause-tube command can delay any new job being reserved for a given time.
+ * Can delay any new job being reserved for a given time.
  *
  * <code>
  * $queue->pauseTube('process-video', 60 * 60);
@@ -623,7 +661,7 @@ PHP_METHOD(Beanspeak_Beanspeak, pauseTube) {
 	object_init_ex(_1, beanspeak_command_pausetube_ce);
 	ZEPHIR_INIT_VAR(_2);
 	ZVAL_LONG(_2, delay);
-	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 13, tube, _2);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 14, tube, _2);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);
 	zephir_check_call_status();

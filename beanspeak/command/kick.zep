@@ -22,33 +22,27 @@ use Beanspeak\Response\ResponseInterface;
 use Beanspeak\Response\Parser\ParserInterface;
 
 /**
- * Beanspeak\Command\PauseTube
+ * Beanspeak\Command\Kick
  *
- * Can delay any new job being reserved for a given time.
+ * Moves jobs into the ready queue.
+ * The Kick command applies only to the currently used tube.
  *
  * <code>
- * use Beanspeak\Command\PauseTube;
+ * use Beanspeak\Command\Kick;
  *
- * $pause = new PauseTube('process-video', 60 * 60);
+ * $command = new Kick($bound);
  * </code>
  */
-class PauseTube extends Command implements ParserInterface
+class Kick extends Command implements ParserInterface
 {
-    private tube;
-    private delay;
+    private bound;
 
     /**
-     * Beanspeak\Command\PauseTube constructor
-     * @throws \Beanspeak\Command\Exception
+     * Beanspeak\Command\Kick constructor
      */
-    public function __construct(string! tube, int! delay)
+    public function __construct(int! bound)
     {
-        if delay > 4294967296 {
-            throw new Exception("The \"delay\" param must less than 4294967296");
-        }
-
-        let this->tube  = tube,
-            this->delay = delay;
+        let this->bound = bound;
     }
 
     /**
@@ -56,7 +50,7 @@ class PauseTube extends Command implements ParserInterface
      */
     public function getName() -> string
     {
-        return "PAUSE-TUBE";
+        return "KICK";
     }
 
     /**
@@ -64,27 +58,20 @@ class PauseTube extends Command implements ParserInterface
      */
     public function getCommandLine() -> string
     {
-        return "pause-tube " . this->tube . " " . this->delay;
+        return "kick " . this->bound;
     }
 
     /**
      * {@inheritdoc}
-     * @throws \Beanspeak\Command\Exception
      */
-    public function parseResponse(string line, string data = null) -> <ResponseInterface>
-    {
-        if starts_with(line, "BAD_FORMAT") {
-            throw new Exception(this->getName() . ": Invalid tube name format");
-        }
+     public function parseResponse(string line, string data = null) -> <ResponseInterface>
+     {
+         var kicked;
 
-        if starts_with(line, "NOT_FOUND") {
-            throw new Exception(this->getName() . ": tube " . this->tube . " doesn't exist");
-        }
+         let kicked = preg_replace("#^KICKED (.+)$#", "$1", line);
 
-        if starts_with(line, "PAUSED") {
-            return this->createResponse("PAUSED", ["delay" : this->delay]);
-        }
-
-        throw new Exception("Unhandled response: " . line);
-    }
+         return this->createResponse("KICKED", [
+             "kicked" : (int) kicked
+         ]);
+     }
 }

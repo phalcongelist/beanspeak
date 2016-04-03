@@ -170,7 +170,7 @@ void zep_Beanspeak_Response_Parser_Yaml_yamlParse(int ht, zval *return_value, zv
 		RETURN_MM();
 	}
 	if ((zephir_function_exists_ex(SS("yaml_parse") TSRMLS_CC) == SUCCESS)) {
-		ZEPHIR_CALL_FUNCTION(&response, "yaml_parse", NULL, 24, data);
+		ZEPHIR_CALL_FUNCTION(&response, "yaml_parse", NULL, 25, data);
 		zephir_check_call_status();
 		if (ZEPHIR_IS_STRING(mode, "list")) {
 			ZEPHIR_INIT_VAR(tmp$$5);
@@ -197,7 +197,7 @@ void zep_Beanspeak_Response_Parser_Yaml_yamlParse(int ht, zval *return_value, zv
 	zephir_fast_trim(_6, data, NULL , ZEPHIR_TRIM_RIGHT TSRMLS_CC);
 	ZEPHIR_SINIT_VAR(_7);
 	ZVAL_STRING(&_7, "#[\r\n]+#", 0);
-	ZEPHIR_CALL_FUNCTION(&lines, "preg_split", NULL, 25, &_7, _6);
+	ZEPHIR_CALL_FUNCTION(&lines, "preg_split", NULL, 26, &_7, _6);
 	zephir_check_call_status();
 	_8 = zephir_array_isset_long(lines, 0);
 	if (_8) {
@@ -206,7 +206,7 @@ void zep_Beanspeak_Response_Parser_Yaml_yamlParse(int ht, zval *return_value, zv
 	}
 	if (_8) {
 		ZEPHIR_MAKE_REF(lines);
-		ZEPHIR_CALL_FUNCTION(NULL, "array_shift", NULL, 26, lines);
+		ZEPHIR_CALL_FUNCTION(NULL, "array_shift", NULL, 27, lines);
 		ZEPHIR_UNREF(lines);
 		zephir_check_call_status();
 	}
@@ -215,13 +215,13 @@ void zep_Beanspeak_Response_Parser_Yaml_yamlParse(int ht, zval *return_value, zv
 		_10 = ZEPHIR_IS_EMPTY(lines);
 	}
 	if (_10) {
-		ZEPHIR_CALL_FUNCTION(&_11$$8, "print_r", NULL, 27, lines, ZEPHIR_GLOBAL(global_true));
+		ZEPHIR_CALL_FUNCTION(&_11$$8, "print_r", NULL, 28, lines, ZEPHIR_GLOBAL(global_true));
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(_12$$8);
 		ZEPHIR_CONCAT_SV(_12$$8, "YAML parse error. Raw data: ", _11$$8);
 		ZEPHIR_SINIT_VAR(_13$$8);
 		ZVAL_LONG(&_13$$8, 512);
-		ZEPHIR_CALL_FUNCTION(NULL, "trigger_error", &_14, 28, _12$$8, &_13$$8);
+		ZEPHIR_CALL_FUNCTION(NULL, "trigger_error", &_14, 29, _12$$8, &_13$$8);
 		zephir_check_call_status();
 		array_init(return_value);
 		RETURN_MM();
@@ -242,7 +242,7 @@ void zep_Beanspeak_Response_Parser_Yaml_yamlParse(int ht, zval *return_value, zv
 			ZEPHIR_CONCAT_SV(_18$$11, "YAML parse error for line: ", values);
 			ZEPHIR_SINIT_NVAR(_19$$11);
 			ZVAL_LONG(&_19$$11, 512);
-			ZEPHIR_CALL_FUNCTION(NULL, "trigger_error", &_14, 28, _18$$11, &_19$$11);
+			ZEPHIR_CALL_FUNCTION(NULL, "trigger_error", &_14, 29, _18$$11, &_19$$11);
 			zephir_check_call_status();
 		} else {
 			ZEPHIR_INIT_NVAR(_20$$12);

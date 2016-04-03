@@ -19,6 +19,7 @@ namespace Beanspeak;
 
 use Beanspeak\Command\Put;
 use Beanspeak\Command\Peek;
+use Beanspeak\Command\Kick;
 use Beanspeak\Command\Quit;
 use Beanspeak\Command\Stats;
 use Beanspeak\Command\Choose;
@@ -294,11 +295,28 @@ class Beanspeak implements DispatcherAwareInterface
     }
 
     /**
+    * Moves jobs into the ready queue.
+    * The Kick command applies only to the currently used tube.
+     *
+     * <code>
+     * $queue->kick(3);
+     * </code>
+     */
+    public function kick(int! bound) -> int
+    {
+        var response;
+
+        let response = this->dispatcher->dispatch(new Kick(bound));
+
+        return response->kicked;
+    }
+
+    /**
      * A variant of kick that operates with a single job identified by its Job ID.
      *
      * <code>
-     * $stats = $queue->kickJob(90);
-     * $stats = $queue->kickJob($jobObject);
+     * $queue->kickJob(90);
+     * $queue->kickJob($jobObject);
      * </code>
      */
     public function kickJob(var job) -> <Beanspeak>
@@ -309,7 +327,7 @@ class Beanspeak implements DispatcherAwareInterface
     }
 
     /**
-     * The pause-tube command can delay any new job being reserved for a given time.
+     * Can delay any new job being reserved for a given time.
      *
      * <code>
      * $queue->pauseTube('process-video', 60 * 60);

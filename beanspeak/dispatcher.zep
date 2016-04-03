@@ -196,7 +196,7 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
 
         if isset statusMessages[message] {
             throw new Exception(
-                message . " in response to \"" . this->lastCommand->getName() . "\"",
+                this->lastCommand->getName() . ": received a \"" . message . "\" response",
                 statusMessages[message]
             );
         }
@@ -223,7 +223,7 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
 
             if "\r\n" !== crlf {
                 throw new Exception(
-                    "Expected 2 bytes of CRLF after " . dataLength . " bytes of data",
+                    this->lastCommand->getName() . ": expected 2 bytes of CRLF after " . dataLength . " bytes of data",
                     self::EXCEPTION_NO_CRLF
                 );
             }

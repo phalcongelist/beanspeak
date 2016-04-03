@@ -26,7 +26,7 @@
 /**
  * Beanspeak\Command\PauseTube
  *
- * The pause-tube command can delay any new job being reserved for a given time.
+ * Can delay any new job being reserved for a given time.
  *
  * <code>
  * use Beanspeak\Command\PauseTube;
