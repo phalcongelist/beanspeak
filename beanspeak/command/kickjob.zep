@@ -18,6 +18,7 @@
 namespace Beanspeak\Command;
 
 use Beanspeak\Command;
+use Beanspeak\Job\JobInterface;
 use Beanspeak\Response\ResponseInterface;
 use Beanspeak\Response\Parser\ParserInterface;
 

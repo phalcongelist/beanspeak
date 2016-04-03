@@ -69,11 +69,11 @@ PHP_METHOD(Beanspeak_Command_Bury, __construct) {
 
 	_0 = Z_TYPE_P(job) == IS_OBJECT;
 	if (_0) {
-		_0 = zephir_is_instance_of(job, SL("Beanspeak\\Command\\JobInterface") TSRMLS_CC);
+		_0 = zephir_instance_of_ev(job, beanspeak_job_jobinterface_ce TSRMLS_CC);
 	}
 	_1 = Z_TYPE_P(job) == IS_LONG;
 	if (!(_1)) {
-		ZEPHIR_CALL_FUNCTION(&_2, "ctype_digit", NULL, 19, job);
+		ZEPHIR_CALL_FUNCTION(&_2, "ctype_digit", NULL, 20, job);
 		zephir_check_call_status();
 		_1 = zephir_is_true(_2);
 	}
@@ -94,7 +94,7 @@ PHP_METHOD(Beanspeak_Command_Bury, __construct) {
 		ZEPHIR_CONCAT_SV(_7$$5, "The \"job\" param must be either instanceof JobInterface or integer. Got: ", _6$$5);
 		ZEPHIR_CALL_METHOD(NULL, _5$$5, "__construct", NULL, 1, _7$$5);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_5$$5, "beanspeak/command/bury.zep", 52 TSRMLS_CC);
+		zephir_throw_exception_debug(_5$$5, "beanspeak/command/bury.zep", 53 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -171,7 +171,7 @@ PHP_METHOD(Beanspeak_Command_Bury, parseResponse) {
 		ZEPHIR_CONCAT_VSVS(_4$$4, _2$$4, ": Job ID #", _3$$4, " is not reserved or does not exist");
 		ZEPHIR_CALL_METHOD(NULL, _1$$4, "__construct", NULL, 1, _4$$4);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_1$$4, "beanspeak/command/bury.zep", 85 TSRMLS_CC);
+		zephir_throw_exception_debug(_1$$4, "beanspeak/command/bury.zep", 86 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -181,7 +181,7 @@ PHP_METHOD(Beanspeak_Command_Bury, parseResponse) {
 	ZEPHIR_CONCAT_SV(_6, "Unhandled response: ", line);
 	ZEPHIR_CALL_METHOD(NULL, _5, "__construct", NULL, 1, _6);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(_5, "beanspeak/command/bury.zep", 88 TSRMLS_CC);
+	zephir_throw_exception_debug(_5, "beanspeak/command/bury.zep", 89 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 
