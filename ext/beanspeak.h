@@ -27,6 +27,7 @@
 #include "beanspeak/command/peek.zep.h"
 #include "beanspeak/command/put.zep.h"
 #include "beanspeak/command/quit.zep.h"
+#include "beanspeak/command/release.zep.h"
 #include "beanspeak/command/reserve.zep.h"
 #include "beanspeak/command/stats.zep.h"
 #include "beanspeak/command/statsjob.zep.h"

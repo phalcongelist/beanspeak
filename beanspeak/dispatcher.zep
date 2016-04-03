@@ -31,8 +31,6 @@ use Beanspeak\Dispatcher\Exception as DispatcherException;
  */
 class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
 {
-    const EXCEPTION_NO_CRLF = 255;
-
     /**
      * @var ConnectionInterface
      */
@@ -169,8 +167,7 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
 
             if "\r\n" !== crlf {
                 throw new Exception(
-                    this->lastCommand->getName() . ": expected 2 bytes of CRLF after " . dataLength . " bytes of data",
-                    self::EXCEPTION_NO_CRLF
+                    this->lastCommand->getName() . ": expected 2 bytes of CRLF after " . dataLength . " bytes of data"
                 );
             }
         }
