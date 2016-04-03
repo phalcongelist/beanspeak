@@ -39,10 +39,10 @@ class Reserve extends Command implements ParserInterface
     /**
      * Beanspeak\Command\Reserve constructor
      */
-    public function __construct(var timeout = null)
+    public function __construct(int timeout = -1)
     {
-        if typeof timeout == "int" || ctype_digit(timeout) {
-            let this->timeout = (int) timeout;
+        if timeout >= 0 {
+            let this->timeout = timeout;
         }
     }
 
@@ -51,7 +51,7 @@ class Reserve extends Command implements ParserInterface
      */
     public function getName() -> string
     {
-        if this->timeout {
+        if this->timeout >= 0 {
             return "RESERVE-WITH-TIMEOUT";
         }
 
@@ -66,7 +66,7 @@ class Reserve extends Command implements ParserInterface
         var timeout;
         let timeout = this->timeout;
 
-        if typeof timeout == "int" {
+        if timeout >= 0  {
             return "reserve-with-timeout " . timeout;
         }
 

@@ -14,8 +14,7 @@
 #include "kernel/main.h"
 #include "kernel/object.h"
 #include "kernel/memory.h"
-#include "ext/spl/spl_exceptions.h"
-#include "kernel/exception.h"
+#include "kernel/operators.h"
 
 
 /**
@@ -46,11 +45,7 @@ PHP_METHOD(Beanspeak_Job, __construct) {
 
 	zephir_fetch_params(0, 2, 0, &id_param, &data);
 
-	if (unlikely(Z_TYPE_P(id_param) != IS_LONG)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'id' must be a int") TSRMLS_CC);
-		RETURN_NULL();
-	}
-	id = Z_LVAL_P(id_param);
+	id = zephir_get_intval(id_param);
 
 
 	ZEPHIR_INIT_ZVAL_NREF(_0);

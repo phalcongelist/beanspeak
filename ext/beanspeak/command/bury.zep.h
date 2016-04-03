@@ -10,7 +10,7 @@ PHP_METHOD(Beanspeak_Command_Bury, parseResponse);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_command_bury___construct, 0, 0, 2)
 	ZEND_ARG_INFO(0, job)
-	ZEND_ARG_INFO(0, pri)
+	ZEND_ARG_INFO(0, priority)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_command_bury_parseresponse, 0, 0, 1)

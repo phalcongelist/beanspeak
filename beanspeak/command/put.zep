@@ -35,11 +35,7 @@ use Beanspeak\Response\Parser\ParserInterface;
  *     'content'   => $content,
  * ];
  *
- * $put = new Put($task, [
- *     'priority' => 999,
- *     'delay'    => 60 * 60,
- *     'ttr'      => 3600,
- * ]);
+ * $put = new Put($task, 999, 60 * 60, 3600);
  * </code>
  */
 class Put extends Command implements ParserInterface
@@ -51,21 +47,12 @@ class Put extends Command implements ParserInterface
 
     /**
      * Beanspeak\Command\Put constructor
+     * @throws \Beanspeak\Command\Exception
      */
-    public function __construct(var data, array options = null)
+    public function __construct(var data, int priority = 1024, int delay = 0, int ttr = 86400)
     {
-        var priority, delay, ttr;
-
-        if !fetch priority, options["priority"] {
-            let priority = "100";
-        }
-
-        if !fetch delay, options["delay"] {
-            let delay = "0";
-        }
-
-        if !fetch ttr, options["ttr"] {
-            let ttr = "86400";
+        if priority > 4294967295 {
+            throw new Exception("The \"priority\" param must less than 4294967295");
         }
 
         // Data is automatically serialized before be sent to the server

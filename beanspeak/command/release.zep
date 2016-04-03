@@ -38,14 +38,14 @@ use Beanspeak\Response\Parser\ParserInterface;
 class Release extends Command implements ParserInterface
 {
     private id;
-    private pri;
+    private priority;
     private delay;
 
     /**
      * Beanspeak\Command\Release constructor
      * @throws \Beanspeak\Command\Exception
      */
-    public function __construct(var job, int! pri = 1024, int! delay = 0)
+    public function __construct(var job, int priority = 1024, int delay = 0)
     {
         if typeof job == "object" && job instanceof JobInterface {
             let this->id = job->getId();
@@ -55,8 +55,8 @@ class Release extends Command implements ParserInterface
             throw new Exception("The \"job\" param must be either instanceof JobInterface or integer. Got: " . typeof job);
         }
 
-        let this->pri   = pri,
-            this->delay = delay;
+        let this->priority = priority,
+            this->delay    = delay;
     }
 
     /**
@@ -72,7 +72,7 @@ class Release extends Command implements ParserInterface
      */
     public function getCommandLine() -> string
     {
-        return "release " . this->id . " " . this->pri . " " . this->delay;
+        return "release " . this->id . " " . this->priority . " " . this->delay;
     }
 
     /**

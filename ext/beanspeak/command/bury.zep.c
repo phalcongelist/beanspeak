@@ -18,7 +18,6 @@
 #include "kernel/operators.h"
 #include "kernel/exception.h"
 #include "kernel/concat.h"
-#include "ext/spl/spl_exceptions.h"
 #include "kernel/string.h"
 
 
@@ -40,7 +39,7 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command_Bury) {
 
 	zend_declare_property_null(beanspeak_command_bury_ce, SL("id"), ZEND_ACC_PRIVATE TSRMLS_CC);
 
-	zend_declare_property_null(beanspeak_command_bury_ce, SL("pri"), ZEND_ACC_PRIVATE TSRMLS_CC);
+	zend_declare_property_null(beanspeak_command_bury_ce, SL("priority"), ZEND_ACC_PRIVATE TSRMLS_CC);
 
 	zend_class_implements(beanspeak_command_bury_ce TSRMLS_CC, 1, beanspeak_response_parser_parserinterface_ce);
 	return SUCCESS;
@@ -54,17 +53,13 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command_Bury) {
 PHP_METHOD(Beanspeak_Command_Bury, __construct) {
 
 	zend_bool _0, _1;
-	int pri, ZEPHIR_LAST_CALL_STATUS;
-	zval *job, *pri_param = NULL, *_2 = NULL, *_8, *_3$$3 = NULL, *_4$$4, *_5$$5, *_6$$5, *_7$$5;
+	int priority, ZEPHIR_LAST_CALL_STATUS;
+	zval *job, *priority_param = NULL, *_2 = NULL, *_8, *_3$$3 = NULL, *_4$$4, *_5$$5, *_6$$5, *_7$$5;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 2, 0, &job, &pri_param);
+	zephir_fetch_params(1, 2, 0, &job, &priority_param);
 
-	if (unlikely(Z_TYPE_P(pri_param) != IS_LONG)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'pri' must be a int") TSRMLS_CC);
-		RETURN_MM_NULL();
-	}
-	pri = Z_LVAL_P(pri_param);
+	priority = zephir_get_intval(priority_param);
 
 
 	_0 = Z_TYPE_P(job) == IS_OBJECT;
@@ -99,8 +94,8 @@ PHP_METHOD(Beanspeak_Command_Bury, __construct) {
 		return;
 	}
 	ZEPHIR_INIT_ZVAL_NREF(_8);
-	ZVAL_LONG(_8, pri);
-	zephir_update_property_this(this_ptr, SL("pri"), _8 TSRMLS_CC);
+	ZVAL_LONG(_8, priority);
+	zephir_update_property_this(this_ptr, SL("priority"), _8 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 
 }
@@ -125,7 +120,7 @@ PHP_METHOD(Beanspeak_Command_Bury, getCommandLine) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("id"), PH_NOISY_CC);
-	_1 = zephir_fetch_nproperty_this(this_ptr, SL("pri"), PH_NOISY_CC);
+	_1 = zephir_fetch_nproperty_this(this_ptr, SL("priority"), PH_NOISY_CC);
 	ZEPHIR_CONCAT_SVSV(return_value, "bury ", _0, " ", _1);
 	return;
 
