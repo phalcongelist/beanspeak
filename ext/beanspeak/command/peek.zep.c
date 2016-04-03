@@ -191,7 +191,7 @@ PHP_METHOD(Beanspeak_Command_Peek, parseResponse) {
 		ZVAL_STRING(_0$$3, "#^FOUND (\\d+) \\d+$#", ZEPHIR_TEMP_PARAM_COPY);
 		ZEPHIR_INIT_VAR(_1$$3);
 		ZVAL_STRING(_1$$3, "$1", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_FUNCTION(&id$$3, "preg_replace", NULL, 18, _0$$3, _1$$3, line);
+		ZEPHIR_CALL_FUNCTION(&id$$3, "preg_replace", NULL, 20, _0$$3, _1$$3, line);
 		zephir_check_temp_parameter(_0$$3);
 		zephir_check_temp_parameter(_1$$3);
 		zephir_check_call_status();

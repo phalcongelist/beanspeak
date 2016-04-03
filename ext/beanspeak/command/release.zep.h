@@ -8,7 +8,7 @@ PHP_METHOD(Beanspeak_Command_Release, getName);
 PHP_METHOD(Beanspeak_Command_Release, getCommandLine);
 PHP_METHOD(Beanspeak_Command_Release, parseResponse);
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_command_release___construct, 0, 0, 3)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_command_release___construct, 0, 0, 1)
 	ZEND_ARG_INFO(0, job)
 	ZEND_ARG_INFO(0, pri)
 	ZEND_ARG_INFO(0, delay)

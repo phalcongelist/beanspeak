@@ -22,29 +22,27 @@ use Beanspeak\Response\ResponseInterface;
 use Beanspeak\Response\Parser\ParserInterface;
 
 /**
- * Beanspeak\Command\Release
+ * Beanspeak\Command\Bury
  *
- * Puts a "reserved" job back into the ready queue (and marks its state as "ready")
- * to be run by any client.
+ * Puts a job into the "buried" state.
  *
  * <code>
- * use Beanspeak\Command\Release;
+ * use Beanspeak\Command\Bury;
  *
- * $command = new Release(89, 10, 60 * 60);
- * $command = new Release($jobObject, 10, 60 * 60);
+ * $command = new Bury(89, 10);
+ * $command = new Bury($jobObject, 10);
  * </code>
  */
-class Release extends Command implements ParserInterface
+class Bury extends Command implements ParserInterface
 {
     private id;
     private pri;
-    private delay;
 
     /**
-     * Beanspeak\Command\Release constructor
+     * Beanspeak\Command\Bury constructor
      * @throws \Beanspeak\Command\Exception
      */
-    public function __construct(var job, int! pri = 1024, int! delay = 0)
+    public function __construct(var job, int! pri)
     {
         if typeof job == "object" && job instanceof JobInterface {
             let this->id = job->getId();
@@ -54,8 +52,7 @@ class Release extends Command implements ParserInterface
             throw new Exception("The \"job\" param must be either instanceof JobInterface or integer. Got: " . typeof job);
         }
 
-        let this->pri   = pri,
-            this->delay = delay;
+        let this->pri = pri;
     }
 
     /**
@@ -63,7 +60,7 @@ class Release extends Command implements ParserInterface
      */
     public function getName() -> string
     {
-        return "RELEASE";
+        return "BURY";
     }
 
     /**
@@ -71,7 +68,7 @@ class Release extends Command implements ParserInterface
      */
     public function getCommandLine() -> string
     {
-        return "release " . this->id . " " . this->pri . " " . this->delay;
+        return "bury " . this->id . " " . this->pri;
     }
 
     /**
@@ -80,16 +77,12 @@ class Release extends Command implements ParserInterface
      */
      public function parseResponse(string line, string data = null) -> <ResponseInterface>
      {
-         if starts_with(line, "RELEASED") {
-             return this->createResponse("RELEASED");
-         }
-
          if starts_with(line, "BURIED") {
-             throw new Exception(this->getName() . ": out of memory trying to grow data structure by release Job ID #" . this->id);
+             return this->createResponse("BURIED");
          }
 
          if starts_with(line, "NOT_FOUND") {
-             throw new Exception(this->getName() . ": Job ID #" . this->id . " doesn't exist or is not reserved by client");
+             throw new Exception(this->getName() . ": Job ID #" . this->id . " is not reserved or does not exist");
          }
 
          throw new Exception("Unhandled response: " . line);

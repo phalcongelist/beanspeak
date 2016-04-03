@@ -59,7 +59,7 @@ PHP_METHOD(Beanspeak_Command_PauseTube, __construct) {
 	zval *tube = NULL;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 2, 0, &tube_param, &delay_param);
+	zephir_fetch_params(1, 1, 1, &tube_param, &delay_param);
 
 	if (unlikely(Z_TYPE_P(tube_param) != IS_STRING && Z_TYPE_P(tube_param) != IS_NULL)) {
 		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'tube' must be a string") TSRMLS_CC);
@@ -71,11 +71,15 @@ PHP_METHOD(Beanspeak_Command_PauseTube, __construct) {
 		ZEPHIR_INIT_VAR(tube);
 		ZVAL_EMPTY_STRING(tube);
 	}
+	if (!delay_param) {
+		delay = 0;
+	} else {
 	if (unlikely(Z_TYPE_P(delay_param) != IS_LONG)) {
 		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'delay' must be a int") TSRMLS_CC);
 		RETURN_MM_NULL();
 	}
 	delay = Z_LVAL_P(delay_param);
+	}
 
 
 	if (delay > 4294967296) {
