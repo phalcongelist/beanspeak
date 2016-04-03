@@ -128,7 +128,9 @@ class Put extends Command implements ParserInterface
         var matches = null;
 
         if preg_match("#^INSERTED (\d+)$#", line, matches) {
-            return this->createResponse("INSERTED", ["id" : (int) matches[1]]);
+            return this->createResponse("INSERTED", [
+                "id" : (int) matches[1]
+            ]);
         }
 
         if starts_with(line, "BURIED") {
