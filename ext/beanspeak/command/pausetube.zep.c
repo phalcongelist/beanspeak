@@ -49,6 +49,7 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command_PauseTube) {
 
 /**
  * Beanspeak\Command\PauseTube constructor
+ * @link https://github.com/kr/beanstalkd/pull/216
  * @throws \Beanspeak\Command\Exception
  */
 PHP_METHOD(Beanspeak_Command_PauseTube, __construct) {
@@ -78,7 +79,7 @@ PHP_METHOD(Beanspeak_Command_PauseTube, __construct) {
 
 
 	if (delay > 4294967296) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_command_exception_ce, "The \"delay\" param must less than 4294967296", "beanspeak/command/pausetube.zep", 47);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_command_exception_ce, "The \"delay\" param must less than 4294967296", "beanspeak/command/pausetube.zep", 48);
 		return;
 	}
 	zephir_update_property_this(this_ptr, SL("tube"), tube TSRMLS_CC);
@@ -148,7 +149,7 @@ PHP_METHOD(Beanspeak_Command_PauseTube, parseResponse) {
 		ZEPHIR_CONCAT_VS(_3$$3, _1$$3, ": Invalid tube name format");
 		ZEPHIR_CALL_METHOD(NULL, _0$$3, "__construct", NULL, 1, _3$$3);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_0$$3, "beanspeak/command/pausetube.zep", 77 TSRMLS_CC);
+		zephir_throw_exception_debug(_0$$3, "beanspeak/command/pausetube.zep", 78 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -162,7 +163,7 @@ PHP_METHOD(Beanspeak_Command_PauseTube, parseResponse) {
 		ZEPHIR_CONCAT_VSVS(_7$$4, _5$$4, ": tube ", _6$$4, " doesn't exist");
 		ZEPHIR_CALL_METHOD(NULL, _4$$4, "__construct", NULL, 1, _7$$4);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_4$$4, "beanspeak/command/pausetube.zep", 81 TSRMLS_CC);
+		zephir_throw_exception_debug(_4$$4, "beanspeak/command/pausetube.zep", 82 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -185,7 +186,7 @@ PHP_METHOD(Beanspeak_Command_PauseTube, parseResponse) {
 	ZEPHIR_CONCAT_SV(_12, "Unhandled response: ", line);
 	ZEPHIR_CALL_METHOD(NULL, _11, "__construct", NULL, 1, _12);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(_11, "beanspeak/command/pausetube.zep", 88 TSRMLS_CC);
+	zephir_throw_exception_debug(_11, "beanspeak/command/pausetube.zep", 89 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 

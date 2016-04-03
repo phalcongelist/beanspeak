@@ -39,6 +39,7 @@ class PauseTube extends Command implements ParserInterface
 
     /**
      * Beanspeak\Command\PauseTube constructor
+     * @link https://github.com/kr/beanstalkd/pull/216
      * @throws \Beanspeak\Command\Exception
      */
     public function __construct(string! tube, int! delay)
