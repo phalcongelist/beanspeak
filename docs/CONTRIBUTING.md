@@ -43,7 +43,7 @@ this format, even those from core contributors.
 
 ## Getting Support
 
-* Feel free to ask any question at [Beanspeak issues](https://github.com/phalcongelist/beanspeak/issues) page
+Feel free to ask any question at [Beanspeak issues](https://github.com/phalcongelist/beanspeak/issues) page.
 
 <hr>
 Thanks!<br>
