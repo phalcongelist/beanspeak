@@ -31,21 +31,7 @@ use Beanspeak\Dispatcher\Exception as DispatcherException;
  */
 class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
 {
-    // See https://github.com/kr/beanstalk/blob/master/err.go
-    const EXCEPTION_BAD_FORMAT      = 0;
-    const EXCEPTION_BURIED          = 1;
-    const EXCEPTION_DEADLINE_SOON   = 2;
-    const EXCEPTION_DRAINING        = 3;
-    const EXCEPTION_EXPECTED_CRLF   = 4;
-    const EXCEPTION_INTERNAL_ERROR  = 5;
-    const EXCEPTION_JOB_TOO_BIG     = 6;
-    const EXCEPTION_NOT_FOUND       = 7;
-    const EXCEPTION_NOT_IGNORED     = 8;
-    const EXCEPTION_OUT_OF_MEMORY   = 9;
-    const EXCEPTION_TIMED_OUT       = 10;
-    const EXCEPTION_UNKNOWN_COMMAND = 11;
-
-    const EXCEPTION_NO_CRLF         = 255;
+    const EXCEPTION_NO_CRLF = 255;
 
     /**
      * @var ConnectionInterface
@@ -99,7 +85,7 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
      */
     public function dispatch(<CommandInterface> command) -> <ResponseInterface>
     {
-        var e;
+        var e, responseParser;
 
         try {
             this->_dispatch(command);
@@ -110,9 +96,9 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
             throw new DispatcherException(e->getMessage(), e->getCode(), e);
         }
 
-        return command
-            ->getResponseParser()
-            ->parseResponse(this->responseLine, this->responseData);
+        let responseParser = command->getResponseParser();
+
+        return responseParser->parseResponse(this->responseLine, this->responseData);
     }
 
     /**
@@ -125,7 +111,7 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
 
     internal function _dispatch(<CommandInterface> command) -> void
     {
-        var connection, preparedcmd, responseLine;
+        var connection, preparedcmd;
 
         let connection = this->connection;
         connection->connect();
@@ -140,13 +126,8 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
         connection->write(preparedcmd);
 
         if command->hasResponse() {
-            let responseLine = connection->getLine();
-
-            this->checkStatusMessage(responseLine);
-
-            this->parseData(responseLine);
-
-            let this->responseLine = responseLine;
+            let this->responseLine = connection->getLine();
+            this->parseData();
         } else {
             let this->responseLine = command->getName();
         }
@@ -168,52 +149,20 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
             "write_retries" : oldc->getWriteRetries()
         ]);
 
+        newc->connect();
+
         let this->connection = newc;
     }
 
-    internal function checkStatusMessage(string content) -> void
+    internal function parseData() -> void
     {
-        var message;
-        array statusMessages;
+        var connection, dataLength, data, crlf, response;
 
-        let statusMessages = this->statusMessages,
-            message        = preg_replace("#^(\S+).*$#s", "$1", content);
+        let data     = null,
+            response = this->responseLine;
 
-        if empty statusMessages {
-            let statusMessages = [
-                "BAD_FORMAT":      self::EXCEPTION_BAD_FORMAT,
-                "BURIED":          self::EXCEPTION_BURIED,
-                "DEADLINE_SOON":   self::EXCEPTION_DEADLINE_SOON,
-                "DRAINING":        self::EXCEPTION_DRAINING,
-                "EXPECTED_CRLF":   self::EXCEPTION_EXPECTED_CRLF,
-                "INTERNAL_ERROR":  self::EXCEPTION_INTERNAL_ERROR,
-                "JOB_TOO_BIG":     self::EXCEPTION_JOB_TOO_BIG,
-                "NOT_FOUND":       self::EXCEPTION_NOT_FOUND,
-                "NOT_IGNORED":     self::EXCEPTION_NOT_IGNORED,
-                "OUT_OF_MEMORY":   self::EXCEPTION_OUT_OF_MEMORY,
-                "TIMED_OUT":       self::EXCEPTION_TIMED_OUT,
-                "UNKNOWN_COMMAND": self::EXCEPTION_UNKNOWN_COMMAND
-            ];
-
-            let this->statusMessages = statusMessages;
-        }
-
-        if isset statusMessages[message] {
-            throw new Exception(
-                this->lastCommand->getName() . ": received a \"" . message . "\" response",
-                statusMessages[message]
-            );
-        }
-    }
-
-    internal function parseData(string content) -> void
-    {
-        var connection, dataLength, data, crlf;
-
-        let data = null;
-
-        if starts_with(content, "OK") || starts_with(content, "FOUND") || starts_with(content, "RESERVED") {
-            let dataLength = preg_replace("#^.*\b(\d+)$#", "$1", content),
+        if starts_with(response, "OK") || starts_with(response, "FOUND") || starts_with(response, "RESERVED") {
+            let dataLength = preg_replace("#^.*\b(\d+)$#", "$1", response),
                 connection = this->connection,
                 data       = connection->read(dataLength),
                 crlf       = connection->read(2);
