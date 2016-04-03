@@ -22,28 +22,35 @@ use Beanspeak\Response\ResponseInterface;
 use Beanspeak\Response\Parser\ParserInterface;
 
 /**
- * Beanspeak\Command\PauseTube
+ * Beanspeak\Command\KickJob
  *
- * The pause-tube command can delay any new job being reserved for a given time.
+ * A variant of kick that operates with a single job identified by its Job ID.
+ * If the given job id exists and is in a buried or delayed state, it will be
+ * moved to the ready queue of the the same tube where it currently belongs.
  *
  * <code>
- * use Beanspeak\Command\PauseTube;
+ * use Beanspeak\Command\KickJob;
  *
- * $pause = new PauseTube('process-video', 60 * 60);
+ * $command = new KickJob(43);
  * </code>
  */
-class PauseTube extends Command implements ParserInterface
+class KickJob extends Command implements ParserInterface
 {
-    private tube;
-    private delay;
+    private id;
 
     /**
-     * Beanspeak\Command\PauseTube constructor
+     * Beanspeak\Command\KickJob constructor
+     * @throws \Beanspeak\Command\Exception;
      */
-    public function __construct(string! tube, int! delay)
+    public function __construct(var job)
     {
-        let this->tube  = tube,
-            this->delay = delay;
+        if typeof job == "object" && job instanceof JobInterface {
+            let this->id = job->getId();
+        } elseif typeof job == "int" || ctype_digit(job) {
+            let this->id = (int) job;
+        } else {
+            throw new Exception("The \"job\" param must be either instanceof JobInterface list or integer got: " . typeof job);
+        }
     }
 
     /**
@@ -51,7 +58,7 @@ class PauseTube extends Command implements ParserInterface
      */
     public function getName() -> string
     {
-        return "PAUSE-TUBE";
+        return "KICK-JOB";
     }
 
     /**
@@ -59,25 +66,21 @@ class PauseTube extends Command implements ParserInterface
      */
     public function getCommandLine() -> string
     {
-        return "pause-tube " . this->tube . " " . this->delay;
+        return "kick-job " . this->id;
     }
 
     /**
      * {@inheritdoc}
      * @throws \Beanspeak\Command\Exception
      */
-    public function parseResponse(string line, string data = null) -> <ResponseInterface>
-    {
-        if starts_with(line, "BAD_FORMAT") {
-            throw new Exception(this->getName() . ": Invalid tube name format");
-        }
-
+     public function parseResponse(string line, string data = null) -> <ResponseInterface>
+     {
         if starts_with(line, "NOT_FOUND") {
-            throw new Exception(this->getName() . ": tube " . this->tube . " doesn't exist");
+            throw new Exception(this->getName() . ": Job " . this->id . " does not exist or is not in a kickable state");
         }
 
-        if starts_with(line, "PAUSED") {
-            return this->createResponse("PAUSED", ["delay" : this->delay]);
+        if starts_with(line, "KICKED") {
+            return this->createResponse("KICKED");
         }
 
         throw new Exception("Unhandled response: " . line);

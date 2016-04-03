@@ -8,9 +8,13 @@ It's simple, lightweight, and completely specialized for job queueing.
 
 Supported PHP versions: **5.5**, **5.6**, **7**
 
+beanstalkd up to the latest version 1.10 is supported.
+All commands and responses specified in the [protocol documentation][2] for beanstalkd 1.10 are implemented.
+
 ## License
 
 Beanspeak is open source software licensed under the [New BSD License](docs/LICENSE.md). © Phalcon Framework Team and contributors
 
 [0]: https://travis-ci.org/phalcongelist/beanspeak
 [1]: http://kr.github.io/beanstalkd/
+[2]: https://github.com/kr/beanstalkd/blob/v1.10/doc/protocol.md

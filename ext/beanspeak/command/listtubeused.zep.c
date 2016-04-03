@@ -88,7 +88,7 @@ PHP_METHOD(Beanspeak_Command_ListTubeUsed, parseResponse) {
 	ZVAL_STRING(_1, "#^USING (.+)$#", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_VAR(_2);
 	ZVAL_STRING(_2, "$1", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_FUNCTION(&_3, "preg_replace", NULL, 13, _1, _2, line);
+	ZEPHIR_CALL_FUNCTION(&_3, "preg_replace", NULL, 14, _1, _2, line);
 	zephir_check_temp_parameter(_1);
 	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();
