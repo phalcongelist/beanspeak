@@ -14,13 +14,12 @@
 #include "kernel/main.h"
 #include "kernel/object.h"
 #include "kernel/memory.h"
-#include "ext/spl/spl_exceptions.h"
-#include "kernel/exception.h"
+#include "kernel/operators.h"
 #include "kernel/concat.h"
 #include "kernel/string.h"
 #include "kernel/fcall.h"
 #include "kernel/array.h"
-#include "kernel/operators.h"
+#include "kernel/exception.h"
 
 
 /**
@@ -56,11 +55,7 @@ PHP_METHOD(Beanspeak_Command_Kick, __construct) {
 
 	zephir_fetch_params(0, 1, 0, &bound_param);
 
-	if (unlikely(Z_TYPE_P(bound_param) != IS_LONG)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'bound' must be a int") TSRMLS_CC);
-		RETURN_NULL();
-	}
-	bound = Z_LVAL_P(bound_param);
+	bound = zephir_get_intval(bound_param);
 
 
 	ZEPHIR_INIT_ZVAL_NREF(_0);

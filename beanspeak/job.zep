@@ -32,7 +32,7 @@ class Job implements JobInterface
     /**
      * Beanspeak\Job constructor
      */
-    public function __construct(int! id, var data)
+    public function __construct(int id, var data)
     {
         let this->id   = id,
             this->data = data;

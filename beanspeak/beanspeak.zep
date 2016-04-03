@@ -107,18 +107,14 @@ class Beanspeak implements DispatcherAwareInterface
      *     'content'   => $content,
      * ];
      *
-     * $queue->put($task, [
-     *     'priority' => 999,
-     *     'delay'    => 60 * 60,
-     *     'ttr'      => 3600,
-     * ]):
+     * $queue->put($task, 999, 60 * 60, 3600);
      * </code>
      */
-    public function put(var data, array options = null) -> int
+    public function put(var data, int priority = 1024, int delay = 0, int ttr = 86400) -> int
     {
         var  response;
 
-        let response = this->dispatcher->dispatch(new Put(data, options));
+        let response = this->dispatcher->dispatch(new Put(data, priority, delay, ttr));
 
         return response->id;
     }
@@ -178,9 +174,9 @@ class Beanspeak implements DispatcherAwareInterface
      * $queue->release($jobObject, 10, 60 * 60);
      * </code>
      */
-    public function release(var job, int! pri = 1024, int! delay = 0) -> <Beanspeak>
+    public function release(var job, int priority = 1024, int delay = 0) -> <Beanspeak>
     {
-        this->dispatcher->dispatch(new Release(job, pri, delay));
+        this->dispatcher->dispatch(new Release(job, priority, delay));
 
         return this;
     }
@@ -193,9 +189,9 @@ class Beanspeak implements DispatcherAwareInterface
      * $queue->release($jobObject, 10, 60 * 60);
      * </code>
      */
-    public function bury(var job, int! pri = 1024) -> <Beanspeak>
+    public function bury(var job, int priority = 1024) -> <Beanspeak>
     {
-        this->dispatcher->dispatch(new Bury(job, pri));
+        this->dispatcher->dispatch(new Bury(job, priority));
 
         return this;
     }
@@ -222,7 +218,7 @@ class Beanspeak implements DispatcherAwareInterface
      * $queue->reserve();
      * </code>
      */
-    public function reserve(var timeout = null) -> boolean|<JobInterface>
+    public function reserve(int timeout = -1) -> boolean|<JobInterface>
     {
         var response;
 
@@ -387,7 +383,7 @@ class Beanspeak implements DispatcherAwareInterface
      * $queue->kick(3);
      * </code>
      */
-    public function kick(int! bound) -> int
+    public function kick(int bound) -> int
     {
         var response;
 
@@ -434,7 +430,7 @@ class Beanspeak implements DispatcherAwareInterface
      * $queue->pauseTube('process-video', 60 * 60);
      * </code>
      */
-    public function pauseTube(string! tube, int! delay = 0) -> <Beanspeak>
+    public function pauseTube(string! tube, int delay = 0) -> <Beanspeak>
     {
         var response;
 

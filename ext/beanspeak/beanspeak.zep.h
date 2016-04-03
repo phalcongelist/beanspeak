@@ -41,7 +41,9 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_beanspeak_put, 0, 0, 1)
 	ZEND_ARG_INFO(0, data)
-	ZEND_ARG_ARRAY_INFO(0, options, 1)
+	ZEND_ARG_INFO(0, priority)
+	ZEND_ARG_INFO(0, delay)
+	ZEND_ARG_INFO(0, ttr)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_beanspeak_delete, 0, 0, 1)
@@ -58,13 +60,13 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_beanspeak_release, 0, 0, 1)
 	ZEND_ARG_INFO(0, job)
-	ZEND_ARG_INFO(0, pri)
+	ZEND_ARG_INFO(0, priority)
 	ZEND_ARG_INFO(0, delay)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_beanspeak_bury, 0, 0, 1)
 	ZEND_ARG_INFO(0, job)
-	ZEND_ARG_INFO(0, pri)
+	ZEND_ARG_INFO(0, priority)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_beanspeak_choose, 0, 0, 1)

@@ -37,13 +37,13 @@ use Beanspeak\Response\Parser\ParserInterface;
 class Bury extends Command implements ParserInterface
 {
     private id;
-    private pri;
+    private priority;
 
     /**
      * Beanspeak\Command\Bury constructor
      * @throws \Beanspeak\Command\Exception
      */
-    public function __construct(var job, int! pri)
+    public function __construct(var job, int priority)
     {
         if typeof job == "object" && job instanceof JobInterface {
             let this->id = job->getId();
@@ -53,7 +53,7 @@ class Bury extends Command implements ParserInterface
             throw new Exception("The \"job\" param must be either instanceof JobInterface or integer. Got: " . typeof job);
         }
 
-        let this->pri = pri;
+        let this->priority = priority;
     }
 
     /**
@@ -69,7 +69,7 @@ class Bury extends Command implements ParserInterface
      */
     public function getCommandLine() -> string
     {
-        return "bury " . this->id . " " . this->pri;
+        return "bury " . this->id . " " . this->priority;
     }
 
     /**

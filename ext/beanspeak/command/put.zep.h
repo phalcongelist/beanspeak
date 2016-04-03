@@ -13,7 +13,9 @@ PHP_METHOD(Beanspeak_Command_Put, parseResponse);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_command_put___construct, 0, 0, 1)
 	ZEND_ARG_INFO(0, data)
-	ZEND_ARG_ARRAY_INFO(0, options, 1)
+	ZEND_ARG_INFO(0, priority)
+	ZEND_ARG_INFO(0, delay)
+	ZEND_ARG_INFO(0, ttr)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_command_put_parseresponse, 0, 0, 1)

@@ -40,7 +40,7 @@ class Kick extends Command implements ParserInterface
     /**
      * Beanspeak\Command\Kick constructor
      */
-    public function __construct(int! bound)
+    public function __construct(int bound)
     {
         let this->bound = bound;
     }

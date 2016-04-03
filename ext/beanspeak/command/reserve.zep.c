@@ -12,12 +12,12 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/memory.h"
-#include "kernel/fcall.h"
-#include "kernel/operators.h"
 #include "kernel/object.h"
+#include "kernel/memory.h"
+#include "kernel/operators.h"
 #include "kernel/concat.h"
 #include "kernel/string.h"
+#include "kernel/fcall.h"
 #include "kernel/array.h"
 #include "kernel/exception.h"
 
@@ -49,30 +49,23 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command_Reserve) {
  */
 PHP_METHOD(Beanspeak_Command_Reserve, __construct) {
 
-	zend_bool _0;
-	int ZEPHIR_LAST_CALL_STATUS;
-	zval *timeout = NULL, *_1 = NULL, *_2$$3;
+	zval *timeout_param = NULL, *_0$$3;
+	int timeout;
 
-	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 0, 1, &timeout);
+	zephir_fetch_params(0, 0, 1, &timeout_param);
 
-	if (!timeout) {
-		timeout = ZEPHIR_GLOBAL(global_null);
+	if (!timeout_param) {
+		timeout = -1;
+	} else {
+		timeout = zephir_get_intval(timeout_param);
 	}
 
 
-	_0 = Z_TYPE_P(timeout) == IS_LONG;
-	if (!(_0)) {
-		ZEPHIR_CALL_FUNCTION(&_1, "ctype_digit", NULL, 21, timeout);
-		zephir_check_call_status();
-		_0 = zephir_is_true(_1);
+	if (timeout >= 0) {
+		ZEPHIR_INIT_ZVAL_NREF(_0$$3);
+		ZVAL_LONG(_0$$3, timeout);
+		zephir_update_property_this(this_ptr, SL("timeout"), _0$$3 TSRMLS_CC);
 	}
-	if (_0) {
-		ZEPHIR_INIT_ZVAL_NREF(_2$$3);
-		ZVAL_LONG(_2$$3, zephir_get_intval(timeout));
-		zephir_update_property_this(this_ptr, SL("timeout"), _2$$3 TSRMLS_CC);
-	}
-	ZEPHIR_MM_RESTORE();
 
 }
 
@@ -85,7 +78,7 @@ PHP_METHOD(Beanspeak_Command_Reserve, getName) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("timeout"), PH_NOISY_CC);
-	if (zephir_is_true(_0)) {
+	if (ZEPHIR_GE_LONG(_0, 0)) {
 		RETURN_STRING("RESERVE-WITH-TIMEOUT", 1);
 	}
 	RETURN_STRING("RESERVE", 1);
@@ -103,7 +96,7 @@ PHP_METHOD(Beanspeak_Command_Reserve, getCommandLine) {
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("timeout"), PH_NOISY_CC);
 	ZEPHIR_CPY_WRT(timeout, _0);
-	if (Z_TYPE_P(timeout) == IS_LONG) {
+	if (ZEPHIR_GE_LONG(timeout, 0)) {
 		ZEPHIR_CONCAT_SV(return_value, "reserve-with-timeout ", timeout);
 		RETURN_MM();
 	}

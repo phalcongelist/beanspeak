@@ -74,16 +74,12 @@ PHP_METHOD(Beanspeak_Command_PauseTube, __construct) {
 	if (!delay_param) {
 		delay = 0;
 	} else {
-	if (unlikely(Z_TYPE_P(delay_param) != IS_LONG)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'delay' must be a int") TSRMLS_CC);
-		RETURN_MM_NULL();
-	}
-	delay = Z_LVAL_P(delay_param);
+		delay = zephir_get_intval(delay_param);
 	}
 
 
-	if (delay > 4294967296) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_command_exception_ce, "The \"delay\" param must less than 4294967296", "beanspeak/command/pausetube.zep", 48);
+	if (delay > 4294967295) {
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_command_exception_ce, "The \"delay\" param must less than 4294967295", "beanspeak/command/pausetube.zep", 48);
 		return;
 	}
 	zephir_update_property_this(this_ptr, SL("tube"), tube TSRMLS_CC);

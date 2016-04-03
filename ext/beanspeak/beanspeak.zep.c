@@ -124,40 +124,50 @@ PHP_METHOD(Beanspeak_Beanspeak, getDispatcher) {
  *     'content'   => $content,
  * ];
  *
- * $queue->put($task, [
- *     'priority' => 999,
- *     'delay'    => 60 * 60,
- *     'ttr'      => 3600,
- * ]):
+ * $queue->put($task, 999, 60 * 60, 3600);
  * </code>
  */
 PHP_METHOD(Beanspeak_Beanspeak, put) {
 
-	int ZEPHIR_LAST_CALL_STATUS;
-	zval *options = NULL;
-	zval *data, *options_param = NULL, *response = NULL, *_0, *_1, *_2;
+	int priority, delay, ttr, ZEPHIR_LAST_CALL_STATUS;
+	zval *data, *priority_param = NULL, *delay_param = NULL, *ttr_param = NULL, *response = NULL, *_0, *_1, *_2, *_3, *_4, *_5;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 1, &data, &options_param);
+	zephir_fetch_params(1, 1, 3, &data, &priority_param, &delay_param, &ttr_param);
 
-	if (!options_param) {
-		ZEPHIR_INIT_VAR(options);
-		array_init(options);
+	if (!priority_param) {
+		priority = 1024;
 	} else {
-		zephir_get_arrval(options, options_param);
+		priority = zephir_get_intval(priority_param);
+	}
+	if (!delay_param) {
+		delay = 0;
+	} else {
+		delay = zephir_get_intval(delay_param);
+	}
+	if (!ttr_param) {
+		ttr = 86400;
+	} else {
+		ttr = zephir_get_intval(ttr_param);
 	}
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
 	ZEPHIR_INIT_VAR(_1);
 	object_init_ex(_1, beanspeak_command_put_ce);
-	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 4, data, options);
+	ZEPHIR_INIT_VAR(_2);
+	ZVAL_LONG(_2, priority);
+	ZEPHIR_INIT_VAR(_3);
+	ZVAL_LONG(_3, delay);
+	ZEPHIR_INIT_VAR(_4);
+	ZVAL_LONG(_4, ttr);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 4, data, _2, _3, _4);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);
 	zephir_check_call_status();
-	ZEPHIR_OBS_VAR(_2);
-	zephir_read_property(&_2, response, SL("id"), PH_NOISY_CC);
-	RETURN_CCTOR(_2);
+	ZEPHIR_OBS_VAR(_5);
+	zephir_read_property(&_5, response, SL("id"), PH_NOISY_CC);
+	RETURN_CCTOR(_5);
 
 }
 
@@ -271,29 +281,21 @@ PHP_METHOD(Beanspeak_Beanspeak, watch) {
  */
 PHP_METHOD(Beanspeak_Beanspeak, release) {
 
-	int pri, delay, ZEPHIR_LAST_CALL_STATUS;
-	zval *job, *pri_param = NULL, *delay_param = NULL, *_0, *_1, *_2, *_3;
+	int priority, delay, ZEPHIR_LAST_CALL_STATUS;
+	zval *job, *priority_param = NULL, *delay_param = NULL, *_0, *_1, *_2, *_3;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 2, &job, &pri_param, &delay_param);
+	zephir_fetch_params(1, 1, 2, &job, &priority_param, &delay_param);
 
-	if (!pri_param) {
-		pri = 1024;
+	if (!priority_param) {
+		priority = 1024;
 	} else {
-	if (unlikely(Z_TYPE_P(pri_param) != IS_LONG)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'pri' must be a int") TSRMLS_CC);
-		RETURN_MM_NULL();
-	}
-	pri = Z_LVAL_P(pri_param);
+		priority = zephir_get_intval(priority_param);
 	}
 	if (!delay_param) {
 		delay = 0;
 	} else {
-	if (unlikely(Z_TYPE_P(delay_param) != IS_LONG)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'delay' must be a int") TSRMLS_CC);
-		RETURN_MM_NULL();
-	}
-	delay = Z_LVAL_P(delay_param);
+		delay = zephir_get_intval(delay_param);
 	}
 
 
@@ -301,7 +303,7 @@ PHP_METHOD(Beanspeak_Beanspeak, release) {
 	ZEPHIR_INIT_VAR(_1);
 	object_init_ex(_1, beanspeak_command_release_ce);
 	ZEPHIR_INIT_VAR(_2);
-	ZVAL_LONG(_2, pri);
+	ZVAL_LONG(_2, priority);
 	ZEPHIR_INIT_VAR(_3);
 	ZVAL_LONG(_3, delay);
 	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 8, job, _2, _3);
@@ -322,20 +324,16 @@ PHP_METHOD(Beanspeak_Beanspeak, release) {
  */
 PHP_METHOD(Beanspeak_Beanspeak, bury) {
 
-	int pri, ZEPHIR_LAST_CALL_STATUS;
-	zval *job, *pri_param = NULL, *_0, *_1, *_2;
+	int priority, ZEPHIR_LAST_CALL_STATUS;
+	zval *job, *priority_param = NULL, *_0, *_1, *_2;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 1, &job, &pri_param);
+	zephir_fetch_params(1, 1, 1, &job, &priority_param);
 
-	if (!pri_param) {
-		pri = 1024;
+	if (!priority_param) {
+		priority = 1024;
 	} else {
-	if (unlikely(Z_TYPE_P(pri_param) != IS_LONG)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'pri' must be a int") TSRMLS_CC);
-		RETURN_MM_NULL();
-	}
-	pri = Z_LVAL_P(pri_param);
+		priority = zephir_get_intval(priority_param);
 	}
 
 
@@ -343,7 +341,7 @@ PHP_METHOD(Beanspeak_Beanspeak, bury) {
 	ZEPHIR_INIT_VAR(_1);
 	object_init_ex(_1, beanspeak_command_bury_ce);
 	ZEPHIR_INIT_VAR(_2);
-	ZVAL_LONG(_2, pri);
+	ZVAL_LONG(_2, priority);
 	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 9, job, _2);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(NULL, _0, "dispatch", NULL, 0, _1);
@@ -400,35 +398,39 @@ PHP_METHOD(Beanspeak_Beanspeak, choose) {
  */
 PHP_METHOD(Beanspeak_Beanspeak, reserve) {
 
-	int ZEPHIR_LAST_CALL_STATUS;
-	zval *timeout = NULL, *response = NULL, *_0, *_1, *_2 = NULL, *_3$$3, *_4$$3, *_5$$3 = NULL;
+	zval *timeout_param = NULL, *response = NULL, *_0, *_1, *_2, *_3 = NULL, *_4$$3, *_5$$3, *_6$$3 = NULL;
+	int timeout, ZEPHIR_LAST_CALL_STATUS;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 0, 1, &timeout);
+	zephir_fetch_params(1, 0, 1, &timeout_param);
 
-	if (!timeout) {
-		timeout = ZEPHIR_GLOBAL(global_null);
+	if (!timeout_param) {
+		timeout = -1;
+	} else {
+		timeout = zephir_get_intval(timeout_param);
 	}
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
 	ZEPHIR_INIT_VAR(_1);
 	object_init_ex(_1, beanspeak_command_reserve_ce);
-	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 11, timeout);
+	ZEPHIR_INIT_VAR(_2);
+	ZVAL_LONG(_2, timeout);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 11, _2);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(&_2, response, "getresponsename", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_3, response, "getresponsename", NULL, 0);
 	zephir_check_call_status();
-	if (ZEPHIR_IS_STRING(_2, "RESERVED")) {
+	if (ZEPHIR_IS_STRING(_3, "RESERVED")) {
 		object_init_ex(return_value, beanspeak_job_ce);
-		ZEPHIR_OBS_VAR(_3$$3);
-		zephir_read_property(&_3$$3, response, SL("id"), PH_NOISY_CC);
 		ZEPHIR_OBS_VAR(_4$$3);
-		zephir_read_property(&_4$$3, response, SL("jobdata"), PH_NOISY_CC);
-		ZEPHIR_CALL_FUNCTION(&_5$$3, "unserialize", NULL, 12, _4$$3);
+		zephir_read_property(&_4$$3, response, SL("id"), PH_NOISY_CC);
+		ZEPHIR_OBS_VAR(_5$$3);
+		zephir_read_property(&_5$$3, response, SL("jobdata"), PH_NOISY_CC);
+		ZEPHIR_CALL_FUNCTION(&_6$$3, "unserialize", NULL, 12, _5$$3);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 13, _3$$3, _5$$3);
+		ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 13, _4$$3, _6$$3);
 		zephir_check_call_status();
 		RETURN_MM();
 	}
@@ -765,11 +767,7 @@ PHP_METHOD(Beanspeak_Beanspeak, kick) {
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &bound_param);
 
-	if (unlikely(Z_TYPE_P(bound_param) != IS_LONG)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'bound' must be a int") TSRMLS_CC);
-		RETURN_MM_NULL();
-	}
-	bound = Z_LVAL_P(bound_param);
+	bound = zephir_get_intval(bound_param);
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
@@ -886,11 +884,7 @@ PHP_METHOD(Beanspeak_Beanspeak, pauseTube) {
 	if (!delay_param) {
 		delay = 0;
 	} else {
-	if (unlikely(Z_TYPE_P(delay_param) != IS_LONG)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'delay' must be a int") TSRMLS_CC);
-		RETURN_MM_NULL();
-	}
-	delay = Z_LVAL_P(delay_param);
+		delay = zephir_get_intval(delay_param);
 	}
 
 

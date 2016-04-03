@@ -42,10 +42,10 @@ class PauseTube extends Command implements ParserInterface
      * @link https://github.com/kr/beanstalkd/pull/216
      * @throws \Beanspeak\Command\Exception
      */
-    public function __construct(string! tube, int! delay = 0)
+    public function __construct(string! tube, int delay = 0)
     {
-        if delay > 4294967296 {
-            throw new Exception("The \"delay\" param must less than 4294967296");
+        if delay > 4294967295 {
+            throw new Exception("The \"delay\" param must less than 4294967295");
         }
 
         let this->tube  = tube,
