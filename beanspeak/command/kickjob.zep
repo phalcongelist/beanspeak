@@ -75,12 +75,12 @@ class KickJob extends Command implements ParserInterface
      */
      public function parseResponse(string line, string data = null) -> <ResponseInterface>
      {
+         if starts_with(line, "KICKED") {
+             return this->createResponse("KICKED");
+         }
+
         if starts_with(line, "NOT_FOUND") {
             throw new Exception(this->getName() . ": Job " . this->id . " does not exist or is not in a kickable state");
-        }
-
-        if starts_with(line, "KICKED") {
-            return this->createResponse("KICKED");
         }
 
         throw new Exception("Unhandled response: " . line);

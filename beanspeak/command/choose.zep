@@ -64,11 +64,16 @@ class Choose extends Command implements ParserInterface
 
     /**
      * {@inheritdoc}
+     * @throws \Beanspeak\Command\Exception
      */
     public function parseResponse(string line, string data = null) -> <ResponseInterface>
     {
-       return this->createResponse("USING", [
-           "tube" : preg_replace("#^USING (.+)$#", "$1", line)
-       ]);
+       if starts_with(line, "USING") {
+           return this->createResponse("USING", [
+               "tube" : preg_replace("#^USING (.+)$#", "$1", line)
+           ]);
+       }
+
+       throw new Exception("Unhandled response: " . line);
     }
 }

@@ -125,11 +125,13 @@ class Put extends Command implements ParserInterface
      */
     public function parseResponse(string line, string data = null) -> <ResponseInterface>
     {
-        var matches = null;
+        if starts_with(line, "INSERTED") {
+            var id = null;
 
-        if preg_match("#^INSERTED (\d+)$#", line, matches) {
+            let id = preg_replace("#^INSERTED (\d+)$#", "$1", line);
+
             return this->createResponse("INSERTED", [
-                "id" : (int) matches[1]
+                "id" : (int) id
             ]);
         }
 

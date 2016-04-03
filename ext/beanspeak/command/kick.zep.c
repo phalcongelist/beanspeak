@@ -17,6 +17,7 @@
 #include "ext/spl/spl_exceptions.h"
 #include "kernel/exception.h"
 #include "kernel/concat.h"
+#include "kernel/string.h"
 #include "kernel/fcall.h"
 #include "kernel/array.h"
 #include "kernel/operators.h"
@@ -95,13 +96,14 @@ PHP_METHOD(Beanspeak_Command_Kick, getCommandLine) {
 
 /**
  * {@inheritdoc}
+ * @throws \Beanspeak\Command\Exception
  */
 PHP_METHOD(Beanspeak_Command_Kick, parseResponse) {
 
-	zval *_2;
+	zval *_2$$3;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *line_param = NULL, *data_param = NULL, *kicked = NULL, *_0 = NULL, *_1;
-	zval *line = NULL, *data = NULL;
+	zval *line_param = NULL, *data_param = NULL, *kicked$$3 = NULL, *_0$$3 = NULL, *_1$$3, *_3;
+	zval *line = NULL, *data = NULL, *_4;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 1, &line_param, &data_param);
@@ -115,23 +117,34 @@ PHP_METHOD(Beanspeak_Command_Kick, parseResponse) {
 	}
 
 
-	ZEPHIR_INIT_VAR(_0);
-	ZVAL_STRING(_0, "#^KICKED (.+)$#", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_INIT_VAR(_1);
-	ZVAL_STRING(_1, "$1", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_FUNCTION(&kicked, "preg_replace", NULL, 17, _0, _1, line);
-	zephir_check_temp_parameter(_0);
-	zephir_check_temp_parameter(_1);
+	if (zephir_start_with_str(line, SL("KICKED"))) {
+		ZEPHIR_INIT_VAR(_0$$3);
+		ZVAL_STRING(_0$$3, "#^KICKED (.+)$#", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_INIT_VAR(_1$$3);
+		ZVAL_STRING(_1$$3, "$1", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_CALL_FUNCTION(&kicked$$3, "preg_replace", NULL, 17, _0$$3, _1$$3, line);
+		zephir_check_temp_parameter(_0$$3);
+		zephir_check_temp_parameter(_1$$3);
+		zephir_check_call_status();
+		ZEPHIR_INIT_VAR(_2$$3);
+		zephir_create_array(_2$$3, 1, 0 TSRMLS_CC);
+		add_assoc_long_ex(_2$$3, SS("kicked"), zephir_get_intval(kicked$$3));
+		ZEPHIR_INIT_NVAR(_0$$3);
+		ZVAL_STRING(_0$$3, "KICKED", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "createresponse", NULL, 0, _0$$3, _2$$3);
+		zephir_check_temp_parameter(_0$$3);
+		zephir_check_call_status();
+		RETURN_MM();
+	}
+	ZEPHIR_INIT_VAR(_3);
+	object_init_ex(_3, beanspeak_command_exception_ce);
+	ZEPHIR_INIT_VAR(_4);
+	ZEPHIR_CONCAT_SV(_4, "Unhandled response: ", line);
+	ZEPHIR_CALL_METHOD(NULL, _3, "__construct", NULL, 1, _4);
 	zephir_check_call_status();
-	ZEPHIR_INIT_VAR(_2);
-	zephir_create_array(_2, 1, 0 TSRMLS_CC);
-	add_assoc_long_ex(_2, SS("kicked"), zephir_get_intval(kicked));
-	ZEPHIR_INIT_NVAR(_0);
-	ZVAL_STRING(_0, "KICKED", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "createresponse", NULL, 0, _0, _2);
-	zephir_check_temp_parameter(_0);
-	zephir_check_call_status();
-	RETURN_MM();
+	zephir_throw_exception_debug(_3, "beanspeak/command/kick.zep", 80 TSRMLS_CC);
+	ZEPHIR_MM_RESTORE();
+	return;
 
 }
 

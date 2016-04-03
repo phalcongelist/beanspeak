@@ -66,11 +66,13 @@ class Ignore extends Command implements ParserInterface
      */
      public function parseResponse(string line, string data = null) -> <ResponseInterface>
      {
-         var matches = null;
+         if starts_with(line, "WATCHING") {
+             var ignored;
 
-         if preg_match("#^WATCHING (\d+)$#", line, matches) {
+             let ignored = preg_replace("#^WATCHING (\d+)$#", "$1", line);
+
              return this->createResponse("WATCHING", [
-                 "count" : (int) matches[1]
+                 "count" : (int) ignored
              ]);
          }
 

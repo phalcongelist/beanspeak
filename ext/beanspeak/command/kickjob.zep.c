@@ -127,7 +127,7 @@ PHP_METHOD(Beanspeak_Command_KickJob, getCommandLine) {
 PHP_METHOD(Beanspeak_Command_KickJob, parseResponse) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *line_param = NULL, *data_param = NULL, *_0$$3, *_1$$3 = NULL, *_2$$3, *_3$$3, *_4$$4, *_5;
+	zval *line_param = NULL, *data_param = NULL, *_0$$3, *_1$$4, *_2$$4 = NULL, *_3$$4, *_4$$4, *_5;
 	zval *line = NULL, *data = NULL, *_6;
 
 	ZEPHIR_MM_GROW();
@@ -142,27 +142,27 @@ PHP_METHOD(Beanspeak_Command_KickJob, parseResponse) {
 	}
 
 
-	if (zephir_start_with_str(line, SL("NOT_FOUND"))) {
-		ZEPHIR_INIT_VAR(_0$$3);
-		object_init_ex(_0$$3, beanspeak_command_exception_ce);
-		ZEPHIR_CALL_METHOD(&_1$$3, this_ptr, "getname", NULL, 0);
-		zephir_check_call_status();
-		_2$$3 = zephir_fetch_nproperty_this(this_ptr, SL("id"), PH_NOISY_CC);
-		ZEPHIR_INIT_VAR(_3$$3);
-		ZEPHIR_CONCAT_VSVS(_3$$3, _1$$3, ": Job ", _2$$3, " does not exist or is not in a kickable state");
-		ZEPHIR_CALL_METHOD(NULL, _0$$3, "__construct", NULL, 1, _3$$3);
-		zephir_check_call_status();
-		zephir_throw_exception_debug(_0$$3, "beanspeak/command/kickjob.zep", 79 TSRMLS_CC);
-		ZEPHIR_MM_RESTORE();
-		return;
-	}
 	if (zephir_start_with_str(line, SL("KICKED"))) {
-		ZEPHIR_INIT_VAR(_4$$4);
-		ZVAL_STRING(_4$$4, "KICKED", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "createresponse", NULL, 0, _4$$4);
-		zephir_check_temp_parameter(_4$$4);
+		ZEPHIR_INIT_VAR(_0$$3);
+		ZVAL_STRING(_0$$3, "KICKED", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "createresponse", NULL, 0, _0$$3);
+		zephir_check_temp_parameter(_0$$3);
 		zephir_check_call_status();
 		RETURN_MM();
+	}
+	if (zephir_start_with_str(line, SL("NOT_FOUND"))) {
+		ZEPHIR_INIT_VAR(_1$$4);
+		object_init_ex(_1$$4, beanspeak_command_exception_ce);
+		ZEPHIR_CALL_METHOD(&_2$$4, this_ptr, "getname", NULL, 0);
+		zephir_check_call_status();
+		_3$$4 = zephir_fetch_nproperty_this(this_ptr, SL("id"), PH_NOISY_CC);
+		ZEPHIR_INIT_VAR(_4$$4);
+		ZEPHIR_CONCAT_VSVS(_4$$4, _2$$4, ": Job ", _3$$4, " does not exist or is not in a kickable state");
+		ZEPHIR_CALL_METHOD(NULL, _1$$4, "__construct", NULL, 1, _4$$4);
+		zephir_check_call_status();
+		zephir_throw_exception_debug(_1$$4, "beanspeak/command/kickjob.zep", 83 TSRMLS_CC);
+		ZEPHIR_MM_RESTORE();
+		return;
 	}
 	ZEPHIR_INIT_VAR(_5);
 	object_init_ex(_5, beanspeak_command_exception_ce);

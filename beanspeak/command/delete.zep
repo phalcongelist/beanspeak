@@ -74,10 +74,14 @@ class Delete extends Command implements ParserInterface
      */
      public function parseResponse(string line, string data = null) -> <ResponseInterface>
      {
+         if starts_with(line, "DELETED") {
+             return this->createResponse("DELETED");
+         }
+
          if starts_with(line, "NOT_FOUND") {
              throw new Exception(this->getName() . ": Cannot delete Job ID #" . this->id);
          }
 
-         return this->createResponse(line);
+        throw new Exception("Unhandled response: " . line);
      }
 }

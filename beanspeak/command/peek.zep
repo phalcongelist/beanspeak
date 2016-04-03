@@ -99,21 +99,23 @@ class Peek extends Command implements ParserInterface
      */
     public function parseResponse(string line, string data = null) -> <ResponseInterface>
     {
+        if starts_with(line, "FOUND") {
+            var id = null;
+
+            let id = preg_replace("#^FOUND (\d+) \d+$#", "$1", line);
+
+            return this->createResponse("FOUND", [
+                "id"      : (int) id,
+                "jobdata" : data
+            ]);
+        }
+
         if starts_with(line, "NOT_FOUND") {
             if this->jobId !== null {
                 throw new Exception(this->getName() . ": Job ID #" . this->jobId . " does not exist");
             } else {
                 throw new Exception(this->getName() . ": There are no jobs in the '" . this->commandSuffix . "' status");
             }
-        }
-
-        var matches = null;
-
-        if preg_match("#^FOUND (\d+) \d+$#", line, matches) {
-            return this->createResponse("FOUND", [
-                "id"      : (int) matches[1],
-                "jobdata" : data
-            ]);
         }
 
         throw new Exception("Unhandled response: " . line);
