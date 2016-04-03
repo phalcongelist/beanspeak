@@ -24,7 +24,7 @@ use Beanspeak\Response\Parser\ParserInterface;
 /**
  * Beanspeak\Command\PauseTube
  *
- * The pause-tube command can delay any new job being reserved for a given time.
+ * Can delay any new job being reserved for a given time.
  *
  * <code>
  * use Beanspeak\Command\PauseTube;
@@ -39,9 +39,14 @@ class PauseTube extends Command implements ParserInterface
 
     /**
      * Beanspeak\Command\PauseTube constructor
+     * @throws \Beanspeak\Command\Exception
      */
     public function __construct(string! tube, int! delay)
     {
+        if delay > 4294967296 {
+            throw new Exception("The \"delay\" param must less than 4294967296");
+        }
+
         let this->tube  = tube,
             this->delay = delay;
     }

@@ -18,39 +18,31 @@
 namespace Beanspeak\Command;
 
 use Beanspeak\Command;
-use Beanspeak\Job\JobInterface;
-use Beanspeak\Response\Parser\Yaml;
+use Beanspeak\Response\ResponseInterface;
 use Beanspeak\Response\Parser\ParserInterface;
 
 /**
- * Beanspeak\Command\StatsJob
+ * Beanspeak\Command\Kick
  *
- * Gives  statistical information about the specified job if it exists.
+ * Moves jobs into the ready queue.
+ * The Kick command applies only to the currently used tube.
  *
  * <code>
- * use Beanspeak\Command\StatsJob;
+ * use Beanspeak\Command\Kick;
  *
- * $stats = new StatsJob(90);
- * $stats = new StatsJob($jobObject);
+ * $command = new Kick($bound);
  * </code>
  */
-class StatsJob extends Command
+class Kick extends Command implements ParserInterface
 {
-    private id;
+    private bound;
 
     /**
-     * Beanspeak\Command\StatsJob constructor
-     * @throws \Beanspeak\Command\Exception
+     * Beanspeak\Command\Kick constructor
      */
-    public function __construct(var job)
+    public function __construct(int! bound)
     {
-        if typeof job == "object" && job instanceof JobInterface {
-            let this->id = job->getId();
-        } elseif typeof job == "int" || ctype_digit(job) {
-            let this->id = (int) job;
-        } else {
-            throw new Exception("The \"job\" param must be either instanceof JobInterface list or integer got: " . typeof job);
-        }
+        let this->bound = bound;
     }
 
     /**
@@ -58,22 +50,28 @@ class StatsJob extends Command
      */
     public function getName() -> string
     {
-        return "STATS-JOB";
+        return "KICK";
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getCommandLine()
+    public function getCommandLine() -> string
     {
-        return "stats-job " . this->id;
+        return "kick " . this->bound;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getResponseParser() -> <ParserInterface>
-    {
-        return new Yaml("dict");
-    }
+     public function parseResponse(string line, string data = null) -> <ResponseInterface>
+     {
+         var kicked;
+
+         let kicked = preg_replace("#^KICKED (.+)$#", "$1", line);
+
+         return this->createResponse("KICKED", [
+             "kicked" : (int) kicked
+         ]);
+     }
 }

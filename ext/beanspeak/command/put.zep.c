@@ -95,7 +95,7 @@ PHP_METHOD(Beanspeak_Command_Put, __construct) {
 		ZEPHIR_INIT_NVAR(ttr);
 		ZVAL_LONG(ttr, 86400);
 	}
-	ZEPHIR_CALL_FUNCTION(&_0, "serialize", NULL, 17, data);
+	ZEPHIR_CALL_FUNCTION(&_0, "serialize", NULL, 18, data);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("data"), _0 TSRMLS_CC);
 	zephir_update_property_this(this_ptr, SL("priority"), priority TSRMLS_CC);
@@ -172,7 +172,7 @@ PHP_METHOD(Beanspeak_Command_Put, getDataLength) {
 		_0$$3 = zephir_fetch_nproperty_this(this_ptr, SL("data"), PH_NOISY_CC);
 		ZEPHIR_SINIT_VAR(_1$$3);
 		ZVAL_STRING(&_1$$3, "latin1", 0);
-		ZEPHIR_RETURN_CALL_FUNCTION("mb_strlen", NULL, 18, _0$$3, &_1$$3);
+		ZEPHIR_RETURN_CALL_FUNCTION("mb_strlen", NULL, 19, _0$$3, &_1$$3);
 		zephir_check_call_status();
 		RETURN_MM();
 	}
