@@ -25,6 +25,8 @@
  *
  * Class to access the beanstalk queue service.
  *
+ * beanstalkd up to the latest version 1.10 is supported.
+ *
  * <code>
  * use Beanspeak\Beanspeak;
  *

@@ -63,15 +63,20 @@ class Kick extends Command implements ParserInterface
 
     /**
      * {@inheritdoc}
+     * @throws \Beanspeak\Command\Exception
      */
      public function parseResponse(string line, string data = null) -> <ResponseInterface>
      {
-         var kicked;
+         if starts_with(line, "KICKED") {
+             var kicked;
 
-         let kicked = preg_replace("#^KICKED (.+)$#", "$1", line);
+             let kicked = preg_replace("#^KICKED (.+)$#", "$1", line);
 
-         return this->createResponse("KICKED", [
-             "kicked" : (int) kicked
-         ]);
+             return this->createResponse("KICKED", [
+                 "kicked" : (int) kicked
+             ]);
+         }
+
+         throw new Exception("Unhandled response: " . line);
      }
 }

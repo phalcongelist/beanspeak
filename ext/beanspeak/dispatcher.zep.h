@@ -10,8 +10,7 @@ PHP_METHOD(Beanspeak_Dispatcher, dispatch);
 PHP_METHOD(Beanspeak_Dispatcher, getLastCommand);
 void zep_Beanspeak_Dispatcher__dispatch(int ht, zval *return_value, zval **return_value_ptr, zval *this_ptr, int return_value_used, zval *command_ext TSRMLS_DC);
 void zep_Beanspeak_Dispatcher__reconnect(int ht, zval *return_value, zval **return_value_ptr, zval *this_ptr, int return_value_used TSRMLS_DC);
-void zep_Beanspeak_Dispatcher_checkStatusMessage(int ht, zval *return_value, zval **return_value_ptr, zval *this_ptr, int return_value_used, zval *content_param_ext TSRMLS_DC);
-void zep_Beanspeak_Dispatcher_parseData(int ht, zval *return_value, zval **return_value_ptr, zval *this_ptr, int return_value_used, zval *content_param_ext TSRMLS_DC);
+void zep_Beanspeak_Dispatcher_parseData(int ht, zval *return_value, zval **return_value_ptr, zval *this_ptr, int return_value_used TSRMLS_DC);
 static zend_object_value zephir_init_properties_Beanspeak_Dispatcher(zend_class_entry *class_type TSRMLS_DC);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_dispatcher___construct, 0, 0, 0)
@@ -28,14 +27,6 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_dispatcher__dispatch, 0, 0, 1)
 	ZEND_ARG_OBJ_INFO(0, command, Beanspeak\\Command\\CommandInterface, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_dispatcher_checkstatusmessage, 0, 0, 1)
-	ZEND_ARG_INFO(0, content)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_dispatcher_parsedata, 0, 0, 1)
-	ZEND_ARG_INFO(0, content)
 ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(beanspeak_dispatcher_method_entry) {

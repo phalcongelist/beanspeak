@@ -18,6 +18,7 @@
 #include "kernel/operators.h"
 #include "kernel/memory.h"
 #include "kernel/concat.h"
+#include "kernel/string.h"
 #include "kernel/fcall.h"
 #include "kernel/array.h"
 
@@ -101,13 +102,14 @@ PHP_METHOD(Beanspeak_Command_Choose, getCommandLine) {
 
 /**
  * {@inheritdoc}
+ * @throws \Beanspeak\Command\Exception
  */
 PHP_METHOD(Beanspeak_Command_Choose, parseResponse) {
 
-	zval *_0;
+	zval *_0$$3;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *line_param = NULL, *data_param = NULL, *_1 = NULL, *_2, *_3 = NULL;
-	zval *line = NULL, *data = NULL;
+	zval *line_param = NULL, *data_param = NULL, *_1$$3 = NULL, *_2$$3, *_3$$3 = NULL, *_4;
+	zval *line = NULL, *data = NULL, *_5;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 1, &line_param, &data_param);
@@ -121,23 +123,34 @@ PHP_METHOD(Beanspeak_Command_Choose, parseResponse) {
 	}
 
 
-	ZEPHIR_INIT_VAR(_0);
-	zephir_create_array(_0, 1, 0 TSRMLS_CC);
-	ZEPHIR_INIT_VAR(_1);
-	ZVAL_STRING(_1, "#^USING (.+)$#", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_INIT_VAR(_2);
-	ZVAL_STRING(_2, "$1", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_FUNCTION(&_3, "preg_replace", NULL, 17, _1, _2, line);
-	zephir_check_temp_parameter(_1);
-	zephir_check_temp_parameter(_2);
+	if (zephir_start_with_str(line, SL("USING"))) {
+		ZEPHIR_INIT_VAR(_0$$3);
+		zephir_create_array(_0$$3, 1, 0 TSRMLS_CC);
+		ZEPHIR_INIT_VAR(_1$$3);
+		ZVAL_STRING(_1$$3, "#^USING (.+)$#", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_INIT_VAR(_2$$3);
+		ZVAL_STRING(_2$$3, "$1", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_CALL_FUNCTION(&_3$$3, "preg_replace", NULL, 17, _1$$3, _2$$3, line);
+		zephir_check_temp_parameter(_1$$3);
+		zephir_check_temp_parameter(_2$$3);
+		zephir_check_call_status();
+		zephir_array_update_string(&_0$$3, SL("tube"), &_3$$3, PH_COPY | PH_SEPARATE);
+		ZEPHIR_INIT_NVAR(_1$$3);
+		ZVAL_STRING(_1$$3, "USING", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "createresponse", NULL, 0, _1$$3, _0$$3);
+		zephir_check_temp_parameter(_1$$3);
+		zephir_check_call_status();
+		RETURN_MM();
+	}
+	ZEPHIR_INIT_VAR(_4);
+	object_init_ex(_4, beanspeak_command_exception_ce);
+	ZEPHIR_INIT_VAR(_5);
+	ZEPHIR_CONCAT_SV(_5, "Unhandled response: ", line);
+	ZEPHIR_CALL_METHOD(NULL, _4, "__construct", NULL, 1, _5);
 	zephir_check_call_status();
-	zephir_array_update_string(&_0, SL("tube"), &_3, PH_COPY | PH_SEPARATE);
-	ZEPHIR_INIT_NVAR(_1);
-	ZVAL_STRING(_1, "USING", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "createresponse", NULL, 0, _1, _0);
-	zephir_check_temp_parameter(_1);
-	zephir_check_call_status();
-	RETURN_MM();
+	zephir_throw_exception_debug(_4, "beanspeak/command/choose.zep", 77 TSRMLS_CC);
+	ZEPHIR_MM_RESTORE();
+	return;
 
 }
 

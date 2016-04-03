@@ -75,19 +75,26 @@ class Reserve extends Command implements ParserInterface
 
     /**
      * {@inheritdoc}
+     * @throws \Beanspeak\Command\Exception
      */
     public function parseResponse(string line, string data = null) -> <ResponseInterface>
     {
-        if !starts_with(line, "RESERVED") {
-            return this->createResponse(line);
+        if starts_with(line, "RESERVED") {
+            var matches = null;
+
+            preg_match("#^RESERVED (\d+) (\d+)$#", line, matches);
+
+            return this->createResponse("RESERVED", [
+                "id"      : (int) matches[1],
+                "bytes"   : (int) matches[2],
+                "jobdata" : data
+            ]);
         }
 
-        var response;
-        let response = explode(" ", line);
+        if starts_with(line, "TIMED_OUT") {
+            return this->createResponse("TIMED_OUT");
+        }
 
-        return this->createResponse(response[0], [
-            "id"      : (int) response[1],
-            "jobdata" : data
-        ]);
+        throw new Exception("Unhandled response: " . line);
     }
 }
