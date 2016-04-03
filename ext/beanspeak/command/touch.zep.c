@@ -22,33 +22,33 @@
 
 
 /**
- * Beanspeak\Command\Delete
+ * Beanspeak\Command\Touch
  *
- * Removes a job from the server entirely.
+ * Allows a worker to request more time to work on a Job.
  *
  * <code>
- * use Beanspeak\Command\Delete;
+ * use Beanspeak\Command\Touch;
  *
- * $command = new Delete(18);
- * $command = new Delete($jobObject);
+ * $command = new Touch(89);
+ * $command = new Touch($jobObject);
  * </code>
  */
-ZEPHIR_INIT_CLASS(Beanspeak_Command_Delete) {
+ZEPHIR_INIT_CLASS(Beanspeak_Command_Touch) {
 
-	ZEPHIR_REGISTER_CLASS_EX(Beanspeak\\Command, Delete, beanspeak, command_delete, beanspeak_command_ce, beanspeak_command_delete_method_entry, 0);
+	ZEPHIR_REGISTER_CLASS_EX(Beanspeak\\Command, Touch, beanspeak, command_touch, beanspeak_command_ce, beanspeak_command_touch_method_entry, 0);
 
-	zend_declare_property_null(beanspeak_command_delete_ce, SL("id"), ZEND_ACC_PRIVATE TSRMLS_CC);
+	zend_declare_property_null(beanspeak_command_touch_ce, SL("id"), ZEND_ACC_PRIVATE TSRMLS_CC);
 
-	zend_class_implements(beanspeak_command_delete_ce TSRMLS_CC, 1, beanspeak_response_parser_parserinterface_ce);
+	zend_class_implements(beanspeak_command_touch_ce TSRMLS_CC, 1, beanspeak_response_parser_parserinterface_ce);
 	return SUCCESS;
 
 }
 
 /**
- * Beanspeak\Command\Delete constructor
+ * Beanspeak\Command\Touch constructor
  * @throws \Beanspeak\Command\Exception
  */
-PHP_METHOD(Beanspeak_Command_Delete, __construct) {
+PHP_METHOD(Beanspeak_Command_Touch, __construct) {
 
 	zend_bool _0, _1;
 	int ZEPHIR_LAST_CALL_STATUS;
@@ -86,7 +86,7 @@ PHP_METHOD(Beanspeak_Command_Delete, __construct) {
 		ZEPHIR_CONCAT_SV(_7$$5, "The \"job\" param must be either instanceof JobInterface or integer. Got: ", _6$$5);
 		ZEPHIR_CALL_METHOD(NULL, _5$$5, "__construct", NULL, 1, _7$$5);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_5$$5, "beanspeak/command/delete.zep", 52 TSRMLS_CC);
+		zephir_throw_exception_debug(_5$$5, "beanspeak/command/touch.zep", 52 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -97,24 +97,24 @@ PHP_METHOD(Beanspeak_Command_Delete, __construct) {
 /**
  * {@inheritdoc}
  */
-PHP_METHOD(Beanspeak_Command_Delete, getName) {
+PHP_METHOD(Beanspeak_Command_Touch, getName) {
 
 	
 
-	RETURN_STRING("DELETE", 1);
+	RETURN_STRING("TOUCH", 1);
 
 }
 
 /**
  * {@inheritdoc}
  */
-PHP_METHOD(Beanspeak_Command_Delete, getCommandLine) {
+PHP_METHOD(Beanspeak_Command_Touch, getCommandLine) {
 
 	zval *_0;
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("id"), PH_NOISY_CC);
-	ZEPHIR_CONCAT_SV(return_value, "delete ", _0);
+	ZEPHIR_CONCAT_SV(return_value, "touch ", _0);
 	return;
 
 }
@@ -123,7 +123,7 @@ PHP_METHOD(Beanspeak_Command_Delete, getCommandLine) {
  * {@inheritdoc}
  * @throws \Beanspeak\Command\Exception
  */
-PHP_METHOD(Beanspeak_Command_Delete, parseResponse) {
+PHP_METHOD(Beanspeak_Command_Touch, parseResponse) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 	zval *line_param = NULL, *data_param = NULL, *_0$$3, *_1$$4, *_2$$4 = NULL, *_3$$4, *_4$$4, *_5;
@@ -141,9 +141,9 @@ PHP_METHOD(Beanspeak_Command_Delete, parseResponse) {
 	}
 
 
-	if (zephir_start_with_str(line, SL("DELETED"))) {
+	if (zephir_start_with_str(line, SL("TOUCHED"))) {
 		ZEPHIR_INIT_VAR(_0$$3);
-		ZVAL_STRING(_0$$3, "DELETED", ZEPHIR_TEMP_PARAM_COPY);
+		ZVAL_STRING(_0$$3, "TOUCHED", ZEPHIR_TEMP_PARAM_COPY);
 		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "createresponse", NULL, 0, _0$$3);
 		zephir_check_temp_parameter(_0$$3);
 		zephir_check_call_status();
@@ -156,10 +156,10 @@ PHP_METHOD(Beanspeak_Command_Delete, parseResponse) {
 		zephir_check_call_status();
 		_3$$4 = zephir_fetch_nproperty_this(this_ptr, SL("id"), PH_NOISY_CC);
 		ZEPHIR_INIT_VAR(_4$$4);
-		ZEPHIR_CONCAT_VSV(_4$$4, _2$$4, ": Cannot delete Job ID #", _3$$4);
+		ZEPHIR_CONCAT_VSVS(_4$$4, _2$$4, ": Job ID #", _3$$4, " does not exist or is not reserved by client");
 		ZEPHIR_CALL_METHOD(NULL, _1$$4, "__construct", NULL, 1, _4$$4);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_1$$4, "beanspeak/command/delete.zep", 83 TSRMLS_CC);
+		zephir_throw_exception_debug(_1$$4, "beanspeak/command/touch.zep", 83 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -169,7 +169,7 @@ PHP_METHOD(Beanspeak_Command_Delete, parseResponse) {
 	ZEPHIR_CONCAT_SV(_6, "Unhandled response: ", line);
 	ZEPHIR_CALL_METHOD(NULL, _5, "__construct", NULL, 1, _6);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(_5, "beanspeak/command/delete.zep", 86 TSRMLS_CC);
+	zephir_throw_exception_debug(_5, "beanspeak/command/touch.zep", 86 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 

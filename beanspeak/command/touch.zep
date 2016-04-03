@@ -23,23 +23,23 @@ use Beanspeak\Response\ResponseInterface;
 use Beanspeak\Response\Parser\ParserInterface;
 
 /**
- * Beanspeak\Command\Delete
+ * Beanspeak\Command\Touch
  *
- * Removes a job from the server entirely.
+ * Allows a worker to request more time to work on a Job.
  *
  * <code>
- * use Beanspeak\Command\Delete;
+ * use Beanspeak\Command\Touch;
  *
- * $command = new Delete(18);
- * $command = new Delete($jobObject);
+ * $command = new Touch(89);
+ * $command = new Touch($jobObject);
  * </code>
  */
-class Delete extends Command implements ParserInterface
+class Touch extends Command implements ParserInterface
 {
     private id;
 
     /**
-     * Beanspeak\Command\Delete constructor
+     * Beanspeak\Command\Touch constructor
      * @throws \Beanspeak\Command\Exception
      */
     public function __construct(var job)
@@ -58,7 +58,7 @@ class Delete extends Command implements ParserInterface
      */
     public function getName() -> string
     {
-        return "DELETE";
+        return "TOUCH";
     }
 
     /**
@@ -66,7 +66,7 @@ class Delete extends Command implements ParserInterface
      */
     public function getCommandLine() -> string
     {
-        return "delete " . this->id;
+        return "touch " . this->id;
     }
 
     /**
@@ -75,14 +75,14 @@ class Delete extends Command implements ParserInterface
      */
      public function parseResponse(string line, string data = null) -> <ResponseInterface>
      {
-         if starts_with(line, "DELETED") {
-             return this->createResponse("DELETED");
+         if starts_with(line, "TOUCHED") {
+             return this->createResponse("TOUCHED");
          }
 
          if starts_with(line, "NOT_FOUND") {
-             throw new Exception(this->getName() . ": Cannot delete Job ID #" . this->id);
+             throw new Exception(this->getName() . ": Job ID #" . this->id . " does not exist or is not reserved by client");
          }
 
-        throw new Exception("Unhandled response: " . line);
+         throw new Exception("Unhandled response: " . line);
      }
 }

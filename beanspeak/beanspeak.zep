@@ -23,6 +23,7 @@ use Beanspeak\Command\Kick;
 use Beanspeak\Command\Bury;
 use Beanspeak\Command\Quit;
 use Beanspeak\Command\Stats;
+use Beanspeak\Command\Touch;
 use Beanspeak\Command\Ignore;
 use Beanspeak\Command\Choose;
 use Beanspeak\Command\Delete;
@@ -132,6 +133,21 @@ class Beanspeak implements DispatcherAwareInterface
     public function delete(var job) -> <Beanspeak>
     {
         this->dispatcher->dispatch(new Delete(job));
+
+        return this;
+    }
+
+    /**
+     * Allows a worker to request more time to work on a Job.
+     *
+     * <code>
+     * $queue->touch(543);
+     * $queue->touch($jobObject);
+     * </code>
+     */
+    public function touch(var job) -> <Beanspeak>
+    {
+        this->dispatcher->dispatch(new Touch(job));
 
         return this;
     }

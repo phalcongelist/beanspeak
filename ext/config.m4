@@ -38,6 +38,7 @@ if test "$PHP_BEANSPEAK" = "yes"; then
 	beanspeak/command/stats.zep.c
 	beanspeak/command/statsjob.zep.c
 	beanspeak/command/statstube.zep.c
+	beanspeak/command/touch.zep.c
 	beanspeak/connection.zep.c
 	beanspeak/connection/exception.zep.c
 	beanspeak/dispatcher.zep.c
