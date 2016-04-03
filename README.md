@@ -9,9 +9,9 @@ specialized for job queueing.
 
 Supported PHP versions: **5.5**, **5.6**, **7**
 
-beanstalkd up to the latest version 1.10 is supported.
+The `beanstalkd` up to the latest version 1.10 is supported.
 All commands and responses specified in the [protocol documentation][2] for
-beanstalkd 1.10 are implemented.
+`beanstalkd` 1.10 are implemented.
 
 ## Contributing
 
