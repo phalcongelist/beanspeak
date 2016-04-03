@@ -24,6 +24,7 @@ use Beanspeak\Command\Bury;
 use Beanspeak\Command\Quit;
 use Beanspeak\Command\Stats;
 use Beanspeak\Command\Touch;
+use Beanspeak\Command\Watch;
 use Beanspeak\Command\Ignore;
 use Beanspeak\Command\Choose;
 use Beanspeak\Command\Delete;
@@ -150,6 +151,22 @@ class Beanspeak implements DispatcherAwareInterface
         this->dispatcher->dispatch(new Touch(job));
 
         return this;
+    }
+
+    /**
+     * Adds the named tube to the watch list for the current connection.
+     *
+     * <code>
+     * $count = $queue->watch($tube);
+     * </code>
+     */
+    public function watch(string! tube) -> int
+    {
+        var response;
+
+        let response = this->dispatcher->dispatch(new Watch(tube));
+
+        return response->count;
     }
 
     /**

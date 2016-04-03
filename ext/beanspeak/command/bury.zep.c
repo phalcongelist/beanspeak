@@ -73,7 +73,7 @@ PHP_METHOD(Beanspeak_Command_Bury, __construct) {
 	}
 	_1 = Z_TYPE_P(job) == IS_LONG;
 	if (!(_1)) {
-		ZEPHIR_CALL_FUNCTION(&_2, "ctype_digit", NULL, 20, job);
+		ZEPHIR_CALL_FUNCTION(&_2, "ctype_digit", NULL, 21, job);
 		zephir_check_call_status();
 		_1 = zephir_is_true(_2);
 	}

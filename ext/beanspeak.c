@@ -57,6 +57,7 @@ zend_class_entry *beanspeak_command_stats_ce;
 zend_class_entry *beanspeak_command_statsjob_ce;
 zend_class_entry *beanspeak_command_statstube_ce;
 zend_class_entry *beanspeak_command_touch_ce;
+zend_class_entry *beanspeak_command_watch_ce;
 zend_class_entry *beanspeak_connection_ce;
 zend_class_entry *beanspeak_connection_exception_ce;
 zend_class_entry *beanspeak_dispatcher_ce;
@@ -123,6 +124,7 @@ static PHP_MINIT_FUNCTION(beanspeak)
 	ZEPHIR_INIT(Beanspeak_Command_StatsJob);
 	ZEPHIR_INIT(Beanspeak_Command_StatsTube);
 	ZEPHIR_INIT(Beanspeak_Command_Touch);
+	ZEPHIR_INIT(Beanspeak_Command_Watch);
 	ZEPHIR_INIT(Beanspeak_Connection);
 	ZEPHIR_INIT(Beanspeak_Connection_Exception);
 	ZEPHIR_INIT(Beanspeak_Dispatcher);
