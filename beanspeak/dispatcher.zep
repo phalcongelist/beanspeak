@@ -52,6 +52,10 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
      */
     protected connection;
 
+    /**
+     * Last used command
+     * @var string
+     */
     protected lastCommand = null;
 
     protected statusMessages = [];
@@ -204,20 +208,13 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
 
     internal function parseData(string content) -> void
     {
-        var connection, dataLength, data, message, crlf;
+        var connection, dataLength, data, crlf;
 
-        let connection = this->connection,
-            message    = preg_replace("#^(\S+).*$#s", "$1", content),
-            data       = null;
+        let data = null;
 
-        array dataResponses = [
-            "RESERVED" : true,
-            "FOUND"    : true,
-            "OK"       : true
-        ];
-
-        if isset dataResponses[message] {
+        if starts_with(content, "OK") || starts_with(content, "FOUND") || starts_with(content, "RESERVED") {
             let dataLength = preg_replace("#^.*\b(\d+)$#", "$1", content),
+                connection = this->connection,
                 data       = connection->read(dataLength),
                 crlf       = connection->read(2);
 
