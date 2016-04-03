@@ -22,34 +22,34 @@ use Beanspeak\Response\ResponseInterface;
 use Beanspeak\Response\Parser\ParserInterface;
 
 /**
- * Beanspeak\Command\PauseTube
+ * Beanspeak\Command\Delete
  *
- * Can delay any new job being reserved for a given time.
+ * Removes a job from the server entirely.
  *
  * <code>
- * use Beanspeak\Command\PauseTube;
+ * use Beanspeak\Command\Delete;
  *
- * $pause = new PauseTube('process-video', 60 * 60);
+ * $command = new Delete(18);
+ * $command = new Delete($jobObject);
  * </code>
  */
-class PauseTube extends Command implements ParserInterface
+class Delete extends Command implements ParserInterface
 {
-    private tube;
-    private delay;
+    private id;
 
     /**
-     * Beanspeak\Command\PauseTube constructor
-     * @link https://github.com/kr/beanstalkd/pull/216
+     * Beanspeak\Command\Delete constructor
      * @throws \Beanspeak\Command\Exception
      */
-    public function __construct(string! tube, int! delay)
+    public function __construct(var job)
     {
-        if delay > 4294967296 {
-            throw new Exception("The \"delay\" param must less than 4294967296");
+        if typeof job == "object" && job instanceof JobInterface {
+            let this->id = job->getId();
+        } elseif typeof job == "int" || ctype_digit(job) {
+            let this->id = (int) job;
+        } else {
+            throw new Exception("The \"job\" param must be either instanceof JobInterface or integer. Got: " . typeof job);
         }
-
-        let this->tube  = tube,
-            this->delay = delay;
     }
 
     /**
@@ -57,7 +57,7 @@ class PauseTube extends Command implements ParserInterface
      */
     public function getName() -> string
     {
-        return "PAUSE-TUBE";
+        return "DELETE";
     }
 
     /**
@@ -65,27 +65,19 @@ class PauseTube extends Command implements ParserInterface
      */
     public function getCommandLine() -> string
     {
-        return "pause-tube " . this->tube . " " . this->delay;
+        return "delete " . this->id;
     }
 
     /**
      * {@inheritdoc}
      * @throws \Beanspeak\Command\Exception
      */
-    public function parseResponse(string line, string data = null) -> <ResponseInterface>
-    {
-        if starts_with(line, "BAD_FORMAT") {
-            throw new Exception(this->getName() . ": Invalid tube name format");
-        }
+     public function parseResponse(string line, string data = null) -> <ResponseInterface>
+     {
+         if starts_with(line, "NOT_FOUND") {
+             throw new Exception(this->getName() . ": Cannot delete Job ID #" . this->id);
+         }
 
-        if starts_with(line, "NOT_FOUND") {
-            throw new Exception(this->getName() . ": tube " . this->tube . " doesn't exist");
-        }
-
-        if starts_with(line, "PAUSED") {
-            return this->createResponse("PAUSED", ["delay" : this->delay]);
-        }
-
-        throw new Exception("Unhandled response: " . line);
-    }
+         return this->createResponse(line);
+     }
 }

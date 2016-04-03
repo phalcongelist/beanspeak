@@ -24,6 +24,7 @@ use Beanspeak\Command\Quit;
 use Beanspeak\Command\Stats;
 use Beanspeak\Command\Ignore;
 use Beanspeak\Command\Choose;
+use Beanspeak\Command\Delete;
 use Beanspeak\Command\Reserve;
 use Beanspeak\Command\KickJob;
 use Beanspeak\Job\JobInterface;
@@ -114,6 +115,21 @@ class Beanspeak implements DispatcherAwareInterface
         let response = this->dispatcher->dispatch(new Put(data, options));
 
         return response->id;
+    }
+
+    /**
+     * Removes a job from the server entirely.
+     *
+     * <code>
+     * $queue->delete(12);
+     * $queue->delete($jobObject);
+     * </code>
+     */
+    public function delete(var job) -> <Beanspeak>
+    {
+        this->dispatcher->dispatch(new Delete(job));
+
+        return this;
     }
 
     /**

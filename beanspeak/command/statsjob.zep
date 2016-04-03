@@ -49,7 +49,7 @@ class StatsJob extends Command
         } elseif typeof job == "int" || ctype_digit(job) {
             let this->id = (int) job;
         } else {
-            throw new Exception("The \"job\" param must be either instanceof JobInterface list or integer got: " . typeof job);
+            throw new Exception("The \"job\" param must be either instanceof JobInterface or integer. Got: " . typeof job);
         }
     }
 
