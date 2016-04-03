@@ -14,6 +14,7 @@
 #include "beanspeak/job/jobinterface.zep.h"
 #include "beanspeak/response/responseinterface.zep.h"
 #include "beanspeak/beanspeak.zep.h"
+#include "beanspeak/command/bury.zep.h"
 #include "beanspeak/command/choose.zep.h"
 #include "beanspeak/command/delete.zep.h"
 #include "beanspeak/command/exception.zep.h"

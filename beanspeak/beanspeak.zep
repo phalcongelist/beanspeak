@@ -20,6 +20,7 @@ namespace Beanspeak;
 use Beanspeak\Command\Put;
 use Beanspeak\Command\Peek;
 use Beanspeak\Command\Kick;
+use Beanspeak\Command\Bury;
 use Beanspeak\Command\Quit;
 use Beanspeak\Command\Stats;
 use Beanspeak\Command\Ignore;
@@ -144,9 +145,24 @@ class Beanspeak implements DispatcherAwareInterface
      * $queue->release($jobObject, 10, 60 * 60);
      * </code>
      */
-    public function release(var job, int! pri, int! delay) -> <Beanspeak>
+    public function release(var job, int! pri = 1024, int! delay = 0) -> <Beanspeak>
     {
         this->dispatcher->dispatch(new Release(job, pri, delay));
+
+        return this;
+    }
+
+    /**
+     * Puts a job into the "buried" state.
+     *
+     * <code>
+     * $queue->release(12, 10, 60 * 60);
+     * $queue->release($jobObject, 10, 60 * 60);
+     * </code>
+     */
+    public function bury(var job, int! pri = 1024) -> <Beanspeak>
+    {
+        this->dispatcher->dispatch(new Bury(job, pri));
 
         return this;
     }
@@ -385,7 +401,7 @@ class Beanspeak implements DispatcherAwareInterface
      * $queue->pauseTube('process-video', 60 * 60);
      * </code>
      */
-    public function pauseTube(string! tube, int! delay) -> <Beanspeak>
+    public function pauseTube(string! tube, int! delay = 0) -> <Beanspeak>
     {
         var response;
 

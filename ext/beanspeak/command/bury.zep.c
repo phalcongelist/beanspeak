@@ -18,45 +18,53 @@
 #include "kernel/operators.h"
 #include "kernel/exception.h"
 #include "kernel/concat.h"
+#include "ext/spl/spl_exceptions.h"
 #include "kernel/string.h"
 
 
 /**
- * Beanspeak\Command\Delete
+ * Beanspeak\Command\Bury
  *
- * Removes a job from the server entirely.
+ * Puts a job into the "buried" state.
  *
  * <code>
- * use Beanspeak\Command\Delete;
+ * use Beanspeak\Command\Bury;
  *
- * $command = new Delete(18);
- * $command = new Delete($jobObject);
+ * $command = new Bury(89, 10);
+ * $command = new Bury($jobObject, 10);
  * </code>
  */
-ZEPHIR_INIT_CLASS(Beanspeak_Command_Delete) {
+ZEPHIR_INIT_CLASS(Beanspeak_Command_Bury) {
 
-	ZEPHIR_REGISTER_CLASS_EX(Beanspeak\\Command, Delete, beanspeak, command_delete, beanspeak_command_ce, beanspeak_command_delete_method_entry, 0);
+	ZEPHIR_REGISTER_CLASS_EX(Beanspeak\\Command, Bury, beanspeak, command_bury, beanspeak_command_ce, beanspeak_command_bury_method_entry, 0);
 
-	zend_declare_property_null(beanspeak_command_delete_ce, SL("id"), ZEND_ACC_PRIVATE TSRMLS_CC);
+	zend_declare_property_null(beanspeak_command_bury_ce, SL("id"), ZEND_ACC_PRIVATE TSRMLS_CC);
 
-	zend_class_implements(beanspeak_command_delete_ce TSRMLS_CC, 1, beanspeak_response_parser_parserinterface_ce);
+	zend_declare_property_null(beanspeak_command_bury_ce, SL("pri"), ZEND_ACC_PRIVATE TSRMLS_CC);
+
+	zend_class_implements(beanspeak_command_bury_ce TSRMLS_CC, 1, beanspeak_response_parser_parserinterface_ce);
 	return SUCCESS;
 
 }
 
 /**
- * Beanspeak\Command\Delete constructor
+ * Beanspeak\Command\Bury constructor
  * @throws \Beanspeak\Command\Exception
  */
-PHP_METHOD(Beanspeak_Command_Delete, __construct) {
+PHP_METHOD(Beanspeak_Command_Bury, __construct) {
 
 	zend_bool _0, _1;
-	int ZEPHIR_LAST_CALL_STATUS;
-	zval *job, *_2 = NULL, *_3$$3 = NULL, *_4$$4, *_5$$5, *_6$$5, *_7$$5;
+	int pri, ZEPHIR_LAST_CALL_STATUS;
+	zval *job, *pri_param = NULL, *_2 = NULL, *_8, *_3$$3 = NULL, *_4$$4, *_5$$5, *_6$$5, *_7$$5;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 0, &job);
+	zephir_fetch_params(1, 2, 0, &job, &pri_param);
 
+	if (unlikely(Z_TYPE_P(pri_param) != IS_LONG)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'pri' must be a int") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+	pri = Z_LVAL_P(pri_param);
 
 
 	_0 = Z_TYPE_P(job) == IS_OBJECT;
@@ -65,7 +73,7 @@ PHP_METHOD(Beanspeak_Command_Delete, __construct) {
 	}
 	_1 = Z_TYPE_P(job) == IS_LONG;
 	if (!(_1)) {
-		ZEPHIR_CALL_FUNCTION(&_2, "ctype_digit", NULL, 18, job);
+		ZEPHIR_CALL_FUNCTION(&_2, "ctype_digit", NULL, 19, job);
 		zephir_check_call_status();
 		_1 = zephir_is_true(_2);
 	}
@@ -86,10 +94,13 @@ PHP_METHOD(Beanspeak_Command_Delete, __construct) {
 		ZEPHIR_CONCAT_SV(_7$$5, "The \"job\" param must be either instanceof JobInterface or integer. Got: ", _6$$5);
 		ZEPHIR_CALL_METHOD(NULL, _5$$5, "__construct", NULL, 1, _7$$5);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_5$$5, "beanspeak/command/delete.zep", 51 TSRMLS_CC);
+		zephir_throw_exception_debug(_5$$5, "beanspeak/command/bury.zep", 52 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
+	ZEPHIR_INIT_ZVAL_NREF(_8);
+	ZVAL_LONG(_8, pri);
+	zephir_update_property_this(this_ptr, SL("pri"), _8 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 
 }
@@ -97,24 +108,25 @@ PHP_METHOD(Beanspeak_Command_Delete, __construct) {
 /**
  * {@inheritdoc}
  */
-PHP_METHOD(Beanspeak_Command_Delete, getName) {
+PHP_METHOD(Beanspeak_Command_Bury, getName) {
 
 	
 
-	RETURN_STRING("DELETE", 1);
+	RETURN_STRING("BURY", 1);
 
 }
 
 /**
  * {@inheritdoc}
  */
-PHP_METHOD(Beanspeak_Command_Delete, getCommandLine) {
+PHP_METHOD(Beanspeak_Command_Bury, getCommandLine) {
 
-	zval *_0;
+	zval *_0, *_1;
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("id"), PH_NOISY_CC);
-	ZEPHIR_CONCAT_SV(return_value, "delete ", _0);
+	_1 = zephir_fetch_nproperty_this(this_ptr, SL("pri"), PH_NOISY_CC);
+	ZEPHIR_CONCAT_SVSV(return_value, "bury ", _0, " ", _1);
 	return;
 
 }
@@ -123,7 +135,7 @@ PHP_METHOD(Beanspeak_Command_Delete, getCommandLine) {
  * {@inheritdoc}
  * @throws \Beanspeak\Command\Exception
  */
-PHP_METHOD(Beanspeak_Command_Delete, parseResponse) {
+PHP_METHOD(Beanspeak_Command_Bury, parseResponse) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 	zval *line_param = NULL, *data_param = NULL, *_0$$3, *_1$$4, *_2$$4 = NULL, *_3$$4, *_4$$4, *_5;
@@ -141,9 +153,9 @@ PHP_METHOD(Beanspeak_Command_Delete, parseResponse) {
 	}
 
 
-	if (zephir_start_with_str(line, SL("DELETED"))) {
+	if (zephir_start_with_str(line, SL("BURIED"))) {
 		ZEPHIR_INIT_VAR(_0$$3);
-		ZVAL_STRING(_0$$3, "DELETED", ZEPHIR_TEMP_PARAM_COPY);
+		ZVAL_STRING(_0$$3, "BURIED", ZEPHIR_TEMP_PARAM_COPY);
 		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "createresponse", NULL, 0, _0$$3);
 		zephir_check_temp_parameter(_0$$3);
 		zephir_check_call_status();
@@ -156,10 +168,10 @@ PHP_METHOD(Beanspeak_Command_Delete, parseResponse) {
 		zephir_check_call_status();
 		_3$$4 = zephir_fetch_nproperty_this(this_ptr, SL("id"), PH_NOISY_CC);
 		ZEPHIR_INIT_VAR(_4$$4);
-		ZEPHIR_CONCAT_VSV(_4$$4, _2$$4, ": Cannot delete Job ID #", _3$$4);
+		ZEPHIR_CONCAT_VSVS(_4$$4, _2$$4, ": Job ID #", _3$$4, " is not reserved or does not exist");
 		ZEPHIR_CALL_METHOD(NULL, _1$$4, "__construct", NULL, 1, _4$$4);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_1$$4, "beanspeak/command/delete.zep", 82 TSRMLS_CC);
+		zephir_throw_exception_debug(_1$$4, "beanspeak/command/bury.zep", 85 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -169,7 +181,7 @@ PHP_METHOD(Beanspeak_Command_Delete, parseResponse) {
 	ZEPHIR_CONCAT_SV(_6, "Unhandled response: ", line);
 	ZEPHIR_CALL_METHOD(NULL, _5, "__construct", NULL, 1, _6);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(_5, "beanspeak/command/delete.zep", 85 TSRMLS_CC);
+	zephir_throw_exception_debug(_5, "beanspeak/command/bury.zep", 88 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 

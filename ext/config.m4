@@ -19,6 +19,7 @@ if test "$PHP_BEANSPEAK" = "yes"; then
 	beanspeak/job/jobinterface.zep.c
 	beanspeak/response/responseinterface.zep.c
 	beanspeak/beanspeak.zep.c
+	beanspeak/command/bury.zep.c
 	beanspeak/command/choose.zep.c
 	beanspeak/command/delete.zep.c
 	beanspeak/command/exception.zep.c

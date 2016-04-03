@@ -8,7 +8,7 @@ PHP_METHOD(Beanspeak_Command_PauseTube, getName);
 PHP_METHOD(Beanspeak_Command_PauseTube, getCommandLine);
 PHP_METHOD(Beanspeak_Command_PauseTube, parseResponse);
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_command_pausetube___construct, 0, 0, 2)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_command_pausetube___construct, 0, 0, 1)
 	ZEND_ARG_INFO(0, tube)
 	ZEND_ARG_INFO(0, delay)
 ZEND_END_ARG_INFO()
