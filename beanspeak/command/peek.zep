@@ -55,7 +55,7 @@ class Peek extends Command implements ParserInterface
                 throw new Exception("Invalid peek subject: " . subject);
             }
         } else {
-            throw new Exception("Peek subject must be either integer or string got: " . typeof subject);
+            throw new Exception("Peek subject must be either integer or string. Got: " . typeof subject);
         }
     }
 

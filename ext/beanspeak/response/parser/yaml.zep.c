@@ -14,12 +14,12 @@
 #include "kernel/main.h"
 #include "kernel/operators.h"
 #include "kernel/exception.h"
-#include "kernel/object.h"
-#include "ext/spl/spl_exceptions.h"
 #include "kernel/memory.h"
-#include "kernel/string.h"
 #include "kernel/fcall.h"
 #include "kernel/concat.h"
+#include "kernel/object.h"
+#include "ext/spl/spl_exceptions.h"
+#include "kernel/string.h"
 #include "kernel/hash.h"
 #include "kernel/array.h"
 
@@ -44,8 +44,9 @@ ZEPHIR_INIT_CLASS(Beanspeak_Response_Parser_Yaml) {
 PHP_METHOD(Beanspeak_Response_Parser_Yaml, __construct) {
 
 	zend_bool _0;
-	zval *mode_param = NULL;
-	zval *mode = NULL;
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *mode_param = NULL, *_1$$3;
+	zval *mode = NULL, *_2$$3;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &mode_param);
@@ -67,7 +68,14 @@ PHP_METHOD(Beanspeak_Response_Parser_Yaml, __construct) {
 		_0 = !ZEPHIR_IS_STRING(mode, "dict");
 	}
 	if (_0) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_response_parser_exception_ce, "Parser mode must be either list or dict", "beanspeak/response/parser/yaml.zep", 36);
+		ZEPHIR_INIT_VAR(_1$$3);
+		object_init_ex(_1$$3, beanspeak_response_parser_exception_ce);
+		ZEPHIR_INIT_VAR(_2$$3);
+		ZEPHIR_CONCAT_SV(_2$$3, "Parser mode must be either \"list\" or \"dict\". Got: ", mode);
+		ZEPHIR_CALL_METHOD(NULL, _1$$3, "__construct", NULL, 1, _2$$3);
+		zephir_check_call_status();
+		zephir_throw_exception_debug(_1$$3, "beanspeak/response/parser/yaml.zep", 36 TSRMLS_CC);
+		ZEPHIR_MM_RESTORE();
 		return;
 	}
 	zephir_update_property_this(this_ptr, SL("mode"), mode TSRMLS_CC);
@@ -170,7 +178,7 @@ void zep_Beanspeak_Response_Parser_Yaml_yamlParse(int ht, zval *return_value, zv
 		RETURN_MM();
 	}
 	if ((zephir_function_exists_ex(SS("yaml_parse") TSRMLS_CC) == SUCCESS)) {
-		ZEPHIR_CALL_FUNCTION(&response, "yaml_parse", NULL, 26, data);
+		ZEPHIR_CALL_FUNCTION(&response, "yaml_parse", NULL, 27, data);
 		zephir_check_call_status();
 		if (ZEPHIR_IS_STRING(mode, "list")) {
 			ZEPHIR_INIT_VAR(tmp$$5);
@@ -197,7 +205,7 @@ void zep_Beanspeak_Response_Parser_Yaml_yamlParse(int ht, zval *return_value, zv
 	zephir_fast_trim(_6, data, NULL , ZEPHIR_TRIM_RIGHT TSRMLS_CC);
 	ZEPHIR_SINIT_VAR(_7);
 	ZVAL_STRING(&_7, "#[\r\n]+#", 0);
-	ZEPHIR_CALL_FUNCTION(&lines, "preg_split", NULL, 27, &_7, _6);
+	ZEPHIR_CALL_FUNCTION(&lines, "preg_split", NULL, 28, &_7, _6);
 	zephir_check_call_status();
 	_8 = zephir_array_isset_long(lines, 0);
 	if (_8) {
@@ -206,7 +214,7 @@ void zep_Beanspeak_Response_Parser_Yaml_yamlParse(int ht, zval *return_value, zv
 	}
 	if (_8) {
 		ZEPHIR_MAKE_REF(lines);
-		ZEPHIR_CALL_FUNCTION(NULL, "array_shift", NULL, 28, lines);
+		ZEPHIR_CALL_FUNCTION(NULL, "array_shift", NULL, 29, lines);
 		ZEPHIR_UNREF(lines);
 		zephir_check_call_status();
 	}
@@ -215,13 +223,13 @@ void zep_Beanspeak_Response_Parser_Yaml_yamlParse(int ht, zval *return_value, zv
 		_10 = ZEPHIR_IS_EMPTY(lines);
 	}
 	if (_10) {
-		ZEPHIR_CALL_FUNCTION(&_11$$8, "print_r", NULL, 29, lines, ZEPHIR_GLOBAL(global_true));
+		ZEPHIR_CALL_FUNCTION(&_11$$8, "print_r", NULL, 30, lines, ZEPHIR_GLOBAL(global_true));
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(_12$$8);
 		ZEPHIR_CONCAT_SV(_12$$8, "YAML parse error. Raw data: ", _11$$8);
 		ZEPHIR_SINIT_VAR(_13$$8);
 		ZVAL_LONG(&_13$$8, 512);
-		ZEPHIR_CALL_FUNCTION(NULL, "trigger_error", &_14, 30, _12$$8, &_13$$8);
+		ZEPHIR_CALL_FUNCTION(NULL, "trigger_error", &_14, 31, _12$$8, &_13$$8);
 		zephir_check_call_status();
 		array_init(return_value);
 		RETURN_MM();
@@ -242,7 +250,7 @@ void zep_Beanspeak_Response_Parser_Yaml_yamlParse(int ht, zval *return_value, zv
 			ZEPHIR_CONCAT_SV(_18$$11, "YAML parse error for line: ", values);
 			ZEPHIR_SINIT_NVAR(_19$$11);
 			ZVAL_LONG(&_19$$11, 512);
-			ZEPHIR_CALL_FUNCTION(NULL, "trigger_error", &_14, 30, _18$$11, &_19$$11);
+			ZEPHIR_CALL_FUNCTION(NULL, "trigger_error", &_14, 31, _18$$11, &_19$$11);
 			zephir_check_call_status();
 		} else {
 			ZEPHIR_INIT_NVAR(_20$$12);

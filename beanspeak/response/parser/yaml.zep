@@ -33,7 +33,7 @@ class Yaml implements ParserInterface
     public function __construct(string! mode)
     {
         if mode != "list" && mode != "dict" {
-            throw new Exception("Parser mode must be either list or dict");
+            throw new Exception("Parser mode must be either \"list\" or \"dict\". Got: " . mode);
         }
 
         let this->mode = mode;

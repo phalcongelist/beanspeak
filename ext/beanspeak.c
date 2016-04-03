@@ -38,6 +38,7 @@ zend_class_entry *beanspeak_response_responseinterface_ce;
 zend_class_entry *beanspeak_command_ce;
 zend_class_entry *beanspeak_beanspeak_ce;
 zend_class_entry *beanspeak_command_choose_ce;
+zend_class_entry *beanspeak_command_delete_ce;
 zend_class_entry *beanspeak_command_exception_ce;
 zend_class_entry *beanspeak_command_ignore_ce;
 zend_class_entry *beanspeak_command_kick_ce;
@@ -100,6 +101,7 @@ static PHP_MINIT_FUNCTION(beanspeak)
 	ZEPHIR_INIT(Beanspeak_Command);
 	ZEPHIR_INIT(Beanspeak_Beanspeak);
 	ZEPHIR_INIT(Beanspeak_Command_Choose);
+	ZEPHIR_INIT(Beanspeak_Command_Delete);
 	ZEPHIR_INIT(Beanspeak_Command_Exception);
 	ZEPHIR_INIT(Beanspeak_Command_Ignore);
 	ZEPHIR_INIT(Beanspeak_Command_Kick);

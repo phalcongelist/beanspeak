@@ -160,6 +160,35 @@ PHP_METHOD(Beanspeak_Beanspeak, put) {
 }
 
 /**
+ * Removes a job from the server entirely.
+ *
+ * <code>
+ * $queue->delete(12);
+ * $queue->delete($jobObject);
+ * </code>
+ */
+PHP_METHOD(Beanspeak_Beanspeak, delete) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *job, *_0, *_1;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &job);
+
+
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
+	ZEPHIR_INIT_VAR(_1);
+	object_init_ex(_1, beanspeak_command_delete_ce);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 5, job);
+	zephir_check_call_status();
+	ZEPHIR_CALL_METHOD(NULL, _0, "dispatch", NULL, 0, _1);
+	zephir_check_call_status();
+	RETURN_THIS();
+
+}
+
+/**
  * Change the active tube.
  *
  * <code>
@@ -190,7 +219,7 @@ PHP_METHOD(Beanspeak_Beanspeak, choose) {
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
 	ZEPHIR_INIT_VAR(_1);
 	object_init_ex(_1, beanspeak_command_choose_ce);
-	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 5, tube);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 6, tube);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);
 	zephir_check_call_status();
@@ -221,7 +250,7 @@ PHP_METHOD(Beanspeak_Beanspeak, reserve) {
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
 	ZEPHIR_INIT_VAR(_1);
 	object_init_ex(_1, beanspeak_command_reserve_ce);
-	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 6, timeout);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 7, timeout);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);
 	zephir_check_call_status();
@@ -233,9 +262,9 @@ PHP_METHOD(Beanspeak_Beanspeak, reserve) {
 		zephir_read_property(&_3$$3, response, SL("id"), PH_NOISY_CC);
 		ZEPHIR_OBS_VAR(_4$$3);
 		zephir_read_property(&_4$$3, response, SL("jobdata"), PH_NOISY_CC);
-		ZEPHIR_CALL_FUNCTION(&_5$$3, "unserialize", NULL, 7, _4$$3);
+		ZEPHIR_CALL_FUNCTION(&_5$$3, "unserialize", NULL, 8, _4$$3);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 8, _3$$3, _5$$3);
+		ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 9, _3$$3, _5$$3);
 		zephir_check_call_status();
 		RETURN_MM();
 	}
@@ -266,7 +295,7 @@ PHP_METHOD(Beanspeak_Beanspeak, peek) {
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
 	ZEPHIR_INIT_VAR(_1);
 	object_init_ex(_1, beanspeak_command_peek_ce);
-	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 9, subject);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 10, subject);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);
 	zephir_check_call_status();
@@ -275,9 +304,9 @@ PHP_METHOD(Beanspeak_Beanspeak, peek) {
 	zephir_read_property(&_2, response, SL("id"), PH_NOISY_CC);
 	ZEPHIR_OBS_VAR(_3);
 	zephir_read_property(&_3, response, SL("jobdata"), PH_NOISY_CC);
-	ZEPHIR_CALL_FUNCTION(&_4, "unserialize", NULL, 7, _3);
+	ZEPHIR_CALL_FUNCTION(&_4, "unserialize", NULL, 8, _3);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 8, _2, _4);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 9, _2, _4);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -519,7 +548,7 @@ PHP_METHOD(Beanspeak_Beanspeak, statsTube) {
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
 	ZEPHIR_INIT_VAR(_1);
 	object_init_ex(_1, beanspeak_command_statstube_ce);
-	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 10, tube);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 11, tube);
 	zephir_check_call_status();
 	ZEPHIR_RETURN_CALL_METHOD(_0, "dispatch", NULL, 0, _1);
 	zephir_check_call_status();
@@ -548,7 +577,7 @@ PHP_METHOD(Beanspeak_Beanspeak, statsJob) {
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
 	ZEPHIR_INIT_VAR(_1);
 	object_init_ex(_1, beanspeak_command_statsjob_ce);
-	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 11, job);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 12, job);
 	zephir_check_call_status();
 	ZEPHIR_RETURN_CALL_METHOD(_0, "dispatch", NULL, 0, _1);
 	zephir_check_call_status();
@@ -584,7 +613,7 @@ PHP_METHOD(Beanspeak_Beanspeak, kick) {
 	object_init_ex(_1, beanspeak_command_kick_ce);
 	ZEPHIR_INIT_VAR(_2);
 	ZVAL_LONG(_2, bound);
-	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 12, _2);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 13, _2);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);
 	zephir_check_call_status();
@@ -615,7 +644,7 @@ PHP_METHOD(Beanspeak_Beanspeak, kickJob) {
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
 	ZEPHIR_INIT_VAR(_1);
 	object_init_ex(_1, beanspeak_command_kickjob_ce);
-	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 13, job);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 14, job);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(NULL, _0, "dispatch", NULL, 0, _1);
 	zephir_check_call_status();
@@ -654,7 +683,7 @@ PHP_METHOD(Beanspeak_Beanspeak, ignore) {
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
 	ZEPHIR_INIT_VAR(_1);
 	object_init_ex(_1, beanspeak_command_ignore_ce);
-	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 14, tube);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 15, tube);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);
 	zephir_check_call_status();
@@ -702,7 +731,7 @@ PHP_METHOD(Beanspeak_Beanspeak, pauseTube) {
 	object_init_ex(_1, beanspeak_command_pausetube_ce);
 	ZEPHIR_INIT_VAR(_2);
 	ZVAL_LONG(_2, delay);
-	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 15, tube, _2);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 16, tube, _2);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);
 	zephir_check_call_status();

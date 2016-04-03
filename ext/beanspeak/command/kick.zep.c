@@ -119,7 +119,7 @@ PHP_METHOD(Beanspeak_Command_Kick, parseResponse) {
 	ZVAL_STRING(_0, "#^KICKED (.+)$#", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_VAR(_1);
 	ZVAL_STRING(_1, "$1", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_FUNCTION(&kicked, "preg_replace", NULL, 16, _0, _1, line);
+	ZEPHIR_CALL_FUNCTION(&kicked, "preg_replace", NULL, 17, _0, _1, line);
 	zephir_check_temp_parameter(_0);
 	zephir_check_temp_parameter(_1);
 	zephir_check_call_status();

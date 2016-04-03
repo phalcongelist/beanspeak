@@ -22,24 +22,23 @@ use Beanspeak\Response\ResponseInterface;
 use Beanspeak\Response\Parser\ParserInterface;
 
 /**
- * Beanspeak\Command\KickJob
+ * Beanspeak\Command\Delete
  *
- * A variant of kick that operates with a single job identified by its Job ID.
- * If the given job id exists and is in a buried or delayed state, it will be
- * moved to the ready queue of the the same tube where it currently belongs.
+ * Removes a job from the server entirely.
  *
  * <code>
- * use Beanspeak\Command\KickJob;
+ * use Beanspeak\Command\Delete;
  *
- * $command = new KickJob(43);
+ * $command = new Delete(18);
+ * $command = new Delete($jobObject);
  * </code>
  */
-class KickJob extends Command implements ParserInterface
+class Delete extends Command implements ParserInterface
 {
     private id;
 
     /**
-     * Beanspeak\Command\KickJob constructor
+     * Beanspeak\Command\Delete constructor
      * @throws \Beanspeak\Command\Exception
      */
     public function __construct(var job)
@@ -58,7 +57,7 @@ class KickJob extends Command implements ParserInterface
      */
     public function getName() -> string
     {
-        return "KICK-JOB";
+        return "DELETE";
     }
 
     /**
@@ -66,7 +65,7 @@ class KickJob extends Command implements ParserInterface
      */
     public function getCommandLine() -> string
     {
-        return "kick-job " . this->id;
+        return "delete " . this->id;
     }
 
     /**
@@ -75,14 +74,10 @@ class KickJob extends Command implements ParserInterface
      */
      public function parseResponse(string line, string data = null) -> <ResponseInterface>
      {
-        if starts_with(line, "NOT_FOUND") {
-            throw new Exception(this->getName() . ": Job " . this->id . " does not exist or is not in a kickable state");
-        }
+         if starts_with(line, "NOT_FOUND") {
+             throw new Exception(this->getName() . ": Cannot delete Job ID #" . this->id);
+         }
 
-        if starts_with(line, "KICKED") {
-            return this->createResponse("KICKED");
-        }
-
-        throw new Exception("Unhandled response: " . line);
-    }
+         return this->createResponse(line);
+     }
 }

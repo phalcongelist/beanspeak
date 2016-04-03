@@ -15,6 +15,7 @@
 #include "beanspeak/response/responseinterface.zep.h"
 #include "beanspeak/beanspeak.zep.h"
 #include "beanspeak/command/choose.zep.h"
+#include "beanspeak/command/delete.zep.h"
 #include "beanspeak/command/exception.zep.h"
 #include "beanspeak/command/ignore.zep.h"
 #include "beanspeak/command/kick.zep.h"

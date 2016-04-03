@@ -22,34 +22,33 @@
 
 
 /**
- * Beanspeak\Command\KickJob
+ * Beanspeak\Command\Delete
  *
- * A variant of kick that operates with a single job identified by its Job ID.
- * If the given job id exists and is in a buried or delayed state, it will be
- * moved to the ready queue of the the same tube where it currently belongs.
+ * Removes a job from the server entirely.
  *
  * <code>
- * use Beanspeak\Command\KickJob;
+ * use Beanspeak\Command\Delete;
  *
- * $command = new KickJob(43);
+ * $command = new Delete(18);
+ * $command = new Delete($jobObject);
  * </code>
  */
-ZEPHIR_INIT_CLASS(Beanspeak_Command_KickJob) {
+ZEPHIR_INIT_CLASS(Beanspeak_Command_Delete) {
 
-	ZEPHIR_REGISTER_CLASS_EX(Beanspeak\\Command, KickJob, beanspeak, command_kickjob, beanspeak_command_ce, beanspeak_command_kickjob_method_entry, 0);
+	ZEPHIR_REGISTER_CLASS_EX(Beanspeak\\Command, Delete, beanspeak, command_delete, beanspeak_command_ce, beanspeak_command_delete_method_entry, 0);
 
-	zend_declare_property_null(beanspeak_command_kickjob_ce, SL("id"), ZEND_ACC_PRIVATE TSRMLS_CC);
+	zend_declare_property_null(beanspeak_command_delete_ce, SL("id"), ZEND_ACC_PRIVATE TSRMLS_CC);
 
-	zend_class_implements(beanspeak_command_kickjob_ce TSRMLS_CC, 1, beanspeak_response_parser_parserinterface_ce);
+	zend_class_implements(beanspeak_command_delete_ce TSRMLS_CC, 1, beanspeak_response_parser_parserinterface_ce);
 	return SUCCESS;
 
 }
 
 /**
- * Beanspeak\Command\KickJob constructor
+ * Beanspeak\Command\Delete constructor
  * @throws \Beanspeak\Command\Exception
  */
-PHP_METHOD(Beanspeak_Command_KickJob, __construct) {
+PHP_METHOD(Beanspeak_Command_Delete, __construct) {
 
 	zend_bool _0, _1;
 	int ZEPHIR_LAST_CALL_STATUS;
@@ -87,7 +86,7 @@ PHP_METHOD(Beanspeak_Command_KickJob, __construct) {
 		ZEPHIR_CONCAT_SV(_7$$5, "The \"job\" param must be either instanceof JobInterface or integer. Got: ", _6$$5);
 		ZEPHIR_CALL_METHOD(NULL, _5$$5, "__construct", NULL, 1, _7$$5);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_5$$5, "beanspeak/command/kickjob.zep", 52 TSRMLS_CC);
+		zephir_throw_exception_debug(_5$$5, "beanspeak/command/delete.zep", 51 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -98,24 +97,24 @@ PHP_METHOD(Beanspeak_Command_KickJob, __construct) {
 /**
  * {@inheritdoc}
  */
-PHP_METHOD(Beanspeak_Command_KickJob, getName) {
+PHP_METHOD(Beanspeak_Command_Delete, getName) {
 
 	
 
-	RETURN_STRING("KICK-JOB", 1);
+	RETURN_STRING("DELETE", 1);
 
 }
 
 /**
  * {@inheritdoc}
  */
-PHP_METHOD(Beanspeak_Command_KickJob, getCommandLine) {
+PHP_METHOD(Beanspeak_Command_Delete, getCommandLine) {
 
 	zval *_0;
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("id"), PH_NOISY_CC);
-	ZEPHIR_CONCAT_SV(return_value, "kick-job ", _0);
+	ZEPHIR_CONCAT_SV(return_value, "delete ", _0);
 	return;
 
 }
@@ -124,11 +123,11 @@ PHP_METHOD(Beanspeak_Command_KickJob, getCommandLine) {
  * {@inheritdoc}
  * @throws \Beanspeak\Command\Exception
  */
-PHP_METHOD(Beanspeak_Command_KickJob, parseResponse) {
+PHP_METHOD(Beanspeak_Command_Delete, parseResponse) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *line_param = NULL, *data_param = NULL, *_0$$3, *_1$$3 = NULL, *_2$$3, *_3$$3, *_4$$4, *_5;
-	zval *line = NULL, *data = NULL, *_6;
+	zval *line_param = NULL, *data_param = NULL, *_0$$3, *_1$$3 = NULL, *_2$$3, *_3$$3;
+	zval *line = NULL, *data = NULL;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 1, &line_param, &data_param);
@@ -149,30 +148,16 @@ PHP_METHOD(Beanspeak_Command_KickJob, parseResponse) {
 		zephir_check_call_status();
 		_2$$3 = zephir_fetch_nproperty_this(this_ptr, SL("id"), PH_NOISY_CC);
 		ZEPHIR_INIT_VAR(_3$$3);
-		ZEPHIR_CONCAT_VSVS(_3$$3, _1$$3, ": Job ", _2$$3, " does not exist or is not in a kickable state");
+		ZEPHIR_CONCAT_VSV(_3$$3, _1$$3, ": Cannot delete Job ID #", _2$$3);
 		ZEPHIR_CALL_METHOD(NULL, _0$$3, "__construct", NULL, 1, _3$$3);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_0$$3, "beanspeak/command/kickjob.zep", 79 TSRMLS_CC);
+		zephir_throw_exception_debug(_0$$3, "beanspeak/command/delete.zep", 78 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
-	if (zephir_start_with_str(line, SL("KICKED"))) {
-		ZEPHIR_INIT_VAR(_4$$4);
-		ZVAL_STRING(_4$$4, "KICKED", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "createresponse", NULL, 0, _4$$4);
-		zephir_check_temp_parameter(_4$$4);
-		zephir_check_call_status();
-		RETURN_MM();
-	}
-	ZEPHIR_INIT_VAR(_5);
-	object_init_ex(_5, beanspeak_command_exception_ce);
-	ZEPHIR_INIT_VAR(_6);
-	ZEPHIR_CONCAT_SV(_6, "Unhandled response: ", line);
-	ZEPHIR_CALL_METHOD(NULL, _5, "__construct", NULL, 1, _6);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "createresponse", NULL, 0, line);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(_5, "beanspeak/command/kickjob.zep", 86 TSRMLS_CC);
-	ZEPHIR_MM_RESTORE();
-	return;
+	RETURN_MM();
 
 }
 
