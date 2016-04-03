@@ -22,6 +22,7 @@ use Beanspeak\Command\Peek;
 use Beanspeak\Command\Kick;
 use Beanspeak\Command\Quit;
 use Beanspeak\Command\Stats;
+use Beanspeak\Command\Ignore;
 use Beanspeak\Command\Choose;
 use Beanspeak\Command\Reserve;
 use Beanspeak\Command\KickJob;
@@ -295,8 +296,8 @@ class Beanspeak implements DispatcherAwareInterface
     }
 
     /**
-    * Moves jobs into the ready queue.
-    * The Kick command applies only to the currently used tube.
+     * Moves jobs into the ready queue.
+     * The Kick command applies only to the currently used tube.
      *
      * <code>
      * $queue->kick(3);
@@ -324,6 +325,22 @@ class Beanspeak implements DispatcherAwareInterface
         this->dispatcher->dispatch(new KickJob(job));
 
         return this;
+    }
+
+    /**
+     * Removes the named tube from the watch list for the current connection.
+     *
+     * <code>
+     * $count = $queue->ignore('tube-name);
+     * </code>
+     */
+    public function ignore(string! tube) -> int
+    {
+        var response;
+
+        let response = this->dispatcher->dispatch(new Ignore(tube));
+
+        return response->count;
     }
 
     /**

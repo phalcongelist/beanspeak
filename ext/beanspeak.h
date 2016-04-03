@@ -16,6 +16,7 @@
 #include "beanspeak/beanspeak.zep.h"
 #include "beanspeak/command/choose.zep.h"
 #include "beanspeak/command/exception.zep.h"
+#include "beanspeak/command/ignore.zep.h"
 #include "beanspeak/command/kick.zep.h"
 #include "beanspeak/command/kickjob.zep.h"
 #include "beanspeak/command/listtubes.zep.h"
