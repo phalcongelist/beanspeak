@@ -40,7 +40,7 @@ class KickJob extends Command implements ParserInterface
 
     /**
      * Beanspeak\Command\KickJob constructor
-     * @throws \Beanspeak\Command\Exception;
+     * @throws \Beanspeak\Command\Exception
      */
     public function __construct(var job)
     {

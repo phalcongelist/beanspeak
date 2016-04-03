@@ -40,7 +40,7 @@ class StatsJob extends Command
 
     /**
      * Beanspeak\Command\StatsJob constructor
-     * @throws \Beanspeak\Command\Exception;
+     * @throws \Beanspeak\Command\Exception
      */
     public function __construct(var job)
     {

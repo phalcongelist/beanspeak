@@ -44,7 +44,7 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command_StatsJob) {
 
 /**
  * Beanspeak\Command\StatsJob constructor
- * @throws \Beanspeak\Command\Exception;
+ * @throws \Beanspeak\Command\Exception
  */
 PHP_METHOD(Beanspeak_Command_StatsJob, __construct) {
 

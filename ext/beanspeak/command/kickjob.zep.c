@@ -47,7 +47,7 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command_KickJob) {
 
 /**
  * Beanspeak\Command\KickJob constructor
- * @throws \Beanspeak\Command\Exception;
+ * @throws \Beanspeak\Command\Exception
  */
 PHP_METHOD(Beanspeak_Command_KickJob, __construct) {
 
