@@ -32,6 +32,7 @@ if test "$PHP_BEANSPEAK" = "yes"; then
 	beanspeak/command/peek.zep.c
 	beanspeak/command/put.zep.c
 	beanspeak/command/quit.zep.c
+	beanspeak/command/release.zep.c
 	beanspeak/command/reserve.zep.c
 	beanspeak/command/stats.zep.c
 	beanspeak/command/statsjob.zep.c

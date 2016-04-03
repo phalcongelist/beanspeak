@@ -70,7 +70,7 @@ PHP_METHOD(Beanspeak_Command_ListTubes, getResponseParser) {
 	object_init_ex(return_value, beanspeak_response_parser_yaml_ce);
 	ZEPHIR_INIT_VAR(_0);
 	ZVAL_STRING(_0, "list", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 19, _0);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 20, _0);
 	zephir_check_temp_parameter(_0);
 	zephir_check_call_status();
 	RETURN_MM();

@@ -25,6 +25,7 @@ use Beanspeak\Command\Stats;
 use Beanspeak\Command\Ignore;
 use Beanspeak\Command\Choose;
 use Beanspeak\Command\Delete;
+use Beanspeak\Command\Release;
 use Beanspeak\Command\Reserve;
 use Beanspeak\Command\KickJob;
 use Beanspeak\Job\JobInterface;
@@ -130,6 +131,22 @@ class Beanspeak implements DispatcherAwareInterface
     public function delete(var job) -> <Beanspeak>
     {
         this->dispatcher->dispatch(new Delete(job));
+
+        return this;
+    }
+
+    /**
+     * Puts a "reserved" job back into the ready queue (and marks its
+     * state as "ready") to be run by any client.
+     *
+     * <code>
+     * $queue->release(12, 10, 60 * 60);
+     * $queue->release($jobObject, 10, 60 * 60);
+     * </code>
+     */
+    public function release(var job, int! pri, int! delay) -> <Beanspeak>
+    {
+        this->dispatcher->dispatch(new Release(job, pri, delay));
 
         return this;
     }

@@ -50,6 +50,7 @@ zend_class_entry *beanspeak_command_pausetube_ce;
 zend_class_entry *beanspeak_command_peek_ce;
 zend_class_entry *beanspeak_command_put_ce;
 zend_class_entry *beanspeak_command_quit_ce;
+zend_class_entry *beanspeak_command_release_ce;
 zend_class_entry *beanspeak_command_reserve_ce;
 zend_class_entry *beanspeak_command_stats_ce;
 zend_class_entry *beanspeak_command_statsjob_ce;
@@ -113,6 +114,7 @@ static PHP_MINIT_FUNCTION(beanspeak)
 	ZEPHIR_INIT(Beanspeak_Command_Peek);
 	ZEPHIR_INIT(Beanspeak_Command_Put);
 	ZEPHIR_INIT(Beanspeak_Command_Quit);
+	ZEPHIR_INIT(Beanspeak_Command_Release);
 	ZEPHIR_INIT(Beanspeak_Command_Reserve);
 	ZEPHIR_INIT(Beanspeak_Command_Stats);
 	ZEPHIR_INIT(Beanspeak_Command_StatsJob);
