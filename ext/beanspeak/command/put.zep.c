@@ -95,7 +95,7 @@ PHP_METHOD(Beanspeak_Command_Put, __construct) {
 		ZEPHIR_INIT_NVAR(ttr);
 		ZVAL_LONG(ttr, 86400);
 	}
-	ZEPHIR_CALL_FUNCTION(&_0, "serialize", NULL, 23, data);
+	ZEPHIR_CALL_FUNCTION(&_0, "serialize", NULL, 24, data);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("data"), _0 TSRMLS_CC);
 	zephir_update_property_this(this_ptr, SL("priority"), priority TSRMLS_CC);
@@ -172,7 +172,7 @@ PHP_METHOD(Beanspeak_Command_Put, getDataLength) {
 		_0$$3 = zephir_fetch_nproperty_this(this_ptr, SL("data"), PH_NOISY_CC);
 		ZEPHIR_SINIT_VAR(_1$$3);
 		ZVAL_STRING(&_1$$3, "latin1", 0);
-		ZEPHIR_RETURN_CALL_FUNCTION("mb_strlen", NULL, 24, _0$$3, &_1$$3);
+		ZEPHIR_RETURN_CALL_FUNCTION("mb_strlen", NULL, 25, _0$$3, &_1$$3);
 		zephir_check_call_status();
 		RETURN_MM();
 	}
@@ -212,7 +212,7 @@ PHP_METHOD(Beanspeak_Command_Put, parseResponse) {
 		ZVAL_STRING(_0$$3, "#^INSERTED (\\d+)$#", ZEPHIR_TEMP_PARAM_COPY);
 		ZEPHIR_INIT_VAR(_1$$3);
 		ZVAL_STRING(_1$$3, "$1", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_FUNCTION(&id$$3, "preg_replace", NULL, 21, _0$$3, _1$$3, line);
+		ZEPHIR_CALL_FUNCTION(&id$$3, "preg_replace", NULL, 22, _0$$3, _1$$3, line);
 		zephir_check_temp_parameter(_0$$3);
 		zephir_check_temp_parameter(_1$$3);
 		zephir_check_call_status();
