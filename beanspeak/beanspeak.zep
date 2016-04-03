@@ -23,6 +23,7 @@ use Beanspeak\Command\Quit;
 use Beanspeak\Command\Stats;
 use Beanspeak\Command\Choose;
 use Beanspeak\Command\Reserve;
+use Beanspeak\Command\KickJob;
 use Beanspeak\Job\JobInterface;
 use Beanspeak\Command\StatsJob;
 use Beanspeak\Command\StatsTube;
@@ -120,12 +121,12 @@ class Beanspeak implements DispatcherAwareInterface
      * $queue->choose('mail-queue');
      * </code>
      */
-    public function choose(string! tube) -> string
+    public function choose(string! tube) -> <Beanspeak>
     {
         var response;
         let response = this->dispatcher->dispatch(new Choose(tube));
 
-        return response->tube;
+        return this;
     }
 
     /**
@@ -293,19 +294,34 @@ class Beanspeak implements DispatcherAwareInterface
     }
 
     /**
+     * A variant of kick that operates with a single job identified by its Job ID.
+     *
+     * <code>
+     * $stats = $queue->kickJob(90);
+     * $stats = $queue->kickJob($jobObject);
+     * </code>
+     */
+    public function kickJob(var job) -> <Beanspeak>
+    {
+        this->dispatcher->dispatch(new KickJob(job));
+
+        return this;
+    }
+
+    /**
      * The pause-tube command can delay any new job being reserved for a given time.
      *
      * <code>
      * $queue->pauseTube('process-video', 60 * 60);
      * </code>
      */
-    public function pauseTube(string! tube, int! delay) -> int
+    public function pauseTube(string! tube, int! delay) -> <Beanspeak>
     {
         var response;
 
         let response = this->dispatcher->dispatch(new PauseTube(tube, delay));
 
-        return response->delay;
+        return this;
     }
 
     /**

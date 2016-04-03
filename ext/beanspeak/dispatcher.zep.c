@@ -96,7 +96,7 @@ PHP_METHOD(Beanspeak_Dispatcher, __construct) {
 	if (!(zephir_is_true(connection))) {
 		ZEPHIR_INIT_NVAR(_0);
 		object_init_ex(_0, beanspeak_connection_ce);
-		ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 22);
+		ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 23);
 		zephir_check_call_status();
 	} else {
 		ZEPHIR_CPY_WRT(_0, connection);
@@ -285,7 +285,7 @@ void zep_Beanspeak_Dispatcher__reconnect(int ht, zval *return_value, zval **retu
 	ZEPHIR_CALL_METHOD(&_1, oldc, "getwriteretries", NULL, 0);
 	zephir_check_call_status();
 	zephir_array_update_string(&_0, SL("write_retries"), &_1, PH_COPY | PH_SEPARATE);
-	ZEPHIR_CALL_METHOD(NULL, newc, "__construct", NULL, 22, _0);
+	ZEPHIR_CALL_METHOD(NULL, newc, "__construct", NULL, 23, _0);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("connection"), newc TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
@@ -312,7 +312,7 @@ void zep_Beanspeak_Dispatcher_checkStatusMessage(int ht, zval *return_value, zva
 	ZVAL_STRING(_1, "#^(\\S+).*$#s", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_VAR(_2);
 	ZVAL_STRING(_2, "$1", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_FUNCTION(&message, "preg_replace", NULL, 13, _1, _2, content);
+	ZEPHIR_CALL_FUNCTION(&message, "preg_replace", NULL, 14, _1, _2, content);
 	zephir_check_temp_parameter(_1);
 	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();
@@ -373,7 +373,7 @@ void zep_Beanspeak_Dispatcher_parseData(int ht, zval *return_value, zval **retur
 	ZVAL_STRING(_1, "#^(\\S+).*$#s", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_INIT_VAR(_2);
 	ZVAL_STRING(_2, "$1", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_FUNCTION(&message, "preg_replace", &_3, 13, _1, _2, content);
+	ZEPHIR_CALL_FUNCTION(&message, "preg_replace", &_3, 14, _1, _2, content);
 	zephir_check_temp_parameter(_1);
 	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();
@@ -389,7 +389,7 @@ void zep_Beanspeak_Dispatcher_parseData(int ht, zval *return_value, zval **retur
 		ZVAL_STRING(_4$$3, "#^.*\\b(\\d+)$#", ZEPHIR_TEMP_PARAM_COPY);
 		ZEPHIR_INIT_VAR(_5$$3);
 		ZVAL_STRING(_5$$3, "$1", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_FUNCTION(&dataLength, "preg_replace", &_3, 13, _4$$3, _5$$3, content);
+		ZEPHIR_CALL_FUNCTION(&dataLength, "preg_replace", &_3, 14, _4$$3, _5$$3, content);
 		zephir_check_temp_parameter(_4$$3);
 		zephir_check_temp_parameter(_5$$3);
 		zephir_check_call_status();

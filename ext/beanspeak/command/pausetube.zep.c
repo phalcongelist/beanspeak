@@ -116,10 +116,11 @@ PHP_METHOD(Beanspeak_Command_PauseTube, getCommandLine) {
  */
 PHP_METHOD(Beanspeak_Command_PauseTube, parseResponse) {
 
-	zval *_4$$4;
+	zval *_8$$5;
+	zephir_fcall_cache_entry *_2 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *line_param = NULL, *data_param = NULL, *_0$$3, *_1$$3 = NULL, *_2$$3, *_3$$3, *_5$$4, *_6$$4, *_7;
-	zval *line = NULL, *data = NULL, *_8;
+	zval *line_param = NULL, *data_param = NULL, *_0$$3, *_1$$3 = NULL, *_3$$3, *_4$$4, *_5$$4 = NULL, *_6$$4, *_7$$4, *_9$$5, *_10$$5, *_11;
+	zval *line = NULL, *data = NULL, *_12;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 1, &line_param, &data_param);
@@ -133,40 +134,53 @@ PHP_METHOD(Beanspeak_Command_PauseTube, parseResponse) {
 	}
 
 
-	if (zephir_start_with_str(line, SL("NOT_FOUND"))) {
+	if (zephir_start_with_str(line, SL("BAD_FORMAT"))) {
 		ZEPHIR_INIT_VAR(_0$$3);
 		object_init_ex(_0$$3, beanspeak_command_exception_ce);
-		ZEPHIR_CALL_METHOD(&_1$$3, this_ptr, "getname", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_1$$3, this_ptr, "getname", &_2, 0);
 		zephir_check_call_status();
-		_2$$3 = zephir_fetch_nproperty_this(this_ptr, SL("tube"), PH_NOISY_CC);
 		ZEPHIR_INIT_VAR(_3$$3);
-		ZEPHIR_CONCAT_VSVS(_3$$3, _1$$3, ": tube ", _2$$3, " doesn't exist");
+		ZEPHIR_CONCAT_VS(_3$$3, _1$$3, ": Invalid tube name format");
 		ZEPHIR_CALL_METHOD(NULL, _0$$3, "__construct", NULL, 1, _3$$3);
 		zephir_check_call_status();
 		zephir_throw_exception_debug(_0$$3, "beanspeak/command/pausetube.zep", 72 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
-	if (zephir_start_with_str(line, SL("PAUSED"))) {
+	if (zephir_start_with_str(line, SL("NOT_FOUND"))) {
 		ZEPHIR_INIT_VAR(_4$$4);
-		zephir_create_array(_4$$4, 1, 0 TSRMLS_CC);
-		ZEPHIR_OBS_VAR(_5$$4);
-		zephir_read_property_this(&_5$$4, this_ptr, SL("delay"), PH_NOISY_CC);
-		zephir_array_update_string(&_4$$4, SL("delay"), &_5$$4, PH_COPY | PH_SEPARATE);
-		ZEPHIR_INIT_VAR(_6$$4);
-		ZVAL_STRING(_6$$4, "PAUSED", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "createresponse", NULL, 0, _6$$4, _4$$4);
-		zephir_check_temp_parameter(_6$$4);
+		object_init_ex(_4$$4, beanspeak_command_exception_ce);
+		ZEPHIR_CALL_METHOD(&_5$$4, this_ptr, "getname", &_2, 0);
+		zephir_check_call_status();
+		_6$$4 = zephir_fetch_nproperty_this(this_ptr, SL("tube"), PH_NOISY_CC);
+		ZEPHIR_INIT_VAR(_7$$4);
+		ZEPHIR_CONCAT_VSVS(_7$$4, _5$$4, ": tube ", _6$$4, " doesn't exist");
+		ZEPHIR_CALL_METHOD(NULL, _4$$4, "__construct", NULL, 1, _7$$4);
+		zephir_check_call_status();
+		zephir_throw_exception_debug(_4$$4, "beanspeak/command/pausetube.zep", 76 TSRMLS_CC);
+		ZEPHIR_MM_RESTORE();
+		return;
+	}
+	if (zephir_start_with_str(line, SL("PAUSED"))) {
+		ZEPHIR_INIT_VAR(_8$$5);
+		zephir_create_array(_8$$5, 1, 0 TSRMLS_CC);
+		ZEPHIR_OBS_VAR(_9$$5);
+		zephir_read_property_this(&_9$$5, this_ptr, SL("delay"), PH_NOISY_CC);
+		zephir_array_update_string(&_8$$5, SL("delay"), &_9$$5, PH_COPY | PH_SEPARATE);
+		ZEPHIR_INIT_VAR(_10$$5);
+		ZVAL_STRING(_10$$5, "PAUSED", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "createresponse", NULL, 0, _10$$5, _8$$5);
+		zephir_check_temp_parameter(_10$$5);
 		zephir_check_call_status();
 		RETURN_MM();
 	}
-	ZEPHIR_INIT_VAR(_7);
-	object_init_ex(_7, beanspeak_command_exception_ce);
-	ZEPHIR_INIT_VAR(_8);
-	ZEPHIR_CONCAT_SV(_8, "Unhandled response: ", line);
-	ZEPHIR_CALL_METHOD(NULL, _7, "__construct", NULL, 1, _8);
+	ZEPHIR_INIT_VAR(_11);
+	object_init_ex(_11, beanspeak_command_exception_ce);
+	ZEPHIR_INIT_VAR(_12);
+	ZEPHIR_CONCAT_SV(_12, "Unhandled response: ", line);
+	ZEPHIR_CALL_METHOD(NULL, _11, "__construct", NULL, 1, _12);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(_7, "beanspeak/command/pausetube.zep", 79 TSRMLS_CC);
+	zephir_throw_exception_debug(_11, "beanspeak/command/pausetube.zep", 83 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 

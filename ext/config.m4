@@ -21,6 +21,7 @@ if test "$PHP_BEANSPEAK" = "yes"; then
 	beanspeak/beanspeak.zep.c
 	beanspeak/command/choose.zep.c
 	beanspeak/command/exception.zep.c
+	beanspeak/command/kickjob.zep.c
 	beanspeak/command/listtubes.zep.c
 	beanspeak/command/listtubeswatched.zep.c
 	beanspeak/command/listtubeused.zep.c
