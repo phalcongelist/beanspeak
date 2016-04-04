@@ -50,13 +50,23 @@ use Beanspeak\Dispatcher\DispatcherAwareInterface;
  * beanstalkd up to the latest version 1.10 is supported.
  *
  * <code>
+ * // Normal init with default params
  * use Beanspeak\Beanspeak;
  *
- * $queue = new Beanspeak([
+ * $queue = new Beanspeak;
+ *
+ * // Initialization with custom params
+ * use Beanspeak\Connection;
+ * use Beanspeak\Dispatcher;
+ * use Beanspeak\Beanspeak;
+ *
+ * $connection = new Connection([
  *     'host'       => '127.0.0.1',
  *     'port'       => 11300,
  *     'persistent' => true,
  * ]);
+
+ $queue = new Beanspeak(new Dispatcher($connection));
  * </code>
  *
  * @link https://github.com/kr/beanstalkd/
