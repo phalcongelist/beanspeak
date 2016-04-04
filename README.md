@@ -69,4 +69,4 @@ Beanspeak is open source software licensed under the [New BSD License](docs/LICE
 
 [0]: https://travis-ci.org/phalcongelist/beanspeak
 [1]: http://kr.github.io/beanstalkd/
-[2]: https://github.com/kr/beanstalkd/blob/v1.10/doc/protocol.md
+[2]: https://github.com/kr/beanstalkd/blob/v1.10/doc/protocol.txt
