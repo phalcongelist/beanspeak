@@ -440,11 +440,27 @@ class Beanspeak implements DispatcherAwareInterface
      * $queue->pauseTube('process-video', 60 * 60);
      * </code>
      */
-    public function pauseTube(string! tube, int delay = 0) -> <Beanspeak>
+    public function pauseTube(string! tube, int delay) -> <Beanspeak>
     {
         var response;
 
         let response = this->dispatcher->dispatch(new PauseTube(tube, delay));
+
+        return this;
+    }
+
+    /**
+     * Resume the tube
+     *
+     * <code>
+     * $queue->resumeTube('process-video');
+     * </code>
+     */
+    public function resumeTube(string! tube) -> <Beanspeak>
+    {
+        var response;
+
+        let response = this->dispatcher->dispatch(new PauseTube(tube, 0));
 
         return this;
     }
