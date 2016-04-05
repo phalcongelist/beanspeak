@@ -130,6 +130,29 @@ class Beanspeak implements DispatcherAwareInterface
     }
 
     /**
+     * Inserts jobs into the queue.
+     *
+     * <code>
+     * $task = [
+     *     'recipient' => 'user@mail.com',
+     *     'subject'   => 'Welcome',
+     *     'content'   => $content,
+     * ];
+     *
+     * $queue->putInTube('tube-name', $task, 999, 60 * 60, 3600);
+     * </code>
+     */
+    public function putInTube(string! tube, var data, int priority = 1024, int delay = 0, int ttr = 86400) -> int
+    {
+        var  response;
+
+        this->choose(tube);
+        let response = this->dispatcher->dispatch(new Put(data, priority, delay, ttr));
+
+        return response->id;
+    }
+
+    /**
      * Removes a job from the server entirely.
      *
      * <code>
