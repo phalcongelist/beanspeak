@@ -33,6 +33,16 @@ interface ConnectionInterface
     public function disconnect() -> boolean;
 
     /**
+     * Returns the connection ID
+     */
+    public function getId() -> string;
+
+    /**
+     * Returns the connected time
+     */
+    public function getConnectedAt() -> int;
+
+    /**
      * Returns the host for this connection.
      */
     public function getHost() -> string;

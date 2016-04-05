@@ -34,6 +34,16 @@ ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, connect);
 ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, disconnect);
 
 /**
+ * Returns the connection ID
+ */
+ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, getId);
+
+/**
+ * Returns the connected time
+ */
+ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, getConnectedAt);
+
+/**
  * Returns the host for this connection.
  */
 ZEPHIR_DOC_METHOD(Beanspeak_Connection_ConnectionInterface, getHost);
