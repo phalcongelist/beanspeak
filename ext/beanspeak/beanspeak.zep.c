@@ -182,6 +182,76 @@ PHP_METHOD(Beanspeak_Beanspeak, put) {
 }
 
 /**
+ * Inserts jobs into the queue.
+ *
+ * <code>
+ * $task = [
+ *     'recipient' => 'user@mail.com',
+ *     'subject'   => 'Welcome',
+ *     'content'   => $content,
+ * ];
+ *
+ * $queue->putInTube('tube-name', $task, 999, 60 * 60, 3600);
+ * </code>
+ */
+PHP_METHOD(Beanspeak_Beanspeak, putInTube) {
+
+	int priority, delay, ttr, ZEPHIR_LAST_CALL_STATUS;
+	zval *tube_param = NULL, *data, *priority_param = NULL, *delay_param = NULL, *ttr_param = NULL, *response = NULL, *_0, *_1, *_2, *_3, *_4, *_5;
+	zval *tube = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 2, 3, &tube_param, &data, &priority_param, &delay_param, &ttr_param);
+
+	if (unlikely(Z_TYPE_P(tube_param) != IS_STRING && Z_TYPE_P(tube_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'tube' must be a string") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+	if (likely(Z_TYPE_P(tube_param) == IS_STRING)) {
+		zephir_get_strval(tube, tube_param);
+	} else {
+		ZEPHIR_INIT_VAR(tube);
+		ZVAL_EMPTY_STRING(tube);
+	}
+	if (!priority_param) {
+		priority = 1024;
+	} else {
+		priority = zephir_get_intval(priority_param);
+	}
+	if (!delay_param) {
+		delay = 0;
+	} else {
+		delay = zephir_get_intval(delay_param);
+	}
+	if (!ttr_param) {
+		ttr = 86400;
+	} else {
+		ttr = zephir_get_intval(ttr_param);
+	}
+
+
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "choose", NULL, 0, tube);
+	zephir_check_call_status();
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
+	ZEPHIR_INIT_VAR(_1);
+	object_init_ex(_1, beanspeak_command_put_ce);
+	ZEPHIR_INIT_VAR(_2);
+	ZVAL_LONG(_2, priority);
+	ZEPHIR_INIT_VAR(_3);
+	ZVAL_LONG(_3, delay);
+	ZEPHIR_INIT_VAR(_4);
+	ZVAL_LONG(_4, ttr);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 4, data, _2, _3, _4);
+	zephir_check_call_status();
+	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);
+	zephir_check_call_status();
+	ZEPHIR_OBS_VAR(_5);
+	zephir_read_property(&_5, response, SL("id"), PH_NOISY_CC);
+	RETURN_CCTOR(_5);
+
+}
+
+/**
  * Removes a job from the server entirely.
  *
  * <code>
@@ -879,7 +949,7 @@ PHP_METHOD(Beanspeak_Beanspeak, pauseTube) {
 	zval *tube = NULL;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 1, &tube_param, &delay_param);
+	zephir_fetch_params(1, 2, 0, &tube_param, &delay_param);
 
 	if (unlikely(Z_TYPE_P(tube_param) != IS_STRING && Z_TYPE_P(tube_param) != IS_NULL)) {
 		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'tube' must be a string") TSRMLS_CC);
@@ -891,11 +961,7 @@ PHP_METHOD(Beanspeak_Beanspeak, pauseTube) {
 		ZEPHIR_INIT_VAR(tube);
 		ZVAL_EMPTY_STRING(tube);
 	}
-	if (!delay_param) {
-		delay = 0;
-	} else {
-		delay = zephir_get_intval(delay_param);
-	}
+	delay = zephir_get_intval(delay_param);
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
@@ -903,6 +969,47 @@ PHP_METHOD(Beanspeak_Beanspeak, pauseTube) {
 	object_init_ex(_1, beanspeak_command_pausetube_ce);
 	ZEPHIR_INIT_VAR(_2);
 	ZVAL_LONG(_2, delay);
+	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 20, tube, _2);
+	zephir_check_call_status();
+	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);
+	zephir_check_call_status();
+	RETURN_THIS();
+
+}
+
+/**
+ * Resume the tube
+ *
+ * <code>
+ * $queue->resumeTube('process-video');
+ * </code>
+ */
+PHP_METHOD(Beanspeak_Beanspeak, resumeTube) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *tube_param = NULL, *response = NULL, *_0, *_1, *_2;
+	zval *tube = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &tube_param);
+
+	if (unlikely(Z_TYPE_P(tube_param) != IS_STRING && Z_TYPE_P(tube_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'tube' must be a string") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+	if (likely(Z_TYPE_P(tube_param) == IS_STRING)) {
+		zephir_get_strval(tube, tube_param);
+	} else {
+		ZEPHIR_INIT_VAR(tube);
+		ZVAL_EMPTY_STRING(tube);
+	}
+
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("dispatcher"), PH_NOISY_CC);
+	ZEPHIR_INIT_VAR(_1);
+	object_init_ex(_1, beanspeak_command_pausetube_ce);
+	ZEPHIR_INIT_VAR(_2);
+	ZVAL_LONG(_2, 0);
 	ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL, 20, tube, _2);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&response, _0, "dispatch", NULL, 0, _1);
