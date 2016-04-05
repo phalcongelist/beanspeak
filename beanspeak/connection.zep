@@ -24,6 +24,20 @@ use Beanspeak\Connection\ConnectionInterface;
  * Beanspeak\Connection
  *
  * Represents a connection to a beanstalkd instance.
+ *
+ * <code>
+ * // Initialization with custom params
+ * use Beanspeak\Connection;
+ *
+ * // each connection parameter is optional
+ * $connection = new Connection([
+ *     'host'       => '127.0.0.1', // server host
+ *     'port'       => 11300,       // server port
+ *     'timeout'    => 60,          // connection timeout
+ *     'persistent' => true,        // is persistent connection?
+ *     'wretries'   => 8,           // write retries
+ * ]);
+ * </code>
  */
 class Connection implements ConnectionInterface
 {
@@ -55,15 +69,15 @@ class Connection implements ConnectionInterface
             let options["persistent"] = false;
         }
 
-        if !isset options["write_retries"] {
-            let options["write_retries"] = 8;
+        if !isset options["wretries"] {
+            let options["wretries"] = 8;
         }
 
-        let options["host"]          = (string) options["host"],
-            options["port"]          = (string) options["port"],
-            options["timeout"]       = (int) options["timeout"],
-            options["write_retries"] = (int) options["write_retries"],
-            options["persistent"]    = (boolean) options["persistent"],
+        let options["host"]       = (string) options["host"],
+            options["port"]       = (string) options["port"],
+            options["timeout"]    = (int) options["timeout"],
+            options["wretries"]   = (int) options["wretries"],
+            options["persistent"] = (boolean) options["persistent"],
 
             this->options = options;
     }
@@ -155,7 +169,7 @@ class Connection implements ConnectionInterface
      */
     public function getWriteRetries() -> int
     {
-        return this->options["write_retries"];
+        return this->options["wretries"];
     }
 
     /**
@@ -178,7 +192,7 @@ class Connection implements ConnectionInterface
         // Performs a connection if none is available
         this->connect();
 
-        let retries = this->options["write_retries"],
+        let retries = this->options["wretries"],
             socket  = this->socket,
             step    = 0,
             fwritec = 0,
