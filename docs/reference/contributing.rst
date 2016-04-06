@@ -51,7 +51,7 @@ Getting Support
 Feel free to ask any question at `Beanspeak issues`_ page.
 
 Related Guides
-^^^^^^^^^^^^^^
+--------------
 .. toctree::
     :maxdepth: 1
 
