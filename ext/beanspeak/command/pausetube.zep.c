@@ -78,7 +78,7 @@ PHP_METHOD(Beanspeak_Command_PauseTube, __construct) {
 
 
 	if (delay > 4294967295) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "The \"delay\" param must less than 4294967295", "beanspeak/command/pausetube.zep", 48);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "The \"delay\" param must be less than 4294967295", "beanspeak/command/pausetube.zep", 48);
 		return;
 	}
 	zephir_update_property_this(this_ptr, SL("tube"), tube TSRMLS_CC);

@@ -87,7 +87,7 @@ PHP_METHOD(Beanspeak_Command_Put, __construct) {
 
 
 	if (priority > 4294967295) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "The \"priority\" param must less than 4294967295", "beanspeak/command/put.zep", 56);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "The \"priority\" param must be less than 4294967295", "beanspeak/command/put.zep", 56);
 		return;
 	}
 	ZEPHIR_CALL_FUNCTION(&_0, "serialize", NULL, 25, data);

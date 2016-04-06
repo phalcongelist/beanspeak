@@ -45,7 +45,7 @@ class PauseTube extends Command implements ParserInterface
     public function __construct(string! tube, int delay = 0)
     {
         if delay > 4294967295 {
-            throw new InvalidArgumentException("The \"delay\" param must less than 4294967295");
+            throw new InvalidArgumentException("The \"delay\" param must be less than 4294967295");
         }
 
         let this->tube  = tube,
