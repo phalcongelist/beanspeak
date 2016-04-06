@@ -1,1 +1,2 @@
 *.w32 -crlf
+*.bat -crlf
