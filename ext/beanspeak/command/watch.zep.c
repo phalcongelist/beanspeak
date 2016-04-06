@@ -16,10 +16,10 @@
 #include "kernel/memory.h"
 #include "kernel/operators.h"
 #include "kernel/exception.h"
+#include "ext/spl/spl_exceptions.h"
 #include "kernel/fcall.h"
 #include "kernel/concat.h"
 #include "kernel/object.h"
-#include "ext/spl/spl_exceptions.h"
 #include "kernel/array.h"
 
 
@@ -47,7 +47,7 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command_Watch) {
 
 /**
  * Beanspeak\Command\Touch constructor
- * @throws \Beanspeak\Command\Exception
+ * @throws \InvalidArgumentException
  */
 PHP_METHOD(Beanspeak_Command_Watch, __construct) {
 
@@ -74,12 +74,12 @@ PHP_METHOD(Beanspeak_Command_Watch, __construct) {
 	ZVAL_LONG(length, zephir_fast_strlen_ev(tube));
 	if (ZEPHIR_GT_LONG(length, 200)) {
 		ZEPHIR_INIT_VAR(_0$$3);
-		object_init_ex(_0$$3, beanspeak_command_exception_ce);
+		object_init_ex(_0$$3, spl_ce_InvalidArgumentException);
 		ZEPHIR_INIT_VAR(_1$$3);
 		ZEPHIR_CONCAT_SV(_1$$3, "The \"tube\" param must be less than 200 bytes. Got: ", length);
-		ZEPHIR_CALL_METHOD(NULL, _0$$3, "__construct", NULL, 1, _1$$3);
+		ZEPHIR_CALL_METHOD(NULL, _0$$3, "__construct", NULL, 22, _1$$3);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_0$$3, "beanspeak/command/watch.zep", 50 TSRMLS_CC);
+		zephir_throw_exception_debug(_0$$3, "beanspeak/command/watch.zep", 51 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -143,7 +143,7 @@ PHP_METHOD(Beanspeak_Command_Watch, parseResponse) {
 		ZVAL_STRING(_0$$3, "#^WATCHING (\\d+)$#", ZEPHIR_TEMP_PARAM_COPY);
 		ZEPHIR_INIT_VAR(_1$$3);
 		ZVAL_STRING(_1$$3, "$1", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_FUNCTION(&count$$3, "preg_replace", NULL, 22, _0$$3, _1$$3, line);
+		ZEPHIR_CALL_FUNCTION(&count$$3, "preg_replace", NULL, 23, _0$$3, _1$$3, line);
 		zephir_check_temp_parameter(_0$$3);
 		zephir_check_temp_parameter(_1$$3);
 		zephir_check_call_status();
@@ -163,7 +163,7 @@ PHP_METHOD(Beanspeak_Command_Watch, parseResponse) {
 	ZEPHIR_CONCAT_SV(_4, "Unhandled response: ", line);
 	ZEPHIR_CALL_METHOD(NULL, _3, "__construct", NULL, 1, _4);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(_3, "beanspeak/command/watch.zep", 89 TSRMLS_CC);
+	zephir_throw_exception_debug(_3, "beanspeak/command/watch.zep", 90 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 

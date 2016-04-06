@@ -18,6 +18,7 @@
 #include "kernel/operators.h"
 #include "kernel/concat.h"
 #include "kernel/exception.h"
+#include "ext/spl/spl_exceptions.h"
 #include "kernel/string.h"
 #include "kernel/array.h"
 
@@ -51,7 +52,7 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command_Peek) {
 
 /**
  * Beanspeak\Command\Peek constructor
- * @throws \Beanspeak\Command\Exception
+ * @throws \InvalidArgumentException
  */
 PHP_METHOD(Beanspeak_Command_Peek, __construct) {
 
@@ -87,25 +88,25 @@ PHP_METHOD(Beanspeak_Command_Peek, __construct) {
 			zephir_update_property_this(this_ptr, SL("commandSuffix"), _4$$5 TSRMLS_CC);
 		} else {
 			ZEPHIR_INIT_VAR(_5$$6);
-			object_init_ex(_5$$6, beanspeak_command_exception_ce);
+			object_init_ex(_5$$6, spl_ce_InvalidArgumentException);
 			ZEPHIR_INIT_VAR(_6$$6);
 			ZEPHIR_CONCAT_SV(_6$$6, "Invalid peek subject: ", subject);
-			ZEPHIR_CALL_METHOD(NULL, _5$$6, "__construct", NULL, 1, _6$$6);
+			ZEPHIR_CALL_METHOD(NULL, _5$$6, "__construct", NULL, 22, _6$$6);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_5$$6, "beanspeak/command/peek.zep", 55 TSRMLS_CC);
+			zephir_throw_exception_debug(_5$$6, "beanspeak/command/peek.zep", 56 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
 	} else {
 		ZEPHIR_INIT_VAR(_7$$7);
-		object_init_ex(_7$$7, beanspeak_command_exception_ce);
+		object_init_ex(_7$$7, spl_ce_InvalidArgumentException);
 		ZEPHIR_INIT_VAR(_8$$7);
 		zephir_gettype(_8$$7, subject TSRMLS_CC);
 		ZEPHIR_INIT_VAR(_9$$7);
 		ZEPHIR_CONCAT_SV(_9$$7, "Peek subject must be either integer or string. Got: ", _8$$7);
-		ZEPHIR_CALL_METHOD(NULL, _7$$7, "__construct", NULL, 1, _9$$7);
+		ZEPHIR_CALL_METHOD(NULL, _7$$7, "__construct", NULL, 22, _9$$7);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_7$$7, "beanspeak/command/peek.zep", 58 TSRMLS_CC);
+		zephir_throw_exception_debug(_7$$7, "beanspeak/command/peek.zep", 59 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -191,7 +192,7 @@ PHP_METHOD(Beanspeak_Command_Peek, parseResponse) {
 		ZVAL_STRING(_0$$3, "#^FOUND (\\d+) \\d+$#", ZEPHIR_TEMP_PARAM_COPY);
 		ZEPHIR_INIT_VAR(_1$$3);
 		ZVAL_STRING(_1$$3, "$1", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_FUNCTION(&id$$3, "preg_replace", NULL, 22, _0$$3, _1$$3, line);
+		ZEPHIR_CALL_FUNCTION(&id$$3, "preg_replace", NULL, 23, _0$$3, _1$$3, line);
 		zephir_check_temp_parameter(_0$$3);
 		zephir_check_temp_parameter(_1$$3);
 		zephir_check_call_status();
@@ -218,7 +219,7 @@ PHP_METHOD(Beanspeak_Command_Peek, parseResponse) {
 			ZEPHIR_CONCAT_VSVS(_8$$5, _5$$5, ": Job ID #", _7$$5, " does not exist");
 			ZEPHIR_CALL_METHOD(NULL, _4$$5, "__construct", NULL, 1, _8$$5);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_4$$5, "beanspeak/command/peek.zep", 115 TSRMLS_CC);
+			zephir_throw_exception_debug(_4$$5, "beanspeak/command/peek.zep", 116 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		} else {
@@ -231,7 +232,7 @@ PHP_METHOD(Beanspeak_Command_Peek, parseResponse) {
 			ZEPHIR_CONCAT_VSVS(_12$$6, _10$$6, ": There are no jobs in the '", _11$$6, "' status");
 			ZEPHIR_CALL_METHOD(NULL, _9$$6, "__construct", NULL, 1, _12$$6);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_9$$6, "beanspeak/command/peek.zep", 117 TSRMLS_CC);
+			zephir_throw_exception_debug(_9$$6, "beanspeak/command/peek.zep", 118 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -242,7 +243,7 @@ PHP_METHOD(Beanspeak_Command_Peek, parseResponse) {
 	ZEPHIR_CONCAT_SV(_14, "Unhandled response: ", line);
 	ZEPHIR_CALL_METHOD(NULL, _13, "__construct", NULL, 1, _14);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(_13, "beanspeak/command/peek.zep", 121 TSRMLS_CC);
+	zephir_throw_exception_debug(_13, "beanspeak/command/peek.zep", 122 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 

@@ -13,9 +13,9 @@
 
 #include "kernel/main.h"
 #include "kernel/exception.h"
+#include "ext/spl/spl_exceptions.h"
 #include "kernel/object.h"
 #include "kernel/memory.h"
-#include "ext/spl/spl_exceptions.h"
 #include "kernel/operators.h"
 #include "kernel/concat.h"
 #include "kernel/string.h"
@@ -49,8 +49,7 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command_PauseTube) {
 
 /**
  * Beanspeak\Command\PauseTube constructor
- * @link https://github.com/kr/beanstalkd/pull/216
- * @throws \Beanspeak\Command\Exception
+ * @throws \InvalidArgumentException
  */
 PHP_METHOD(Beanspeak_Command_PauseTube, __construct) {
 
@@ -79,7 +78,7 @@ PHP_METHOD(Beanspeak_Command_PauseTube, __construct) {
 
 
 	if (delay > 4294967295) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_command_exception_ce, "The \"delay\" param must less than 4294967295", "beanspeak/command/pausetube.zep", 48);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "The \"delay\" param must be less than 4294967295", "beanspeak/command/pausetube.zep", 48);
 		return;
 	}
 	zephir_update_property_this(this_ptr, SL("tube"), tube TSRMLS_CC);

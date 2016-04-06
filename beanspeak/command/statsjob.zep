@@ -18,6 +18,7 @@
 namespace Beanspeak\Command;
 
 use Beanspeak\Command;
+use InvalidArgumentException;
 use Beanspeak\Job\JobInterface;
 use Beanspeak\Response\Parser\Yaml;
 use Beanspeak\Response\Parser\ParserInterface;
@@ -40,7 +41,7 @@ class StatsJob extends Command
 
     /**
      * Beanspeak\Command\StatsJob constructor
-     * @throws \Beanspeak\Command\Exception
+     * @throws \InvalidArgumentException
      */
     public function __construct(var job)
     {
@@ -49,7 +50,7 @@ class StatsJob extends Command
         } elseif typeof job == "int" || ctype_digit(job) {
             let this->id = (int) job;
         } else {
-            throw new Exception("The \"job\" param must be either instanceof JobInterface or integer. Got: " . typeof job);
+            throw new InvalidArgumentException("The \"job\" param must be either instanceof JobInterface or integer. Got: " . typeof job);
         }
     }
 

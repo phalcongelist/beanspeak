@@ -5,8 +5,6 @@ Beanspeak is designed as a C-extension for PHP and aims to be the most complete,
 stable and fastest solution for PHP world. It's simple, lightweight, and
 completely specialized for job queueing.
 
-**Work in progress. Do not use at production**
-
 Supported PHP versions: **5.5**, **5.6**, **7**
 
 The `beanstalkd` up to the latest version 1.10 is supported.

@@ -17,6 +17,7 @@
 #include "kernel/fcall.h"
 #include "kernel/operators.h"
 #include "kernel/exception.h"
+#include "ext/spl/spl_exceptions.h"
 #include "kernel/concat.h"
 #include "kernel/string.h"
 
@@ -48,7 +49,7 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command_Bury) {
 
 /**
  * Beanspeak\Command\Bury constructor
- * @throws \Beanspeak\Command\Exception
+ * @throws \InvalidArgumentException
  */
 PHP_METHOD(Beanspeak_Command_Bury, __construct) {
 
@@ -82,14 +83,14 @@ PHP_METHOD(Beanspeak_Command_Bury, __construct) {
 		zephir_update_property_this(this_ptr, SL("id"), _4$$4 TSRMLS_CC);
 	} else {
 		ZEPHIR_INIT_VAR(_5$$5);
-		object_init_ex(_5$$5, beanspeak_command_exception_ce);
+		object_init_ex(_5$$5, spl_ce_InvalidArgumentException);
 		ZEPHIR_INIT_VAR(_6$$5);
 		zephir_gettype(_6$$5, job TSRMLS_CC);
 		ZEPHIR_INIT_VAR(_7$$5);
 		ZEPHIR_CONCAT_SV(_7$$5, "The \"job\" param must be either instanceof JobInterface or integer. Got: ", _6$$5);
-		ZEPHIR_CALL_METHOD(NULL, _5$$5, "__construct", NULL, 1, _7$$5);
+		ZEPHIR_CALL_METHOD(NULL, _5$$5, "__construct", NULL, 22, _7$$5);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_5$$5, "beanspeak/command/bury.zep", 53 TSRMLS_CC);
+		zephir_throw_exception_debug(_5$$5, "beanspeak/command/bury.zep", 54 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -166,7 +167,7 @@ PHP_METHOD(Beanspeak_Command_Bury, parseResponse) {
 		ZEPHIR_CONCAT_VSVS(_4$$4, _2$$4, ": Job ID #", _3$$4, " is not reserved or does not exist");
 		ZEPHIR_CALL_METHOD(NULL, _1$$4, "__construct", NULL, 1, _4$$4);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_1$$4, "beanspeak/command/bury.zep", 86 TSRMLS_CC);
+		zephir_throw_exception_debug(_1$$4, "beanspeak/command/bury.zep", 87 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -176,7 +177,7 @@ PHP_METHOD(Beanspeak_Command_Bury, parseResponse) {
 	ZEPHIR_CONCAT_SV(_6, "Unhandled response: ", line);
 	ZEPHIR_CALL_METHOD(NULL, _5, "__construct", NULL, 1, _6);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(_5, "beanspeak/command/bury.zep", 89 TSRMLS_CC);
+	zephir_throw_exception_debug(_5, "beanspeak/command/bury.zep", 90 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 

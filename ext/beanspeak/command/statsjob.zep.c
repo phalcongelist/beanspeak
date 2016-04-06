@@ -17,6 +17,7 @@
 #include "kernel/fcall.h"
 #include "kernel/operators.h"
 #include "kernel/exception.h"
+#include "ext/spl/spl_exceptions.h"
 #include "kernel/concat.h"
 
 
@@ -44,7 +45,7 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command_StatsJob) {
 
 /**
  * Beanspeak\Command\StatsJob constructor
- * @throws \Beanspeak\Command\Exception
+ * @throws \InvalidArgumentException
  */
 PHP_METHOD(Beanspeak_Command_StatsJob, __construct) {
 
@@ -77,14 +78,14 @@ PHP_METHOD(Beanspeak_Command_StatsJob, __construct) {
 		zephir_update_property_this(this_ptr, SL("id"), _4$$4 TSRMLS_CC);
 	} else {
 		ZEPHIR_INIT_VAR(_5$$5);
-		object_init_ex(_5$$5, beanspeak_command_exception_ce);
+		object_init_ex(_5$$5, spl_ce_InvalidArgumentException);
 		ZEPHIR_INIT_VAR(_6$$5);
 		zephir_gettype(_6$$5, job TSRMLS_CC);
 		ZEPHIR_INIT_VAR(_7$$5);
 		ZEPHIR_CONCAT_SV(_7$$5, "The \"job\" param must be either instanceof JobInterface or integer. Got: ", _6$$5);
-		ZEPHIR_CALL_METHOD(NULL, _5$$5, "__construct", NULL, 1, _7$$5);
+		ZEPHIR_CALL_METHOD(NULL, _5$$5, "__construct", NULL, 22, _7$$5);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_5$$5, "beanspeak/command/statsjob.zep", 52 TSRMLS_CC);
+		zephir_throw_exception_debug(_5$$5, "beanspeak/command/statsjob.zep", 53 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -130,7 +131,7 @@ PHP_METHOD(Beanspeak_Command_StatsJob, getResponseParser) {
 	object_init_ex(return_value, beanspeak_response_parser_yaml_ce);
 	ZEPHIR_INIT_VAR(_0);
 	ZVAL_STRING(_0, "dict", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 23, _0);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 24, _0);
 	zephir_check_temp_parameter(_0);
 	zephir_check_call_status();
 	RETURN_MM();

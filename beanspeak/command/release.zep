@@ -18,6 +18,7 @@
 namespace Beanspeak\Command;
 
 use Beanspeak\Command;
+use InvalidArgumentException;
 use Beanspeak\Job\JobInterface;
 use Beanspeak\Response\ResponseInterface;
 use Beanspeak\Response\Parser\ParserInterface;
@@ -43,7 +44,7 @@ class Release extends Command implements ParserInterface
 
     /**
      * Beanspeak\Command\Release constructor
-     * @throws \Beanspeak\Command\Exception
+     * @throws \InvalidArgumentException
      */
     public function __construct(var job, int priority = 1024, int delay = 0)
     {
@@ -52,7 +53,7 @@ class Release extends Command implements ParserInterface
         } elseif typeof job == "int" || ctype_digit(job) {
             let this->id = (int) job;
         } else {
-            throw new Exception("The \"job\" param must be either instanceof JobInterface or integer. Got: " . typeof job);
+            throw new InvalidArgumentException("The \"job\" param must be either instanceof JobInterface or integer. Got: " . typeof job);
         }
 
         let this->priority = priority,

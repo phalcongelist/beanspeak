@@ -18,6 +18,7 @@
 namespace Beanspeak\Command;
 
 use Beanspeak\Command;
+use InvalidArgumentException;
 use Beanspeak\Response\ResponseInterface;
 use Beanspeak\Response\Parser\ParserInterface;
 
@@ -47,12 +48,12 @@ class Put extends Command implements ParserInterface
 
     /**
      * Beanspeak\Command\Put constructor
-     * @throws \Beanspeak\Command\Exception
+     * @throws \InvalidArgumentException
      */
     public function __construct(var data, int priority = 1024, int delay = 0, int ttr = 86400)
     {
         if priority > 4294967295 {
-            throw new Exception("The \"priority\" param must less than 4294967295");
+            throw new InvalidArgumentException("The \"priority\" param must be less than 4294967295");
         }
 
         // Data is automatically serialized before be sent to the server
