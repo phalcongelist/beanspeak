@@ -7,6 +7,8 @@ PHP_METHOD(Beanspeak_Connection, __construct);
 PHP_METHOD(Beanspeak_Connection, isConnected);
 PHP_METHOD(Beanspeak_Connection, connect);
 PHP_METHOD(Beanspeak_Connection, disconnect);
+PHP_METHOD(Beanspeak_Connection, getId);
+PHP_METHOD(Beanspeak_Connection, getConnectedAt);
 PHP_METHOD(Beanspeak_Connection, getHost);
 PHP_METHOD(Beanspeak_Connection, getPort);
 PHP_METHOD(Beanspeak_Connection, getConnectTimeout);
@@ -38,6 +40,8 @@ ZEPHIR_INIT_FUNCS(beanspeak_connection_method_entry) {
 	PHP_ME(Beanspeak_Connection, isConnected, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Connection, connect, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Connection, disconnect, NULL, ZEND_ACC_PUBLIC)
+	PHP_ME(Beanspeak_Connection, getId, NULL, ZEND_ACC_PUBLIC)
+	PHP_ME(Beanspeak_Connection, getConnectedAt, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Connection, getHost, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Connection, getPort, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Connection, getConnectTimeout, NULL, ZEND_ACC_PUBLIC)

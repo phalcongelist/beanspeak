@@ -18,6 +18,8 @@ ZEND_END_ARG_INFO()
 ZEPHIR_INIT_FUNCS(beanspeak_connection_connectioninterface_method_entry) {
 	PHP_ABSTRACT_ME(Beanspeak_Connection_ConnectionInterface, connect, NULL)
 	PHP_ABSTRACT_ME(Beanspeak_Connection_ConnectionInterface, disconnect, NULL)
+	PHP_ABSTRACT_ME(Beanspeak_Connection_ConnectionInterface, getId, NULL)
+	PHP_ABSTRACT_ME(Beanspeak_Connection_ConnectionInterface, getConnectedAt, NULL)
 	PHP_ABSTRACT_ME(Beanspeak_Connection_ConnectionInterface, getHost, NULL)
 	PHP_ABSTRACT_ME(Beanspeak_Connection_ConnectionInterface, getPort, NULL)
 	PHP_ABSTRACT_ME(Beanspeak_Connection_ConnectionInterface, getConnectTimeout, NULL)

@@ -42,6 +42,8 @@ use Beanspeak\Connection\ConnectionInterface;
 class Connection implements ConnectionInterface
 {
     private socket;
+    private id = null;
+    private connectedAt = null;
 
     /**
      * Connection options
@@ -98,7 +100,7 @@ class Connection implements ConnectionInterface
     public function connect() -> resource
     {
         if !this->isConnected() {
-            var options, socket, $function;
+            var options, socket, $function, connectedAt;
 
             let options = this->options;
 
@@ -108,7 +110,8 @@ class Connection implements ConnectionInterface
                 let $function = "fsockopen";
             }
 
-            let socket = {$function}(options["host"], options["port"], null, null, options["timeout"]);
+            let socket      = {$function}(options["host"], options["port"], null, null, options["timeout"]),
+                connectedAt = time();
 
             if typeof socket != "resource" {
                 throw new Exception("Can't connect to Beanstalk server.");
@@ -116,7 +119,9 @@ class Connection implements ConnectionInterface
 
             stream_set_timeout(socket, -1, 0);
 
-            let this->socket = socket;
+            let this->socket      = socket,
+                this->id          = md5(uniqid(connectedAt)),
+                this->connectedAt = connectedAt;
         }
 
         return this->socket;
@@ -135,9 +140,28 @@ class Connection implements ConnectionInterface
         }
 
         fclose(socket);
-        let this->socket = null;
+
+        let this->socket      = null,
+            this->id          = null,
+            this->connectedAt = null;
 
         return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getId() -> string
+    {
+        return this->id;
+    }
+
+    /**
+     * Returns the connected time
+     */
+    public function getConnectedAt() -> int
+    {
+        return this->connectedAt;
     }
 
     /**
