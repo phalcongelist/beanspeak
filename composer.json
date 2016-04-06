@@ -8,7 +8,7 @@
       "beanspeak",
       "queue",
       "extension",
-      "job"
+      ""
     ],
     "homepage": "https://github.com/phalcongelist/beanspeak",
     "license": "BSD-3-Clause",
@@ -27,7 +27,7 @@
         "source": "https://github.com/phalcongelist/beanspea"
     },
     "require": {
-        "php": ">=5.5.0 <8.0",
+        "php": ">=5.4.0 <8.0",
         "ext-ctype" : "*",
         "ext-SPL" : "*"
     },
