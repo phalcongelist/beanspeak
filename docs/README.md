@@ -1,3 +1,3 @@
-# Beanspeak documentation
+# Beanspeak Docs
 
 Beanspeak documentation on readthedocs.org
