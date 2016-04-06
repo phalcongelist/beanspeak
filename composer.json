@@ -8,7 +8,7 @@
       "beanspeak",
       "queue",
       "extension",
-      ""
+      "job"
     ],
     "homepage": "https://github.com/phalcongelist/beanspeak",
     "license": "BSD-3-Clause",
@@ -35,7 +35,7 @@
         "codeception/codeception": ">=2.2.0-beta"
     },
     "suggest": {
-        "ext-yaml" : "Best way to parse beanstalkd yaml"
+        "ext-yaml" : "Best way to parse beanstalkd YAML-response"
     },
     "minimum-stability": "dev"
 }
