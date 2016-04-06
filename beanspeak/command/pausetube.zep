@@ -18,6 +18,7 @@
 namespace Beanspeak\Command;
 
 use Beanspeak\Command;
+use InvalidArgumentException;
 use Beanspeak\Response\ResponseInterface;
 use Beanspeak\Response\Parser\ParserInterface;
 
@@ -39,13 +40,12 @@ class PauseTube extends Command implements ParserInterface
 
     /**
      * Beanspeak\Command\PauseTube constructor
-     * @link https://github.com/kr/beanstalkd/pull/216
-     * @throws \Beanspeak\Command\Exception
+     * @throws \InvalidArgumentException
      */
     public function __construct(string! tube, int delay = 0)
     {
         if delay > 4294967295 {
-            throw new Exception("The \"delay\" param must less than 4294967295");
+            throw new InvalidArgumentException("The \"delay\" param must less than 4294967295");
         }
 
         let this->tube  = tube,

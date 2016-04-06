@@ -18,6 +18,7 @@
 namespace Beanspeak\Command;
 
 use Beanspeak\Command;
+use InvalidArgumentException;
 use Beanspeak\Response\ResponseInterface;
 use Beanspeak\Response\Parser\ParserInterface;
 
@@ -38,7 +39,7 @@ class Watch extends Command implements ParserInterface
 
     /**
      * Beanspeak\Command\Touch constructor
-     * @throws \Beanspeak\Command\Exception
+     * @throws \InvalidArgumentException
      */
     public function __construct(string! tube)
     {
@@ -47,7 +48,7 @@ class Watch extends Command implements ParserInterface
         let length = strlen(tube);
 
         if length > 200 {
-            throw new Exception("The \"tube\" param must be less than 200 bytes. Got: " . length);
+            throw new InvalidArgumentException("The \"tube\" param must be less than 200 bytes. Got: " . length);
         }
 
         let this->tube = tube;

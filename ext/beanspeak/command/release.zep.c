@@ -17,6 +17,7 @@
 #include "kernel/fcall.h"
 #include "kernel/operators.h"
 #include "kernel/exception.h"
+#include "ext/spl/spl_exceptions.h"
 #include "kernel/concat.h"
 #include "kernel/string.h"
 
@@ -51,7 +52,7 @@ ZEPHIR_INIT_CLASS(Beanspeak_Command_Release) {
 
 /**
  * Beanspeak\Command\Release constructor
- * @throws \Beanspeak\Command\Exception
+ * @throws \InvalidArgumentException
  */
 PHP_METHOD(Beanspeak_Command_Release, __construct) {
 
@@ -94,14 +95,14 @@ PHP_METHOD(Beanspeak_Command_Release, __construct) {
 		zephir_update_property_this(this_ptr, SL("id"), _4$$4 TSRMLS_CC);
 	} else {
 		ZEPHIR_INIT_VAR(_5$$5);
-		object_init_ex(_5$$5, beanspeak_command_exception_ce);
+		object_init_ex(_5$$5, spl_ce_InvalidArgumentException);
 		ZEPHIR_INIT_VAR(_6$$5);
 		zephir_gettype(_6$$5, job TSRMLS_CC);
 		ZEPHIR_INIT_VAR(_7$$5);
 		ZEPHIR_CONCAT_SV(_7$$5, "The \"job\" param must be either instanceof JobInterface or integer. Got: ", _6$$5);
-		ZEPHIR_CALL_METHOD(NULL, _5$$5, "__construct", NULL, 1, _7$$5);
+		ZEPHIR_CALL_METHOD(NULL, _5$$5, "__construct", NULL, 22, _7$$5);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_5$$5, "beanspeak/command/release.zep", 55 TSRMLS_CC);
+		zephir_throw_exception_debug(_5$$5, "beanspeak/command/release.zep", 56 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -183,7 +184,7 @@ PHP_METHOD(Beanspeak_Command_Release, parseResponse) {
 		ZEPHIR_CONCAT_VSV(_5$$4, _2$$4, ": out of memory trying to grow data structure by release Job ID #", _4$$4);
 		ZEPHIR_CALL_METHOD(NULL, _1$$4, "__construct", NULL, 1, _5$$4);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_1$$4, "beanspeak/command/release.zep", 89 TSRMLS_CC);
+		zephir_throw_exception_debug(_1$$4, "beanspeak/command/release.zep", 90 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -197,7 +198,7 @@ PHP_METHOD(Beanspeak_Command_Release, parseResponse) {
 		ZEPHIR_CONCAT_VSVS(_9$$5, _7$$5, ": Job ID #", _8$$5, " doesn't exist or is not reserved by client");
 		ZEPHIR_CALL_METHOD(NULL, _6$$5, "__construct", NULL, 1, _9$$5);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_6$$5, "beanspeak/command/release.zep", 93 TSRMLS_CC);
+		zephir_throw_exception_debug(_6$$5, "beanspeak/command/release.zep", 94 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -207,7 +208,7 @@ PHP_METHOD(Beanspeak_Command_Release, parseResponse) {
 	ZEPHIR_CONCAT_SV(_11, "Unhandled response: ", line);
 	ZEPHIR_CALL_METHOD(NULL, _10, "__construct", NULL, 1, _11);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(_10, "beanspeak/command/release.zep", 96 TSRMLS_CC);
+	zephir_throw_exception_debug(_10, "beanspeak/command/release.zep", 97 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 

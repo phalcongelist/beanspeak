@@ -18,6 +18,7 @@
 namespace Beanspeak\Command;
 
 use Beanspeak\Command;
+use InvalidArgumentException;
 use Beanspeak\Response\ResponseInterface;
 use Beanspeak\Response\Parser\ParserInterface;
 
@@ -42,7 +43,7 @@ class Peek extends Command implements ParserInterface
 
     /**
      * Beanspeak\Command\Peek constructor
-     * @throws \Beanspeak\Command\Exception
+     * @throws \InvalidArgumentException
      */
     public function __construct(var subject)
     {
@@ -52,10 +53,10 @@ class Peek extends Command implements ParserInterface
             if subject == "ready" || subject == "delayed" || subject == "buried" {
                 let this->commandSuffix = "-" . subject;
             } else {
-                throw new Exception("Invalid peek subject: " . subject);
+                throw new InvalidArgumentException("Invalid peek subject: " . subject);
             }
         } else {
-            throw new Exception("Peek subject must be either integer or string. Got: " . typeof subject);
+            throw new InvalidArgumentException("Peek subject must be either integer or string. Got: " . typeof subject);
         }
     }
 
