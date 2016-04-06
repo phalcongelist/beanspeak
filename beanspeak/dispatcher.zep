@@ -38,14 +38,20 @@ class Dispatcher implements DispatcherInterface, ConnectionAwareInterface
 
     /**
      * Last used command
-     * @var string
+     * @var null|string
      */
     protected lastCommand = null;
 
-    protected statusMessages = [];
-
+    /**
+     * Response data from last used command
+     * @var null|string
+     */
     protected responseData = null;
 
+    /**
+     * Response data from last used command
+     * @var null|string
+     */
     protected responseLine = null;
 
     /**

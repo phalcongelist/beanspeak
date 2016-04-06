@@ -36,17 +36,21 @@ ZEPHIR_INIT_CLASS(Beanspeak_Dispatcher) {
 
 	/**
 	 * Last used command
-	 * @var string
+	 * @var null|string
 	 */
 	zend_declare_property_null(beanspeak_dispatcher_ce, SL("lastCommand"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_declare_property_null(beanspeak_dispatcher_ce, SL("statusMessages"), ZEND_ACC_PROTECTED TSRMLS_CC);
-
+	/**
+	 * Response data from last used command
+	 * @var null|string
+	 */
 	zend_declare_property_null(beanspeak_dispatcher_ce, SL("responseData"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
+	/**
+	 * Response data from last used command
+	 * @var null|string
+	 */
 	zend_declare_property_null(beanspeak_dispatcher_ce, SL("responseLine"), ZEND_ACC_PROTECTED TSRMLS_CC);
-
-	beanspeak_dispatcher_ce->create_object = zephir_init_properties_Beanspeak_Dispatcher;
 
 	zend_class_implements(beanspeak_dispatcher_ce TSRMLS_CC, 1, beanspeak_dispatcher_dispatcherinterface_ce);
 	zend_class_implements(beanspeak_dispatcher_ce TSRMLS_CC, 1, beanspeak_connection_connectionawareinterface_ce);
@@ -157,7 +161,7 @@ PHP_METHOD(Beanspeak_Dispatcher, dispatch) {
 			zephir_check_call_status();
 			ZEPHIR_CALL_METHOD(NULL, _0$$5, "__construct", NULL, 1, _1$$5, _2$$5, e);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_0$$5, "beanspeak/dispatcher.zep", 94 TSRMLS_CC);
+			zephir_throw_exception_debug(_0$$5, "beanspeak/dispatcher.zep", 100 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
@@ -321,34 +325,13 @@ void zep_Beanspeak_Dispatcher_parseData(int ht, zval *return_value, zval **retur
 			ZEPHIR_CONCAT_VSVS(_9$$4, _8$$4, ": expected 2 bytes of CRLF after ", dataLength, " bytes of data");
 			ZEPHIR_CALL_METHOD(NULL, _6$$4, "__construct", NULL, 1, _9$$4);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(_6$$4, "beanspeak/dispatcher.zep", 171 TSRMLS_CC);
+			zephir_throw_exception_debug(_6$$4, "beanspeak/dispatcher.zep", 177 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
 	}
 	zephir_update_property_this(this_ptr, SL("responseData"), data TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
-
-}
-
-static zend_object_value zephir_init_properties_Beanspeak_Dispatcher(zend_class_entry *class_type TSRMLS_DC) {
-
-		zval *_0, *_1$$3;
-
-		ZEPHIR_MM_GROW();
-	
-	{
-		zval *this_ptr = NULL;
-		ZEPHIR_CREATE_OBJECT(this_ptr, class_type);
-		_0 = zephir_fetch_nproperty_this(this_ptr, SL("statusMessages"), PH_NOISY_CC);
-		if (Z_TYPE_P(_0) == IS_NULL) {
-			ZEPHIR_INIT_VAR(_1$$3);
-			array_init(_1$$3);
-			zephir_update_property_this(this_ptr, SL("statusMessages"), _1$$3 TSRMLS_CC);
-		}
-		ZEPHIR_MM_RESTORE();
-		return Z_OBJVAL_P(this_ptr);
-	}
 
 }
 
