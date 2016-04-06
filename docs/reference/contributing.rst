@@ -26,7 +26,7 @@ Bug Report Checklist
   the development it would be difficult provide corrections and solutions.
 * Be sure that information such as OS, Beanspeak version and PHP version are
   part of the bug report. You can get Beanspeak version by using
-  `php --ri beanspeak` command.
+  :code:`php --ri beanspeak` command.
 * If you're submitting a Segmentation Fault error, we would require a backtrace,
   please see :doc:`Generating a Backtrace <gdb>`.
 
