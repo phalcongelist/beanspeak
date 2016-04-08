@@ -26,21 +26,6 @@ use Beanspeak\Response\ResponseInterface;
  */
 class Yaml implements ParserInterface
 {
-    private mode;
-
-    /**
-     * Beanspeak\Response\Parser\Yaml constructor.
-     * @throws \InvalidArgumentException
-     */
-    public function __construct(string! mode)
-    {
-        if mode != "list" && mode != "dict" {
-            throw new InvalidArgumentException("Parser mode must be either \"list\" or \"dict\". Got: " . mode);
-        }
-
-        let this->mode = mode;
-    }
-
     /**
      * Fetch a YAML payload from the Beanstalkd server
      * @throws \Beanspeak\Response\Parser\Exception
@@ -57,12 +42,12 @@ class Yaml implements ParserInterface
             throw new Exception("Unhandled response: " . line);
         }
 
-        let response = this->yamlParse(this->mode, data);
+        let response = this->yamlParse(data);
 
         return new ArrayResponse("OK", response);
     }
 
-    internal function yamlParse(string! mode, string data = null) -> array
+    internal function yamlParse(string data = null) -> array
     {
         var lines, values, value, response = [];
 
@@ -72,16 +57,6 @@ class Yaml implements ParserInterface
 
         if function_exists("yaml_parse") {
             let response = yaml_parse(data);
-
-            if mode == "list" {
-                var key, value, tmp = [];
-
-                for key, value in response {
-                    let tmp[] = key . ": " . value;
-                }
-
-                let response = tmp;
-            }
 
             return response;
         }
@@ -96,10 +71,6 @@ class Yaml implements ParserInterface
         if typeof lines != "array" || empty(lines) {
             trigger_error("YAML parse error. Raw data: " . print_r(lines, true), E_USER_WARNING);
             return [];
-        }
-
-        if mode == "list" {
-            return lines;
         }
 
         for values in lines {
