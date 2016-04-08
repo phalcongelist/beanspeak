@@ -106,6 +106,10 @@ PHP_METHOD(Beanspeak_Command_Release, __construct) {
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
+	if (priority > 4294967295) {
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "The \"priority\" param must be less than 4294967295", "beanspeak/command/release.zep", 60);
+		return;
+	}
 	ZEPHIR_INIT_ZVAL_NREF(_8);
 	ZVAL_LONG(_8, priority);
 	zephir_update_property_this(this_ptr, SL("priority"), _8 TSRMLS_CC);
@@ -184,7 +188,7 @@ PHP_METHOD(Beanspeak_Command_Release, parseResponse) {
 		ZEPHIR_CONCAT_VSV(_5$$4, _2$$4, ": out of memory trying to grow data structure by release Job ID #", _4$$4);
 		ZEPHIR_CALL_METHOD(NULL, _1$$4, "__construct", NULL, 1, _5$$4);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_1$$4, "beanspeak/command/release.zep", 90 TSRMLS_CC);
+		zephir_throw_exception_debug(_1$$4, "beanspeak/command/release.zep", 94 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -198,7 +202,7 @@ PHP_METHOD(Beanspeak_Command_Release, parseResponse) {
 		ZEPHIR_CONCAT_VSVS(_9$$5, _7$$5, ": Job ID #", _8$$5, " doesn't exist or is not reserved by client");
 		ZEPHIR_CALL_METHOD(NULL, _6$$5, "__construct", NULL, 1, _9$$5);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(_6$$5, "beanspeak/command/release.zep", 94 TSRMLS_CC);
+		zephir_throw_exception_debug(_6$$5, "beanspeak/command/release.zep", 98 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -208,7 +212,7 @@ PHP_METHOD(Beanspeak_Command_Release, parseResponse) {
 	ZEPHIR_CONCAT_SV(_11, "Unhandled response: ", line);
 	ZEPHIR_CALL_METHOD(NULL, _10, "__construct", NULL, 1, _11);
 	zephir_check_call_status();
-	zephir_throw_exception_debug(_10, "beanspeak/command/release.zep", 97 TSRMLS_CC);
+	zephir_throw_exception_debug(_10, "beanspeak/command/release.zep", 101 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 
