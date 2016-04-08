@@ -56,6 +56,10 @@ class Release extends Command implements ParserInterface
             throw new InvalidArgumentException("The \"job\" param must be either instanceof JobInterface or integer. Got: " . typeof job);
         }
 
+        if priority > 4294967295 {
+            throw new InvalidArgumentException("The \"priority\" param must be less than 4294967295");
+        }
+
         let this->priority = priority,
             this->delay    = delay;
     }
