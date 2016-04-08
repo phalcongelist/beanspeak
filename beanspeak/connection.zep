@@ -17,6 +17,7 @@
 
 namespace Beanspeak;
 
+use RuntimeException;
 use Beanspeak\Connection\Exception;
 use Beanspeak\Connection\ConnectionInterface;
 
@@ -102,6 +103,9 @@ class Connection implements ConnectionInterface
 
     /**
      * {@inheritdoc}
+     * The resulting stream will not have any timeout set on it.
+     * Which means it can wait an unlimited amount of time until a packet
+     * becomes available.
      *
      * @throws \Beanspeak\Connection\Exception
      */
@@ -137,17 +141,24 @@ class Connection implements ConnectionInterface
 
     /**
      * {@inheritdoc}
+     * Will throw an exception if closing the connection fails, to allow
+     * handling the then undefined state.
+     *
+     * @throws \RuntimeException
      */
     public function disconnect() -> boolean
     {
-        var socket;
+        var socket, status;
 
         let socket = this->socket;
         if typeof socket != "resource" {
             return false;
         }
 
-        fclose(socket);
+        let status = fclose(socket);
+        if !status {
+            throw new RuntimeException("Failed to close connection");
+        }
 
         let this->socket      = null,
             this->id          = null,
