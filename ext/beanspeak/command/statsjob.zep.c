@@ -123,17 +123,15 @@ PHP_METHOD(Beanspeak_Command_StatsJob, getCommandLine) {
  */
 PHP_METHOD(Beanspeak_Command_StatsJob, getResponseParser) {
 
-	zval *_0;
 	int ZEPHIR_LAST_CALL_STATUS;
 
 	ZEPHIR_MM_GROW();
 
 	object_init_ex(return_value, beanspeak_response_parser_yaml_ce);
-	ZEPHIR_INIT_VAR(_0);
-	ZVAL_STRING(_0, "dict", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 24, _0);
-	zephir_check_temp_parameter(_0);
-	zephir_check_call_status();
+	if (zephir_has_constructor(return_value TSRMLS_CC)) {
+		ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 0);
+		zephir_check_call_status();
+	}
 	RETURN_MM();
 
 }

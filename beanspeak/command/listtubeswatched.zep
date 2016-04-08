@@ -55,6 +55,6 @@ class ListTubesWatched extends Command
      */
     public function getResponseParser() -> <ParserInterface>
     {
-        return new Yaml("list");
+        return new Yaml;
     }
 }

@@ -65,6 +65,6 @@ class StatsTube extends Command
      */
     public function getResponseParser() -> <ParserInterface>
     {
-        return new Yaml("dict");
+        return new Yaml;
     }
 }

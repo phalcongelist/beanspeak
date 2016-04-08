@@ -90,7 +90,7 @@ PHP_METHOD(Beanspeak_Command_Put, __construct) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "The \"priority\" param must be less than 4294967295", "beanspeak/command/put.zep", 56);
 		return;
 	}
-	ZEPHIR_CALL_FUNCTION(&_0, "serialize", NULL, 25, data);
+	ZEPHIR_CALL_FUNCTION(&_0, "serialize", NULL, 24, data);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("data"), _0 TSRMLS_CC);
 	ZEPHIR_INIT_ZVAL_NREF(_1);
@@ -173,7 +173,7 @@ PHP_METHOD(Beanspeak_Command_Put, getDataLength) {
 		_0$$3 = zephir_fetch_nproperty_this(this_ptr, SL("data"), PH_NOISY_CC);
 		ZEPHIR_SINIT_VAR(_1$$3);
 		ZVAL_STRING(&_1$$3, "latin1", 0);
-		ZEPHIR_RETURN_CALL_FUNCTION("mb_strlen", NULL, 26, _0$$3, &_1$$3);
+		ZEPHIR_RETURN_CALL_FUNCTION("mb_strlen", NULL, 25, _0$$3, &_1$$3);
 		zephir_check_call_status();
 		RETURN_MM();
 	}
