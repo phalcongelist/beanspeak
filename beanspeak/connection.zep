@@ -85,6 +85,14 @@ class Connection implements ConnectionInterface
     }
 
     /**
+     * Destructor, disconnects from the server.
+     */
+    public function __destruct()
+    {
+        this->disconnect();
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function isConnected() -> boolean
