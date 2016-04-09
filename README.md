@@ -7,6 +7,13 @@ Beanspeak is the best way to interact with [beanstalkd workqueue](https://travis
 in PHP. Beanspeak is designed as a C-extension for PHP and aims to be the most complete,
 stable and fastest solution for PHP world. It's simple, lightweight, and completely specialized for job queueing.
 
+Supported PHP versions:
+
+- **5.4**
+- **5.5**
+- **5.6**
+- **7**
+
 ## Documentation
 
 The current version can be seen at [beanspeak.readthedocs.org](http://beanspeak.readthedocs.org/).
