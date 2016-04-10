@@ -37,4 +37,5 @@ ln -s /ext/beanspeak.ini /usr/local/phpenv/versions/$(phpenv global)/etc/conf.d/
 
 php --ri beanspeak
 
-exec "$@"
+# exec "$@"
+exit 0;
