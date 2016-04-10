@@ -50,19 +50,15 @@ install:
   - sudo cp tests/_ci/php.sh /usr/local/bin/php && sudo chmod +x /usr/local/bin/php
   # Install Beanstalk
   - bash tests/_ci/install_beanstalkd.sh
+  # Install Builder
+  - sudo cp tests/_ci/build.sh /usr/local/bin/beanspeak-cli && sudo chmod +x /usr/local/bin/beanspeak-cli
 
 before_script:
   # Build extension
   - '[[ "$PHP_VERSION" == "7" ]] || zephir build'
   - '[[ "$PHP_VERSION" != "7" ]] || zephir build --ZendEngine3'
-
-  #- echo "extension=${TRAVIS_BUILD_DIR}/ext/modules/beanspeak.so" | tee tests/_ci/beanspeak.ini
-  #- phpenv config-add tests/_ci/beanspeak.ini
   - stty cols 160
 
 script:
   - zephir version
-  - /usr/local/bin/php -v
-  - ls -l "${TRAVIS_BUILD_DIR}/ext/modules"
-
-  #- php --ri beanspeak
+  - beanspeak-cli
