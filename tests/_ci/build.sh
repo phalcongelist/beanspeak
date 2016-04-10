@@ -13,10 +13,17 @@
 #
 #  Authors: Serghei Iakovlev <serghei@phalconphp.com>
 
+# First create network
+# docker network create --driver bridge beanstalk_nw
+
+# Then run beanstalkd
+# docker run -d --net=beanstalk_nw --name=beanstalk_srv phalconphp/beanstalkd:1.10 sh -c "beanstalkd -l 0.0.0.0 -p 11300"
+
+# Then run
 docker run -it --rm \
   --entrypoint /entrypoint.sh \
   --privileged=true \
-  --net=bridge \
+  --net=beanstalk_nw \
   --name=test-beanspeak-${PHP_VERSION} \
   -v ${TRAVIS_BUILD_DIR}/tests/_ci/entrypoint.sh:/entrypoint.sh \
   -v ${TRAVIS_BUILD_DIR}/vendor:/app/vendor \
