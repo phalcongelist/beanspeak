@@ -11,8 +11,7 @@ branches:
     - docs
 
 sudo: required
-dist: precise
-group: edge
+dist: trusty
 
 env:
   global:
