@@ -50,4 +50,10 @@ echo -e "${GREEN}Beanspeak${NC}   version ${YELLOW}${BEANSPEAK_VERSION}${NC}"
 echo -e ""
 /app/vendor/bin/codecept run -v
 
+result_codecept=$?
+
+if [ $result_codecept -ne 0 ]; then
+  exit 1;
+fi
+
 exit 0;
