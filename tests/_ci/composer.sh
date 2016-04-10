@@ -13,12 +13,7 @@
 #
 #  Authors: Serghei Iakovlev <serghei@phalconphp.com>
 
-docker run -it --rm \
-  --entrypoint /entrypoint.sh \
-  --privileged=true \
-  --net=bridge \
-  --name=test-beanspeak-${PHP_VERSION} \
-  -v ${TRAVIS_BUILD_DIR}/tests/_ci/entrypoint.sh:/entrypoint.sh \
-  -v ${TRAVIS_BUILD_DIR}/ext/modules/beanspeak.so:/ext/beanspeak.so \
-  -v ${TRAVIS_BUILD_DIR}/tests/_ci/beanspeak.ini:/ext/beanspeak.ini \
-  phalconphp/php:${PHP_VERSION} bash
+# Create .ssh if it non exists
+mkdir -p ${HOME}/.ssh
+
+docker run -it --rm --name=composer-${PHP_VERSION} -v $(pwd):/app -v ${HOME}/.ssh:/root/.ssh phalconphp/composer:${PHP_VERSION} "$@"
