@@ -27,48 +27,9 @@
 
 
 
-zend_class_entry *beanspeak_command_commandinterface_ce;
-zend_class_entry *beanspeak_response_parser_parserinterface_ce;
-zend_class_entry *beanspeak_connection_connectionawareinterface_ce;
-zend_class_entry *beanspeak_connection_connectioninterface_ce;
-zend_class_entry *beanspeak_dispatcher_dispatcherawareinterface_ce;
-zend_class_entry *beanspeak_dispatcher_dispatcherinterface_ce;
-zend_class_entry *beanspeak_job_jobinterface_ce;
-zend_class_entry *beanspeak_response_responseinterface_ce;
-zend_class_entry *beanspeak_command_ce;
-zend_class_entry *beanspeak_beanspeak_ce;
-zend_class_entry *beanspeak_command_bury_ce;
-zend_class_entry *beanspeak_command_choose_ce;
-zend_class_entry *beanspeak_command_delete_ce;
-zend_class_entry *beanspeak_command_exception_ce;
-zend_class_entry *beanspeak_command_ignore_ce;
-zend_class_entry *beanspeak_command_kick_ce;
-zend_class_entry *beanspeak_command_kickjob_ce;
-zend_class_entry *beanspeak_command_listtubes_ce;
-zend_class_entry *beanspeak_command_listtubeswatched_ce;
-zend_class_entry *beanspeak_command_listtubeused_ce;
-zend_class_entry *beanspeak_command_pausetube_ce;
-zend_class_entry *beanspeak_command_peek_ce;
-zend_class_entry *beanspeak_command_put_ce;
-zend_class_entry *beanspeak_command_quit_ce;
-zend_class_entry *beanspeak_command_release_ce;
-zend_class_entry *beanspeak_command_reserve_ce;
-zend_class_entry *beanspeak_command_stats_ce;
-zend_class_entry *beanspeak_command_statsjob_ce;
-zend_class_entry *beanspeak_command_statstube_ce;
-zend_class_entry *beanspeak_command_touch_ce;
-zend_class_entry *beanspeak_command_watch_ce;
-zend_class_entry *beanspeak_connection_ce;
-zend_class_entry *beanspeak_connection_exception_ce;
-zend_class_entry *beanspeak_dispatcher_ce;
-zend_class_entry *beanspeak_dispatcher_exception_ce;
+zend_class_entry *beanspeak_client_ce;
 zend_class_entry *beanspeak_exception_ce;
 zend_class_entry *beanspeak_job_ce;
-zend_class_entry *beanspeak_job_exception_ce;
-zend_class_entry *beanspeak_response_arrayresponse_ce;
-zend_class_entry *beanspeak_response_exception_ce;
-zend_class_entry *beanspeak_response_parser_exception_ce;
-zend_class_entry *beanspeak_response_parser_yaml_ce;
 
 ZEND_DECLARE_MODULE_GLOBALS(beanspeak)
 
@@ -94,48 +55,9 @@ static PHP_MINIT_FUNCTION(beanspeak)
 	setlocale(LC_ALL, "C");
 #endif
 	REGISTER_INI_ENTRIES();
-	ZEPHIR_INIT(Beanspeak_Command_CommandInterface);
-	ZEPHIR_INIT(Beanspeak_Response_Parser_ParserInterface);
-	ZEPHIR_INIT(Beanspeak_Connection_ConnectionAwareInterface);
-	ZEPHIR_INIT(Beanspeak_Connection_ConnectionInterface);
-	ZEPHIR_INIT(Beanspeak_Dispatcher_DispatcherAwareInterface);
-	ZEPHIR_INIT(Beanspeak_Dispatcher_DispatcherInterface);
-	ZEPHIR_INIT(Beanspeak_Job_JobInterface);
-	ZEPHIR_INIT(Beanspeak_Response_ResponseInterface);
-	ZEPHIR_INIT(Beanspeak_Command);
-	ZEPHIR_INIT(Beanspeak_Beanspeak);
-	ZEPHIR_INIT(Beanspeak_Command_Bury);
-	ZEPHIR_INIT(Beanspeak_Command_Choose);
-	ZEPHIR_INIT(Beanspeak_Command_Delete);
-	ZEPHIR_INIT(Beanspeak_Command_Exception);
-	ZEPHIR_INIT(Beanspeak_Command_Ignore);
-	ZEPHIR_INIT(Beanspeak_Command_Kick);
-	ZEPHIR_INIT(Beanspeak_Command_KickJob);
-	ZEPHIR_INIT(Beanspeak_Command_ListTubeUsed);
-	ZEPHIR_INIT(Beanspeak_Command_ListTubes);
-	ZEPHIR_INIT(Beanspeak_Command_ListTubesWatched);
-	ZEPHIR_INIT(Beanspeak_Command_PauseTube);
-	ZEPHIR_INIT(Beanspeak_Command_Peek);
-	ZEPHIR_INIT(Beanspeak_Command_Put);
-	ZEPHIR_INIT(Beanspeak_Command_Quit);
-	ZEPHIR_INIT(Beanspeak_Command_Release);
-	ZEPHIR_INIT(Beanspeak_Command_Reserve);
-	ZEPHIR_INIT(Beanspeak_Command_Stats);
-	ZEPHIR_INIT(Beanspeak_Command_StatsJob);
-	ZEPHIR_INIT(Beanspeak_Command_StatsTube);
-	ZEPHIR_INIT(Beanspeak_Command_Touch);
-	ZEPHIR_INIT(Beanspeak_Command_Watch);
-	ZEPHIR_INIT(Beanspeak_Connection);
-	ZEPHIR_INIT(Beanspeak_Connection_Exception);
-	ZEPHIR_INIT(Beanspeak_Dispatcher);
-	ZEPHIR_INIT(Beanspeak_Dispatcher_Exception);
+	ZEPHIR_INIT(Beanspeak_Client);
 	ZEPHIR_INIT(Beanspeak_Exception);
 	ZEPHIR_INIT(Beanspeak_Job);
-	ZEPHIR_INIT(Beanspeak_Job_Exception);
-	ZEPHIR_INIT(Beanspeak_Response_ArrayResponse);
-	ZEPHIR_INIT(Beanspeak_Response_Exception);
-	ZEPHIR_INIT(Beanspeak_Response_Parser_Exception);
-	ZEPHIR_INIT(Beanspeak_Response_Parser_Yaml);
 
 #if PHP_VERSION_ID < 50500
 	setlocale(LC_ALL, old_lc_all);

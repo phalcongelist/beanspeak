@@ -13,8 +13,12 @@
 
 #include "kernel/main.h"
 #include "kernel/object.h"
-#include "kernel/memory.h"
 #include "kernel/operators.h"
+#include "kernel/memory.h"
+#include "kernel/fcall.h"
+#include "kernel/concat.h"
+#include "kernel/array.h"
+#include "kernel/exception.h"
 
 
 /**
@@ -26,37 +30,23 @@ ZEPHIR_INIT_CLASS(Beanspeak_Job) {
 
 	ZEPHIR_REGISTER_CLASS(Beanspeak, Job, beanspeak, job, beanspeak_job_method_entry, 0);
 
-	zend_declare_property_null(beanspeak_job_ce, SL("id"), ZEND_ACC_PRIVATE TSRMLS_CC);
+	zend_declare_property_null(beanspeak_job_ce, SL("queue"), ZEND_ACC_PRIVATE TSRMLS_CC);
 
-	zend_declare_property_null(beanspeak_job_ce, SL("data"), ZEND_ACC_PRIVATE TSRMLS_CC);
+	/**
+	 * @var string
+	 */
+	zend_declare_property_null(beanspeak_job_ce, SL("id"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_class_implements(beanspeak_job_ce TSRMLS_CC, 1, beanspeak_job_jobinterface_ce);
+	/**
+	 * @var mixed
+	 */
+	zend_declare_property_null(beanspeak_job_ce, SL("body"), ZEND_ACC_PROTECTED TSRMLS_CC);
+
 	return SUCCESS;
 
 }
 
 /**
- * Beanspeak\Job constructor
- */
-PHP_METHOD(Beanspeak_Job, __construct) {
-
-	zval *id_param = NULL, *data, *_0;
-	int id;
-
-	zephir_fetch_params(0, 2, 0, &id_param, &data);
-
-	id = zephir_get_intval(id_param);
-
-
-	ZEPHIR_INIT_ZVAL_NREF(_0);
-	ZVAL_LONG(_0, id);
-	zephir_update_property_this(this_ptr, SL("id"), _0 TSRMLS_CC);
-	zephir_update_property_this(this_ptr, SL("data"), data TSRMLS_CC);
-
-}
-
-/**
- * {@inheritdoc}
  */
 PHP_METHOD(Beanspeak_Job, getId) {
 
@@ -67,13 +57,295 @@ PHP_METHOD(Beanspeak_Job, getId) {
 }
 
 /**
- * {@inheritdoc}
  */
-PHP_METHOD(Beanspeak_Job, getData) {
+PHP_METHOD(Beanspeak_Job, getBody) {
 
 	
 
-	RETURN_MEMBER(this_ptr, "data");
+	RETURN_MEMBER(this_ptr, "body");
+
+}
+
+/**
+ * Beanspeak\Job constructor
+ */
+PHP_METHOD(Beanspeak_Job, __construct) {
+
+	zval *id = NULL;
+	zval *queue, *id_param = NULL, *body;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 3, 0, &queue, &id_param, &body);
+
+	zephir_get_strval(id, id_param);
+
+
+	zephir_update_property_this(this_ptr, SL("queue"), queue TSRMLS_CC);
+	zephir_update_property_this(this_ptr, SL("id"), id TSRMLS_CC);
+	zephir_update_property_this(this_ptr, SL("body"), body TSRMLS_CC);
+	ZEPHIR_MM_RESTORE();
+
+}
+
+/**
+ * Removes a job from the server entirely.
+ *
+ * <code>
+ * $job->delete();
+ * </code>
+ */
+PHP_METHOD(Beanspeak_Job, delete) {
+
+	zend_bool _3;
+	zval *queue = NULL, *response = NULL, *_0, *_1 = NULL, *_2, *_4;
+	int ZEPHIR_LAST_CALL_STATUS;
+
+	ZEPHIR_MM_GROW();
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("queue"), PH_NOISY_CC);
+	ZEPHIR_CPY_WRT(queue, _0);
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("id"), PH_NOISY_CC);
+	ZEPHIR_INIT_VAR(_2);
+	ZEPHIR_CONCAT_SV(_2, "delete ", _0);
+	ZEPHIR_CALL_METHOD(&_1, queue, "write", NULL, 0, _2);
+	zephir_check_call_status();
+	if (!(zephir_is_true(_1))) {
+		RETURN_MM_BOOL(0);
+	}
+	ZEPHIR_CALL_METHOD(&response, queue, "readstatus", NULL, 0);
+	zephir_check_call_status();
+	_3 = zephir_array_isset_long(response, 0);
+	if (_3) {
+		zephir_array_fetch_long(&_4, response, 0, PH_NOISY | PH_READONLY, "beanspeak/job.zep", 67 TSRMLS_CC);
+		_3 = ZEPHIR_IS_STRING(_4, "DELETED");
+	}
+	RETURN_MM_BOOL(_3);
+
+}
+
+/**
+ * Allows a worker to request more time to work on a Job.
+ *
+ * <code>
+ * $job->touch();
+ * </code>
+ */
+PHP_METHOD(Beanspeak_Job, touch) {
+
+	zend_bool _3;
+	zval *queue = NULL, *response = NULL, *_0, *_1 = NULL, *_2, *_4;
+	int ZEPHIR_LAST_CALL_STATUS;
+
+	ZEPHIR_MM_GROW();
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("queue"), PH_NOISY_CC);
+	ZEPHIR_CPY_WRT(queue, _0);
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("id"), PH_NOISY_CC);
+	ZEPHIR_INIT_VAR(_2);
+	ZEPHIR_CONCAT_SV(_2, "touch ", _0);
+	ZEPHIR_CALL_METHOD(&_1, queue, "write", NULL, 0, _2);
+	zephir_check_call_status();
+	if (!(zephir_is_true(_1))) {
+		RETURN_MM_BOOL(0);
+	}
+	ZEPHIR_CALL_METHOD(&response, queue, "readstatus", NULL, 0);
+	zephir_check_call_status();
+	_3 = zephir_array_isset_long(response, 0);
+	if (_3) {
+		zephir_array_fetch_long(&_4, response, 0, PH_NOISY | PH_READONLY, "beanspeak/job.zep", 88 TSRMLS_CC);
+		_3 = ZEPHIR_IS_STRING(_4, "TOUCHED");
+	}
+	RETURN_MM_BOOL(_3);
+
+}
+
+/**
+ * Puts a "reserved" job back into the ready queue (and marks its
+ * state as "ready") to be run by any client.
+ *
+ * <code>
+ * $job->release(10, 60 * 60);
+ * </code>
+ */
+PHP_METHOD(Beanspeak_Job, release) {
+
+	zend_bool _5;
+	zval *priority_param = NULL, *delay_param = NULL, *queue = NULL, *response = NULL, *_0, *_1 = NULL, _2, _3, *_4, *_6;
+	int priority, delay, ZEPHIR_LAST_CALL_STATUS;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 0, 2, &priority_param, &delay_param);
+
+	if (!priority_param) {
+		priority = 1024;
+	} else {
+		priority = zephir_get_intval(priority_param);
+	}
+	if (!delay_param) {
+		delay = 0;
+	} else {
+		delay = zephir_get_intval(delay_param);
+	}
+
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("queue"), PH_NOISY_CC);
+	ZEPHIR_CPY_WRT(queue, _0);
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("id"), PH_NOISY_CC);
+	ZEPHIR_SINIT_VAR(_2);
+	ZVAL_LONG(&_2, priority);
+	ZEPHIR_SINIT_VAR(_3);
+	ZVAL_LONG(&_3, delay);
+	ZEPHIR_INIT_VAR(_4);
+	ZEPHIR_CONCAT_SVSVSV(_4, "release ", _0, " ", &_2, " ", &_3);
+	ZEPHIR_CALL_METHOD(&_1, queue, "write", NULL, 0, _4);
+	zephir_check_call_status();
+	if (!(zephir_is_true(_1))) {
+		RETURN_MM_BOOL(0);
+	}
+	ZEPHIR_CALL_METHOD(&response, queue, "readstatus", NULL, 0);
+	zephir_check_call_status();
+	_5 = zephir_array_isset_long(response, 0);
+	if (_5) {
+		zephir_array_fetch_long(&_6, response, 0, PH_NOISY | PH_READONLY, "beanspeak/job.zep", 111 TSRMLS_CC);
+		_5 = ZEPHIR_IS_STRING(_6, "RELEASED");
+	}
+	RETURN_MM_BOOL(_5);
+
+}
+
+/**
+ * Puts a job into the "buried" state.
+ *
+ * <code>
+ * $job->release(10, 60 * 60);
+ * </code>
+ */
+PHP_METHOD(Beanspeak_Job, bury) {
+
+	zend_bool _4;
+	zval *priority_param = NULL, *queue = NULL, *response = NULL, *_0, *_1 = NULL, _2, *_3, *_5;
+	int priority, ZEPHIR_LAST_CALL_STATUS;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 0, 1, &priority_param);
+
+	if (!priority_param) {
+		priority = 1024;
+	} else {
+		priority = zephir_get_intval(priority_param);
+	}
+
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("queue"), PH_NOISY_CC);
+	ZEPHIR_CPY_WRT(queue, _0);
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("id"), PH_NOISY_CC);
+	ZEPHIR_SINIT_VAR(_2);
+	ZVAL_LONG(&_2, priority);
+	ZEPHIR_INIT_VAR(_3);
+	ZEPHIR_CONCAT_SVSV(_3, "bury ", _0, " ", &_2);
+	ZEPHIR_CALL_METHOD(&_1, queue, "write", NULL, 0, _3);
+	zephir_check_call_status();
+	if (!(zephir_is_true(_1))) {
+		RETURN_MM_BOOL(0);
+	}
+	ZEPHIR_CALL_METHOD(&response, queue, "readstatus", NULL, 0);
+	zephir_check_call_status();
+	_4 = zephir_array_isset_long(response, 0);
+	if (_4) {
+		zephir_array_fetch_long(&_5, response, 0, PH_NOISY | PH_READONLY, "beanspeak/job.zep", 132 TSRMLS_CC);
+		_4 = ZEPHIR_IS_STRING(_5, "BURIED");
+	}
+	RETURN_MM_BOOL(_4);
+
+}
+
+/**
+ * Gives statistical information about the specified job if it exists.
+ *
+ * <code>
+ * $stats = $job->stats();
+ * </code>
+ */
+PHP_METHOD(Beanspeak_Job, stats) {
+
+	zval *queue = NULL, *response = NULL, *_0, *_1 = NULL, *_2, *_3, *_4;
+	int ZEPHIR_LAST_CALL_STATUS;
+
+	ZEPHIR_MM_GROW();
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("queue"), PH_NOISY_CC);
+	ZEPHIR_CPY_WRT(queue, _0);
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("id"), PH_NOISY_CC);
+	ZEPHIR_INIT_VAR(_2);
+	ZEPHIR_CONCAT_SV(_2, "stats-job ", _0);
+	ZEPHIR_CALL_METHOD(&_1, queue, "write", NULL, 0, _2);
+	zephir_check_call_status();
+	if (!(zephir_is_true(_1))) {
+		RETURN_MM_BOOL(0);
+	}
+	ZEPHIR_CALL_METHOD(&response, queue, "readyaml", NULL, 0);
+	zephir_check_call_status();
+	zephir_array_fetch_long(&_3, response, 0, PH_NOISY | PH_READONLY, "beanspeak/job.zep", 152 TSRMLS_CC);
+	if (!ZEPHIR_IS_STRING(_3, "OK")) {
+		RETURN_MM_BOOL(0);
+	}
+	zephir_array_fetch_long(&_4, response, 2, PH_NOISY | PH_READONLY, "beanspeak/job.zep", 156 TSRMLS_CC);
+	RETURN_CTOR(_4);
+
+}
+
+/**
+ * A variant of Client::kick that operates with a single job identified by its Job ID.
+ *
+ * <code>
+ * $job->kick();
+ * </code>
+ */
+PHP_METHOD(Beanspeak_Job, kick) {
+
+	zend_bool _3;
+	zval *queue = NULL, *response = NULL, *_0, *_1 = NULL, *_2, *_4;
+	int ZEPHIR_LAST_CALL_STATUS;
+
+	ZEPHIR_MM_GROW();
+
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("queue"), PH_NOISY_CC);
+	ZEPHIR_CPY_WRT(queue, _0);
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("id"), PH_NOISY_CC);
+	ZEPHIR_INIT_VAR(_2);
+	ZEPHIR_CONCAT_SV(_2, "kick-job ", _0);
+	ZEPHIR_CALL_METHOD(&_1, queue, "write", NULL, 0, _2);
+	zephir_check_call_status();
+	if (!(zephir_is_true(_1))) {
+		RETURN_MM_BOOL(0);
+	}
+	ZEPHIR_CALL_METHOD(&response, queue, "readstatus", NULL, 0);
+	zephir_check_call_status();
+	_3 = zephir_array_isset_long(response, 0);
+	if (_3) {
+		zephir_array_fetch_long(&_4, response, 0, PH_NOISY | PH_READONLY, "beanspeak/job.zep", 177 TSRMLS_CC);
+		_3 = ZEPHIR_IS_STRING(_4, "KICKED");
+	}
+	RETURN_MM_BOOL(_3);
+
+}
+
+/**
+ * Checks if the job has been modified after unserializing the object
+ */
+PHP_METHOD(Beanspeak_Job, __wakeup) {
+
+	zval *_0;
+
+	ZEPHIR_MM_GROW();
+
+	ZEPHIR_OBS_VAR(_0);
+	zephir_read_property_this(&_0, this_ptr, SL("id"), PH_NOISY_CC);
+	if (Z_TYPE_P(_0) != IS_STRING) {
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_exception_ce, "Unexpected inconsistency in Beanspeak\\Job::__wakeup() - possible break-in attempt!", "beanspeak/job.zep", 186);
+		return;
+	}
+	ZEPHIR_MM_RESTORE();
 
 }
 
