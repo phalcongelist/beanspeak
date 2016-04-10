@@ -19,6 +19,8 @@ docker run -it --rm \
   --net=bridge \
   --name=test-beanspeak-${PHP_VERSION} \
   -v ${TRAVIS_BUILD_DIR}/tests/_ci/entrypoint.sh:/entrypoint.sh \
+  -v ${TRAVIS_BUILD_DIR}/vendor:/app/vendor \
+  -v ${TRAVIS_BUILD_DIR}/codeception.yml:/app/codeception.yml \
+  -v ${TRAVIS_BUILD_DIR}/tests:/app/tests \
   -v ${TRAVIS_BUILD_DIR}/ext/modules/beanspeak.so:/ext/beanspeak.so \
-  -v ${TRAVIS_BUILD_DIR}/tests/_ci/beanspeak.ini:/ext/beanspeak.ini \
   phalconphp/php:${PHP_VERSION} bash
