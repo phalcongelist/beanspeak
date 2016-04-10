@@ -21,9 +21,6 @@ sudo: required
 dist: trusty
 
 env:
-  global:
-    - TEST_BT_HOST="127.0.0.1"
-    - TEST_BT_PORT="11300"
   matrix:
     - PHP_VERSION="5.4"
     - PHP_VERSION="5.5"
@@ -47,13 +44,16 @@ install:
   # Install PHP
   - docker pull phalconphp/php:$PHP_VERSION
   - sudo cp tests/_ci/build.sh /usr/local/bin/beanspeak-cli && sudo chmod +x /usr/local/bin/beanspeak-cli
-  # Install Beanstalk
-  - bash tests/_ci/install_beanstalkd.sh
   # Install Composer
   - docker pull phalconphp/composer:$PHP_VERSION
   - sudo cp tests/_ci/composer.sh /home/travis/.phpenv/shims/composer && sudo chmod +x /home/travis/.phpenv/shims/composer
   - if [ -n "$GH_TOKEN" ]; then composer config github-oauth.github.com ${GH_TOKEN}; fi
   - travis_retry composer install --prefer-dist --no-interaction --ignore-platform-reqs
+  # Setup network
+  - docker network create --driver bridge beanstalk_nw
+  # Install Beanstalkd
+  - docker pull phalconphp/beanstalkd:1.10
+  - bash tests/_ci/beanstalkd.sh
 
 before_script:
   # Build extension

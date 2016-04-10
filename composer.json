@@ -30,8 +30,8 @@
         "php": ">=5.4.0 <8.0"
     },
     "require-dev": {
+        "phpunit/phpunit": "^4.8",
         "codeception/codeception": ">=2.2.0-beta",
-        "codeception/mockery-module": "*",
         "codeception/verify": "*",
         "codeception/specify": "*"
     },
@@ -43,6 +43,5 @@
     },
     "suggest": {
         "ext-yaml" : "Best way to parse beanstalkd YAML-response"
-    },
-    "minimum-stability": "dev"
+    }
 }
