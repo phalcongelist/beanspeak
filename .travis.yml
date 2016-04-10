@@ -21,9 +21,6 @@ sudo: required
 dist: trusty
 
 env:
-  global:
-    - TEST_BT_HOST="172.24.0.1"
-    - TEST_BT_PORT="11300"
   matrix:
     - PHP_VERSION="5.4"
     - PHP_VERSION="5.5"
