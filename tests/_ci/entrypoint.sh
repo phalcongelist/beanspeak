@@ -27,4 +27,14 @@ echo -e "\tfor debugging.\n"
 
 ulimit -c unlimited
 
+export PHP_EXTENSION_DIR=`/usr/local/phpenv/versions/$(phpenv global)/bin/php-config --extension-dir`
+
+echo -e "\tPHP extension path:"
+echo -e "\t${GREEN}${PHP_EXTENSION_DIR}${NC}\n"
+
+ln -s /ext/beanspeak.so ${PHP_EXTENSION_DIR}/beanspeak.so
+ln -s /ext/beanspeak.ini /usr/local/phpenv/versions/$(phpenv global)/etc/conf.d/50-beanspeak.ini
+
+php --ri beanspeak
+
 exec "$@"
