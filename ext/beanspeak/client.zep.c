@@ -30,18 +30,18 @@
  *
  * Class to access the beanstalk queue service.
  *
- * beanstalkd up to the latest version 1.10 is supported.
+ * Implements the beanstalk protocol spec 1.10.
  *
  * <code>
- * use Beanspeak\Connection;
+ * use Beanspeak\Client;
  *
  * // Each connection parameter is optional
- * $queue = new Connection([
- *     'host'       => '127.0.0.1', // server host
- *     'port'       => 11300,       // server port
- *     'timeout'    => 60,          // connection timeout
- *     'persistent' => true,        // is persistent connection?
- *     'wretries'   => 8,           // write retries
+ * $queue = new Client([
+ *     'host'       => '127.0.0.1', // The beanstalk server hostname or IP address to connect to
+ *     'port'       => 11300,       // The port of the server to connect to
+ *     'timeout'    => 60,          // Timeout in seconds when establishing the connection
+ *     'persistent' => true,        // Whether to make the connection persistent or not
+ *     'wretries'   => 8,           // Write retries
  * ]);
  * </code>
  *
