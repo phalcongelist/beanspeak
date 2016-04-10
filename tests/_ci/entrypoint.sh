@@ -18,9 +18,6 @@ GREEN="\033[0;32m"
 YELLOW="\e[1;33m"
 NC="\033[0m"
 
-export TEST_BT_HOST="172.24.0.1"
-export TEST_BT_PORT="11300"
-
 echo -e "\n\tWelcome to the Docker testing container.\n"
 
 mkdir -p /tmp/beanspeak

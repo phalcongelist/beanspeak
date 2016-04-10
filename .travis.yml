@@ -53,7 +53,7 @@ install:
   - docker network create --driver bridge beanstalk_nw
   # Install Beanstalkd
   - docker pull phalconphp/beanstalkd:1.10
-  - bash tests/_ci/beanstalkd.sh &
+  - bash tests/_ci/beanstalkd.sh
 
 before_script:
   # Build extension
