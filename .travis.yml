@@ -21,7 +21,6 @@ cache:
   - apt
 
 before_install:
-  - export PATH=$PATH:~/bin;
   - travis_retry composer self-update
   - sudo service docker stop
 
@@ -46,19 +45,11 @@ before_script:
 
   #- echo "extension=${TRAVIS_BUILD_DIR}/ext/modules/beanspeak.so" | tee tests/_ci/beanspeak.ini
   #- phpenv config-add tests/_ci/beanspeak.ini
-  - ulimit -c unlimited -S || true
-  - echo '/tmp/core_%e.%p' | sudo tee /proc/sys/kernel/core_pattern &> /dev/null
   - stty cols 160
 
 script:
   - zephir $PHP_VERSION version
-  - php $PHP_VERSION version
+  - php $PHP_VERSION -v
   - ls -l "${TRAVIS_BUILD_DIR}/ext/modules"
 
   #- php --ri beanspeak
-
-addons:
-  apt:
-    packages:
-      - gdb
-      - re2c
