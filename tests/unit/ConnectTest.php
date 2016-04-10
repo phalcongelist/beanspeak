@@ -22,8 +22,17 @@ use Beanspeak\Test\Unit\Helper\Base;
  */
 class ConnectTest extends Base
 {
-    public function testFoo()
+    public function testConnect()
     {
-        return true;
+        $this->client->disconnect();
+
+        $this->assertFalse($this->client->isConnected());
+        $this->assertFalse($this->client->disconnect());
+
+        $this->assertTrue(is_resource($this->client->connect()));
+        $this->assertTrue($this->client->isConnected());
+
+        $this->assertTrue($this->client->disconnect());
+        $this->assertFalse($this->client->isConnected());
     }
 }

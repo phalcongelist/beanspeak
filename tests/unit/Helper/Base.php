@@ -36,7 +36,7 @@ class Base extends UnitTest
         parent::_before();
 
         if (!defined('TEST_BT_HOST') || !defined('TEST_BT_PORT')) {
-            $this->markTestSkipped('TEST_BT_HOST and/or TEST_BT_PORT env variables are not defined');
+            $this->markTestSkipped('TEST_BT_HOST and/or TEST_BT_PORT env variables are not defined.');
         }
 
         $this->client = new Client([
