@@ -26,17 +26,16 @@ before_install:
   - travis_retry composer self-update
   - sudo service docker stop
 
-  # Install Zephir
-  - docker pull phalconphp/zephir
-  - cp tests/_ci/zephir.sh /usr/local/bin/zephir
-  # Install Beanstalk
-  - bash tests/_ci/install_beanstalkd.sh
-
 install:
   # Install Docker
   - sudo apt-get update -qq
   - sudo apt-get install -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y --force-yes docker-engine
   - sudo service docker restart
+  # Install Zephir
+  - docker pull phalconphp/zephir
+  - cp tests/_ci/zephir.sh /usr/local/bin/zephir
+  # Install Beanstalk
+  - bash tests/_ci/install_beanstalkd.sh
 
 before_script:
   # Build extension
