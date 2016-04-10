@@ -13,7 +13,9 @@
 #
 #  Authors: Serghei Iakovlev <serghei@phalconphp.com>
 
+PURPLE="\e[0;35m"
 GREEN="\033[0;32m"
+YELLOW="\e[1;33m"
 NC="\033[0m"
 
 echo -e "\n\tWelcome to the Docker testing container.\n"
@@ -22,7 +24,7 @@ mkdir -p /tmp/beanspeak
 echo "/tmp/beanspeak/core-%e.%p" | tee /proc/sys/kernel/core_pattern &> /dev/null
 
 echo -e "\tIf a Segmentation Fault is happens use:"
-echo -e "\t${GREEN}gdb php /tmp/beanspeak/core-*${NC}"
+echo -e "\t${PURPLE}gdb php /tmp/beanspeak/core-*${NC}"
 echo -e "\tfor debugging.\n"
 
 ulimit -c unlimited
@@ -30,12 +32,16 @@ ulimit -c unlimited
 export PHP_EXTENSION_DIR=`/usr/local/phpenv/versions/$(phpenv global)/bin/php-config --extension-dir`
 
 echo -e "\tPHP extension path:"
-echo -e "\t${GREEN}${PHP_EXTENSION_DIR}${NC}\n"
+echo -e "\t${PURPLE}${PHP_EXTENSION_DIR}${NC}\n"
 
 ln -s /ext/beanspeak.so ${PHP_EXTENSION_DIR}/beanspeak.so
-ln -s /ext/beanspeak.ini /usr/local/phpenv/versions/$(phpenv global)/etc/conf.d/50-beanspeak.ini
+ln -s /app/tests/_ci/beanspeak.ini /usr/local/phpenv/versions/$(phpenv global)/etc/conf.d/50-beanspeak.ini
 
-php --ri beanspeak
+export BEANSPEAK_VERSION=`php --ri beanspeak | grep "Version =" | awk '{print $3}'`
 
-# exec "$@"
+echo -e "${GREEN}Beanspeak${NC}   version ${YELLOW}${BEANSPEAK_VERSION}${NC}"
+/app/vendor/bin/codecept --version
+
+/app/vendor/bin/codecept build &> /dev/null
+
 exit 0;

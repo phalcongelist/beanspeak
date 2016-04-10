@@ -1274,12 +1274,13 @@ PHP_METHOD(Beanspeak_Client, readStatus) {
 
 PHP_METHOD(Beanspeak_Client, yamlParse) {
 
-	HashTable *_10;
-	HashPosition _9;
+	double _20$$14;
+	HashTable *_9;
+	HashPosition _8;
 	zend_bool _0, _3, _5;
-	zval *data = NULL, *lines = NULL, *values = NULL, *value = NULL, *response = NULL, *_1 = NULL, _2, *_4, **_11, _6$$6, _7$$6, *_12$$8 = NULL, _13$$8 = zval_used_for_init, *_14$$9 = NULL, *_15$$9, *_16$$9 = NULL, *_17$$9, _18$$9 = zval_used_for_init;
-	zephir_fcall_cache_entry *_8 = NULL;
-	int ZEPHIR_LAST_CALL_STATUS;
+	zval *data = NULL, *lines = NULL, *key = NULL, *value = NULL, *values = NULL, *response = NULL, *_1 = NULL, _2, *_4, **_10, _6$$6, _7$$6, _11$$7 = zval_used_for_init, *_12$$7 = NULL, *_13$$8 = NULL, _14$$8 = zval_used_for_init, *_15$$10 = NULL, _16$$10 = zval_used_for_init, *_18$$11, _19$$11 = zval_used_for_init;
+	zephir_fcall_cache_entry *_17 = NULL;
+	int ZEPHIR_LAST_CALL_STATUS, tmp = 0;
 
 	ZEPHIR_MM_GROW();
 
@@ -1329,37 +1330,60 @@ PHP_METHOD(Beanspeak_Client, yamlParse) {
 		ZVAL_STRING(&_6$$6, "YAML parse error.", 0);
 		ZEPHIR_SINIT_VAR(_7$$6);
 		ZVAL_LONG(&_7$$6, 512);
-		ZEPHIR_CALL_FUNCTION(NULL, "trigger_error", &_8, 16, &_6$$6, &_7$$6);
+		ZEPHIR_CALL_FUNCTION(NULL, "trigger_error", NULL, 16, &_6$$6, &_7$$6);
 		zephir_check_call_status();
 		array_init(return_value);
 		RETURN_MM();
 	}
-	zephir_is_iterable(lines, &_10, &_9, 0, 0, "beanspeak/client.zep", 742);
+	zephir_is_iterable(lines, &_9, &_8, 0, 0, "beanspeak/client.zep", 759);
 	for (
-	  ; zephir_hash_get_current_data_ex(_10, (void**) &_11, &_9) == SUCCESS
-	  ; zephir_hash_move_forward_ex(_10, &_9)
+	  ; zephir_hash_get_current_data_ex(_9, (void**) &_10, &_8) == SUCCESS
+	  ; zephir_hash_move_forward_ex(_9, &_8)
 	) {
-		ZEPHIR_GET_HVALUE(values, _11);
-		ZEPHIR_INIT_NVAR(value);
-		zephir_fast_explode_str(value, SL(":"), values, LONG_MAX TSRMLS_CC);
-		if (!(zephir_array_isset_long(value, 1))) {
-			ZEPHIR_INIT_LNVAR(_12$$8);
-			ZEPHIR_CONCAT_SV(_12$$8, "YAML parse error for line: ", values);
-			ZEPHIR_SINIT_NVAR(_13$$8);
-			ZVAL_LONG(&_13$$8, 512);
-			ZEPHIR_CALL_FUNCTION(NULL, "trigger_error", &_8, 16, _12$$8, &_13$$8);
-			zephir_check_call_status();
-		} else {
-			ZEPHIR_INIT_NVAR(_14$$9);
-			zephir_array_fetch_long(&_15$$9, value, 1, PH_NOISY | PH_READONLY, "beanspeak/client.zep", 738 TSRMLS_CC);
-			zephir_fast_trim(_14$$9, _15$$9, NULL , ZEPHIR_TRIM_BOTH TSRMLS_CC);
-			ZEPHIR_INIT_NVAR(_16$$9);
-			zephir_array_fetch_long(&_17$$9, value, 0, PH_NOISY | PH_READONLY, "beanspeak/client.zep", 738 TSRMLS_CC);
-			ZEPHIR_SINIT_NVAR(_18$$9);
-			ZVAL_STRING(&_18$$9, "- ", 0);
-			zephir_fast_trim(_16$$9, _17$$9, &_18$$9, ZEPHIR_TRIM_LEFT TSRMLS_CC);
-			zephir_array_update_zval(&response, _16$$9, &_14$$9, PH_COPY | PH_SEPARATE);
+		ZEPHIR_GET_HMKEY(key, _9, _8);
+		ZEPHIR_GET_HVALUE(value, _10);
+		ZEPHIR_SINIT_NVAR(_11$$7);
+		ZVAL_STRING(&_11$$7, ":", 0);
+		ZEPHIR_INIT_NVAR(_12$$7);
+		zephir_fast_strpos(_12$$7, value, &_11$$7, 0 );
+		if (zephir_start_with_str(value, SL("-"))) {
+			ZEPHIR_INIT_NVAR(_13$$8);
+			ZEPHIR_SINIT_NVAR(_14$$8);
+			ZVAL_STRING(&_14$$8, "- ", 0);
+			zephir_fast_trim(_13$$8, value, &_14$$8, ZEPHIR_TRIM_LEFT TSRMLS_CC);
+			ZEPHIR_CPY_WRT(value, _13$$8);
+		} else if (!ZEPHIR_IS_FALSE_IDENTICAL(_12$$7)) {
+			ZEPHIR_INIT_NVAR(values);
+			zephir_fast_explode_str(values, SL(":"), value, LONG_MAX TSRMLS_CC);
+			if (!(zephir_array_isset_long(values, 1))) {
+				ZEPHIR_INIT_LNVAR(_15$$10);
+				ZEPHIR_CONCAT_SVS(_15$$10, "YAML parse error for line: \"", value, "\"");
+				ZEPHIR_SINIT_NVAR(_16$$10);
+				ZVAL_LONG(&_16$$10, 512);
+				ZEPHIR_CALL_FUNCTION(NULL, "trigger_error", &_17, 16, _15$$10, &_16$$10);
+				zephir_check_call_status();
+			} else {
+				ZEPHIR_OBS_NVAR(key);
+				zephir_array_fetch_long(&key, values, 0, PH_NOISY, "beanspeak/client.zep", 741 TSRMLS_CC);
+				zephir_array_fetch_long(&_18$$11, values, 1, PH_NOISY | PH_READONLY, "beanspeak/client.zep", 742 TSRMLS_CC);
+				ZEPHIR_SINIT_NVAR(_19$$11);
+				ZVAL_STRING(&_19$$11, " ", 0);
+				ZEPHIR_INIT_NVAR(value);
+				zephir_fast_trim(value, _18$$11, &_19$$11, ZEPHIR_TRIM_LEFT TSRMLS_CC);
+			}
 		}
+		if (zephir_is_numeric(value)) {
+			tmp = zephir_get_intval(value);
+			if (ZEPHIR_IS_LONG(value, tmp)) {
+				ZEPHIR_INIT_NVAR(value);
+				ZVAL_LONG(value, tmp);
+			} else {
+				_20$$14 = zephir_get_doubleval(value);
+				ZEPHIR_INIT_NVAR(value);
+				ZVAL_DOUBLE(value, _20$$14);
+			}
+		}
+		zephir_array_update_zval(&response, key, &value, PH_COPY | PH_SEPARATE);
 	}
 	RETURN_CCTOR(response);
 
