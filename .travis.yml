@@ -25,13 +25,17 @@ cache:
 before_install:
   - export PATH=$PATH:~/bin;
   - travis_retry composer self-update
-  - travis_retry composer require phalcon/zephir:dev-master
-  - bash tests/_ci/install_zephir.sh
+  # Install Zephir
+  - docker pull phalconphp/zephir
+  - cp tests/_ci/zephir.sh /usr/local/bin/zephir
+  # Install Beanstalk
   - bash tests/_ci/install_beanstalkd.sh
 
 before_script:
-  - '[[ "$TRAVIS_PHP_VERSION" == "7" ]] || zephir build'
-  - '[[ "$TRAVIS_PHP_VERSION" != "7" ]] || zephir build --ZendEngine3'
+  # Build extension
+  - '[[ "$TRAVIS_PHP_VERSION" == "7" ]] || zephir:$TRAVIS_PHP_VERSION build'
+  - '[[ "$TRAVIS_PHP_VERSION" != "7" ]] || zephir:$TRAVIS_PHP_VERSION build --ZendEngine3'
+
   - echo "extension=${TRAVIS_BUILD_DIR}/ext/modules/beanspeak.so" | tee tests/_ci/beanspeak.ini
   - phpenv config-add tests/_ci/beanspeak.ini
   - ulimit -c unlimited -S || true
