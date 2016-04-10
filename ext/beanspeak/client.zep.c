@@ -106,7 +106,7 @@ PHP_METHOD(Beanspeak_Client, __construct) {
  * Which means it can wait an unlimited amount of time until a packet
  * becomes available.
  *
- * @throws \Beanspeak\Connection\Exception
+ * @throws \Beanspeak\Exception
  */
 PHP_METHOD(Beanspeak_Client, connect) {
 
@@ -183,7 +183,7 @@ PHP_METHOD(Beanspeak_Client, __destruct) {
  * Will throw an exception if closing the connection fails, to allow
  * handling the then undefined state.
  *
- * @throws \Beanspeak\Connection\Exception
+ * @throws \Beanspeak\Exception
  */
 PHP_METHOD(Beanspeak_Client, disconnect) {
 
@@ -348,7 +348,7 @@ PHP_METHOD(Beanspeak_Client, putInTube) {
 	}
 
 
-	ZEPHIR_CALL_METHOD(&response, this_ptr, "use", NULL, 0, tube);
+	ZEPHIR_CALL_METHOD(&response, this_ptr, "usetube", NULL, 0, tube);
 	zephir_check_call_status();
 	if (Z_TYPE_P(response) == IS_OBJECT) {
 		ZEPHIR_INIT_VAR(_0$$3);
@@ -373,10 +373,10 @@ PHP_METHOD(Beanspeak_Client, putInTube) {
  * jobs will be put into the tube named "default".
  *
  * <code>
- * $queue->use('mail-queue');
+ * $queue->useTube('mail-queue');
  * </code>
  */
-PHP_METHOD(Beanspeak_Client, use) {
+PHP_METHOD(Beanspeak_Client, useTube) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 	zval *tube_param = NULL, *response = NULL, *status = NULL, *_0 = NULL;

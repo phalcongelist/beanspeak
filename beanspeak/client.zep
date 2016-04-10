@@ -72,7 +72,7 @@ class Client
      * Which means it can wait an unlimited amount of time until a packet
      * becomes available.
      *
-     * @throws \Beanspeak\Connection\Exception
+     * @throws \Beanspeak\Exception
      */
     public function connect() -> resource
     {
@@ -115,7 +115,7 @@ class Client
      * Will throw an exception if closing the connection fails, to allow
      * handling the then undefined state.
      *
-     * @throws \Beanspeak\Connection\Exception
+     * @throws \Beanspeak\Exception
      */
     public function disconnect() -> boolean
     {
@@ -200,7 +200,7 @@ class Client
     {
         var  response;
 
-        let response = this->$use(tube);
+        let response = this->useTube(tube);
         if typeof response == "object" {
             return this->put(data, priority, delay, ttr);
         }
@@ -216,10 +216,10 @@ class Client
      * jobs will be put into the tube named "default".
      *
      * <code>
-     * $queue->use('mail-queue');
+     * $queue->useTube('mail-queue');
      * </code>
      */
-    public function $use(string! tube) -> boolean|<Client>
+    public function useTube(string! tube) -> boolean|<Client>
     {
         var response, status;
 

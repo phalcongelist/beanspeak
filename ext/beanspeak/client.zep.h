@@ -10,7 +10,7 @@ PHP_METHOD(Beanspeak_Client, disconnect);
 PHP_METHOD(Beanspeak_Client, isConnected);
 PHP_METHOD(Beanspeak_Client, put);
 PHP_METHOD(Beanspeak_Client, putInTube);
-PHP_METHOD(Beanspeak_Client, use);
+PHP_METHOD(Beanspeak_Client, useTube);
 PHP_METHOD(Beanspeak_Client, peekJob);
 PHP_METHOD(Beanspeak_Client, peekDelayed);
 PHP_METHOD(Beanspeak_Client, peekBuried);
@@ -52,7 +52,7 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_client_putintube, 0, 0, 2)
 	ZEND_ARG_INFO(0, ttr)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_client_use, 0, 0, 1)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_client_usetube, 0, 0, 1)
 	ZEND_ARG_INFO(0, tube)
 ZEND_END_ARG_INFO()
 
@@ -101,7 +101,7 @@ ZEPHIR_INIT_FUNCS(beanspeak_client_method_entry) {
 	PHP_ME(Beanspeak_Client, isConnected, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Client, put, arginfo_beanspeak_client_put, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Client, putInTube, arginfo_beanspeak_client_putintube, ZEND_ACC_PUBLIC)
-	PHP_ME(Beanspeak_Client, use, arginfo_beanspeak_client_use, ZEND_ACC_PUBLIC)
+	PHP_ME(Beanspeak_Client, useTube, arginfo_beanspeak_client_usetube, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Client, peekJob, arginfo_beanspeak_client_peekjob, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Client, peekDelayed, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Client, peekBuried, NULL, ZEND_ACC_PUBLIC)
