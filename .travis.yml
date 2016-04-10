@@ -22,7 +22,6 @@ dist: trusty
 
 env:
   matrix:
-    - PHP_VERSION="5.4"
     - PHP_VERSION="5.5"
     - PHP_VERSION="5.6"
     - PHP_VERSION="7"

@@ -7,5 +7,4 @@ modules:
     # enabled modules and helpers
     enabled:
         - Asserts
-        - Mockery
         - Helper\Unit
