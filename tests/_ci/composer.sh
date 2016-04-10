@@ -15,5 +15,11 @@
 
 # Create .ssh if it non exists
 mkdir -p ${HOME}/.ssh
+mkdir -p ${HOME}/.composer
 
-docker run -it --rm --name=composer-${PHP_VERSION} -v $(pwd):/app -v ${HOME}/.ssh:/root/.ssh phalconphp/composer:${PHP_VERSION} "$@"
+docker run -it --rm \
+  --name=composer-${PHP_VERSION} \
+  -v $(pwd):/app \
+  -v ${HOME}/.ssh:/root/.ssh \
+  -v ${HOME}/.composer:/root/composer \
+  phalconphp/composer:${PHP_VERSION} "$@"
