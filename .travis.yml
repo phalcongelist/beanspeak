@@ -41,8 +41,8 @@ install:
 
 before_script:
   # Build extension
-  - '[[ "$PHP_VERSION" == "7" ]] || zephir:$PHP_VERSION build'
-  - '[[ "$PHP_VERSION" != "7" ]] || zephir:$PHP_VERSION build --ZendEngine3'
+  - '[[ "$PHP_VERSION" == "7" ]] || zephir $PHP_VERSION build'
+  - '[[ "$PHP_VERSION" != "7" ]] || zephir $PHP_VERSION build --ZendEngine3'
 
   #- echo "extension=${TRAVIS_BUILD_DIR}/ext/modules/beanspeak.so" | tee tests/_ci/beanspeak.ini
   #- phpenv config-add tests/_ci/beanspeak.ini
@@ -51,8 +51,11 @@ before_script:
   - stty cols 160
 
 script:
+  - zephir $PHP_VERSION version
+  - php $PHP_VERSION version
+  - ls -l "${TRAVIS_BUILD_DIR}/ext/modules"
+
   #- php --ri beanspeak
-  ls -l "${TRAVIS_BUILD_DIR}/ext/modules"
 
 addons:
   apt:
