@@ -47,11 +47,9 @@ install:
   - sudo cp tests/_ci/zephir.sh /usr/local/bin/zephir && sudo chmod +x /usr/local/bin/zephir
   # Install PHP
   - docker pull phalconphp/php:$PHP_VERSION
-  - sudo cp tests/_ci/php.sh /usr/local/bin/php && sudo chmod +x /usr/local/bin/php
+  - sudo cp tests/_ci/build.sh /usr/local/bin/beanspeak-cli && sudo chmod +x /usr/local/bin/beanspeak-cli
   # Install Beanstalk
   - bash tests/_ci/install_beanstalkd.sh
-  # Install Builder
-  - sudo cp tests/_ci/build.sh /usr/local/bin/beanspeak-cli && sudo chmod +x /usr/local/bin/beanspeak-cli
 
 before_script:
   # Build extension
