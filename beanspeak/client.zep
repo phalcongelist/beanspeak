@@ -703,7 +703,7 @@ class Client
 
     private function yamlParse() -> array
     {
-        var data, lines, values, value, response = [];
+        var data, lines, key, value, values, tmp, response = [];
 
         let data = this->read();
 
@@ -729,14 +729,31 @@ class Client
             return [];
         }
 
-        for values in lines {
-            let value = explode(":", values);
+        for key, value in lines {
+            if starts_with(value, "-") {
+                let value = ltrim(value, "- ");
+            } elseif strpos(value, ":") !== false {
+                let values = explode(":", value);
 
-            if !isset value[1] {
-                trigger_error("YAML parse error for line: " . values, E_USER_WARNING);
-            } else {
-                let response[ltrim(value[0], "- ")] = trim(value[1]);
+                if !isset values[1] {
+                    trigger_error("YAML parse error for line: \"" . value . "\"", E_USER_WARNING);
+                } else {
+                    let key   = values[0],
+                        value = ltrim(values[1], " ");
+                }
             }
+
+            if is_numeric(value) {
+                let tmp = (int) value;
+
+                if tmp == value {
+                    let value = tmp;
+                } else {
+                    let value = (float) value;
+                }
+            }
+
+            let response[key] = value;
         }
 
         return response;
