@@ -27,9 +27,10 @@
         "source": "https://github.com/phalcongelist/beanspea"
     },
     "require": {
-        "php": ">=5.5.0 <8.0"
+        "php": ">=5.4.0 <8.0"
     },
     "require-dev": {
+        "phpunit/phpunit": "^4.8",
         "codeception/codeception": ">=2.2.0-beta",
         "codeception/verify": "*",
         "codeception/specify": "*"
