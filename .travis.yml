@@ -1,11 +1,5 @@
 language: php
 
-php:
-  - 5.4
-  - 5.5
-  - 5.6
-  - 7
-
 branches:
   except:
     - docs
@@ -17,6 +11,11 @@ env:
   global:
     - TEST_BT_HOST="127.0.0.1"
     - TEST_BT_PORT="11300"
+  matrix:
+    - PHP_VERSION="5.4"
+    - PHP_VERSION="5.5"
+    - PHP_VERSION="5.6"
+    - PHP_VERSION="7"
 
 cache:
   - apt
@@ -32,24 +31,28 @@ install:
   - sudo apt-get install -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y --force-yes docker-engine
   - sudo service docker restart
   # Install Zephir
-  - docker pull phalconphp/zephir
-  - cp tests/_ci/zephir.sh /usr/local/bin/zephir
+  - docker pull phalconphp/zephir:$PHP_VERSION
+  - sudo cp tests/_ci/zephir.sh /usr/local/bin/zephir && sudo chmod +x /usr/local/bin/zephir
+  # Install PHP
+  - docker pull phalconphp/php:$PHP_VERSION
+  - sudo cp tests/_ci/php.sh /usr/local/bin/php && sudo chmod +x /usr/local/bin/php
   # Install Beanstalk
   - bash tests/_ci/install_beanstalkd.sh
 
 before_script:
   # Build extension
-  - '[[ "$TRAVIS_PHP_VERSION" == "7" ]] || zephir:$TRAVIS_PHP_VERSION build'
-  - '[[ "$TRAVIS_PHP_VERSION" != "7" ]] || zephir:$TRAVIS_PHP_VERSION build --ZendEngine3'
+  - '[[ "$PHP_VERSION" == "7" ]] || zephir:$PHP_VERSION build'
+  - '[[ "$PHP_VERSION" != "7" ]] || zephir:$PHP_VERSION build --ZendEngine3'
 
-  - echo "extension=${TRAVIS_BUILD_DIR}/ext/modules/beanspeak.so" | tee tests/_ci/beanspeak.ini
-  - phpenv config-add tests/_ci/beanspeak.ini
+  #- echo "extension=${TRAVIS_BUILD_DIR}/ext/modules/beanspeak.so" | tee tests/_ci/beanspeak.ini
+  #- phpenv config-add tests/_ci/beanspeak.ini
   - ulimit -c unlimited -S || true
   - echo '/tmp/core_%e.%p' | sudo tee /proc/sys/kernel/core_pattern &> /dev/null
   - stty cols 160
 
 script:
-  - php --ri beanspeak
+  #- php --ri beanspeak
+  ls -l "${TRAVIS_BUILD_DIR}/ext/modules"
 
 addons:
   apt:
