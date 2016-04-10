@@ -13,7 +13,4 @@
 #
 #  Authors: Serghei Iakovlev <serghei@phalconphp.com>
 
-VERSION=$1
-shift
-
-docker run -it --rm --name=php-$1 -p 8000:8000 -v $(pwd):/www phalconphp/php:$VERSION "$@"
+docker run -it --rm --name=php-$1 -p 8000:8000 -v $(pwd):/www phalconphp/php:$PHP_VERSION "$@"

@@ -13,7 +13,4 @@
 #
 #  Authors: Serghei Iakovlev <serghei@phalconphp.com>
 
-VERSION=$1
-shift
-
-docker run -it --rm --name=zephir-$1 -v $(pwd):/zephir phalconphp/zephir:$VERSION "$@"
+docker run -it --rm --name=zephir-$1 -v $(pwd):/zephir phalconphp/zephir:$PHP_VERSION "$@"
