@@ -35,6 +35,12 @@
         "codeception/verify": "*",
         "codeception/specify": "*"
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Beanspeak\\Test\\Unit\\": "tests/unit/",
+            "Beanspeak\\Test\\Module\\": "tests/_support/Module/"
+        }
+    },
     "suggest": {
         "ext-yaml" : "Best way to parse beanstalkd YAML-response"
     },

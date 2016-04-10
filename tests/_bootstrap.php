@@ -34,3 +34,16 @@ if (!file_exists(PROJECT_PATH . 'vendor/autoload.php')) {
 }
 
 include_once PROJECT_PATH . 'vendor/autoload.php';
+
+if (extension_loaded('xdebug')) {
+    ini_set('xdebug.cli_color', 1);
+    ini_set('xdebug.collect_params', 0);
+    ini_set('xdebug.dump_globals', 'on');
+    ini_set('xdebug.show_local_vars', 'on');
+    ini_set('xdebug.max_nesting_level', 100);
+    ini_set('xdebug.var_display_max_depth', 4);
+}
+
+// Beanstalk
+defined('TEST_BT_HOST') || define('TEST_BT_HOST', getenv('TEST_BT_HOST') ?: '127.0.0.1');
+defined('TEST_BT_PORT') || define('TEST_BT_PORT', getenv('TEST_BT_PORT') ?: 11300);

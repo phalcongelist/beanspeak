@@ -3,16 +3,26 @@
 namespace Helper;
 
 use Codeception\Module;
-use Codeception\Specify\Config as SpecifyConfig;
 use Codeception\TestInterface;
+use Codeception\Specify\Config;
 
 /**
- * Unit Helper
+ * \Helper\Unit
  *
  * Here you can define custom actions
  * all public methods declared in helper class will be available in $I
  *
- * @package Helper
+ * @copyright (c) 2016 Phalcon Team
+ * @link      http://www.phalconphp.com
+ * @author    Serghei Iakovlev <serghei@phalconphp.com>
+ * @package   Helper
+ *
+ * The contents of this file are subject to the New BSD License that is
+ * bundled with this package in the file LICENSE.txt
+ *
+ * If you did not receive a copy of the license and are unable to obtain it
+ * through the world-wide-web, please send an email to license@phalconphp.com
+ * so that we can send you a copy immediately.
  */
 class Unit extends Module
 {
@@ -29,7 +39,7 @@ class Unit extends Module
     public function _before(TestInterface $test)
     {
         $this->test = $test;
-        SpecifyConfig::setDeepClone(false);
+        Config::setDeepClone(false);
     }
 
     /**

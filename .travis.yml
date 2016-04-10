@@ -62,6 +62,4 @@ before_script:
   - stty cols 160
 
 script:
-  - composer --version
-  - zephir version
   - beanspeak-cli
