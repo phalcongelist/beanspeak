@@ -34,7 +34,6 @@ cache:
   - apt
 
 before_install:
-  - travis_retry composer self-update
   - sudo service docker stop
 
 install:
@@ -50,6 +49,9 @@ install:
   - sudo cp tests/_ci/build.sh /usr/local/bin/beanspeak-cli && sudo chmod +x /usr/local/bin/beanspeak-cli
   # Install Beanstalk
   - bash tests/_ci/install_beanstalkd.sh
+  # Install Composer
+  - docker pull phalconphp/composer:$PHP_VERSION
+  - sudo cp tests/_ci/composer.sh /home/travis/.phpenv/shims/composer && sudo chmod +x /home/travis/.phpenv/shims/composer
 
 before_script:
   # Build extension
@@ -58,5 +60,6 @@ before_script:
   - stty cols 160
 
 script:
+  - composer --version
   - zephir version
   - beanspeak-cli
