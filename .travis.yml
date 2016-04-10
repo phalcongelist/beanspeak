@@ -1,48 +1,62 @@
-language: php
+#  Beanspeak
+#
+#  Copyright (c) 2016 Phalcon Team (http://www.phalconphp.com)
+#
+#  This source file is subject to the New BSD License that is bundled
+#  with this package in the file LICENSE.txt.
+#
+#  If you did not receive a copy of the license and are unable to
+#  obtain it through the world-wide-web, please send an email
+#  to license@phalconphp.com so we can send you a copy immediately.
+#
+#  Authors: Serghei Iakovlev <serghei@phalconphp.com>
 
-php:
-  - 5.4
-  - 5.5
-  - 5.6
-  - 7
+language: php
 
 branches:
   except:
     - docs
 
 sudo: required
-dist: precise
-group: edge
+dist: trusty
 
 env:
   global:
     - TEST_BT_HOST="127.0.0.1"
     - TEST_BT_PORT="11300"
+  matrix:
+    - PHP_VERSION="5.4"
+    - PHP_VERSION="5.5"
+    - PHP_VERSION="5.6"
+    - PHP_VERSION="7"
 
 cache:
   - apt
 
 before_install:
-  - export PATH=$PATH:~/bin;
   - travis_retry composer self-update
-  - travis_retry composer require phalcon/zephir:dev-master
-  - bash tests/_ci/install_zephir.sh
+  - sudo service docker stop
+
+install:
+  # Install Docker
+  - sudo apt-get update -qq
+  - sudo apt-get install -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y --force-yes docker-engine
+  - sudo service docker restart
+  # Install Zephir
+  - docker pull phalconphp/zephir:$PHP_VERSION
+  - sudo cp tests/_ci/zephir.sh /usr/local/bin/zephir && sudo chmod +x /usr/local/bin/zephir
+  # Install PHP
+  - docker pull phalconphp/php:$PHP_VERSION
+  - sudo cp tests/_ci/build.sh /usr/local/bin/beanspeak-cli && sudo chmod +x /usr/local/bin/beanspeak-cli
+  # Install Beanstalk
   - bash tests/_ci/install_beanstalkd.sh
 
 before_script:
-  - '[[ "$TRAVIS_PHP_VERSION" == "7" ]] || zephir build'
-  - '[[ "$TRAVIS_PHP_VERSION" != "7" ]] || zephir build --ZendEngine3'
-  - echo "extension=${TRAVIS_BUILD_DIR}/ext/modules/beanspeak.so" | tee tests/_ci/beanspeak.ini
-  - phpenv config-add tests/_ci/beanspeak.ini
-  - ulimit -c unlimited -S || true
-  - echo '/tmp/core_%e.%p' | sudo tee /proc/sys/kernel/core_pattern &> /dev/null
+  # Build extension
+  - '[[ "$PHP_VERSION" == "7" ]] || zephir build'
+  - '[[ "$PHP_VERSION" != "7" ]] || zephir build --ZendEngine3'
   - stty cols 160
 
 script:
-  - php --ri beanspeak
-
-addons:
-  apt:
-    packages:
-      - gdb
-      - re2c
+  - zephir version
+  - beanspeak-cli
