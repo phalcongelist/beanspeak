@@ -2,6 +2,7 @@
 
 namespace Beanspeak\Test\Unit;
 
+use Beanspeak\Client;
 use Beanspeak\Test\Unit\Helper\Base;
 
 /**
@@ -22,8 +23,32 @@ use Beanspeak\Test\Unit\Helper\Base;
  */
 class ConnectTest extends Base
 {
-    public function testFoo()
+    public function testShouldConnectAndDisconnect()
     {
-        return true;
+        $this->client->disconnect();
+
+        $this->assertFalse($this->client->isConnected());
+        $this->assertFalse($this->client->disconnect());
+
+        $this->assertTrue(is_resource($this->client->connect()));
+        $this->assertTrue($this->client->isConnected());
+
+        $this->assertTrue($this->client->disconnect());
+        $this->assertFalse($this->client->isConnected());
+    }
+
+    public function testConnectionFailsToIncorrectPort()
+    {
+        $this->setExpectedException(
+            '\Beanspeak\Exception',
+            sprintf('pfsockopen(): unable to connect to %s:%s (Connection refused)', TEST_BT_HOST, TEST_BT_PORT + 9)
+        );
+
+        $client = new Client([
+            'host' => TEST_BT_HOST,
+            'port' => TEST_BT_PORT + 9,
+        ]);
+
+        $client->useTube('test');
     }
 }

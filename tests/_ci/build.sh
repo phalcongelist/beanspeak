@@ -27,7 +27,9 @@ docker run -it --rm \
   --privileged=true \
   --net=beanstalk_nw \
   -e TEST_BT_HOST="${CONTAINER_IP}" \
+  -e PHP_VERSION="${PHP_VERSION}" \
   --name=test-beanspeak-${PHP_VERSION} \
+  -v ${TRAVIS_BUILD_DIR}/tests/_ci/after_failure.sh:/after_failure.sh \
   -v ${TRAVIS_BUILD_DIR}/tests/_ci/entrypoint.sh:/entrypoint.sh \
   -v ${TRAVIS_BUILD_DIR}/vendor:/app/vendor \
   -v ${TRAVIS_BUILD_DIR}/codeception.yml:/app/codeception.yml \

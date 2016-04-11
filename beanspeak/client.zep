@@ -72,11 +72,11 @@ class Client
      * Which means it can wait an unlimited amount of time until a packet
      * becomes available.
      *
-     * @throws \Beanspeak\Connection\Exception
+     * @throws \Beanspeak\Exception
      */
     public function connect() -> resource
     {
-        var options, socket;
+        var e, options, socket;
 
         if this->isConnected() {
             this->disconnect();
@@ -84,15 +84,20 @@ class Client
 
         let options = this->options;
 
-        if options["persistent"] {
-            let socket = pfsockopen(options["host"], options["port"], null, null, options["timeout"]);
-        } else {
-            let socket = fsockopen(options["host"], options["port"], null, null, options["timeout"]);
+        try {
+            if options["persistent"] {
+                let socket = pfsockopen(options["host"], options["port"], null, null, options["timeout"]);
+            } else {
+                let socket = fsockopen(options["host"], options["port"], null, null, options["timeout"]);
+            }
+
+            if typeof socket != "resource" {
+                throw new Exception("Can't connect to Beanstalk server.");
+            }
+        } catch  \Exception, e {
+            throw new Exception(e->getMessage());
         }
 
-        if typeof socket != "resource" {
-            throw new Exception("Can't connect to Beanstalk server.");
-        }
 
         stream_set_timeout(socket, -1, null);
 
@@ -115,7 +120,7 @@ class Client
      * Will throw an exception if closing the connection fails, to allow
      * handling the then undefined state.
      *
-     * @throws \Beanspeak\Connection\Exception
+     * @throws \Beanspeak\Exception
      */
     public function disconnect() -> boolean
     {
@@ -200,7 +205,7 @@ class Client
     {
         var  response;
 
-        let response = this->$use(tube);
+        let response = this->useTube(tube);
         if typeof response == "object" {
             return this->put(data, priority, delay, ttr);
         }
@@ -216,10 +221,10 @@ class Client
      * jobs will be put into the tube named "default".
      *
      * <code>
-     * $queue->use('mail-queue');
+     * $queue->useTube('mail-queue');
      * </code>
      */
-    public function $use(string! tube) -> boolean|<Client>
+    public function useTube(string! tube) -> boolean|<Client>
     {
         var response, status;
 
