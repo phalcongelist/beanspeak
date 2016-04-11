@@ -76,7 +76,7 @@ class Client
      */
     public function connect() -> resource
     {
-        var options, socket;
+        var e, options, socket;
 
         if this->isConnected() {
             this->disconnect();
@@ -84,15 +84,20 @@ class Client
 
         let options = this->options;
 
-        if options["persistent"] {
-            let socket = pfsockopen(options["host"], options["port"], null, null, options["timeout"]);
-        } else {
-            let socket = fsockopen(options["host"], options["port"], null, null, options["timeout"]);
+        try {
+            if options["persistent"] {
+                let socket = pfsockopen(options["host"], options["port"], null, null, options["timeout"]);
+            } else {
+                let socket = fsockopen(options["host"], options["port"], null, null, options["timeout"]);
+            }
+
+            if typeof socket != "resource" {
+                throw new Exception("Can't connect to Beanstalk server.");
+            }
+        } catch  \Exception, e {
+            throw new Exception(e->getMessage());
         }
 
-        if typeof socket != "resource" {
-            throw new Exception("Can't connect to Beanstalk server.");
-        }
 
         stream_set_timeout(socket, -1, null);
 
