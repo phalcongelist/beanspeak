@@ -50,7 +50,10 @@ echo -e ""
 result_codecept=$?
 
 if [ $result_codecept -ne 0 ]; then
-  exit 1;
+  bash /after_failure.sh
+  [[ "$PHP_VERSION" == "7" ]] || exit 1;
+  # Allow failures for PHP 7
+  [[ "$PHP_VERSION" != "7" ]] || exit 0;
 fi
 
 exit 0;
