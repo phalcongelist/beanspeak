@@ -3,7 +3,7 @@
 shopt -s nullglob
 export LC_ALL=C
 
-for i in /tmp/beanspeak/core_*.*; do
+for i in /tmp/beanspeak/core-*.*; do
 	if [ -f "$i" -a "$(file "$i" | grep -o 'core file')" ]; then
 		gdb -q /usr/local/phpenv/versions/$(phpenv global)/bin/php "$i" <<EOF
 set pagination 0
