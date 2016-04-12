@@ -57,8 +57,8 @@ install:
 
 before_script:
   # Build extension
-  - '[[ "$PHP_VERSION" == "7" ]] || zephir build'
-  - '[[ "$PHP_VERSION" != "7" ]] || zephir build --ZendEngine3'
+  - '[[ "$PHP_VERSION" == "7" ]] || zephir builddev'
+  - '[[ "$PHP_VERSION" != "7" ]] || zephir builddev --ZendEngine3'
   - stty cols 160
 
 script:
