@@ -13,4 +13,6 @@
 #
 #  Authors: Serghei Iakovlev <serghei@phalconphp.com>
 
+[ -z "$PHP_VERSION" ] && echo "Need to set PHP_VERSION varialble. Fox example: 'export PHP_VERSION=7'"
+
 docker run -it --rm --name=zephir-${PHP_VERSION} -e ZEND_DONT_UNLOAD_MODULES=1 -v $(pwd):/zephir phalconphp/zephir:${PHP_VERSION} "$@"

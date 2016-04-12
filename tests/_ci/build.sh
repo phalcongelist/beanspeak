@@ -19,14 +19,16 @@
 # Then run beanstalkd
 # docker run -d --net=beanstalk_nw --name=beanstalk_srv phalconphp/beanstalkd:1.10 sh -c "beanstalkd -l 0.0.0.0 -p 11300"
 
-CONTAINER_IP=`docker inspect -f '{{ .NetworkSettings.Networks.beanstalk_nw.IPAddress }}' beanstalk_srv`
+[ -z "$PHP_VERSION" ] && echo "Need to set PHP_VERSION varialble. Fox example: 'export PHP_VERSION=7'"
+[ -z "$TEST_BT_HOST" ] && TEST_BT_HOST=`docker inspect -f '{{ .NetworkSettings.Networks.beanstalk_nw.IPAddress }}' beanstalk_srv`
+[ -z "$TRAVIS_BUILD_DIR" ] && TRAVIS_BUILD_DIR=$(cd $(dirname "$1") && pwd -P)/$(basename "$1")
 
 # Then run
 docker run -it --rm \
   --entrypoint /entrypoint.sh \
   --privileged=true \
   --net=beanstalk_nw \
-  -e TEST_BT_HOST="${CONTAINER_IP}" \
+  -e TEST_BT_HOST="${TEST_BT_HOST}" \
   -e PHP_VERSION="${PHP_VERSION}" \
   --name=test-beanspeak-${PHP_VERSION} \
   -v ${TRAVIS_BUILD_DIR}/tests/_ci/after_failure.sh:/after_failure.sh \
