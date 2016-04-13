@@ -23,19 +23,16 @@ echo -e "\n\tWelcome to the Docker testing container.\n"
 mkdir -p /tmp/beanspeak
 echo "/tmp/beanspeak/core-%e.%p" | tee /proc/sys/kernel/core_pattern &> /dev/null
 
-echo -e "\tIf a Segmentation Fault is happens use:"
-echo -e "\t${PURPLE}gdb php /tmp/beanspeak/core-*${NC}"
-echo -e "\tfor debugging.\n"
-
 ulimit -c unlimited
 
-export PHP_EXTENSION_DIR=`/usr/local/phpenv/versions/$(phpenv global)/bin/php-config --extension-dir`
+export PHP_EXTENSION_DIR=`php-config --extension-dir`
 
-echo -e "\tPHP extension path:"
-echo -e "\t${PURPLE}${PHP_EXTENSION_DIR}${NC}\n"
+echo -e "\tIf a Segmentation Fault is happens use: ${PURPLE}bash /backtrace.sh${NC}\n"
+echo -e "\tPHP extension path: ${PURPLE}${PHP_EXTENSION_DIR}${NC}\n"
 
 ln -s /ext/beanspeak.so ${PHP_EXTENSION_DIR}/beanspeak.so
-ln -s /app/tests/_ci/beanspeak.ini /usr/local/phpenv/versions/$(phpenv global)/etc/conf.d/50-beanspeak.ini
+[[ "$PHP_VERSION" == "7" ]] || ln -s /app/tests/_ci/beanspeak.ini /etc/php5/cli/conf.d/50-beanspeak.ini;
+[[ "$PHP_VERSION" != "7" ]] || ln -s /app/tests/_ci/beanspeak.ini /etc/php/7.0/cli/conf.d/50-beanspeak.ini;
 
 export BEANSPEAK_VERSION=`php --ri beanspeak | grep "Version =" | awk '{print $3}'`
 
@@ -50,7 +47,7 @@ echo -e ""
 result_codecept=$?
 
 if [ $result_codecept -ne 0 ]; then
-  bash /after_failure.sh
+  bash /backtrace.sh
   [[ "$PHP_VERSION" == "7" ]] || exit 1;
   # Allow failures for PHP 7
   [[ "$PHP_VERSION" != "7" ]] || exit 0;
