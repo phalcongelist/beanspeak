@@ -43,20 +43,6 @@ class Base extends Test
         if (!defined('TEST_BT_HOST') || !defined('TEST_BT_PORT')) {
             $this->markTestSkipped('TEST_BT_HOST and/or TEST_BT_PORT env variables are not defined.');
         }
-
-        $this->client = new Client([
-            'host'       => TEST_BT_HOST,
-            'port'       => TEST_BT_PORT,
-            'timeout'    => 5,
-            'persistent' => true,
-            'wretries'   => 2,
-        ]);
-
-        try {
-            $this->client->connect();
-        } catch (\Exception $e) {
-            $this->markTestSkipped($e->getMessage());
-        }
     }
 
     /**
