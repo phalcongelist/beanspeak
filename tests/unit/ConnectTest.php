@@ -79,14 +79,15 @@ class ConnectTest extends Base
 
     public function testConnectionFailsToIncorrectHost()
     {
-        $this->setExpectedException(
+        $this->setExpectedExceptionRegExp(
             '\Beanspeak\Exception',
-            sprintf("pfsockopen(): unable to connect to 1.1.1.1:%s (Connection refused)", TEST_BT_PORT)
+            sprintf('/pfsockopen\(\): unable to connect to 1.1.1.1:%s \(Connection (refused|timed out)\)/', TEST_BT_PORT)
         );
 
         $client = new Client([
-            'host' => '1.1.1.1',
-            'port' => TEST_BT_PORT,
+            'host'    => '1.1.1.1',
+            'port'    => TEST_BT_PORT,
+            'timeout' => 1
         ]);
 
         $client->connect();
