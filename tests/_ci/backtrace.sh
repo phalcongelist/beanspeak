@@ -13,6 +13,18 @@
 #
 #  Authors: Serghei Iakovlev <serghei@phalconphp.com>
 
-[ -z "$PHP_VERSION" ] && echo "Need to set PHP_VERSION varialble. Fox example: 'export PHP_VERSION=7'" && exit 1;
+shopt -s nullglob
+export LC_ALL=C
 
-docker run -it --rm -e ZEND_DONT_UNLOAD_MODULES=1 -v $(pwd):/zephir phalconphp/zephir:${PHP_VERSION} "$@"
+for i in /tmp/beanspeak/core-*.*; do
+	if [ -f "$i" -a "$(file "$i" | grep -o 'core file')" ]; then
+		gdb -q $(which php) "$i" <<EOF
+set pagination 0
+backtrace full
+info registers
+x/16i \$pc
+thread apply all backtrace
+quit
+EOF
+	fi
+done
