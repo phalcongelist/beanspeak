@@ -4,7 +4,6 @@ namespace Helper;
 
 use Codeception\Module;
 use Codeception\TestInterface;
-use Codeception\Specify\Config;
 
 /**
  * \Helper\Unit
@@ -39,7 +38,6 @@ class Unit extends Module
     public function _before(TestInterface $test)
     {
         $this->test = $test;
-        Config::setDeepClone(false);
     }
 
     /**

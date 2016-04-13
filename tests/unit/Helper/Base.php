@@ -3,6 +3,7 @@
 namespace Beanspeak\Test\Unit\Helper;
 
 use Beanspeak\Client;
+use Codeception\TestCase\Test;
 use Beanspeak\Test\Module\UnitTest;
 
 /**
@@ -21,7 +22,7 @@ use Beanspeak\Test\Module\UnitTest;
  * through the world-wide-web, please send an email to license@phalconphp.com
  * so that we can send you a copy immediately.
  */
-class Base extends UnitTest
+class Base extends Test
 {
     /**
      * @var Client
@@ -29,12 +30,16 @@ class Base extends UnitTest
     protected $client = null;
 
     /**
+     * UnitTester Object
+     * @var UnitTester
+     */
+    protected $tester;
+
+    /**
      * Executed before each test
      */
     protected function _before()
     {
-        parent::_before();
-
         if (!defined('TEST_BT_HOST') || !defined('TEST_BT_PORT')) {
             $this->markTestSkipped('TEST_BT_HOST and/or TEST_BT_PORT env variables are not defined.');
         }
@@ -52,5 +57,21 @@ class Base extends UnitTest
         } catch (\Exception $e) {
             $this->markTestSkipped($e->getMessage());
         }
+    }
+
+    /**
+     * Executed after each test
+     */
+    protected function _after()
+    {
+    }
+
+    /**
+     * Returns current UnitTester instance
+     * @return UnitTester
+     */
+    public function getTester()
+    {
+        return $this->tester;
     }
 }

@@ -31,9 +31,7 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8",
-        "codeception/codeception": ">=2.2.0-beta",
-        "codeception/verify": "*",
-        "codeception/specify": "*"
+        "codeception/codeception": ">=2.2.0-beta"
     },
     "autoload-dev": {
         "psr-4": {
