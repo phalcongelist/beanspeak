@@ -23,25 +23,50 @@ use Beanspeak\Test\Unit\Helper\Base;
  */
 class ConnectTest extends Base
 {
-    public function testShouldConnectAndDisconnect()
+    public function testPersistentConnection()
     {
-        $this->client->disconnect();
+        $client = new Client([
+            'host' => TEST_BT_HOST,
+            'port' => TEST_BT_PORT,
+        ]);
 
-        $this->assertFalse($this->client->isConnected());
-        $this->assertFalse($this->client->disconnect());
+        $this->assertFalse($client->isConnected());
+        $this->assertFalse($client->disconnect());
 
-        $this->assertTrue(is_resource($this->client->connect()));
-        $this->assertTrue($this->client->isConnected());
+        $this->assertTrue(is_resource($client->connect()));
+        $this->assertTrue($client->isConnected());
 
-        $this->assertTrue($this->client->disconnect());
-        $this->assertFalse($this->client->isConnected());
+        $client->useTube('test');
+
+        $this->assertTrue($client->disconnect());
+        $this->assertFalse($client->isConnected());
+    }
+
+    public function testNonPersistentConnection()
+    {
+        $client = new Client([
+            'host'       => TEST_BT_HOST,
+            'port'       => TEST_BT_PORT,
+            'persistent' => false,
+        ]);
+
+        $this->assertFalse($client->isConnected());
+        $this->assertFalse($client->disconnect());
+
+        $this->assertTrue(is_resource($client->connect()));
+        $this->assertTrue($client->isConnected());
+
+        $client->useTube('test');
+
+        $this->assertTrue($client->disconnect());
+        $this->assertFalse($client->isConnected());
     }
 
     public function testConnectionFailsToIncorrectPort()
     {
         $this->setExpectedException(
-            '\Beanspeak\Exception',
-            sprintf('pfsockopen(): unable to connect to %s:%s (Connection refused)', TEST_BT_HOST, TEST_BT_PORT + 9)
+            '\Exception',
+            sprintf("pfsockopen(): unable to connect to %s:%s (Connection refused)", TEST_BT_HOST, TEST_BT_PORT + 9)
         );
 
         $client = new Client([
@@ -49,6 +74,21 @@ class ConnectTest extends Base
             'port' => TEST_BT_PORT + 9,
         ]);
 
-        $client->useTube('test');
+        $client->connect();
+    }
+
+    public function testConnectionFailsToIncorrectHost()
+    {
+        $this->setExpectedException(
+            '\Beanspeak\Exception',
+            sprintf("pfsockopen(): unable to connect to 1.1.1.1:%s (Connection refused)", TEST_BT_PORT)
+        );
+
+        $client = new Client([
+            'host' => '1.1.1.1',
+            'port' => TEST_BT_PORT,
+        ]);
+
+        $client->connect();
     }
 }
