@@ -41,9 +41,8 @@ namespace Beanspeak;
  */
 class Client
 {
-    private socket    = null;
-    private connected = false;
-    private options   = [];
+    protected socket;
+    protected options = [];
 
     /**
      * Beanspeak\Client constructor
