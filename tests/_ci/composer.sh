@@ -17,9 +17,11 @@
 mkdir -p ${HOME}/.ssh
 mkdir -p ${HOME}/.composer
 
+docker_bin="$(which docker.io 2> /dev/null || which docker 2> /dev/null)"
+
 [ -z "$PHP_VERSION" ] && echo "Need to set PHP_VERSION variable. Fox example: 'export PHP_VERSION=7'" && exit 1;
 
-docker run -it --rm \
+${docker_bin} run -it --rm \
   --name=composer-${PHP_VERSION} \
   -v $(pwd):/app \
   -v ${HOME}/.ssh:/root/.ssh \
