@@ -5,7 +5,7 @@ namespace Beanspeak\Test\Unit;
 use UnitTester;
 use Beanspeak\Client;
 use Beanspeak\Exception;
-use Codeception\Exception\ConnectionException;
+use PHPUnit_Framework_SkippedTestError as SkipException;
 
 /**
  * \Beanspeak\Test\Unit\ConnectCest
@@ -27,8 +27,8 @@ class ConnectCest
 {
     public function _before(UnitTester $I)
     {
-        if (!defined('TEST_BT_HOST') || !defined('TEST_BT_PORT')) {
-            throw new ConnectionException(
+        if (!defined('TEST_BT_HOST') || defined('TEST_BT_PORT')) {
+            throw new SkipException(
                 'TEST_BT_HOST and/or TEST_BT_PORT env variables are not defined.'
             );
         }
