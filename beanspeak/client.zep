@@ -760,7 +760,7 @@ class Client
                 if tmp == value {
                     let value = tmp;
                 } else {
-                    let value = (float) value;
+                    let value = doubleval(value);
                 }
             }
 
