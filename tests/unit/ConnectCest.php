@@ -36,6 +36,8 @@ class ConnectCest
 
     public function testPersistentConnection(UnitTester $I)
     {
+        $I->wantTo('connect to beanstalkd server by using persistent connection');
+
         $client = new Client([
             'host' => TEST_BT_HOST,
             'port' => TEST_BT_PORT,
@@ -55,6 +57,8 @@ class ConnectCest
 
     public function testNonPersistentConnection(UnitTester $I)
     {
+        $I->wantTo('connect to beanstalkd server by using non persistent connection');
+
         $client = new Client([
             'host'       => TEST_BT_HOST,
             'port'       => TEST_BT_PORT,
@@ -75,6 +79,8 @@ class ConnectCest
 
     public function testConnectionFailsToIncorrectPort(UnitTester $I)
     {
+        $I->wantTo('catch exception with desired message when connect with invalid port');
+
         $client = new Client([
             'host' => TEST_BT_HOST,
             'port' => TEST_BT_PORT + 9,
@@ -91,6 +97,8 @@ class ConnectCest
 
     public function testConnectionFailsToIncorrectHost(UnitTester $I)
     {
+        $I->wantTo('catch exception when connect with invalid host');
+
         $client = new Client([
             'host' => 'TEST_BT_HOST',
             'port' => TEST_BT_PORT,
