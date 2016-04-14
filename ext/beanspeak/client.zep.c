@@ -1109,7 +1109,8 @@ PHP_METHOD(Beanspeak_Client, write) {
 		ZEPHIR_CALL_METHOD(&_2$$3, this_ptr, "isconnected", &_1, 0);
 		zephir_check_call_status();
 		if (!(zephir_is_true(_2$$3))) {
-			RETURN_MM_BOOL(0);
+			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_exception_ce, "Unable to establish connection with beanstalkd server.", "beanspeak/client.zep", 588);
+			return;
 		}
 	}
 	_3 = zephir_fetch_nproperty_this(this_ptr, SL("options"), PH_NOISY_CC);

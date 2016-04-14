@@ -577,7 +577,7 @@ class Client
      * Performs a connection if none is available.
      * @throws \Beanspeak\Exception
      */
-    public function write(string data) -> boolean|int
+    public function write(string data) -> int
     {
         var socket, retries, written, step, length;
 
@@ -585,7 +585,7 @@ class Client
             this->connect();
 
             if !this->isConnected() {
-                return false;
+                throw new Exception("Unable to establish connection with beanstalkd server.");
             }
         }
 
