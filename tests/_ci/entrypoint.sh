@@ -18,7 +18,7 @@ GREEN="\033[0;32m"
 YELLOW="\e[1;33m"
 NC="\033[0m"
 
-echo -e "\n\tWelcome to the Docker testing container.\n"
+echo -e "\nWelcome to the Docker testing container."
 
 mkdir -p /tmp/beanspeak
 echo "/tmp/beanspeak/core-%e.%p" | tee /proc/sys/kernel/core_pattern &> /dev/null
@@ -27,8 +27,8 @@ ulimit -c unlimited
 
 export PHP_EXTENSION_DIR=`php-config --extension-dir`
 
-echo -e "\tIf a Segmentation Fault is happens use: ${PURPLE}bash /backtrace.sh${NC}\n"
-echo -e "\tPHP extension path: ${PURPLE}${PHP_EXTENSION_DIR}${NC}\n"
+echo -e "If a Segmentation Fault is happens use: ${PURPLE}bash /backtrace.sh${NC}"
+echo -e "PHP extension path: ${PURPLE}${PHP_EXTENSION_DIR}${NC}\n"
 
 ln -s /ext/beanspeak.so ${PHP_EXTENSION_DIR}/beanspeak.so
 [[ "$PHP_VERSION" == "7" ]] || ln -s /app/tests/_ci/beanspeak.ini /etc/php5/cli/conf.d/50-beanspeak.ini;
