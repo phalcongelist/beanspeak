@@ -71,7 +71,7 @@ class Client
      * Which means it can wait an unlimited amount of time until a packet
      * becomes available.
      *
-     * @throws \Beanspeak\Exception
+     * @throws Exception
      */
     public function connect() -> resource
     {
@@ -119,7 +119,7 @@ class Client
      * Will throw an exception if closing the connection fails, to allow
      * handling the then undefined state.
      *
-     * @throws \Beanspeak\Exception
+     * @throws Exception
      */
     public function disconnect() -> boolean
     {
@@ -159,7 +159,7 @@ class Client
      *     'content'   => $content,
      * ];
      *
-     * $put = $ueue->pit($task, 999, 60 * 60, 3600);
+     * $put = $queue->pit($task, 999, 60 * 60, 3600);
      * </code>
      */
     public function put(var data, int priority = 1024, int delay = 0, int ttr = 86400) -> int|boolean
@@ -545,7 +545,7 @@ class Client
     /**
      * Writes data to the socket.
      * Performs a connection if none is available.
-     * @throws \Beanspeak\Exception
+     * @throws Exception
      */
     public function write(string data) -> int
     {
@@ -583,7 +583,7 @@ class Client
     /**
      * Reads a packet from the socket.
      * Performs a connection if none is available.
-     * @throws \Beanspeak\Exception
+     * @throws Exception
      */
     public function read(int length = 0) -> boolean|string
     {

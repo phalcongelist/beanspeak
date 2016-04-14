@@ -30,7 +30,10 @@ ZEPHIR_INIT_CLASS(Beanspeak_Job) {
 
 	ZEPHIR_REGISTER_CLASS(Beanspeak, Job, beanspeak, job, beanspeak_job_method_entry, 0);
 
-	zend_declare_property_null(beanspeak_job_ce, SL("queue"), ZEND_ACC_PRIVATE TSRMLS_CC);
+	/**
+	 * @var Client
+	 */
+	zend_declare_property_null(beanspeak_job_ce, SL("queue"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
 	/**
 	 * @var string
@@ -113,7 +116,7 @@ PHP_METHOD(Beanspeak_Job, delete) {
 	zephir_check_call_status();
 	_2 = zephir_array_isset_long(response, 0);
 	if (_2) {
-		zephir_array_fetch_long(&_3, response, 0, PH_NOISY | PH_READONLY, "beanspeak/job.zep", 65 TSRMLS_CC);
+		zephir_array_fetch_long(&_3, response, 0, PH_NOISY | PH_READONLY, "beanspeak/job.zep", 68 TSRMLS_CC);
 		_2 = ZEPHIR_IS_STRING(_3, "DELETED");
 	}
 	RETURN_MM_BOOL(_2);
@@ -146,7 +149,7 @@ PHP_METHOD(Beanspeak_Job, touch) {
 	zephir_check_call_status();
 	_2 = zephir_array_isset_long(response, 0);
 	if (_2) {
-		zephir_array_fetch_long(&_3, response, 0, PH_NOISY | PH_READONLY, "beanspeak/job.zep", 84 TSRMLS_CC);
+		zephir_array_fetch_long(&_3, response, 0, PH_NOISY | PH_READONLY, "beanspeak/job.zep", 87 TSRMLS_CC);
 		_2 = ZEPHIR_IS_STRING(_3, "TOUCHED");
 	}
 	RETURN_MM_BOOL(_2);
@@ -197,7 +200,7 @@ PHP_METHOD(Beanspeak_Job, release) {
 	zephir_check_call_status();
 	_4 = zephir_array_isset_long(response, 0);
 	if (_4) {
-		zephir_array_fetch_long(&_5, response, 0, PH_NOISY | PH_READONLY, "beanspeak/job.zep", 105 TSRMLS_CC);
+		zephir_array_fetch_long(&_5, response, 0, PH_NOISY | PH_READONLY, "beanspeak/job.zep", 108 TSRMLS_CC);
 		_4 = ZEPHIR_IS_STRING(_5, "RELEASED");
 	}
 	RETURN_MM_BOOL(_4);
@@ -240,7 +243,7 @@ PHP_METHOD(Beanspeak_Job, bury) {
 	zephir_check_call_status();
 	_3 = zephir_array_isset_long(response, 0);
 	if (_3) {
-		zephir_array_fetch_long(&_4, response, 0, PH_NOISY | PH_READONLY, "beanspeak/job.zep", 124 TSRMLS_CC);
+		zephir_array_fetch_long(&_4, response, 0, PH_NOISY | PH_READONLY, "beanspeak/job.zep", 127 TSRMLS_CC);
 		_3 = ZEPHIR_IS_STRING(_4, "BURIED");
 	}
 	RETURN_MM_BOOL(_3);
@@ -270,11 +273,11 @@ PHP_METHOD(Beanspeak_Job, stats) {
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&response, queue, "readyaml", NULL, 0);
 	zephir_check_call_status();
-	zephir_array_fetch_long(&_2, response, 0, PH_NOISY | PH_READONLY, "beanspeak/job.zep", 142 TSRMLS_CC);
+	zephir_array_fetch_long(&_2, response, 0, PH_NOISY | PH_READONLY, "beanspeak/job.zep", 145 TSRMLS_CC);
 	if (!ZEPHIR_IS_STRING(_2, "OK")) {
 		RETURN_MM_BOOL(0);
 	}
-	zephir_array_fetch_long(&_3, response, 2, PH_NOISY | PH_READONLY, "beanspeak/job.zep", 146 TSRMLS_CC);
+	zephir_array_fetch_long(&_3, response, 2, PH_NOISY | PH_READONLY, "beanspeak/job.zep", 149 TSRMLS_CC);
 	RETURN_CTOR(_3);
 
 }
@@ -305,7 +308,7 @@ PHP_METHOD(Beanspeak_Job, kick) {
 	zephir_check_call_status();
 	_2 = zephir_array_isset_long(response, 0);
 	if (_2) {
-		zephir_array_fetch_long(&_3, response, 0, PH_NOISY | PH_READONLY, "beanspeak/job.zep", 165 TSRMLS_CC);
+		zephir_array_fetch_long(&_3, response, 0, PH_NOISY | PH_READONLY, "beanspeak/job.zep", 168 TSRMLS_CC);
 		_2 = ZEPHIR_IS_STRING(_3, "KICKED");
 	}
 	RETURN_MM_BOOL(_2);
@@ -324,7 +327,7 @@ PHP_METHOD(Beanspeak_Job, __wakeup) {
 	ZEPHIR_OBS_VAR(_0);
 	zephir_read_property_this(&_0, this_ptr, SL("id"), PH_NOISY_CC);
 	if (Z_TYPE_P(_0) != IS_STRING) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_exception_ce, "Unexpected inconsistency in Beanspeak\\Job::__wakeup() - possible break-in attempt!", "beanspeak/job.zep", 174);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_exception_ce, "Unexpected inconsistency in Beanspeak\\Job::__wakeup() - possible break-in attempt!", "beanspeak/job.zep", 177);
 		return;
 	}
 	ZEPHIR_MM_RESTORE();

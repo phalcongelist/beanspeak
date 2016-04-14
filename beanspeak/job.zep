@@ -24,7 +24,10 @@ namespace Beanspeak;
  */
 class Job
 {
-    private queue;
+    /**
+     * @var Client
+     */
+    protected queue;
 
     /**
      * @var string

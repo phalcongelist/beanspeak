@@ -104,7 +104,7 @@ PHP_METHOD(Beanspeak_Client, __construct) {
  * Which means it can wait an unlimited amount of time until a packet
  * becomes available.
  *
- * @throws \Beanspeak\Exception
+ * @throws Exception
  */
 PHP_METHOD(Beanspeak_Client, connect) {
 
@@ -210,7 +210,7 @@ PHP_METHOD(Beanspeak_Client, __destruct) {
  * Will throw an exception if closing the connection fails, to allow
  * handling the then undefined state.
  *
- * @throws \Beanspeak\Exception
+ * @throws Exception
  */
 PHP_METHOD(Beanspeak_Client, disconnect) {
 
@@ -262,7 +262,7 @@ PHP_METHOD(Beanspeak_Client, isConnected) {
  *     'content'   => $content,
  * ];
  *
- * $put = $ueue->pit($task, 999, 60 * 60, 3600);
+ * $put = $queue->pit($task, 999, 60 * 60, 3600);
  * </code>
  */
 PHP_METHOD(Beanspeak_Client, put) {
@@ -1040,7 +1040,7 @@ PHP_METHOD(Beanspeak_Client, quit) {
 /**
  * Writes data to the socket.
  * Performs a connection if none is available.
- * @throws \Beanspeak\Exception
+ * @throws Exception
  */
 PHP_METHOD(Beanspeak_Client, write) {
 
@@ -1112,7 +1112,7 @@ PHP_METHOD(Beanspeak_Client, write) {
 /**
  * Reads a packet from the socket.
  * Performs a connection if none is available.
- * @throws \Beanspeak\Exception
+ * @throws Exception
  */
 PHP_METHOD(Beanspeak_Client, read) {
 
