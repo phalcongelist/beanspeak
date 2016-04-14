@@ -1,3 +1,4 @@
+/ide/
 /.idea/
 /nbproject/
 /vendor/
@@ -8,10 +9,8 @@ composer.phar
 *.o
 *.lo
 *.gch
-*.lo
 *.loT
-*.gch
-.libs
+.libs/
 .DS_Store
 .temp/
 compile-errors.log
@@ -22,12 +21,10 @@ ext/acinclude.m4
 ext/aclocal.m4
 ext/autom4te.cache/
 ext/beanspeak.la
-ext/beanspeak.lo
 ext/build/
 ext/config.guess
 ext/config.h
 ext/config.h.in
-ext/config.lo
 ext/config.log
 ext/config.nice
 ext/config.status

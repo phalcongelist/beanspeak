@@ -31,12 +31,11 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8",
-        "codeception/codeception": ">=2.2.0-beta"
+        "codeception/codeception": ">=2.2.0-RC"
     },
     "autoload-dev": {
         "psr-4": {
-            "Beanspeak\\Test\\Unit\\": "tests/unit/",
-            "Beanspeak\\Test\\Module\\": "tests/_support/Module/"
+            "Beanspeak\\Test\\Unit\\": "tests/unit/"
         }
     },
     "suggest": {

@@ -13,4 +13,12 @@
 #
 #  Authors: Serghei Iakovlev <serghei@phalconphp.com>
 
-docker run -d --net=beanstalk_nw --name=beanstalk_srv phalconphp/beanstalkd:1.10 sh -c "beanstalkd -l 0.0.0.0 -p 11300"
+docker_bin="$(which docker.io 2> /dev/null || which docker 2> /dev/null)"
+
+${docker_bin} run -d \
+    --restart=always \
+    --expose=11300 \
+    --net=beanstalk_nw \
+    --name beanstalk_srv \
+    --publish="11300:11300" \
+    phalconphp/beanstalkd:1.10 sh -c "beanstalkd -l 0.0.0.0 -p 11300"

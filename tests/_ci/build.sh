@@ -12,25 +12,32 @@
 #  to license@phalconphp.com so we can send you a copy immediately.
 #
 #  Authors: Serghei Iakovlev <serghei@phalconphp.com>
+#
+#  HOW TO USE IT:
+#
+#  1) Create network
+#  docker network create --driver bridge beanstalk_nw
+#
+#  2) Run beanstalkd
+#  docker run -d --net=beanstalk_nw --name beanstalk_srv phalconphp/beanstalkd:1.10 sh -c "beanstalkd -l 0.0.0.0 -p 11300"
+#
 
-# First create network
-# docker network create --driver bridge beanstalk_nw
-
-# Then run beanstalkd
-# docker run -d --net=beanstalk_nw --name=beanstalk_srv phalconphp/beanstalkd:1.10 sh -c "beanstalkd -l 0.0.0.0 -p 11300"
+docker_bin="$(which docker.io 2> /dev/null || which docker 2> /dev/null)"
 
 [ -z "$PHP_VERSION" ] && echo "Need to set PHP_VERSION variable. Fox example: 'export PHP_VERSION=7'" && exit 1;
-[ -z "$TEST_BT_HOST" ] && TEST_BT_HOST=`docker inspect -f '{{ .NetworkSettings.Networks.beanstalk_nw.IPAddress }}' beanstalk_srv`
+[ -z "$TEST_BT_HOST" ] && TEST_BT_HOST="beanstalk_srv"
 [ -z "$TRAVIS_BUILD_DIR" ] && TRAVIS_BUILD_DIR=$(cd $(dirname "$1") && pwd -P)/$(basename "$1")
 
-# Then run
-docker run -it --rm \
+chmod +x ${TRAVIS_BUILD_DIR}/tests/_ci/entrypoint.sh
+
+#  3) Run tests
+${docker_bin} run -it --rm \
   --entrypoint /entrypoint.sh \
   --privileged=true \
   --net=beanstalk_nw \
   -e TEST_BT_HOST="${TEST_BT_HOST}" \
   -e PHP_VERSION="${PHP_VERSION}" \
-  --name=test-beanspeak-${PHP_VERSION} \
+  --name test-beanspeak-${PHP_VERSION} \
   -v ${TRAVIS_BUILD_DIR}/tests/_ci/backtrace.sh:/backtrace.sh \
   -v ${TRAVIS_BUILD_DIR}/tests/_ci/entrypoint.sh:/entrypoint.sh \
   -v ${TRAVIS_BUILD_DIR}/vendor:/app/vendor \

@@ -487,20 +487,27 @@ class Client
      * <code>
      * $tube = $queue->listTubeUsed();
      * </code>
+     *
+     * @throws Exception
      */
-    public function listTubeUsed() -> boolean|string
+    public function listTubeUsed(boolean ask = false) -> string
     {
         var response;
+
+        if !ask {
+            return this->usedTube;
+        }
 
         this->write("list-tube-used");
 
         let response = this->readStatus();
 
         if isset response[1] && response[0] == "USING" {
+            let this->usedTube = response[1];
             return response[1];
         }
 
-        return false;
+        throw new Exception("Unhandled response form beanstalkd server: " . join(" ", response));
     }
 
     /**
