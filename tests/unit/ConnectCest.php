@@ -5,6 +5,7 @@ namespace Beanspeak\Test\Unit;
 use UnitTester;
 use Beanspeak\Client;
 use Beanspeak\Exception;
+use Codeception\Exception\ConnectionException;
 
 /**
  * \Beanspeak\Test\Unit\ConnectCest
@@ -24,6 +25,15 @@ use Beanspeak\Exception;
  */
 class ConnectCest
 {
+    public function _before(UnitTester $I)
+    {
+        if (!defined('TEST_BT_HOST') || !defined('TEST_BT_PORT')) {
+            throw new ConnectionException(
+                'TEST_BT_HOST and/or TEST_BT_PORT env variables are not defined.'
+            );
+        }
+    }
+
     public function testPersistentConnection(UnitTester $I)
     {
         $client = new Client([
