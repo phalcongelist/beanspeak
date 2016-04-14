@@ -27,14 +27,14 @@ class ConnectCest
 {
     public function _before(UnitTester $I)
     {
-        if (!defined('TEST_BT_HOST') || defined('TEST_BT_PORT')) {
+        if (!defined('TEST_BT_HOST') || !defined('TEST_BT_PORT')) {
             throw new SkipException(
                 'TEST_BT_HOST and/or TEST_BT_PORT env variables are not defined.'
             );
         }
     }
 
-    public function testPersistentConnection(UnitTester $I)
+    public function persistentConnection(UnitTester $I)
     {
         $I->wantTo('connect to beanstalkd server by using persistent connection');
 
@@ -55,7 +55,7 @@ class ConnectCest
         $I->assertFalse($client->isConnected());
     }
 
-    public function testNonPersistentConnection(UnitTester $I)
+    public function nonPersistentConnection(UnitTester $I)
     {
         $I->wantTo('connect to beanstalkd server by using non persistent connection');
 
@@ -77,7 +77,7 @@ class ConnectCest
         $I->assertFalse($client->isConnected());
     }
 
-    public function testConnectionFailsToIncorrectPort(UnitTester $I)
+    public function failsToIncorrectPort(UnitTester $I)
     {
         $I->wantTo('catch exception with desired message when connect with invalid port');
 
@@ -95,7 +95,7 @@ class ConnectCest
         );
     }
 
-    public function testConnectionFailsToIncorrectHost(UnitTester $I)
+    public function failsIncorrectHost(UnitTester $I)
     {
         $I->wantTo('catch exception when connect with invalid host');
 
