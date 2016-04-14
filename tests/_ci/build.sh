@@ -12,12 +12,15 @@
 #  to license@phalconphp.com so we can send you a copy immediately.
 #
 #  Authors: Serghei Iakovlev <serghei@phalconphp.com>
-
-# First create network
-# docker network create --driver bridge beanstalk_nw
-
-# Then run beanstalkd
-# docker run -d --net=beanstalk_nw --name beanstalk_srv phalconphp/beanstalkd:1.10 sh -c "beanstalkd -l 0.0.0.0 -p 11300"
+#
+#  HOW TO USE IT:
+#
+#  1) Create network
+#  docker network create --driver bridge beanstalk_nw
+#
+#  2) Run beanstalkd
+#  docker run -d --net=beanstalk_nw --name beanstalk_srv phalconphp/beanstalkd:1.10 sh -c "beanstalkd -l 0.0.0.0 -p 11300"
+#
 
 docker_bin="$(which docker.io 2> /dev/null || which docker 2> /dev/null)"
 
@@ -25,7 +28,9 @@ docker_bin="$(which docker.io 2> /dev/null || which docker 2> /dev/null)"
 [ -z "$TEST_BT_HOST" ] && TEST_BT_HOST="beanstalk_srv"
 [ -z "$TRAVIS_BUILD_DIR" ] && TRAVIS_BUILD_DIR=$(cd $(dirname "$1") && pwd -P)/$(basename "$1")
 
-# Then run
+chmod +x ${TRAVIS_BUILD_DIR}/tests/_ci/entrypoint.sh
+
+#  3) Run tests
 ${docker_bin} run -it --rm \
   --entrypoint /entrypoint.sh \
   --privileged=true \
