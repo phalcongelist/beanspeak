@@ -46,7 +46,7 @@ echo -e ""
 
 result_codecept=$?
 
-if [ $result_codecept -ne 0 ]; then
+if [ ${result_codecept} -ne 0 ]; then
   bash /backtrace.sh
   [[ "$PHP_VERSION" == "7" ]] || exit 1;
   # Allow failures for PHP 7
