@@ -17,4 +17,7 @@ docker_bin="$(which docker.io 2> /dev/null || which docker 2> /dev/null)"
 
 [ -z "$PHP_VERSION" ] && echo "Need to set PHP_VERSION variable. Fox example: 'export PHP_VERSION=7'" && exit 1;
 
-${docker_bin} run -it --rm -e ZEND_DONT_UNLOAD_MODULES=1 -v $(pwd):/zephir phalconphp/zephir:${PHP_VERSION} "$@"
+${docker_bin} run -it --rm \
+    -e ZEND_DONT_UNLOAD_MODULES=1 \
+    -v $(pwd):/zephir \
+    phalconphp/zephir:${PHP_VERSION} "$@"

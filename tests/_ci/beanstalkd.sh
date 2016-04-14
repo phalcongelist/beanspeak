@@ -15,4 +15,7 @@
 
 docker_bin="$(which docker.io 2> /dev/null || which docker 2> /dev/null)"
 
-${docker_bin} run -d --net=beanstalk_nw --name=beanstalk_srv phalconphp/beanstalkd:1.10 sh -c "beanstalkd -l 0.0.0.0 -p 11300"
+${docker_bin} run -d \
+    --net=beanstalk_nw \
+    --name beanstalk_srv \
+    phalconphp/beanstalkd:1.10 sh -c "beanstalkd -l 0.0.0.0 -p 11300"

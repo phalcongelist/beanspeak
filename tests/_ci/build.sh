@@ -32,7 +32,7 @@ ${docker_bin} run -it --rm \
   --net=beanstalk_nw \
   -e TEST_BT_HOST="${TEST_BT_HOST}" \
   -e PHP_VERSION="${PHP_VERSION}" \
-  --name=test-beanspeak-${PHP_VERSION} \
+  --name test-beanspeak-${PHP_VERSION} \
   -v ${TRAVIS_BUILD_DIR}/tests/_ci/backtrace.sh:/backtrace.sh \
   -v ${TRAVIS_BUILD_DIR}/tests/_ci/entrypoint.sh:/entrypoint.sh \
   -v ${TRAVIS_BUILD_DIR}/vendor:/app/vendor \

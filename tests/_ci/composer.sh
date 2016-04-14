@@ -20,10 +20,11 @@ mkdir -p ${HOME}/.composer
 docker_bin="$(which docker.io 2> /dev/null || which docker 2> /dev/null)"
 
 [ -z "$PHP_VERSION" ] && echo "Need to set PHP_VERSION variable. Fox example: 'export PHP_VERSION=7'" && exit 1;
+[ -z "$TRAVIS_BUILD_DIR" ] && TRAVIS_BUILD_DIR=$(cd $(dirname "$1") && pwd -P)/$(basename "$1")
 
 ${docker_bin} run -it --rm \
-  --name=composer-${PHP_VERSION} \
-  -v $(pwd):/app \
+  --name composer-${PHP_VERSION} \
+  -v $TRAVIS_BUILD_DIR:/app \
   -v ${HOME}/.ssh:/root/.ssh \
   -v ${HOME}/.composer:/root/composer \
   phalconphp/composer:${PHP_VERSION} "$@"
