@@ -4,7 +4,7 @@
     "description": "Client for Beanstalk delivered as a C-extension for PHP",
     "author": "Phalcon Team and contributors",
     "version": "1.0.0-alpha",
-    "verbose": false,
+    "verbose": true,
     "requires": {
         "extensions": []
     },
@@ -13,11 +13,11 @@
         "stubs-run-after-generate": false
     },
     "api": {
-        "path": "doc\/%version%",
+        "path": "docs\/%version%",
         "theme": {
             "name": "zephir",
             "options": {
-                "github": null,
+                "github": "https://github.com/phalcongelist/beanspeak",
                 "analytics": null,
                 "main_color": "#3E6496",
                 "link_color": "#3E6496",
