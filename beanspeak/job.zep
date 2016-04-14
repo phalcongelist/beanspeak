@@ -58,9 +58,7 @@ class Job
         var queue, response;
 
         let queue = this->queue;
-        if !queue->write("delete " . this->id) {
-            return false;
-        }
+        queue->write("delete " . this->id);
 
         let response = queue->readStatus();
 
@@ -79,9 +77,7 @@ class Job
         var queue, response;
 
         let queue = this->queue;
-        if !queue->write("touch " . this->id) {
-            return false;
-        }
+        queue->write("touch " . this->id);
 
         let response = queue->readStatus();
 
@@ -102,9 +98,7 @@ class Job
         var queue, response;
 
         let queue = this->queue;
-        if !queue->write("release " . this->id . " " . priority . " " . delay) {
-            return false;
-        }
+        queue->write("release " . this->id . " " . priority . " " . delay);
 
         let response = queue->readStatus();
 
@@ -123,9 +117,7 @@ class Job
         var queue, response;
 
         let queue = this->queue;
-        if !queue->write("bury " . this->id . " " . priority) {
-            return false;
-        }
+        queue->write("bury " . this->id . " " . priority);
 
         let response = queue->readStatus();
 
@@ -144,9 +136,7 @@ class Job
         var queue, response;
 
         let queue = this->queue;
-        if !queue->write("stats-job " . this->id) {
-            return false;
-        }
+        queue->write("stats-job " . this->id);
 
         let response = queue->readYaml();
         if response[0] != "OK" {
@@ -168,9 +158,7 @@ class Job
         var queue, response;
 
         let queue = this->queue;
-        if !queue->write("kick-job " . this->id) {
-            return false;
-        }
+        queue->write("kick-job " . this->id);
 
         let response = queue->readStatus();
 

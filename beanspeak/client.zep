@@ -170,9 +170,7 @@ class Client
         let serialized = serialize(data),
             length     = strlen(serialized);
 
-        if !this->write("put " . priority . " " . delay . " " . ttr . " " . length . "\r\n" . serialized) {
-            return false;
-        }
+        this->write("put " . priority . " " . delay . " " . ttr . " " . length . "\r\n" . serialized);
 
         let response = this->readStatus();
 
@@ -227,9 +225,7 @@ class Client
     {
         var response, status;
 
-        if !this->write("use " . tube) {
-            return false;
-        }
+        this->write("use " . tube);
 
         let response = this->readStatus();
 
@@ -255,9 +251,7 @@ class Client
     {
         var response;
 
-        if !this->write("peek " . id) {
-            return false;
-        }
+        this->write("peek " . id);
 
         let response = this->readStatus();
         if isset response[2] && response[0] == "FOUND" {
@@ -278,9 +272,7 @@ class Client
     {
         var response;
 
-        if !this->write("peek-delayed") {
-            return false;
-        }
+        this->write("peek-delayed");
 
         let response = this->readStatus();
         if isset response[2] && response[0] == "FOUND" {
@@ -301,9 +293,7 @@ class Client
     {
         var response;
 
-        if !this->write("peek-buried") {
-            return false;
-        }
+        this->write("peek-buried");
 
         let response = this->readStatus();
         if isset response[2] && response[0] == "FOUND" {
@@ -324,9 +314,7 @@ class Client
     {
         var response;
 
-        if !this->write("peek-ready") {
-            return false;
-        }
+        this->write("peek-ready");
 
         let response = this->readStatus();
         if isset response[2] && response[0] == "FOUND" {
@@ -348,9 +336,7 @@ class Client
     {
         var response;
 
-        if !this->write("kick " . bound) {
-            return false;
-        }
+        this->write("kick " . bound);
 
         let response = this->readStatus();
         if isset response[1] && response[0] == "KICKED" {
@@ -371,9 +357,7 @@ class Client
     {
         var response;
 
-        if !this->write("watch " . tube) {
-            return false;
-        }
+        this->write("watch " . tube);
 
         let response = this->readStatus();
         if isset response[1] && response[0] == "WATCHING" {
@@ -394,9 +378,7 @@ class Client
     {
         var response;
 
-        if !this->write("ignore " . tube) {
-            return false;
-        }
+        this->write("ignore " . tube);
 
         let response = this->readStatus();
         if isset response[1] && response[0] == "WATCHING" {
@@ -417,9 +399,7 @@ class Client
     {
         var response;
 
-        if !this->write("stats") {
-            return false;
-        }
+        this->write("stats");
 
         let response = this->readYaml();
         if response[0] != "OK" {
@@ -440,9 +420,7 @@ class Client
     {
         var response;
 
-        if !this->write("stats-tube " . tube) {
-            return false;
-        }
+        this->write("stats-tube " . tube);
 
         let response = this->readYaml();
         if response[0] != "OK" {
@@ -463,9 +441,7 @@ class Client
     {
         var response;
 
-        if !this->write("list-tubes") {
-            return false;
-        }
+        this->write("list-tubes");
 
         let response = this->readYaml();
         if response[0] != "OK" {
@@ -486,9 +462,7 @@ class Client
     {
         var response;
 
-        if !this->write("list-tube-used") {
-            return false;
-        }
+        this->write("list-tube-used");
 
         let response = this->readStatus();
 
@@ -510,9 +484,7 @@ class Client
     {
         var response;
 
-        if !this->write("list-tubes-watched") {
-            return false;
-        }
+        this->write("list-tubes-watched");
 
         let response = this->readYaml();
         if response[0] != "OK" {
@@ -533,9 +505,7 @@ class Client
     {
         var response;
 
-        if !this->write("pause-tube " . tube . " " . delay) {
-            return false;
-        }
+        this->write("pause-tube " . tube . " " . delay);
 
         let response = this->readStatus();
         if !isset response[0] || response[0] != "PAUSED" {
@@ -601,7 +571,7 @@ class Client
             let step++;
 
             if step >= retries && !written {
-                throw new Exception("Failed to write data to socket after " . retries . " tries");
+                throw new Exception("Failed to write data to socket after " . retries . " tries.");
             }
 
             let written += fwrite(socket, substr(data, written));
