@@ -41,8 +41,23 @@ namespace Beanspeak;
  */
 class Client
 {
+    /**
+     * The current socket connection.
+     * @var resource
+     */
     protected socket;
+
+    /**
+     * The current connection options.
+     * @var array
+     */
     protected options = [];
+
+    /**
+     * The current used tube
+     * @var string
+     */
+    protected usedTube = "default" { get } ;
 
     /**
      * Beanspeak\Client constructor
@@ -75,7 +90,7 @@ class Client
      */
     public function connect() -> resource
     {
-        var e, options, socket;
+        var e, options, socket, usedTube;
 
         if this->isConnected() {
             this->disconnect();
@@ -100,7 +115,12 @@ class Client
 
         stream_set_timeout(socket, -1, null);
 
-        let this->socket = socket;
+        let this->socket = socket,
+            usedTube     = this->usedTube;
+
+        if usedTube != "default" {
+            this->useTube(usedTube);
+        }
 
         return socket;
     }
@@ -220,24 +240,34 @@ class Client
      * <code>
      * $queue->useTube('mail-queue');
      * </code>
+     *
+     * @throws Exception
      */
-    public function useTube(string! tube) -> boolean|<Client>
+    public function useTube(string! tube) -> <Client>
     {
-        var response, status;
+        var response, status, used;
+
+        let used = this->usedTube;
+        if used == tube {
+            return this;
+        }
 
         this->write("use " . tube);
 
         let response = this->readStatus();
 
-        if isset response[1] {
+        if isset response[1] && response[0] == "USING" {
             let status = response[0];
 
             if status == "USING" {
+                let this->usedTube = tube;
                 return this;
             }
         }
 
-        return false;
+        throw new Exception(
+            "Unable to change the active tube. Server response: ". join(" ", response)
+        );
     }
 
     /**

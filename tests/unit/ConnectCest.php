@@ -49,7 +49,7 @@ class ConnectCest
         $I->assertTrue(is_resource($client->connect()));
         $I->assertTrue($client->isConnected());
 
-        $client->useTube('test');
+        $I->assertInstanceOf('\Beanspeak\Client', $client->useTube('test'));
 
         $I->assertTrue($client->disconnect());
         $I->assertFalse($client->isConnected());
@@ -71,7 +71,7 @@ class ConnectCest
         $I->assertTrue(is_resource($client->connect()));
         $I->assertTrue($client->isConnected());
 
-        $client->useTube('test');
+        $I->assertInstanceOf('\Beanspeak\Client', $client->useTube('test'));
 
         $I->assertTrue($client->disconnect());
         $I->assertFalse($client->isConnected());
