@@ -54,10 +54,16 @@ class Client
     protected options = [];
 
     /**
-     * The current used tube
+     * The current used tube.
      * @var string
      */
     protected usedTube = "default" { get } ;
+
+    /**
+     * The current watched tubes.
+     * @var array
+     */
+    protected watchedTubes = [ "default" : true ] { get } ;
 
     /**
      * Beanspeak\Client constructor
@@ -404,18 +410,29 @@ class Client
      * $count = $queue->ignore('tube-name);
      * </code>
      */
-    public function ignore(string! tube) -> boolean|int
+    public function ignore(string! tube) -> <Client>
     {
-        var response;
+        var response, watchedTubes;
 
-        this->write("ignore " . tube);
+        let watchedTubes = this->watchedTubes;
 
-        let response = this->readStatus();
-        if isset response[1] && response[0] == "WATCHING" {
-            return (int) response[1];
+        if  isset watchedTubes[tube] {
+            this->write("ignore " . tube);
+
+            let response = this->readStatus();
+            if response[0] == "NOT_IGNORED" {
+                throw new Exception("Cannot ignore last tube in watchlist.");
+            }
+
+            if !isset response[1] || response[0] == "WATCHING" {
+                throw new Exception("Unhandled response: " . join(" ", response));
+            }
+
+            unset(watchedTubes[tube]);
+            let this->watchedTubes = watchedTubes;
         }
 
-        return false;
+        return this;
     }
 
     /**
