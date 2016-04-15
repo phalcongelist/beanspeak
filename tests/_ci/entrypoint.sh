@@ -42,7 +42,7 @@ echo -e "${GREEN}Beanspeak${NC}   version ${YELLOW}${BEANSPEAK_VERSION}${NC}"
 /app/vendor/bin/codecept build &> /dev/null
 
 echo -e ""
-/app/vendor/bin/codecept run -v
+/app/vendor/bin/codecept run "${RUN_ARGS}"
 
 result_codecept=$?
 

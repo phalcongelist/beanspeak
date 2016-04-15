@@ -24,6 +24,13 @@
 
 docker_bin="$(which docker.io 2> /dev/null || which docker 2> /dev/null)"
 
+#  Abbility to run tests as:
+#  build.sh relative/path/to/the/test.php
+#  or
+#  build.sh "relative/path/to/the/test.php --debug"
+RUN_ARGS="$@"
+shift
+
 [ -z "$PHP_VERSION" ] && echo "Need to set PHP_VERSION variable. Fox example: 'export PHP_VERSION=7'" && exit 1;
 [ -z "$TEST_BT_HOST" ] && TEST_BT_HOST="beanstalk_srv"
 [ -z "$TRAVIS_BUILD_DIR" ] && TRAVIS_BUILD_DIR=$(cd $(dirname "$1") && pwd -P)/$(basename "$1")
@@ -37,6 +44,7 @@ ${docker_bin} run -it --rm \
   --net=beanstalk_nw \
   -e TEST_BT_HOST="${TEST_BT_HOST}" \
   -e PHP_VERSION="${PHP_VERSION}" \
+  -e RUN_ARGS="${RUN_ARGS}" \
   --name test-beanspeak-${PHP_VERSION} \
   -v ${TRAVIS_BUILD_DIR}/tests/_ci/backtrace.sh:/backtrace.sh \
   -v ${TRAVIS_BUILD_DIR}/tests/_ci/entrypoint.sh:/entrypoint.sh \

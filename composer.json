@@ -38,6 +38,11 @@
             "Beanspeak\\Test\\Unit\\": "tests/unit/"
         }
     },
+    "scripts": {
+        "post-update-cmd": [
+            "php vendor/bin/codecept build"
+        ]
+    },
     "suggest": {
         "ext-yaml" : "Best way to parse beanstalkd YAML-response"
     }
