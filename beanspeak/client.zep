@@ -409,6 +409,8 @@ class Client
      * <code>
      * $count = $queue->ignore('tube-name);
      * </code>
+     *
+     * @throws Exception
      */
     public function ignore(string! tube) -> <Client>
     {
@@ -502,7 +504,8 @@ class Client
      * Returns the tube currently being used by the client.
      *
      * <code>
-     * $tube = $queue->listTubeUsed();
+     * $tube = $queue->listTubeUsed(); // local cache
+     * $tube = $queue->listTubeUsed(); // ask server
      * </code>
      *
      * @throws Exception
@@ -531,21 +534,30 @@ class Client
      * Returns a list tubes currently being watched by the client.
      *
      * <code>
-     * $tubes = $queue->listTubesWatched();
+     * $tubes = $queue->listTubesWatched(); // local cache
+     * $tubes = $queue->listTubesWatched(true); // ask server
      * </code>
+     *
+     * @throws Exception
      */
-    public function listTubesWatched() -> boolean|array
+    public function listTubesWatched(boolean ask = false) -> array
     {
         var response;
+
+        if !ask {
+            return array_keys(this->watchedTubes);
+        }
 
         this->write("list-tubes-watched");
 
         let response = this->readYaml();
         if response[0] != "OK" {
-            return false;
+            throw new Exception("Unhandled response form beanstalkd server: " . join(" ", response));
         }
 
-        return response[2];
+        let this->watchedTubes = array_fill_keys(response[2], true);
+
+        return this->watchedTubes;
     }
 
     /**
