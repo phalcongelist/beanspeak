@@ -3,8 +3,6 @@ extern zend_class_entry *beanspeak_client_ce;
 
 ZEPHIR_INIT_CLASS(Beanspeak_Client);
 
-PHP_METHOD(Beanspeak_Client, getUsedTube);
-PHP_METHOD(Beanspeak_Client, getWatchedTubes);
 PHP_METHOD(Beanspeak_Client, __construct);
 PHP_METHOD(Beanspeak_Client, connect);
 PHP_METHOD(Beanspeak_Client, __destruct);
@@ -104,8 +102,6 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_client_read, 0, 0, 0)
 ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(beanspeak_client_method_entry) {
-	PHP_ME(Beanspeak_Client, getUsedTube, NULL, ZEND_ACC_PUBLIC)
-	PHP_ME(Beanspeak_Client, getWatchedTubes, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Client, __construct, arginfo_beanspeak_client___construct, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
 	PHP_ME(Beanspeak_Client, connect, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Client, __destruct, NULL, ZEND_ACC_PUBLIC|ZEND_ACC_DTOR)

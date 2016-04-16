@@ -57,13 +57,13 @@ class Client
      * The current used tube.
      * @var string
      */
-    protected usedTube = "default" { get } ;
+    protected usedTube = "default";
 
     /**
      * The current watched tubes.
      * @var array
      */
-    protected watchedTubes = [ "default" : true ] { get } ;
+    protected watchedTubes = [ "default" : true ];
 
     /**
      * Beanspeak\Client constructor
@@ -388,19 +388,26 @@ class Client
      * <code>
      * $count = $queue->watch($tube);
      * </code>
+     *
+     * @throws Exception
      */
-    public function watch(string! tube) -> boolean|int
+    public function watch(string! tube) -> <Client>
     {
-        var response;
+        var response, watchedTubes;
 
-        this->write("watch " . tube);
+        let watchedTubes = this->watchedTubes;
+        if !isset watchedTubes[tube] {
+            this->write("watch " . tube);
 
-        let response = this->readStatus();
-        if isset response[1] && response[0] == "WATCHING" {
-            return (int) response[1];
+            let response = this->readStatus();
+            if !isset response[1] || response[0] != "WATCHING" {
+                throw new Exception("Unhandled response: " . join(" ", response));
+            }
+
+            let this->watchedTubes[tube] = true;
         }
 
-        return false;
+        return this;
     }
 
     /**
