@@ -12,9 +12,9 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/object.h"
 #include "kernel/memory.h"
 #include "kernel/array.h"
+#include "kernel/object.h"
 #include "kernel/operators.h"
 #include "kernel/fcall.h"
 #include "kernel/exception.h"
@@ -77,28 +77,6 @@ ZEPHIR_INIT_CLASS(Beanspeak_Client) {
 
 	beanspeak_client_ce->create_object = zephir_init_properties_Beanspeak_Client;
 	return SUCCESS;
-
-}
-
-/**
- * The current used tube.
- */
-PHP_METHOD(Beanspeak_Client, getUsedTube) {
-
-	
-
-	RETURN_MEMBER(this_ptr, "usedTube");
-
-}
-
-/**
- * The current watched tubes.
- */
-PHP_METHOD(Beanspeak_Client, getWatchedTubes) {
-
-	
-
-	RETURN_MEMBER(this_ptr, "watchedTubes");
 
 }
 

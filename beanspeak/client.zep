@@ -57,13 +57,13 @@ class Client
      * The current used tube.
      * @var string
      */
-    protected usedTube = "default" { get } ;
+    protected usedTube = "default";
 
     /**
      * The current watched tubes.
      * @var array
      */
-    protected watchedTubes = [ "default" : true ] { get } ;
+    protected watchedTubes = [ "default" : true ];
 
     /**
      * Beanspeak\Client constructor
