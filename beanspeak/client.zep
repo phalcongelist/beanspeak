@@ -96,7 +96,7 @@ class Client
      */
     public function connect() -> resource
     {
-        var e, options, socket, usedTube, watchedTubes, tube;
+        var e, options, socket, usedTube, tube;
 
         if this->isConnected() {
             this->disconnect();
@@ -118,25 +118,23 @@ class Client
             throw new Exception(e->getMessage());
         }
 
-
         stream_set_timeout(socket, -1, null);
 
         let this->socket = socket,
-            watchedTubes = this->watchedTubes,
             usedTube     = this->usedTube;
 
         if usedTube != "default" {
             this->useTube(usedTube);
         }
 
-        for tube, _ in watchedTubes {
+        for tube, _ in this->watchedTubes {
             if tube != "default" {
                 unset(this->watchedTubes[tube]);
                 this->watch(tube);
             }
         }
 
-        if !isset watchedTubes["default"] {
+        if !isset this->watchedTubes["default"] {
             this->ignore("default");
         }
 
