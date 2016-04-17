@@ -383,7 +383,7 @@ class Client
     }
 
     /**
-     * Adds the named tube to the watch list for the current connection.
+     * Adds the named tube to the watch list, to reserve jobs from.
      *
      * <code>
      * $count = $queue->watch($tube);
@@ -405,6 +405,33 @@ class Client
             }
 
             let this->watchedTubes[tube] = true;
+        }
+
+        return this;
+    }
+
+    /**
+    * Adds the named tube to the watch list, to reserve jobs from, and
+    * ignores any other tubes remaining on the watchlist.
+    *
+    * <code>
+    * $count = $queue->watchOnly($tube);
+    * </code>
+    *
+    * @throws Exception
+    */
+    public function watchOnly(string! tube) -> <Client>
+    {
+        var ignoreTubes, watchedTubes, ignoreTube;
+        array watchTube = [ tube : true ];
+
+        this->watch(tube);
+
+        let watchedTubes = this->watchedTubes,
+            ignoreTubes  = array_keys(array_diff_key(watchedTubes, watchTube));
+
+        for ignoreTube in ignoreTubes {
+            this->ignore(ignoreTube);
         }
 
         return this;
