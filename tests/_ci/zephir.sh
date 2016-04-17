@@ -21,3 +21,8 @@ ${docker_bin} run -it --rm \
     -e ZEND_DONT_UNLOAD_MODULES=1 \
     -v $(pwd):/zephir \
     phalconphp/zephir:${PHP_VERSION} "$@"
+
+build_extension=$?
+if [ ${build_extension} -ne 0 ]; then
+    cat compile-errors.log
+fi

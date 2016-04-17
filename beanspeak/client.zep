@@ -96,7 +96,7 @@ class Client
      */
     public function connect() -> resource
     {
-        var e, options, socket, usedTube;
+        var e, options, socket, usedTube, tube;
 
         if this->isConnected() {
             this->disconnect();
@@ -118,7 +118,6 @@ class Client
             throw new Exception(e->getMessage());
         }
 
-
         stream_set_timeout(socket, -1, null);
 
         let this->socket = socket,
@@ -126,6 +125,17 @@ class Client
 
         if usedTube != "default" {
             this->useTube(usedTube);
+        }
+
+        for tube, _ in this->watchedTubes {
+            if tube != "default" {
+                unset(this->watchedTubes[tube]);
+                this->watch(tube);
+            }
+        }
+
+        if !isset this->watchedTubes["default"] {
+            this->ignore("default");
         }
 
         return socket;
@@ -162,7 +172,9 @@ class Client
             throw new Exception("Failed to close connection.");
         }
 
-        let this->socket = null;
+        let this->socket       = null,
+            this->usedTube     = "default",
+            this->watchedTubes = [ "default" : true ];
 
         return true;
     }
@@ -383,7 +395,7 @@ class Client
     }
 
     /**
-     * Adds the named tube to the watch list for the current connection.
+     * Adds the named tube to the watch list, to reserve jobs from.
      *
      * <code>
      * $count = $queue->watch($tube);
@@ -405,6 +417,34 @@ class Client
             }
 
             let this->watchedTubes[tube] = true;
+        }
+
+        return this;
+    }
+
+    /**
+    * Adds the named tube to the watch list, to reserve jobs from, and
+    * ignores any other tubes remaining on the watchlist.
+    *
+    * <code>
+    * $count = $queue->watchOnly($tube);
+    * </code>
+    *
+    * @throws Exception
+    */
+    public function watchOnly(string! tube) -> <Client>
+    {
+        var watchedTubes, watchedTube;
+
+        this->watch(tube);
+
+        let watchedTubes = this->watchedTubes;
+        for watchedTube, _ in watchedTubes {
+            if watchedTube == tube {
+                continue;
+            }
+
+            this->ignore(watchedTube);
         }
 
         return this;
