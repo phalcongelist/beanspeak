@@ -96,7 +96,7 @@ class Client
      */
     public function connect() -> resource
     {
-        var e, options, socket, usedTube;
+        var e, options, socket, usedTube, watchedTubes, tube;
 
         if this->isConnected() {
             this->disconnect();
@@ -122,10 +122,22 @@ class Client
         stream_set_timeout(socket, -1, null);
 
         let this->socket = socket,
+            watchedTubes = this->watchedTubes,
             usedTube     = this->usedTube;
 
         if usedTube != "default" {
             this->useTube(usedTube);
+        }
+
+        for tube, _ in watchedTubes {
+            if tube != "default" {
+                unset(this->watchedTubes[tube]);
+                this->watch(tube);
+            }
+        }
+
+        if !isset watchedTubes["default"] {
+            this->ignore("default");
         }
 
         return socket;
@@ -162,7 +174,9 @@ class Client
             throw new Exception("Failed to close connection.");
         }
 
-        let this->socket = null;
+        let this->socket       = null,
+            this->usedTube     = "default",
+            this->watchedTubes = [ "default" : true ];
 
         return true;
     }
@@ -422,16 +436,17 @@ class Client
     */
     public function watchOnly(string! tube) -> <Client>
     {
-        var ignoreTubes, watchedTubes, ignoreTube;
-        array watchTube = [ tube : true ];
+        var watchedTubes, watchedTube;
 
         this->watch(tube);
 
-        let watchedTubes = this->watchedTubes,
-            ignoreTubes  = array_keys(array_diff_key(watchedTubes, watchTube));
+        let watchedTubes = this->watchedTubes;
+        for watchedTube, _ in watchedTubes {
+            if watchedTube == tube {
+                continue;
+            }
 
-        for ignoreTube in ignoreTubes {
-            this->ignore(ignoreTube);
+            this->ignore(watchedTube);
         }
 
         return this;
