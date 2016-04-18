@@ -142,14 +142,6 @@ class Client
     }
 
     /**
-     * Destructor, disconnects from the server.
-     */
-    public function __destruct()
-    {
-        this->disconnect();
-    }
-
-    /**
      * Closes the connection to the Beanstalk server.
      *
      * Will throw an exception if closing the connection fails, to allow
