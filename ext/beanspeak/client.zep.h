@@ -5,7 +5,6 @@ ZEPHIR_INIT_CLASS(Beanspeak_Client);
 
 PHP_METHOD(Beanspeak_Client, __construct);
 PHP_METHOD(Beanspeak_Client, connect);
-PHP_METHOD(Beanspeak_Client, __destruct);
 PHP_METHOD(Beanspeak_Client, disconnect);
 PHP_METHOD(Beanspeak_Client, isConnected);
 PHP_METHOD(Beanspeak_Client, put);
@@ -109,7 +108,6 @@ ZEND_END_ARG_INFO()
 ZEPHIR_INIT_FUNCS(beanspeak_client_method_entry) {
 	PHP_ME(Beanspeak_Client, __construct, arginfo_beanspeak_client___construct, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
 	PHP_ME(Beanspeak_Client, connect, NULL, ZEND_ACC_PUBLIC)
-	PHP_ME(Beanspeak_Client, __destruct, NULL, ZEND_ACC_PUBLIC|ZEND_ACC_DTOR)
 	PHP_ME(Beanspeak_Client, disconnect, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Client, isConnected, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Client, put, arginfo_beanspeak_client_put, ZEND_ACC_PUBLIC)
