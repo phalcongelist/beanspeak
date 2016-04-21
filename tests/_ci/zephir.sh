@@ -18,11 +18,16 @@ docker_bin="$(which docker.io 2> /dev/null || which docker 2> /dev/null)"
 [ -z "$PHP_VERSION" ] && echo "Need to set PHP_VERSION variable. Fox example: 'export PHP_VERSION=7'" && exit 1;
 
 ${docker_bin} run -it --rm \
+    --privileged=true \
     -e ZEND_DONT_UNLOAD_MODULES=1 \
     -v $(pwd):/zephir \
-    phalconphp/zephir:${PHP_VERSION} "$@"
+    phalconphp/zephir:${PHP_VERSION} "zephir $@"
 
-build_extension=$?
-if [ ${build_extension} -ne 0 ]; then
-    cat compile-errors.log
+ret=$?
+
+if [ ${ret} -ne 0 ]; then
+    errors="$(pwd)/compile-errors.log"
+    if [ -e ${errors} ]; then
+        cat ${errors}
+    fi
 fi
