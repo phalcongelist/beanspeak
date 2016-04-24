@@ -52,4 +52,5 @@ ${docker_bin} run -it --rm \
   -v ${TRAVIS_BUILD_DIR}/codeception.yml:/app/codeception.yml \
   -v ${TRAVIS_BUILD_DIR}/tests:/app/tests \
   -v ${TRAVIS_BUILD_DIR}/ext/modules/beanspeak.so:/ext/beanspeak.so \
+  -v ${TRAVIS_BUILD_DIR}/ext:/zephir/ext \
   phalconphp/php:${PHP_VERSION} bash
