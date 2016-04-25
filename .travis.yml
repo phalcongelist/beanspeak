@@ -13,19 +13,18 @@
 
 language: php
 
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+  - 7
+
 branches:
   except:
     - docs
 
 sudo: required
 dist: trusty
-
-env:
-  matrix:
-    - PHP_VERSION="5.4"
-    - PHP_VERSION="5.5"
-    - PHP_VERSION="5.6"
-    - PHP_VERSION="7"
 
 cache:
   - apt
@@ -39,13 +38,13 @@ install:
   - sudo apt-get install -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y --force-yes docker-engine
   - sudo service docker restart
   # Install Zephir
-  - docker pull phalconphp/zephir:$PHP_VERSION
+  - docker pull phalconphp/zephir:$TRAVIS_PHP_VERSION
   - sudo cp tests/_ci/zephir.sh /usr/local/bin/zephir && sudo chmod +x /usr/local/bin/zephir
   # Install PHP
-  - docker pull phalconphp/php:$PHP_VERSION
+  - docker pull phalconphp/php:$TRAVIS_PHP_VERSION
   - sudo cp tests/_ci/build.sh /usr/local/bin/beanspeak-test && sudo chmod +x /usr/local/bin/beanspeak-test
   # Install Composer
-  - docker pull phalconphp/composer:$PHP_VERSION
+  - docker pull phalconphp/composer:$TRAVIS_PHP_VERSION
   - sudo cp tests/_ci/composer.sh /home/travis/.phpenv/shims/composer && sudo chmod +x /home/travis/.phpenv/shims/composer
   - if [ -n "$GH_TOKEN" ]; then composer config github-oauth.github.com ${GH_TOKEN}; fi
   - travis_retry composer install --prefer-dist --no-interaction --ignore-platform-reqs
@@ -57,10 +56,11 @@ install:
 
 before_script:
   # Build extension
-  - '[[ "$PHP_VERSION" == "7" ]] || zephir builddev'
-  - '[[ "$PHP_VERSION" != "7" ]] || zephir builddev --ZendEngine3'
+  - '[[ "$TRAVIS_PHP_VERSION" == "7" ]] || zephir builddev'
+  - '[[ "$TRAVIS_PHP_VERSION" != "7" ]] || zephir builddev --ZendEngine3'
   - stty cols 160
 
 script:
   # Run tests
+  - echo -e "Run tests on PHP v${TRAVIS_PHP_VERSION}"
   - beanspeak-test
