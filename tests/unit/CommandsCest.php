@@ -54,4 +54,19 @@ class CommandsCest
         $I->assertEquals($jobId, $job->getId());
         $I->assertTrue($job->delete());
     }
+
+    public function listTubes(UnitTester $I)
+    {
+        $I->wantTo('list tubes and see expected tubes');
+
+        $client = new Client([
+            'host' => TEST_BT_HOST,
+            'port' => TEST_BT_PORT,
+        ]);
+
+        $client->useTube('testTube');
+        $tubes = $client->listTubes();
+
+        $I->assertEquals(['default', 'testTube'], $tubes);
+    }
 }
