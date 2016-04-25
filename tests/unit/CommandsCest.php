@@ -45,7 +45,7 @@ class CommandsCest
 
         $client->useTube('testTube');
 
-        $jobId = $client->put('testPutInTube');
+        $jobId = $client->put('testData');
         $I->assertNotEquals(false, $jobId);
 
         $job = $client->peekJob($jobId);
@@ -68,5 +68,29 @@ class CommandsCest
         $tubes = $client->listTubes();
 
         $I->assertEquals(['default', 'testTube'], $tubes);
+    }
+
+    public function putAndTouch(UnitTester $I)
+    {
+        $I->wantTo('put task to the tube and request more time to work on Job');
+
+        $client = new Client([
+            'host' => TEST_BT_HOST,
+            'port' => TEST_BT_PORT,
+        ]);
+
+        $client->useTube('testTube');
+        $client->put('testData', 1024, 0, 10);
+        $client->watch('testTube');
+
+        $job = $client->reserve();
+        sleep(2);
+        $stats = $job->stats();
+
+        $I->assertEquals(7, $stats['time-left']);
+        $I->assertTrue($job->touch());
+
+        $stats = $job->stats();
+        $I->assertEquals(9, $stats['time-left']);
     }
 }
