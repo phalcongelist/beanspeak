@@ -4,7 +4,6 @@ namespace Beanspeak\Test\Unit;
 
 use UnitTester;
 use Beanspeak\Client;
-use Beanspeak\Exception;
 use PHPUnit_Framework_SkippedTestError as SkipException;
 
 /**
@@ -67,7 +66,7 @@ class CommandsCest
         $client->useTube('testTube');
         $tubes = $client->listTubes();
 
-        $I->assertEquals(['default', 'testTube'], $tubes);
+        $I->assertTrue(in_array('testTube', $tubes, true));
     }
 
     public function putAndTouch(UnitTester $I)
@@ -87,10 +86,10 @@ class CommandsCest
         sleep(2);
         $stats = $job->stats();
 
-        $I->assertEquals(7, $stats['time-left']);
+        $I->assertEquals(7, intval($stats['time-left']));
         $I->assertTrue($job->touch());
 
         $stats = $job->stats();
-        $I->assertEquals(9, $stats['time-left']);
+        $I->assertEquals(9, intval($stats['time-left']));
     }
 }
