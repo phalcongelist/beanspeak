@@ -35,7 +35,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Beanspeak\\Test\\Unit\\": "tests/unit/"
+            "Beanspeak\\Test\\Unit\\": "tests/unit/",
+            "Beanspeak\\Test\\Bench\\": "tests/bench/"
         }
     },
     "scripts": {
