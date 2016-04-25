@@ -59,7 +59,7 @@ ZEND_EXTERN_MODULE_GLOBALS(beanspeak)
 
 #ifdef ZTS
 	void ***tsrm_ls;
-	#define ZEPHIR_VGLOBAL ((zend_beanspeak_globals *) (*((void ***) TSRMLS_CACHE))[TSRM_UNSHUFFLE_RSRC_ID(id)])
+	#define ZEPHIR_VGLOBAL ((zend_beanspeak_globals *) (*((void ***) tsrm_get_ls_cache()))[TSRM_UNSHUFFLE_RSRC_ID(beanspeak_globals_id)])
 #else
 	#define ZEPHIR_VGLOBAL &(beanspeak_globals)
 #endif
