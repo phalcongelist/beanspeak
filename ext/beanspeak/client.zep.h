@@ -17,6 +17,7 @@ PHP_METHOD(Beanspeak_Client, peekReady);
 PHP_METHOD(Beanspeak_Client, kick);
 PHP_METHOD(Beanspeak_Client, watch);
 PHP_METHOD(Beanspeak_Client, watchOnly);
+PHP_METHOD(Beanspeak_Client, reserve);
 PHP_METHOD(Beanspeak_Client, ignore);
 PHP_METHOD(Beanspeak_Client, stats);
 PHP_METHOD(Beanspeak_Client, statsTube);
@@ -72,6 +73,10 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_client_watchonly, 0, 0, 1)
 	ZEND_ARG_INFO(0, tube)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_client_reserve, 0, 0, 0)
+	ZEND_ARG_INFO(0, timeout)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_client_ignore, 0, 0, 1)
 	ZEND_ARG_INFO(0, tube)
 ZEND_END_ARG_INFO()
@@ -120,6 +125,7 @@ ZEPHIR_INIT_FUNCS(beanspeak_client_method_entry) {
 	PHP_ME(Beanspeak_Client, kick, arginfo_beanspeak_client_kick, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Client, watch, arginfo_beanspeak_client_watch, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Client, watchOnly, arginfo_beanspeak_client_watchonly, ZEND_ACC_PUBLIC)
+	PHP_ME(Beanspeak_Client, reserve, arginfo_beanspeak_client_reserve, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Client, ignore, arginfo_beanspeak_client_ignore, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Client, stats, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Beanspeak_Client, statsTube, arginfo_beanspeak_client_statstube, ZEND_ACC_PUBLIC)

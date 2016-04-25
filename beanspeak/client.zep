@@ -443,6 +443,37 @@ class Client
     }
 
     /**
+     * Reserves/locks a ready job from the specified tube.
+     *
+     * <code>
+     * $job = $queue->reserve();
+     * </code>
+     *
+     * @throws Exception
+     */
+    public function reserve(int timeout = -1) -> boolean|<Job>
+    {
+        var response;
+        string command;
+
+        if timeout >= 0 {
+            let command = "reserve-with-timeout " . timeout;
+        } else {
+            let command = "reserve";
+        }
+
+        this->write(command);
+
+        let response = this->readStatus();
+
+        if response[0] != "RESERVED" || !isset response[2] {
+            return false;
+        }
+
+        return new Job(this, response[1], unserialize(this->read(response[2])));
+    }
+
+    /**
      * Removes the named tube from the watch list for the current connection.
      *
      * <code>
