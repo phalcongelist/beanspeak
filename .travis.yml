@@ -62,5 +62,4 @@ before_script:
 
 script:
   # Run tests
-  - echo -e "Run tests on PHP v${TRAVIS_PHP_VERSION}"
   - beanspeak-test
