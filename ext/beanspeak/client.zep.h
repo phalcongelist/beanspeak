@@ -31,7 +31,7 @@ PHP_METHOD(Beanspeak_Client, read);
 PHP_METHOD(Beanspeak_Client, readYaml);
 PHP_METHOD(Beanspeak_Client, readStatus);
 PHP_METHOD(Beanspeak_Client, yamlParse);
-static zend_object_value zephir_init_properties_Beanspeak_Client(zend_class_entry *class_type TSRMLS_DC);
+zend_object *zephir_init_properties_Beanspeak_Client(zend_class_entry *class_type TSRMLS_DC);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_beanspeak_client___construct, 0, 0, 0)
 	ZEND_ARG_ARRAY_INFO(0, options, 1)

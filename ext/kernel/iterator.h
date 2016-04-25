@@ -24,6 +24,6 @@
 #include <php.h>
 #include <Zend/zend.h>
 
-zend_object_iterator *zephir_get_iterator(zval *iterator TSRMLS_DC);
+zend_object_iterator *zephir_get_iterator(zval *iterator);
 
 #endif

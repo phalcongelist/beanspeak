@@ -104,7 +104,11 @@ static void php_zephir_init_globals(zend_beanspeak_globals *beanspeak_globals TS
 static PHP_RINIT_FUNCTION(beanspeak)
 {
 
-	zend_beanspeak_globals *beanspeak_globals_ptr = ZEPHIR_VGLOBAL;
+	zend_beanspeak_globals *beanspeak_globals_ptr;
+#ifdef ZTS
+	tsrm_ls = ts_resource(0);
+#endif
+	beanspeak_globals_ptr = ZEPHIR_VGLOBAL;
 
 	php_zephir_init_globals(beanspeak_globals_ptr TSRMLS_CC);
 	//zephir_init_interned_strings(TSRMLS_C);

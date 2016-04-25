@@ -42,10 +42,6 @@ ZEND_BEGIN_MODULE_GLOBALS(beanspeak)
 	/* Max recursion control */
 	unsigned int recursive_lock;
 
-	/* Global constants */
-	zval *global_true;
-	zval *global_false;
-	zval *global_null;
 	
 ZEND_END_MODULE_GLOBALS(beanspeak)
 
@@ -56,13 +52,14 @@ ZEND_END_MODULE_GLOBALS(beanspeak)
 ZEND_EXTERN_MODULE_GLOBALS(beanspeak)
 
 #ifdef ZTS
-	#define ZEPHIR_GLOBAL(v) TSRMG(beanspeak_globals_id, zend_beanspeak_globals *, v)
+	#define ZEPHIR_GLOBAL(v) ZEND_MODULE_GLOBALS_ACCESSOR(beanspeak, v)
 #else
 	#define ZEPHIR_GLOBAL(v) (beanspeak_globals.v)
 #endif
 
 #ifdef ZTS
-	#define ZEPHIR_VGLOBAL ((zend_beanspeak_globals *) (*((void ***) tsrm_ls))[TSRM_UNSHUFFLE_RSRC_ID(beanspeak_globals_id)])
+	void ***tsrm_ls;
+	#define ZEPHIR_VGLOBAL ((zend_beanspeak_globals *) (*((void ***) TSRMLS_CACHE))[TSRM_UNSHUFFLE_RSRC_ID(id)])
 #else
 	#define ZEPHIR_VGLOBAL &(beanspeak_globals)
 #endif
