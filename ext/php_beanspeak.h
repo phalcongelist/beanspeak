@@ -14,7 +14,7 @@
 #define PHP_BEANSPEAK_VERSION     "1.0.0-alpha"
 #define PHP_BEANSPEAK_EXTNAME     "beanspeak"
 #define PHP_BEANSPEAK_AUTHOR      "Phalcon Team and contributors"
-#define PHP_BEANSPEAK_ZEPVERSION  "0.9.2a-dev"
+#define PHP_BEANSPEAK_ZEPVERSION  "0.9.3a-dev"
 #define PHP_BEANSPEAK_DESCRIPTION "Client for Beanstalk delivered as a C-extension for PHP"
 
 
