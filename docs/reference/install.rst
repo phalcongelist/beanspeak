@@ -18,7 +18,7 @@ Prerequisite packages are:
 * PHP >= 5.4 development resources
 * GCC compiler (Linux/Solaris)
 * Git (if not already installed in your system - unless you download the package from GitHub and upload it on your server via FTP/SFTP)
-* `Zephir`_ >= 0.9.2a-dev
+* `Zephir`_ >= 0.9.3a-dev
 
 Specific packages for common platforms:
 
