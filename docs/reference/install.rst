@@ -51,13 +51,15 @@ Creating the extension:
     # Or, for PHP 7 use
     zephir build --ZendEngine3
 
+.. highlights::
 
-After that, the compiled extension will be placed in the appropriate directory.
-If the automatic installer failed to do this try moving extension manually:
+   **Important:** After that, the compiled extension will be placed in the appropriate directory.
+   If the automatic installer failed to do this try moving extension manually.
 
-.. code-block:: bash
-    # Use right path to the PHP extensions dir here
-    sudo cp ext/modules/beanspeak.so /usr/lib/php5/20121212
+   .. code-block:: bash
+
+      # Use right path to the PHP extensions dir here
+      sudo cp ext/modules/beanspeak.so /usr/lib/php5/20121212
 
 Add extension to your PHP configuration:
 
