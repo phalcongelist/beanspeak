@@ -496,7 +496,7 @@ class Client
                 throw new Exception("Cannot ignore last tube in watchlist.");
             }
 
-            if !isset response[1] || response[0] == "WATCHING" {
+            if !isset response[1] || response[0] != "WATCHING" {
                 throw new Exception("Unhandled response: " . join(" ", response));
             }
 

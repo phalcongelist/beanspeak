@@ -1126,7 +1126,7 @@ PHP_METHOD(Beanspeak_Client, ignore) {
 		_3$$3 = !(zephir_array_isset_long(&response, 1));
 		if (!(_3$$3)) {
 			zephir_array_fetch_long(&_4$$3, &response, 0, PH_NOISY | PH_READONLY, "beanspeak/client.zep", 499 TSRMLS_CC);
-			_3$$3 = ZEPHIR_IS_STRING(&_4$$3, "WATCHING");
+			_3$$3 = !ZEPHIR_IS_STRING(&_4$$3, "WATCHING");
 		}
 		if (_3$$3) {
 			ZEPHIR_INIT_VAR(&_5$$5);

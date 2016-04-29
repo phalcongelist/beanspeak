@@ -24,16 +24,16 @@
 
 docker_bin="$(which docker.io 2> /dev/null || which docker 2> /dev/null)"
 
-#  Abbility to run tests as:
+#  Ability to run tests as:
 #  build.sh relative/path/to/the/test.php
 #  or
 #  build.sh "relative/path/to/the/test.php --debug"
 RUN_ARGS="$@"
 shift
 
-[ -z "$TRAVIS_PHP_VERSION" ] && echo "Need to set TRAVIS_PHP_VERSION variable. Fox example: 'export TRAVIS_PHP_VERSION=7'" && exit 1;
-[ -z "$TEST_BT_HOST" ] && TEST_BT_HOST="beanstalk_srv"
-[ -z "$TRAVIS_BUILD_DIR" ] && TRAVIS_BUILD_DIR=$(cd $(dirname "$1") && pwd -P)/$(basename "$1")
+[ -z "${TRAVIS_PHP_VERSION}" ] && echo "Need to set TRAVIS_PHP_VERSION variable. Fox example: 'export TRAVIS_PHP_VERSION=7'" && exit 1;
+[ -z "${TEST_BT_HOST}" ] && TEST_BT_HOST="beanstalk_srv"
+[ -z "${TRAVIS_BUILD_DIR}" ] && TRAVIS_BUILD_DIR=$(cd $(dirname "$1") && pwd -P)/$(basename "$1")
 
 chmod +x ${TRAVIS_BUILD_DIR}/tests/_ci/entrypoint.sh
 

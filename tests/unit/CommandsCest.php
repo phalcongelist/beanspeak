@@ -4,6 +4,7 @@ namespace Beanspeak\Test\Unit;
 
 use UnitTester;
 use Beanspeak\Client;
+use Beanspeak\Job;
 use PHPUnit_Framework_SkippedTestError as SkipException;
 
 /**
@@ -91,5 +92,32 @@ class CommandsCest
 
         $stats = $job->stats();
         $I->assertEquals(9, intval($stats['time-left']));
+    }
+
+    public  function putDelayKickAndBuryKick(UnitTester $I)
+    {
+        $I->wantTo('put delay task to the tube and then kick Job');
+
+        $client = new Client([
+            'host' => TEST_BT_HOST,
+            'port' => TEST_BT_PORT,
+        ]);
+
+        $jobId = $client->putInTube('testTube', 'testData', 1024, 3);
+        $job = new Job($client, $jobId, '');
+
+        $I->assertEquals(1, $client->kick(1));
+        $stats = $job->stats();
+        $I->assertEquals('ready', $stats['state']);
+
+        $client->watchOnly('testTube');
+        $job = $client->reserve();
+
+        $I->assertTrue($job->bury());
+        $I->assertEquals(1, $client->kick(1));
+
+        $stats = $job->stats();
+        $I->assertEquals('ready', $stats['state']);
+        $I->assertTrue($job->delete());
     }
 }
