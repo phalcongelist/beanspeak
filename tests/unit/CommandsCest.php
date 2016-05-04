@@ -36,7 +36,7 @@ class CommandsCest
 
     public function putAndPeek(UnitTester $I)
     {
-        $I->wantTo('put task to the desired tube and peek job from this tube by id');
+        $I->wantTo('put job to the desired tube and peek job from this tube by id');
 
         $client = new Client([
             'host' => TEST_BT_HOST,
@@ -72,7 +72,7 @@ class CommandsCest
 
     public function putAndTouch(UnitTester $I)
     {
-        $I->wantTo('put task to the tube and request more time to work on Job');
+        $I->wantTo('put job to the tube and request more time to work on job');
 
         $client = new Client([
             'host' => TEST_BT_HOST,
@@ -94,9 +94,9 @@ class CommandsCest
         $I->assertEquals(9, intval($stats['time-left']));
     }
 
-    public  function putDelayKickAndBuryKick(UnitTester $I)
+    public function putDelayKickAndBuryKick(UnitTester $I)
     {
-        $I->wantTo('put delay task to the tube and then kick Job');
+        $I->wantTo('put delay job to the tube and then kick job');
 
         $client = new Client([
             'host' => TEST_BT_HOST,
@@ -115,6 +115,26 @@ class CommandsCest
 
         $I->assertTrue($job->bury());
         $I->assertEquals(1, $client->kick(1));
+
+        $stats = $job->stats();
+        $I->assertEquals('ready', $stats['state']);
+        $I->assertTrue($job->delete());
+    }
+
+    public function putDelayAndPutBuriedAfterKick(UnitTester $I)
+    {
+        $I->wantTo('put delay job to the tube then put job into the "buried" state and then kick job');
+
+        $client = new Client([
+            'host' => TEST_BT_HOST,
+            'port' => TEST_BT_PORT,
+        ]);
+
+        $client->putInTube('testTube', 'testData', 1024, 3);
+        $job = $client->reserve();
+
+        $I->assertTrue($job->bury());
+        $I->assertTrue($job->kick());
 
         $stats = $job->stats();
         $I->assertEquals('ready', $stats['state']);
