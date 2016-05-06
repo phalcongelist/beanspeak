@@ -50,4 +50,24 @@ if [ ${result_codecept} -ne 0 ]; then
   bash /backtrace.sh
 fi
 
-exit ${result_codecept}
+echo -e ""
+
+# Benchmarks
+FILES=/app/tests/bench/*.php
+i=0
+
+for file in ${FILES}
+do
+  name=${file##*/}
+  echo -e "=== Start ${name%.*} benchmark ===\n"
+  chrt -f 99 /usr/bin/time -f "\nTotal time: %E\nContext Switches: %c\nWaits: %w\n" php ${file}
+done
+
+result_bench=$?
+
+if [ ${result_codecept} -ne 0 -o ${result_bench} -ne 0 ];
+then
+   exit 1;
+fi
+
+exit 0
