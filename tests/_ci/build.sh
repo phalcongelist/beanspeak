@@ -37,7 +37,10 @@ shift
 
 chmod +x ${TRAVIS_BUILD_DIR}/tests/_ci/entrypoint.sh
 
-#  3) Run tests
+#  3) Clean local memory
+if [ -z ${TRAVIS} ]; then ${docker_bin} restart ${TEST_BT_HOST}; fi
+
+#  4) Run tests
 ${docker_bin} run -it --rm \
   --entrypoint /entrypoint.sh \
   --privileged=true \
