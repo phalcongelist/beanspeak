@@ -474,6 +474,22 @@ class Client
     }
 
     /**
+     * Reserves/locks a ready job from the specified tube.
+     *
+     * <code>
+     * $job = $queue->reserve();
+     * </code>
+     *
+     * @throws Exception
+     */
+    public function reserveFromTube(string tube, int timeout = -1) -> boolean|<Job>
+    {
+        this->watch(tube);
+
+        return this->reserve(timeout);
+    }
+
+    /**
      * Removes the named tube from the watch list for the current connection.
      *
      * <code>
