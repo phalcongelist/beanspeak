@@ -58,6 +58,8 @@ echo -e ""
 FILES=/app/tests/bench/*.php
 i=0
 
+sysctl -w kernel.sched_rt_runtime_us=-1 &> /dev/null
+
 for file in ${FILES}
 do
   name=${file##*/}
