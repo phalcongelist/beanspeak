@@ -30,13 +30,13 @@
         "php": ">=5.4.0 <8.0"
     },
     "require-dev": {
+        "phpdocumentor/reflection-docblock": "^2.0.4",
         "phpunit/phpunit": "^4.8",
-        "codeception/codeception": ">=2.2.0-RC"
+        "codeception/codeception": "~2.2"
     },
     "autoload-dev": {
         "psr-4": {
-            "Beanspeak\\Test\\Unit\\": "tests/unit/",
-            "Beanspeak\\Test\\Bench\\": "tests/bench/"
+            "Beanspeak\\Test\\Unit\\": "tests/unit/"
         }
     },
     "scripts": {
