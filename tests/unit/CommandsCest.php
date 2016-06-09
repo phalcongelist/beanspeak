@@ -163,4 +163,35 @@ class CommandsCest
         $job = $client->reserve();
         $I->assertTrue($job->delete());
     }
+
+    public function putDelay(UnitTester $I)
+    {
+        $I->wantTo('put delay job');
+
+        $client = new Client([
+            'host' => TEST_BT_HOST,
+            'port' => TEST_BT_PORT,
+        ]);
+
+        $client->useTube('testTube');
+
+        $jobId = $client->put('testPutInTube', 1024, 2);
+        $job = new Job($client, $jobId, '');
+
+        $stats = $job->stats();
+        $I->assertEquals('delayed', $stats['state']);
+        sleep(3);
+
+        $stats = $job->stats();
+        $I->assertEquals('ready', $stats['state']);
+
+        $client->watch('testTube');
+
+        $job = $client->reserve();
+        $I->assertTrue($job->delete());
+
+        $client->put('testPutInTube', 1024, 2);
+        $job = $client->peekDelayed();
+        $I->assertTrue($job->delete());
+    }
 }
