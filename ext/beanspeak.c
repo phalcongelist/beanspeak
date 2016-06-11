@@ -76,6 +76,14 @@ static void php_zephir_init_globals(zend_beanspeak_globals *beanspeak_globals TS
 
 }
 
+/**
+ * Initialize globals only on each thread started
+ */
+static void php_zephir_init_module_globals(zend_beanspeak_globals *beanspeak_globals TSRMLS_DC)
+{
+
+}
+
 static PHP_RINIT_FUNCTION(beanspeak)
 {
 
@@ -119,6 +127,7 @@ static PHP_MINFO_FUNCTION(beanspeak)
 static PHP_GINIT_FUNCTION(beanspeak)
 {
 	php_zephir_init_globals(beanspeak_globals TSRMLS_CC);
+	php_zephir_init_module_globals(beanspeak_globals TSRMLS_CC);
 }
 
 static PHP_GSHUTDOWN_FUNCTION(beanspeak)
