@@ -30,6 +30,7 @@ cache:
   - apt
 
 before_install:
+  - phpenv config-rm xdebug.ini
   - sudo service docker stop
 
 install:
