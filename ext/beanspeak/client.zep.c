@@ -419,14 +419,14 @@ PHP_METHOD(Beanspeak_Client, put) {
 	ZEPHIR_CALL_METHOD(&response, this_ptr, "readstatus", NULL, 6);
 	zephir_check_call_status();
 	if (zephir_array_isset_long(&response, 1)) {
-		zephir_array_fetch_long(&status, &response, 0, PH_NOISY | PH_READONLY, "beanspeak/client.zep", 208 TSRMLS_CC);
+		ZEPHIR_OBS_VAR(&status);
+		zephir_array_fetch_long(&status, &response, 0, PH_NOISY, "beanspeak/client.zep", 208 TSRMLS_CC);
 		_4$$3 = ZEPHIR_IS_STRING(&status, "INSERTED");
 		if (!(_4$$3)) {
 			_4$$3 = ZEPHIR_IS_STRING(&status, "BURIED");
 		}
 		if (_4$$3) {
-			ZEPHIR_OBS_VAR(&_5$$4);
-			zephir_array_fetch_long(&_5$$4, &response, 1, PH_NOISY, "beanspeak/client.zep", 211 TSRMLS_CC);
+			zephir_array_fetch_long(&_5$$4, &response, 1, PH_NOISY | PH_READONLY, "beanspeak/client.zep", 211 TSRMLS_CC);
 			RETURN_MM_LONG(zephir_get_intval(&_5$$4));
 		}
 	}
@@ -843,8 +843,7 @@ PHP_METHOD(Beanspeak_Client, kick) {
 		_2 = ZEPHIR_IS_STRING(&_3, "KICKED");
 	}
 	if (_2) {
-		ZEPHIR_OBS_VAR(&_4$$3);
-		zephir_array_fetch_long(&_4$$3, &response, 1, PH_NOISY, "beanspeak/client.zep", 383 TSRMLS_CC);
+		zephir_array_fetch_long(&_4$$3, &response, 1, PH_NOISY | PH_READONLY, "beanspeak/client.zep", 383 TSRMLS_CC);
 		RETURN_MM_LONG(zephir_get_intval(&_4$$3));
 	}
 	RETURN_MM_BOOL(0);
@@ -1836,9 +1835,9 @@ PHP_METHOD(Beanspeak_Client, yamlParse) {
 	zend_string *_10;
 	zend_ulong _9;
 	zend_bool _0, _3, _5;
-	zval data, lines, key, value, values, response, _1, _2, _4, *_8, _6$$6, _7$$6, _11$$7, _12$$7, _13$$8, _14$$8, _15$$10, _16$$10, _18$$11, _19$$11;
+	zval data, lines, key, value, values, tmp, response, _1, _2, _4, *_8, _6$$6, _7$$6, _11$$7, _12$$7, _13$$8, _14$$8, _15$$10, _16$$10, _18$$11, _19$$11;
 	zephir_fcall_cache_entry *_17 = NULL;
-	int ZEPHIR_LAST_CALL_STATUS, tmp = 0;
+	int ZEPHIR_LAST_CALL_STATUS;
 	ZEPHIR_INIT_THIS();
 
 	ZVAL_UNDEF(&data);
@@ -1846,6 +1845,7 @@ PHP_METHOD(Beanspeak_Client, yamlParse) {
 	ZVAL_UNDEF(&key);
 	ZVAL_UNDEF(&value);
 	ZVAL_UNDEF(&values);
+	ZVAL_UNDEF(&tmp);
 	ZVAL_UNDEF(&response);
 	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&_2);
@@ -1954,10 +1954,10 @@ PHP_METHOD(Beanspeak_Client, yamlParse) {
 			}
 		}
 		if (zephir_is_numeric(&value)) {
-			tmp = zephir_get_intval(&value);
-			if (ZEPHIR_IS_LONG(&value, tmp)) {
-				ZEPHIR_INIT_NVAR(&value);
-				ZVAL_LONG(&value, tmp);
+			ZEPHIR_INIT_NVAR(&tmp);
+			ZVAL_LONG(&tmp, zephir_get_intval(&value));
+			if (ZEPHIR_IS_EQUAL(&tmp, &value)) {
+				ZEPHIR_CPY_WRT(&value, &tmp);
 			} else {
 				_20$$14 = zephir_get_doubleval(&value);
 				ZEPHIR_INIT_NVAR(&value);

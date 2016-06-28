@@ -208,7 +208,7 @@ class Client
             let status = response[0];
 
             if status == "INSERTED" || status == "BURIED" {
-                return (int) response[1];
+                return intval(response[1]);
             }
         }
 
@@ -380,7 +380,7 @@ class Client
 
         let response = this->readStatus();
         if isset response[1] && response[0] == "KICKED" {
-            return (int) response[1];
+            return intval(response[1]);
         }
 
         return false;
@@ -870,7 +870,7 @@ class Client
             }
 
             if is_numeric(value) {
-                let tmp = (int) value;
+                let tmp = intval(value);
 
                 if tmp == value {
                     let value = tmp;
