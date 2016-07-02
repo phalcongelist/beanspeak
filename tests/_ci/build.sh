@@ -31,9 +31,9 @@ docker_bin="$(which docker.io 2> /dev/null || which docker 2> /dev/null)"
 RUN_ARGS="$@"
 shift
 
-[ -z "${TRAVIS_PHP_VERSION}" ] && echo "Need to set TRAVIS_PHP_VERSION variable. Fox example: 'export TRAVIS_PHP_VERSION=7'" && exit 1;
+[ -z "${TRAVIS_PHP_VERSION}" ] && echo "Need to set TRAVIS_PHP_VERSION variable. Fox example: 'export TRAVIS_PHP_VERSION=7.0'" && exit 1;
 [ -z "${TEST_BT_HOST}" ] && TEST_BT_HOST="beanstalk_srv"
-[ -z "${TRAVIS_BUILD_DIR}" ] && TRAVIS_BUILD_DIR=$(cd $(dirname "$1") && pwd -P)
+[ -z "${TRAVIS_BUILD_DIR}" ] && TRAVIS_BUILD_DIR=$(pwd)
 
 chmod +x ${TRAVIS_BUILD_DIR}/tests/_ci/entrypoint.sh
 

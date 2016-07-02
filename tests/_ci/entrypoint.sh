@@ -32,9 +32,7 @@ echo -e "PHP extension path: ${PURPLE}${PHP_EXTENSION_DIR}${NC}\n"
 
 ln -s /ext/beanspeak.so ${PHP_EXTENSION_DIR}/beanspeak.so
 
-[[ "${TRAVIS_PHP_VERSION}" == "5.4" ]] && ln -s /app/tests/_ci/beanspeak.ini /etc/php5/cli/conf.d/50-beanspeak.ini;
-[[ "${TRAVIS_PHP_VERSION}" == "7" ]] || ln -s /app/tests/_ci/beanspeak.ini /etc/php/${TRAVIS_PHP_VERSION}/cli/conf.d/50-beanspeak.ini;
-[[ "${TRAVIS_PHP_VERSION}" != "7" ]] || ln -s /app/tests/_ci/beanspeak.ini /etc/php/7.0/cli/conf.d/50-beanspeak.ini;
+ln -s /app/tests/_ci/beanspeak.ini /etc/php/${TRAVIS_PHP_VERSION}/cli/conf.d/50-beanspeak.ini;
 
 PHP_FULL_VERSION=`php -r 'echo phpversion();'`
 BEANSPEAK_VERSION=`php --ri beanspeak | grep "Version =" | awk '{print $3}'`
