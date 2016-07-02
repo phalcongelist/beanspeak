@@ -19,8 +19,8 @@ mkdir -p ${HOME}/.composer
 
 docker_bin="$(which docker.io 2> /dev/null || which docker 2> /dev/null)"
 
-[ -z "$TRAVIS_PHP_VERSION" ] && echo "Need to set TRAVIS_PHP_VERSION variable. Fox example: 'export TRAVIS_PHP_VERSION=7'" && exit 1;
-[ -z "$TRAVIS_BUILD_DIR" ] && TRAVIS_BUILD_DIR=$(cd $(dirname "$1") && pwd -P)/$(basename "$1")
+[ -z "$TRAVIS_PHP_VERSION" ] && echo "Need to set TRAVIS_PHP_VERSION variable. Fox example: 'export TRAVIS_PHP_VERSION=7.0'" && exit 1;
+[ -z "$TRAVIS_BUILD_DIR" ] && TRAVIS_BUILD_DIR=$(pwd)
 
 ${docker_bin} run -it --rm \
   --name composer-${TRAVIS_PHP_VERSION} \

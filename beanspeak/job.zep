@@ -44,9 +44,9 @@ class Job
      */
     public function __construct(<Client> queue, string id, var body)
     {
-        let this->queue = queue,
-            this->id    = id,
-            this->body  = body;
+        let this->{"queue"} = queue,
+            this->{"id"}    = id,
+            this->{"body"}  = body;
     }
 
     /**
