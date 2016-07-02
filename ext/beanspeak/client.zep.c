@@ -322,7 +322,6 @@ PHP_METHOD(Beanspeak_Client, disconnect) {
 	}
 	zephir_update_property_zval(this_ptr, SL("socket"), &__$null);
 	ZEPHIR_INIT_VAR(&_2);
-	ZEPHIR_INIT_NVAR(&_2);
 	ZVAL_STRING(&_2, "default");
 	zephir_update_property_zval(this_ptr, SL("usedTube"), &_2);
 	ZEPHIR_INIT_VAR(&_3);
@@ -1115,22 +1114,22 @@ PHP_METHOD(Beanspeak_Client, reserveFromTube) {
  */
 PHP_METHOD(Beanspeak_Client, ignore) {
 
-	zend_bool _3$$3;
+	zend_bool _1, _4$$3;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *tube_param = NULL, response, watchedTubes, _0, _2$$3, _4$$3, _5$$5, _6$$5, _7$$5;
-	zval tube, _1$$3;
+	zval *tube_param = NULL, response, watchedTubes, _0, _3$$3, _5$$3, _6$$5, _7$$5, _8$$5;
+	zval tube, _2$$3;
 	ZEPHIR_INIT_THIS();
 
 	ZVAL_UNDEF(&tube);
-	ZVAL_UNDEF(&_1$$3);
+	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&response);
 	ZVAL_UNDEF(&watchedTubes);
 	ZVAL_UNDEF(&_0);
-	ZVAL_UNDEF(&_2$$3);
-	ZVAL_UNDEF(&_4$$3);
-	ZVAL_UNDEF(&_5$$5);
+	ZVAL_UNDEF(&_3$$3);
+	ZVAL_UNDEF(&_5$$3);
 	ZVAL_UNDEF(&_6$$5);
 	ZVAL_UNDEF(&_7$$5);
+	ZVAL_UNDEF(&_8$$5);
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &tube_param);
@@ -1149,33 +1148,37 @@ PHP_METHOD(Beanspeak_Client, ignore) {
 
 	zephir_read_property(&_0, this_ptr, SL("watchedTubes"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_CPY_WRT(&watchedTubes, &_0);
-	if (zephir_array_isset(&watchedTubes, &tube)) {
-		ZEPHIR_INIT_VAR(&_1$$3);
-		ZEPHIR_CONCAT_SV(&_1$$3, "ignore ", &tube);
-		ZEPHIR_CALL_METHOD(NULL, this_ptr, "write", NULL, 0, &_1$$3);
+	_1 = Z_TYPE_P(&watchedTubes) == IS_ARRAY;
+	if (_1) {
+		_1 = zephir_array_isset(&watchedTubes, &tube);
+	}
+	if (_1) {
+		ZEPHIR_INIT_VAR(&_2$$3);
+		ZEPHIR_CONCAT_SV(&_2$$3, "ignore ", &tube);
+		ZEPHIR_CALL_METHOD(NULL, this_ptr, "write", NULL, 0, &_2$$3);
 		zephir_check_call_status();
 		ZEPHIR_CALL_METHOD(&response, this_ptr, "readstatus", NULL, 6);
 		zephir_check_call_status();
-		zephir_array_fetch_long(&_2$$3, &response, 0, PH_NOISY | PH_READONLY, "beanspeak/client.zep", 511 TSRMLS_CC);
-		if (ZEPHIR_IS_STRING(&_2$$3, "NOT_IGNORED")) {
+		zephir_array_fetch_long(&_3$$3, &response, 0, PH_NOISY | PH_READONLY, "beanspeak/client.zep", 511 TSRMLS_CC);
+		if (ZEPHIR_IS_STRING(&_3$$3, "NOT_IGNORED")) {
 			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(beanspeak_exception_ce, "Cannot ignore last tube in watchlist.", "beanspeak/client.zep", 512);
 			return;
 		}
-		_3$$3 = !(zephir_array_isset_long(&response, 1));
-		if (!(_3$$3)) {
-			zephir_array_fetch_long(&_4$$3, &response, 0, PH_NOISY | PH_READONLY, "beanspeak/client.zep", 515 TSRMLS_CC);
-			_3$$3 = !ZEPHIR_IS_STRING(&_4$$3, "WATCHING");
+		_4$$3 = !(zephir_array_isset_long(&response, 1));
+		if (!(_4$$3)) {
+			zephir_array_fetch_long(&_5$$3, &response, 0, PH_NOISY | PH_READONLY, "beanspeak/client.zep", 515 TSRMLS_CC);
+			_4$$3 = !ZEPHIR_IS_STRING(&_5$$3, "WATCHING");
 		}
-		if (_3$$3) {
-			ZEPHIR_INIT_VAR(&_5$$5);
-			object_init_ex(&_5$$5, beanspeak_exception_ce);
+		if (_4$$3) {
 			ZEPHIR_INIT_VAR(&_6$$5);
-			zephir_fast_join_str(&_6$$5, SL(" "), &response TSRMLS_CC);
+			object_init_ex(&_6$$5, beanspeak_exception_ce);
 			ZEPHIR_INIT_VAR(&_7$$5);
-			ZEPHIR_CONCAT_SV(&_7$$5, "Unhandled response: ", &_6$$5);
-			ZEPHIR_CALL_METHOD(NULL, &_5$$5, "__construct", NULL, 3, &_7$$5);
+			zephir_fast_join_str(&_7$$5, SL(" "), &response TSRMLS_CC);
+			ZEPHIR_INIT_VAR(&_8$$5);
+			ZEPHIR_CONCAT_SV(&_8$$5, "Unhandled response: ", &_7$$5);
+			ZEPHIR_CALL_METHOD(NULL, &_6$$5, "__construct", NULL, 3, &_8$$5);
 			zephir_check_call_status();
-			zephir_throw_exception_debug(&_5$$5, "beanspeak/client.zep", 516 TSRMLS_CC);
+			zephir_throw_exception_debug(&_6$$5, "beanspeak/client.zep", 516 TSRMLS_CC);
 			ZEPHIR_MM_RESTORE();
 			return;
 		}

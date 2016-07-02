@@ -79,9 +79,9 @@ class Client
         ];
 
         if typeof options != "array" {
-            let this->options = defaults;
+            let this->{"options"} = defaults;
         } else {
-            let this->options = options + defaults;
+            let this->{"options"} = options + defaults;
         }
     }
 
@@ -120,8 +120,8 @@ class Client
 
         stream_set_timeout(socket, -1, null);
 
-        let this->socket = socket,
-            usedTube     = this->usedTube;
+        let this->{"socket"} = socket,
+            usedTube = this->usedTube;
 
         if usedTube != "default" {
             this->useTube(usedTube);
@@ -164,9 +164,9 @@ class Client
             throw new Exception("Failed to close connection.");
         }
 
-        let this->socket       = null,
-            this->usedTube     = "default",
-            this->watchedTubes = [ "default" : true ];
+        let this->{"socket"}       = null,
+            this->{"usedTube"}     = "default",
+            this->{"watchedTubes"} = [ "default" : true ];
 
         return true;
     }
@@ -270,7 +270,7 @@ class Client
             let status = response[0];
 
             if status == "USING" {
-                let this->usedTube = tube;
+                let this->{"usedTube"} = tube;
                 return this;
             }
         }
@@ -504,7 +504,7 @@ class Client
 
         let watchedTubes = this->watchedTubes;
 
-        if  isset watchedTubes[tube] {
+        if typeof watchedTubes == "array" && isset watchedTubes[tube] {
             this->write("ignore " . tube);
 
             let response = this->readStatus();
@@ -517,7 +517,7 @@ class Client
             }
 
             unset(watchedTubes[tube]);
-            let this->watchedTubes = watchedTubes;
+            let this->{"watchedTubes"} = watchedTubes;
         }
 
         return this;
@@ -609,7 +609,7 @@ class Client
         let response = this->readStatus();
 
         if isset response[1] && response[0] == "USING" {
-            let this->usedTube = response[1];
+            let this->{"usedTube"} = response[1];
             return response[1];
         }
 
@@ -641,7 +641,7 @@ class Client
             throw new Exception("Unhandled response form beanstalkd server: " . join(" ", response));
         }
 
-        let this->watchedTubes = array_fill_keys(response[2], true);
+        let this->{"watchedTubes"} = array_fill_keys(response[2], true);
 
         return this->watchedTubes;
     }
