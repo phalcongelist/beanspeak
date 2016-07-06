@@ -21,7 +21,7 @@ ${docker_bin} run -it --rm \
     --privileged=true \
     -e ZEND_DONT_UNLOAD_MODULES=1 \
     -v $(pwd):/zephir \
-    phalconphp/zephir:${TRAVIS_PHP_VERSION} "zephir $@"
+    phalconphp/zephir:${TRAVIS_PHP_VERSION} "$@"
 
 ret=$?
 
