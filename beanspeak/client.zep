@@ -503,8 +503,11 @@ class Client
         var response, watchedTubes;
 
         let watchedTubes = this->watchedTubes;
+        if typeof watchedTubes != "array" {
+            return this;
+        }
 
-        if typeof watchedTubes == "array" && isset watchedTubes[tube] {
+        if isset watchedTubes[tube] {
             this->write("ignore " . tube);
 
             let response = this->readStatus();
@@ -517,7 +520,7 @@ class Client
             }
 
             unset(watchedTubes[tube]);
-            let this->{"watchedTubes"} = watchedTubes;
+            let this->watchedTubes = watchedTubes;
         }
 
         return this;
