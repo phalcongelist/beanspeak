@@ -43,7 +43,7 @@ install:
   - sudo cp tests/_ci/zephir.sh /usr/local/bin/zephir && sudo chmod +x /usr/local/bin/zephir
   # Install PHP
   - docker pull phalconphp/php:$TRAVIS_PHP_VERSION
-  - sudo cp tests/_ci/build.sh /usr/local/bin/beanspeak-test && sudo chmod +x /usr/local/bin/beanspeak-test
+  - sudo cp tests/_ci/run.sh /usr/local/bin/beanspeak-test && sudo chmod +x /usr/local/bin/beanspeak-test
   # Install Composer
   - docker pull phalconphp/composer:$TRAVIS_PHP_VERSION
   - sudo cp tests/_ci/composer.sh /home/travis/.phpenv/shims/composer && sudo chmod +x /home/travis/.phpenv/shims/composer
