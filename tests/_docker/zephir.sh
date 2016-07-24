@@ -13,7 +13,7 @@
 #
 #  Authors: Serghei Iakovlev <serghei@phalconphp.com>
 
-docker_bin="$(which docker.io 2> /dev/null || which docker 2> /dev/null)"
+docker_bin="$(which docker 2> /dev/null)"
 
 [ -z "$TRAVIS_PHP_VERSION" ] && echo "Need to set TRAVIS_PHP_VERSION variable. Fox example: 'export TRAVIS_PHP_VERSION=7.0'" && exit 1;
 

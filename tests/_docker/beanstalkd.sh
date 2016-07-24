@@ -13,7 +13,7 @@
 #
 #  Authors: Serghei Iakovlev <serghei@phalconphp.com>
 
-docker_bin="$(which docker.io 2> /dev/null || which docker 2> /dev/null)"
+docker_bin="$(which docker 2> /dev/null)"
 
 ${docker_bin} run -d \
     --restart=always \
