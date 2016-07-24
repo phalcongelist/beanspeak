@@ -13,9 +13,9 @@
 #
 #  Authors: Serghei Iakovlev <serghei@phalconphp.com>
 
-PURPLE="\e[0;35m"
+PURPLE="\033[0;35m"
 GREEN="\033[0;32m"
-YELLOW="\e[1;33m"
+YELLOW="\033[1;33m"
 NC="\033[0m"
 
 echo -e "\nWelcome to the Docker testing container."
