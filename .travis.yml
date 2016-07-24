@@ -57,9 +57,9 @@ before_install:
 
 before_script:
   - (export PRE_PHP_INCLUDES=`php-config --includes`; cd ext/; for file in `find kernel -name "*.h"`; do $CC "$file" -I. $PRE_PHP_INCLUDES -o "$file.ghc"; done)
-  - (cd ext; export CFLAGS="-g3 -O1 -std=gnu90 -Wall -DZEPHIR_RELEASE=1"; phpize &> /dev/null && ./configure --silent --enable-beansleak &> /dev/null && make --silent -j4 &> /dev/null && make --silent install)
-  - phpenv config-add tests/_ci/beansleak.ini
-  - php --ri beansleak
+  - (cd ext; export CFLAGS="-g3 -O1 -std=gnu90 -Wall -DZEPHIR_RELEASE=1"; phpize &> /dev/null && ./configure --silent --enable-beanspeak &> /dev/null && make --silent -j4 &> /dev/null && make --silent install)
+  - phpenv config-add tests/_ci/beanspeak.ini
+  - php --ri beanspeak
   - ulimit -c unlimited -S || true
   - echo "/tmp/beanspeak/core-%e.%p" | tee /proc/sys/kernel/core_pattern &> /dev/null
 
