@@ -26,40 +26,52 @@ branches:
 sudo: required
 dist: trusty
 
+git:
+  depth: 1
+
 cache:
-  - apt
+  apt: true
+  ccache: true
+  timeout: 691200
+  directories:
+    - .temp
+    - $HOME/.ccache
+    - $HOME/.composer/cache
+
+env:
+  global:
+    - TEST_BT_HOST="127.0.0.1"
+    - TEST_BT_PORT="11300"
+    - ZEND_DONT_UNLOAD_MODULES=1
+    - CC="ccache gcc"
 
 before_install:
+  - export PATH=$PATH:~/bin;
   - phpenv config-rm xdebug.ini
-  - sudo service docker stop
-
-install:
-  # Install Docker
-  - sudo apt-get update -qq
-  - sudo apt-get install -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y --force-yes docker-engine
-  - sudo service docker restart
-  # Install Zephir
-  - docker pull phalconphp/zephir:$TRAVIS_PHP_VERSION
-  - sudo cp tests/_ci/zephir.sh /usr/local/bin/zephir && sudo chmod +x /usr/local/bin/zephir
-  # Install PHP
-  - docker pull phalconphp/php:$TRAVIS_PHP_VERSION
-  - sudo cp tests/_ci/run.sh /usr/local/bin/beanspeak-test && sudo chmod +x /usr/local/bin/beanspeak-test
-  # Install Composer
-  - docker pull phalconphp/composer:$TRAVIS_PHP_VERSION
-  - sudo cp tests/_ci/composer.sh /home/travis/.phpenv/shims/composer && sudo chmod +x /home/travis/.phpenv/shims/composer
-  - if [ -n "$GH_TOKEN" ]; then composer config github-oauth.github.com ${GH_TOKEN}; fi
-  - travis_retry composer install --prefer-dist --no-interaction
-  # Setup network
-  - docker network create --driver bridge beanstalk_nw
-  # Install Beanstalkd
-  - docker pull phalconphp/beanstalkd:1.10
-  - bash tests/_ci/beanstalkd.sh
+  - composer self-update -q
+  - travis_retry composer --prefer-source install
+  - bash tests/_ci/install_zephir.sh
+  - bash tests/_ci/install_beanstalkd.sh
+  - '[[ "$TRAVIS_PHP_VERSION" == "7.0" ]] || zephir fullclean && zephir generate'
+  - '[[ "$TRAVIS_PHP_VERSION" != "7.0" ]] || zephir fullclean && zephir generate --backend=ZendEngine3'
 
 before_script:
-  # Build extension
-  - '[[ "$TRAVIS_PHP_VERSION" == "7.0" ]] || zephir builddev'
-  - '[[ "$TRAVIS_PHP_VERSION" != "7.0" ]] || zephir builddev --ZendEngine3'
+  - (export PRE_PHP_INCLUDES=`php-config --includes`; cd ext/; for file in `find kernel -name "*.h"`; do $CC "$file" -I. $PRE_PHP_INCLUDES -o "$file.ghc"; done)
+  - (cd ext; export CFLAGS="-g3 -O1 -std=gnu90 -Wall -DZEPHIR_RELEASE=1"; phpize &> /dev/null && ./configure --silent --enable-beansleak &> /dev/null && make --silent -j4 &> /dev/null && make --silent install)
+  - phpenv config-add tests/_ci/beansleak.ini
+  - php --ri beansleak
+  - ulimit -c unlimited -S || true
+  - echo "/tmp/beanspeak/core-%e.%p" | tee /proc/sys/kernel/core_pattern &> /dev/null
 
 script:
-  # Run tests
-  - beanspeak-test
+  - vendor/bin/codecept build
+  - vendor/bin/codecept run -v
+
+after_failure:
+  - bash tests/_ci/backtrace.sh
+
+addons:
+  apt:
+    packages:
+      - gdb
+      - re2c

@@ -34,7 +34,7 @@ shift
 [ -z "${TRAVIS_PHP_VERSION}" ] && echo "Need to set TRAVIS_PHP_VERSION variable. Fox example: 'export TRAVIS_PHP_VERSION=7.0'" && exit 1;
 [ -z "${TEST_BT_HOST}" ] && TEST_BT_HOST="beanstalk_srv"
 
-chmod +x $(pwd)/tests/_ci/entrypoint.sh
+chmod +x $(pwd)/tests/_docker/entrypoint.sh
 
 #  3) Clean local memory
 if [ -z ${TRAVIS} ]; then ${docker_bin} restart ${TEST_BT_HOST}; fi
@@ -49,7 +49,7 @@ ${docker_bin} run -it --rm \
   -e RUN_ARGS="${RUN_ARGS}" \
   --name test-beanspeak-${TRAVIS_PHP_VERSION} \
   -v $(pwd)/tests/_ci/backtrace.sh:/backtrace.sh \
-  -v $(pwd)/tests/_ci/entrypoint.sh:/entrypoint.sh \
+  -v $(pwd)/tests/_docker/entrypoint.sh:/entrypoint.sh \
   -v $(pwd)/vendor:/app/vendor \
   -v $(pwd)/codeception.yml:/app/codeception.yml \
   -v $(pwd)/tests:/app/tests \
