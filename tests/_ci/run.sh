@@ -22,7 +22,7 @@
 #  docker run -d --net=beanstalk_nw --name beanstalk_srv phalconphp/beanstalkd:1.10 sh -c "beanstalkd -l 0.0.0.0 -p 11300"
 #
 
-docker_bin="$(which docker.io 2> /dev/null || which docker 2> /dev/null)"
+docker_bin="$(which docker 2> /dev/null)"
 
 #  Ability to run tests as:
 #  build.sh relative/path/to/the/test.php
@@ -33,9 +33,8 @@ shift
 
 [ -z "${TRAVIS_PHP_VERSION}" ] && echo "Need to set TRAVIS_PHP_VERSION variable. Fox example: 'export TRAVIS_PHP_VERSION=7.0'" && exit 1;
 [ -z "${TEST_BT_HOST}" ] && TEST_BT_HOST="beanstalk_srv"
-[ -z "${TRAVIS_BUILD_DIR}" ] && TRAVIS_BUILD_DIR=$(pwd)
 
-chmod +x ${TRAVIS_BUILD_DIR}/tests/_ci/entrypoint.sh
+chmod +x $(pwd)/tests/_ci/entrypoint.sh
 
 #  3) Clean local memory
 if [ -z ${TRAVIS} ]; then ${docker_bin} restart ${TEST_BT_HOST}; fi
@@ -49,11 +48,11 @@ ${docker_bin} run -it --rm \
   -e TRAVIS_PHP_VERSION="${TRAVIS_PHP_VERSION}" \
   -e RUN_ARGS="${RUN_ARGS}" \
   --name test-beanspeak-${TRAVIS_PHP_VERSION} \
-  -v ${TRAVIS_BUILD_DIR}/tests/_ci/backtrace.sh:/backtrace.sh \
-  -v ${TRAVIS_BUILD_DIR}/tests/_ci/entrypoint.sh:/entrypoint.sh \
-  -v ${TRAVIS_BUILD_DIR}/vendor:/app/vendor \
-  -v ${TRAVIS_BUILD_DIR}/codeception.yml:/app/codeception.yml \
-  -v ${TRAVIS_BUILD_DIR}/tests:/app/tests \
-  -v ${TRAVIS_BUILD_DIR}/ext/modules/beanspeak.so:/ext/beanspeak.so \
-  -v ${TRAVIS_BUILD_DIR}/ext:/zephir/ext \
+  -v $(pwd)/tests/_ci/backtrace.sh:/backtrace.sh \
+  -v $(pwd)/tests/_ci/entrypoint.sh:/entrypoint.sh \
+  -v $(pwd)/vendor:/app/vendor \
+  -v $(pwd)/codeception.yml:/app/codeception.yml \
+  -v $(pwd)/tests:/app/tests \
+  -v $(pwd)/ext/modules/beanspeak.so:/ext/beanspeak.so \
+  -v $(pwd)/ext:/zephir/ext \
   phalconphp/php:${TRAVIS_PHP_VERSION} bash
