@@ -61,7 +61,7 @@ before_script:
   - phpenv config-add tests/_ci/beanspeak.ini
   - php --ri beanspeak
   - ulimit -c unlimited -S || true
-  - echo "/tmp/beanspeak/core-%e.%p" | tee /proc/sys/kernel/core_pattern &> /dev/null
+  - echo "/tmp/beanspeak/core-%e.%p" | sudo tee /proc/sys/kernel/core_pattern &> /dev/null
 
 script:
   - vendor/bin/codecept run -v
