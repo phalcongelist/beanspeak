@@ -50,9 +50,7 @@ ${docker_bin} run -it --rm \
   --name test-beanspeak-${TRAVIS_PHP_VERSION} \
   -v $(pwd)/tests/_ci/backtrace.sh:/backtrace.sh \
   -v $(pwd)/tests/_docker/entrypoint.sh:/entrypoint.sh \
-  -v $(pwd)/vendor:/app/vendor \
-  -v $(pwd)/codeception.yml:/app/codeception.yml \
-  -v $(pwd)/tests:/app/tests \
+  -v $(pwd):/app \
   -v $(pwd)/ext/modules/beanspeak.so:/ext/beanspeak.so \
   -v $(pwd)/ext:/zephir/ext \
   phalconphp/php:${TRAVIS_PHP_VERSION} bash
