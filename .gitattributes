@@ -11,3 +11,5 @@ ext/install linguist-language=sh
 
 ext/* linguist-vendored
 build/* linguist-vendored
+tests/_ci/* linguist-vendored
+tests/_docker/* linguist-vendored
