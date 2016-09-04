@@ -1,2 +1,10 @@
 *.w32 -crlf
 *.bat -crlf
+
+docs/* linguist-documentation
+
+*.zep.h linguist-language=C
+*.zep.c linguist-language=C
+
+ext/* linguist-vendored
+build/* linguist-vendored
