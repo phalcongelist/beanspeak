@@ -12,5 +12,7 @@ if (PHP_BEANSPEAK != "no") {
   }
   
   ADD_SOURCES(configure_module_dirname + "/beanspeak", "client.zep.c exception.zep.c job.zep.c", "beanspeak");
-  ADD_FLAG("CFLAGS_BEANSPEAK", "/D ZEPHIR_RELEASE");
+  ADD_FLAG("CFLAGS_BEANSPEAK", "/D ZEPHIR_RELEASE /Oi /Ot /Oy /Ob2 /Gs /GF /Gy /GL");
+  ADD_FLAG("CFLAGS", "/D ZEPHIR_RELEASE /Oi /Ot /Oy /Ob2 /Gs /GF /Gy /GL");
+  ADD_FLAG("LDFLAGS", "/LTCG");
 }
