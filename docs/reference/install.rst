@@ -25,16 +25,16 @@ Specific packages for common platforms:
 .. code-block:: bash
 
     # Ubuntu
-    sudo apt-get install php5-dev gcc make
+    sudo apt-get install php5-dev gcc make autoconf
 
     # Suse
     sudo yast -i php5-devel gcc make autoconf
 
     # CentOS/RedHat/Fedora
-    sudo yum install php-devel gcc make
+    sudo yum install php-devel gcc make autoconf
 
     # Solaris
-    pkg install php-54 apache-php54 gcc-45
+    pkg install php-56 gcc-48 make autoconf
 
 Of course, you need to install PHP development headers and tools appropriate for your current PHP version.
 
@@ -59,7 +59,7 @@ Creating the extension:
    .. code-block:: bash
 
       # Use right path to the PHP extensions dir here
-      sudo cp ext/modules/beanspeak.so /usr/lib/php5/20121212
+      sudo cp ext/modules/beanspeak.so $(php-config --extension-dir)
 
 Add extension to your PHP configuration:
 
