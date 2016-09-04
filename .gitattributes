@@ -6,5 +6,8 @@ docs/* linguist-documentation
 *.zep.h linguist-language=C
 *.zep.c linguist-language=C
 
+ext/clean linguist-language=sh
+ext/install linguist-language=sh
+
 ext/* linguist-vendored
 build/* linguist-vendored
