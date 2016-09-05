@@ -74,3 +74,10 @@ addons:
     packages:
       - gdb
       - re2c
+
+notifications:
+  email:
+    recipients:
+      - build@phalconphp.com
+    on_success: change
+    on_failure: always
