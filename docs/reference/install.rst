@@ -49,7 +49,7 @@ Creating the extension:
     cd beanspeak
     zephir build
     # Or, for PHP 7 use
-    zephir build --ZendEngine3
+    zephir build --backend=ZendEngine3
 
 .. highlights::
 
