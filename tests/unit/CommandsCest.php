@@ -12,7 +12,7 @@ use PHPUnit_Framework_SkippedTestError as SkipException;
  * Tests the \Beanspeak\Client component
  *
  * @copyright (c) 2016 Phalcon Team
- * @link      http://www.phalconphp.com
+ * @link      https://www.phalconphp.com
  * @author    Serghei Iakovlev <serghei@phalconphp.com>
  * @package   Beanspeak\Test\Unit
  *
