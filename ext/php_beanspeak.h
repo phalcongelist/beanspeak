@@ -11,7 +11,7 @@
 #include "kernel/globals.h"
 
 #define PHP_BEANSPEAK_NAME        "beanspeak"
-#define PHP_BEANSPEAK_VERSION     "1.0.0-beta1"
+#define PHP_BEANSPEAK_VERSION     "1.0.0-beta2"
 #define PHP_BEANSPEAK_EXTNAME     "beanspeak"
 #define PHP_BEANSPEAK_AUTHOR      "Phalcon Team and contributors"
 #define PHP_BEANSPEAK_ZEPVERSION  "0.9.4a-dev"

@@ -12,7 +12,7 @@ use Codeception\TestInterface;
  * all public methods declared in helper class will be available in $I
  *
  * @copyright (c) 2016 Phalcon Team
- * @link      http://www.phalconphp.com
+ * @link      https://www.phalconphp.com
  * @author    Serghei Iakovlev <serghei@phalconphp.com>
  * @package   Helper
  *

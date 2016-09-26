@@ -10,12 +10,12 @@
       "extension",
       "job"
     ],
-    "homepage": "http://beanspeak.readthedocs.org",
+    "homepage": "https://beanspeak.readthedocs.org",
     "license": "BSD-3-Clause",
     "authors": [
         {
             "name": "Phalcon Team",
-            "homepage": "http://phalconphp.com/en/team"
+            "homepage": "https://phalconphp.com/en/team"
         },
         {
             "name": "Contributors",
