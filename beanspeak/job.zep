@@ -24,157 +24,157 @@ namespace Beanspeak;
  */
 class Job
 {
-    /**
-     * @var Client
-     */
-    protected queue;
+	/**
+	 * @var Client
+	 */
+	protected queue;
 
-    /**
-     * @var string
-     */
-    protected id { get };
+	/**
+	 * @var string
+	 */
+	protected id { get };
 
-    /**
-     * @var mixed
-     */
-    protected body { get };
+	/**
+	 * @var mixed
+	 */
+	protected body { get };
 
-    /**
-     * Beanspeak\Job constructor
-     */
-    public function __construct(<Client> queue, string id, var body)
-    {
-        let this->{"queue"} = queue,
-            this->{"id"}    = id,
-            this->{"body"}  = body;
-    }
+	/**
+	 * Beanspeak\Job constructor
+	 */
+	public function __construct(<Client> queue, string id, var body)
+	{
+		let this->{"queue"} = queue,
+			this->{"id"}    = id,
+			this->{"body"}  = body;
+	}
 
-    /**
-     * Removes a job from the server entirely.
-     *
-     * <code>
-     * $job->delete();
-     * </code>
-     */
-    public function delete() -> boolean
-    {
-        var queue, response;
+	/**
+	 * Removes a job from the server entirely.
+	 *
+	 * <code>
+	 * $job->delete();
+	 * </code>
+	 */
+	public function delete() -> boolean
+	{
+		var queue, response;
 
-        let queue = this->queue;
-        queue->write("delete " . this->id);
+		let queue = this->queue;
+		queue->write("delete " . this->id);
 
-        let response = queue->readStatus();
+		let response = queue->readStatus();
 
-        return isset response[0] && response[0] == "DELETED";
-    }
+		return isset response[0] && response[0] == "DELETED";
+	}
 
-    /**
-     * Allows a worker to request more time to work on a Job.
-     *
-     * <code>
-     * $job->touch();
-     * </code>
-     */
-    public function touch() -> boolean
-    {
-        var queue, response;
+	/**
+	 * Allows a worker to request more time to work on a Job.
+	 *
+	 * <code>
+	 * $job->touch();
+	 * </code>
+	 */
+	public function touch() -> boolean
+	{
+		var queue, response;
 
-        let queue = this->queue;
-        queue->write("touch " . this->id);
+		let queue = this->queue;
+		queue->write("touch " . this->id);
 
-        let response = queue->readStatus();
+		let response = queue->readStatus();
 
-        return isset response[0] && response[0] == "TOUCHED";
-    }
+		return isset response[0] && response[0] == "TOUCHED";
+	}
 
 
-    /**
-     * Puts a "reserved" job back into the ready queue (and marks its
-     * state as "ready") to be run by any client.
-     *
-     * <code>
-     * $job->release(10, 60 * 60);
-     * </code>
-     */
-    public function release(int priority = 1024, int delay = 0) -> boolean
-    {
-        var queue, response;
+	/**
+	 * Puts a "reserved" job back into the ready queue (and marks its
+	 * state as "ready") to be run by any client.
+	 *
+	 * <code>
+	 * $job->release(10, 60 * 60);
+	 * </code>
+	 */
+	public function release(int priority = 1024, int delay = 0) -> boolean
+	{
+		var queue, response;
 
-        let queue = this->queue;
-        queue->write("release " . this->id . " " . priority . " " . delay);
+		let queue = this->queue;
+		queue->write("release " . this->id . " " . priority . " " . delay);
 
-        let response = queue->readStatus();
+		let response = queue->readStatus();
 
-        return isset response[0] && response[0] == "RELEASED";
-    }
+		return isset response[0] && response[0] == "RELEASED";
+	}
 
-    /**
-     * Puts a job into the "buried" state.
-     *
-     * <code>
-     * $job->release(10, 60 * 60);
-     * </code>
-     */
-    public function bury(int priority = 1024) -> boolean
-    {
-        var queue, response;
+	/**
+	 * Puts a job into the "buried" state.
+	 *
+	 * <code>
+	 * $job->release(10, 60 * 60);
+	 * </code>
+	 */
+	public function bury(int priority = 1024) -> boolean
+	{
+		var queue, response;
 
-        let queue = this->queue;
-        queue->write("bury " . this->id . " " . priority);
+		let queue = this->queue;
+		queue->write("bury " . this->id . " " . priority);
 
-        let response = queue->readStatus();
+		let response = queue->readStatus();
 
-        return isset response[0] && response[0] == "BURIED";
-    }
+		return isset response[0] && response[0] == "BURIED";
+	}
 
-    /**
-     * Gives statistical information about the specified job if it exists.
-     *
-     * <code>
-     * $stats = $job->stats();
-     * </code>
-     */
-    public function stats() -> boolean|array
-    {
-        var queue, response;
+	/**
+	 * Gives statistical information about the specified job if it exists.
+	 *
+	 * <code>
+	 * $stats = $job->stats();
+	 * </code>
+	 */
+	public function stats() -> boolean|array
+	{
+		var queue, response;
 
-        let queue = this->queue;
-        queue->write("stats-job " . this->id);
+		let queue = this->queue;
+		queue->write("stats-job " . this->id);
 
-        let response = queue->readYaml();
-        if response[0] != "OK" {
-            return false;
-        }
+		let response = queue->readYaml();
+		if response[0] != "OK" {
+			return false;
+		}
 
-        return response[2];
-    }
+		return response[2];
+	}
 
-    /**
-     * A variant of Client::kick that operates with a single job identified by its Job ID.
-     *
-     * <code>
-     * $job->kick();
-     * </code>
-     */
-    public function kick() -> boolean
-    {
-        var queue, response;
+	/**
+	 * A variant of Client::kick that operates with a single job identified by its Job ID.
+	 *
+	 * <code>
+	 * $job->kick();
+	 * </code>
+	 */
+	public function kick() -> boolean
+	{
+		var queue, response;
 
-        let queue = this->queue;
-        queue->write("kick-job " . this->id);
+		let queue = this->queue;
+		queue->write("kick-job " . this->id);
 
-        let response = queue->readStatus();
+		let response = queue->readStatus();
 
-        return isset response[0] && response[0] == "KICKED";
-    }
+		return isset response[0] && response[0] == "KICKED";
+	}
 
-    /**
-     * Checks if the job has been modified after unserializing the object
-     */
-    public function __wakeup()
-    {
-        if typeof this->id != "string" {
-            throw new Exception("Unexpected inconsistency in Beanspeak\\Job::__wakeup() - possible break-in attempt!");
-        }
-    }
+	/**
+	 * Checks if the job has been modified after unserializing the object
+	 */
+	public function __wakeup()
+	{
+		if typeof this->id != "string" {
+			throw new Exception("Unexpected inconsistency in Beanspeak\\Job::__wakeup() - possible break-in attempt!");
+		}
+	}
 }
